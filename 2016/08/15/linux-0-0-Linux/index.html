@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="我会发一系列 Linux 学习笔记（它们最多可以算是“操作手册”，我不认为它们可以代替一本正经的入门书），这些东西是很久以前写的了，可能在 排版、内容 上质量都不高，请见谅。 Linux Linux (/ˈlɪnəks/ LIN-əks) is a family of open source Unix-like operating systems based on the Linux kernel">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-0.0-Linux?">
+<meta property="og:url" content="https://clownote.github.io/2016/08/15/linux-0-0-Linux/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="我会发一系列 Linux 学习笔记（它们最多可以算是“操作手册”，我不认为它们可以代替一本正经的入门书），这些东西是很久以前写的了，可能在 排版、内容 上质量都不高，请见谅。 Linux Linux (/ˈlɪnəks/ LIN-əks) is a family of open source Unix-like operating systems based on the Linux kernel">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-15T06:46:14.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-0.0-Linux?">
+<meta name="twitter:description" content="我会发一系列 Linux 学习笔记（它们最多可以算是“操作手册”，我不认为它们可以代替一本正经的入门书），这些东西是很久以前写的了，可能在 排版、内容 上质量都不高，请见谅。 Linux Linux (/ˈlɪnəks/ LIN-əks) is a family of open source Unix-like operating systems based on the Linux kernel">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>linux-0.0-Linux?</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/08/16/linux-0-1-Install/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/08/14/helloworld/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/08/15/linux-0-0-Linux/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&text=linux-0.0-Linux?"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&is_video=false&description=linux-0.0-Linux?"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-0.0-Linux?&body=Check out this article: https://clownote.github.io/2016/08/15/linux-0-0-Linux/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&name=linux-0.0-Linux?&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux"><span class="toc-number">1.</span> <span class="toc-text">Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么用-Linux？"><span class="toc-number">1.1.</span> <span class="toc-text">为什么用 Linux？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用-Linux-做什么？"><span class="toc-number">1.2.</span> <span class="toc-text">用 Linux 做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-UNIX，MacOS，Windows"><span class="toc-number">1.3.</span> <span class="toc-text">Linux/UNIX，MacOS，Windows</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        linux-0.0-Linux?
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2016-08-15T05:34:47.000Z" itemprop="datePublished">2016-08-15</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>我会发一系列 Linux 学习笔记（它们最多可以算是“操作手册”，我不认为它们可以代替一本正经的入门书），这些东西是很久以前写的了，可能在 排版、内容 上质量都不高，请见谅。</p>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><blockquote>
+<p>Linux (/ˈlɪnəks/ LIN-əks) is a family of open source Unix-like operating systems based on the Linux kernel, an operating system kernel first released on September 17, 1991 by Linus Torvalds. Linux is typically packaged in a Linux distribution.<br>【翻译】Linux 是一系列基于 Linux 内核(一个最早由 Linus Torvalds 在 1991 年 9 月 17 日发布的操作系统内核)的类 Unix 开源操作系统。Linux 通常打包在 Linux 发行版中。</p>
+</blockquote>
+<p>👆这是 <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener">维基百科</a> 对 Linux 的介绍。</p>
+<p>Linux 是什么不重要，重要的是为什么用Linux。就像对用户来说软件的代码实现不重要，重要的是这个软件可以用来干什么。</p>
+<h2 id="为什么用-Linux？"><a href="#为什么用-Linux？" class="headerlink" title="为什么用 Linux？"></a>为什么用 Linux？</h2><p>我们常说，用 Linux 是因为它安全，或者因为它自由、因为它的高度可定制、因为它免费、应为它的背后有专业的社区支持……</p>
+<p>然而，所有的这些全是瞎扯！我们这样欺骗非 Linux 用户，只是因为他们不会懂得 Linux 的真谛。<br>久而久之，说的多了，有时候连我们自己都开始相信这些乱七八糟的“充分理由”了。</p>
+<p>夜深人静时再扪心自问，我们用 Linux 的原因到底何在？</p>
+<p>……</p>
+<p>我们用 Linux —— —— 是因为它好玩呀！</p>
+<p>对着各种设置一阵捣鼓、把系统无情地玩弄到崩坏，再夹着尾巴跑到恢复系统、笨拙地为她缝合伤口、虔诚为她祈祷痊愈、期待着下一次把她摆布成不一样的姿势，这难道不好玩吗？<br>在那数百种发行版中肆意尝试她们各不相同的命令行不好玩吗？</p>
+<p>是的，我们觉得命令行超级有趣！</p>
+<p>其实 Linux 爱好者们爱上 Linux，爱的只是 Linux 本身！</p>
+<p>是，我们使用 Linux 完成老板布置的工作；<br>是，我们使用 Linux 保障安全、远离病毒；<br>是，我们使用 Linux 省下几个柴米油盐钱；<br>但，这些都只是我们使用 Linux 的副作用！ </p>
+<p>真正重要的是 —— —— 这系统好玩啊！</p>
+<p>Linux 让我们像探险家一样游荡在系统深处，四处搅合，随性发掘，在软件的背后寻觅可爱的诗篇！</p>
+<p>（翻译自一篇出处难寻的文章）</p>
+<h2 id="用-Linux-做什么？"><a href="#用-Linux-做什么？" class="headerlink" title="用 Linux 做什么？"></a>用 Linux 做什么？</h2><p>我们可以用 Linux 干什么？</p>
+<p>毫无疑问——玩！</p>
+<h2 id="Linux-UNIX，MacOS，Windows"><a href="#Linux-UNIX，MacOS，Windows" class="headerlink" title="Linux/UNIX，MacOS，Windows"></a>Linux/UNIX，MacOS，Windows</h2><p>Linux/UNIX，MacOS，Windows，这几乎就是我们平时接触到的所有操作系统了。</p>
+<p>抛开刚才写的那么多 Linux 的好处不看，客观地比较一下它们：</p>
+<ul>
+<li><p>Linux/UNIX 以自由著称，但正如很多开源的东西，设计上会有一些缺陷，用户体验绝对不是最好的，但它几乎可以满足你在计算机编程、工作上的全部需求（只是操作起来可能需要时间、精力）。其实在 Linux/UNIX 的内部有很多很糟糕的部分，这是历史遗留问题了，在学会  Linux 的基础之前我们最好不去过多研究。</p>
+</li>
+<li><p>MacOS，这是我现在正在使用的操作系统，Apple一向以用户体验著称。MacOS绝对是我用过的体验最好的计算机操作系统，你不用了解太多的东西就可以专心地高效完成你的工作。但 MacOS 无论如何还是脱离不了 UNIX 的影响，UNIX 有的问题，MacOS 也会有，只是在表面上看不出来。在开发方面，按照 Apple 的文档，你虽然可以快速地开发出一个 App，但你很难去了解底层的东西，这给移植之类的工作带来了很大的麻烦，不过近年来也有好转。</p>
+</li>
+<li><p>Windows，我承认微软很厉害，Windows的设计也有很多很好的地方，但我始终无法接受 Windows 呈现给用户的那种东西，我想是我的程序设计功夫还不到家，所以不喜欢微软风格的代码——虽然客观地说我承认它们其实很好。在 Windows 10 中我已经看到了它朝我想要的方向有了十足的进步，但这还不够！我期望微软有一天可以让我用回 Windows，毕竟它是我对计算机的最初回忆。</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux"><span class="toc-number">1.</span> <span class="toc-text">Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么用-Linux？"><span class="toc-number">1.1.</span> <span class="toc-text">为什么用 Linux？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用-Linux-做什么？"><span class="toc-number">1.2.</span> <span class="toc-text">用 Linux 做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-UNIX，MacOS，Windows"><span class="toc-number">1.3.</span> <span class="toc-text">Linux/UNIX，MacOS，Windows</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/08/15/linux-0-0-Linux/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&text=linux-0.0-Linux?"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&is_video=false&description=linux-0.0-Linux?"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-0.0-Linux?&body=Check out this article: https://clownote.github.io/2016/08/15/linux-0-0-Linux/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&title=linux-0.0-Linux?"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/15/linux-0-0-Linux/&name=linux-0.0-Linux?&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
