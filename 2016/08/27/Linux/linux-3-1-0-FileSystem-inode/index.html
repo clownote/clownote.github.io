@@ -9,16 +9,16 @@
     <meta name="description" content="Linux文件系统与inode硬盘分区和文件系统一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）分区，之后再把每一个分区格式化为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。 Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。 把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元， 并将这些小">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux-3.1.0-FileSystem-inode">
+<meta property="og:title" content="linux-3.1.0-文件系统与inode">
 <meta property="og:url" content="https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Linux文件系统与inode硬盘分区和文件系统一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）分区，之后再把每一个分区格式化为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。 Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。 把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元， 并将这些小">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g60fl18enfj30go0730tl.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79gy1g60oehim96j30go00v0sr.jpg">
-<meta property="og:updated_time" content="2019-08-15T13:20:05.976Z">
+<meta property="og:updated_time" content="2019-08-16T14:51:27.274Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux-3.1.0-FileSystem-inode">
+<meta name="twitter:title" content="linux-3.1.0-文件系统与inode">
 <meta name="twitter:description" content="Linux文件系统与inode硬盘分区和文件系统一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）分区，之后再把每一个分区格式化为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。 Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。 把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元， 并将这些小">
 <meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g60fl18enfj30go0730tl.jpg">
     
@@ -40,7 +40,7 @@
         
     
     <!-- title -->
-    <title>linux-3.1.0-FileSystem-inode</title>
+    <title>linux-3.1.0-文件系统与inode</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -95,15 +95,15 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&text=linux-3.1.0-FileSystem-inode"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&is_video=false&description=linux-3.1.0-FileSystem-inode"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=linux-3.1.0-FileSystem-inode&body=Check out this article: https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&name=linux-3.1.0-FileSystem-inode&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&text=linux-3.1.0-文件系统与inode"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&is_video=false&description=linux-3.1.0-文件系统与inode"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-3.1.0-文件系统与inode&body=Check out this article: https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&name=linux-3.1.0-文件系统与inode&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -120,7 +120,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        linux-3.1.0-FileSystem-inode
+        linux-3.1.0-文件系统与inode
     </h1>
 
 
@@ -134,7 +134,7 @@
       
         <time datetime="2016-08-27T08:13:00.000Z" itemprop="datePublished">2016-08-27</time>
         
-        (Updated: <time datetime="2019-08-15T13:20:05.976Z" itemprop="dateModified">2019-08-15</time>)
+        (Updated: <time datetime="2019-08-16T14:51:27.274Z" itemprop="dateModified">2019-08-16</time>)
         
       
     </div>
@@ -255,15 +255,15 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&text=linux-3.1.0-FileSystem-inode"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&is_video=false&description=linux-3.1.0-FileSystem-inode"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=linux-3.1.0-FileSystem-inode&body=Check out this article: https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-FileSystem-inode"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&name=linux-3.1.0-FileSystem-inode&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&text=linux-3.1.0-文件系统与inode"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&is_video=false&description=linux-3.1.0-文件系统与inode"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-3.1.0-文件系统与inode&body=Check out this article: https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&title=linux-3.1.0-文件系统与inode"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/27/Linux/linux-3-1-0-FileSystem-inode/&name=linux-3.1.0-文件系统与inode&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
