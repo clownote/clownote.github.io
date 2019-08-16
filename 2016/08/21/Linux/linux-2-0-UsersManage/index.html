@@ -10,7 +10,7 @@
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-2.0-用户管理">
-<meta property="og:url" content="https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/index.html">
+<meta property="og:url" content="https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="用户管理 su：切换用户  123$ su [-]用户名    -   ：有则重启shell，重装$PATH（环境变量），pwd切换至用户名的$HOME（家目录）         无则不变 环境变量（检索命令的目录），pwd不变  用户名 ：缺省为 root 12345678[me@Example ~]$ su - root密码：[root@Example~]# whoamiroot[root@E">
 <meta property="og:locale" content="zh-CN">
@@ -75,10 +75,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2016/08/22/linux-2-1-User/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2016/08/22/Linux/linux-2-1-User/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2016/08/20/linux-1-2-getHelp/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2016/08/20/Linux/linux-1-2-getHelp/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -91,16 +91,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&text=linux-2.0-用户管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&is_video=false&description=linux-2.0-用户管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=linux-2.0-用户管理&body=Check out this article: https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&name=linux-2.0-用户管理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&text=linux-2.0-用户管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&is_video=false&description=linux-2.0-用户管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-2.0-用户管理&body=Check out this article: https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&name=linux-2.0-用户管理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -220,16 +220,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&text=linux-2.0-用户管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&is_video=false&description=linux-2.0-用户管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=linux-2.0-用户管理&body=Check out this article: https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/21/linux-2-0-UsersManage/&name=linux-2.0-用户管理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&text=linux-2.0-用户管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&is_video=false&description=linux-2.0-用户管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-2.0-用户管理&body=Check out this article: https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/08/21/Linux/linux-2-0-UsersManage/&name=linux-2.0-用户管理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
