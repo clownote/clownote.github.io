@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="文件及其操作Linux文件类型：   表示 名称 解释    - regular file 普通文件，或称正规文件   d directory 目录   l symbolic link🏎 符号（软）连接   b block 块特殊文件：一般是指块设备，如硬盘。   c character 字符特殊文件：一般是指字符设备，如键盘。   p pipe 命名的管道文件：一般用于在进程之间传输数据。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-3.0.1-文件及其操作">
+<meta property="og:url" content="https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="文件及其操作Linux文件类型：   表示 名称 解释    - regular file 普通文件，或称正规文件   d directory 目录   l symbolic link🏎 符号（软）连接   b block 块特殊文件：一般是指块设备，如硬盘。   c character 字符特殊文件：一般是指字符设备，如键盘。   p pipe 命名的管道文件：一般用于在进程之间传输数据。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-17T05:28:09.940Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-3.0.1-文件及其操作">
+<meta name="twitter:description" content="文件及其操作Linux文件类型：   表示 名称 解释    - regular file 普通文件，或称正规文件   d directory 目录   l symbolic link🏎 符号（软）连接   b block 块特殊文件：一般是指块设备，如硬盘。   c character 字符特殊文件：一般是指字符设备，如键盘。   p pipe 命名的管道文件：一般用于在进程之间传输数据。">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>linux-3.0.1-文件及其操作</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/12/27/Linux/linux-3-1-0-FileSystem-inode/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/12/25/Linux/linux-3-0-0-Directory/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&text=linux-3.0.1-文件及其操作"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&is_video=false&description=linux-3.0.1-文件及其操作"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-3.0.1-文件及其操作&body=Check out this article: https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&name=linux-3.0.1-文件及其操作&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件及其操作"><span class="toc-number">1.</span> <span class="toc-text">文件及其操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux文件类型："><span class="toc-number">1.1.</span> <span class="toc-text">Linux文件类型：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件操作"><span class="toc-number">1.2.</span> <span class="toc-text">文件操作</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        linux-3.0.1-文件及其操作
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2016-12-26T08:06:36.000Z" itemprop="datePublished">2016-12-26</time>
+        
+        (Updated: <time datetime="2019-08-17T05:28:09.940Z" itemprop="dateModified">2019-08-17</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="文件及其操作"><a href="#文件及其操作" class="headerlink" title="文件及其操作"></a>文件及其操作</h1><h2 id="Linux文件类型："><a href="#Linux文件类型：" class="headerlink" title="Linux文件类型："></a>Linux文件类型：</h2><table>
+<thead>
+<tr>
+<th>表示</th>
+<th>名称</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-</td>
+<td>regular file</td>
+<td>普通文件，或称正规文件</td>
+</tr>
+<tr>
+<td>d</td>
+<td>directory</td>
+<td>目录</td>
+</tr>
+<tr>
+<td>l</td>
+<td>symbolic link🏎</td>
+<td>符号（软）连接</td>
+</tr>
+<tr>
+<td>b</td>
+<td>block</td>
+<td>块特殊文件：一般是指块设备，如硬盘。</td>
+</tr>
+<tr>
+<td>c</td>
+<td>character</td>
+<td>字符特殊文件：一般是指字符设备，如键盘。</td>
+</tr>
+<tr>
+<td>p</td>
+<td>pipe</td>
+<td>命名的管道文件：一般用于在进程之间传输数据。</td>
+</tr>
+<tr>
+<td>s</td>
+<td>socket🐶</td>
+<td>套接字：通信（过程中）的一个终点。</td>
+</tr>
+</tbody></table>
+<p>🏎. 详见本系列文章的“<u>连接(link)</u>”</p>
+<p>🐶.  socket 的比喻性解释：</p>
+<p><strong>socket与电话十分相似：</strong></p>
+<p><em>当与某人通话时就要建立两个通信的终点：</em></p>
+<p><em>（1）自己的电话</em></p>
+<p><em>（2）对方的电话</em></p>
+<p><em>只要双方进行通话，就必须有两个通话所必需的终点（电话）和一条在它们之间的通信线路存在。</em></p>
+<pre><code>socket就相当于一条通信线路的终点（电话），而在这些终点（sockets）之间存在着数据通信网络。</code></pre><p><em>当打电话给他人时，需要拨打对方的电话号码。</em></p>
+<pre><code>sockets使用网络地址取代了电话号码。通过访问远程（计算机）的socket地址，本机程序就可以用的本机socket与远程的终点（socket）之间建立起一条通信线路。</code></pre><h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><ul>
+<li>file：确定文件类型</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ file 文件名</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>touch：刷新、新建文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ touch file(s)</span><br><span class="line">        若file存在，更新时间戳</span><br><span class="line">        若file不存在，新建空文件</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>cp：复制</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cp [-option(s)]  source(s)  target</span><br><span class="line">    把source复制到target：</span><br><span class="line">        -i：交互式：防止覆盖，覆盖前提示</span><br><span class="line">        -f：强制式：有同名，强制覆盖，不提示</span><br><span class="line">        -r：递归式：复制目录时包括子目录</span><br><span class="line">        -p：维持式：保留属性（如时间戳）</span><br><span class="line">        source是目录名或文件名</span><br><span class="line">        target是目录名或 新文件名(复制并重命名)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mv：移动及修改文件、目录名</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mv file(s) target</span><br><span class="line">    把source移动到target：</span><br><span class="line">        source是目录名或文件名</span><br><span class="line">        target是目录名或 新文件名(移动并重命名)</span><br></pre></td></tr></table></figure>
+
+<pre><code>重命名可用“**mv  path/old\_name  path/new\_nam**e”实现</code></pre><ul>
+<li>rm：删除</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ rm  [option(s)]  file(s)|directory(s)</span><br><span class="line">    删除文件或 目录(加-r)：</span><br><span class="line">        -i：交互式：删前提示</span><br><span class="line">        -r：递归式：包括子目录、文件</span><br><span class="line">        -f：强制性：不询问，直接删</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>find：搜索文件和目录</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$ find Pathname Expressions Actions</span><br><span class="line">    •Pathname：遍历起始路径</span><br><span class="line">    •Expressions：条件表达式：</span><br><span class="line">        -name“指定文件名”</span><br><span class="line">        -size[+|-]n</span><br><span class="line">                文件大小大于小于或等于(n*512B)</span><br><span class="line">        -atime[+|-]n</span><br><span class="line">                访问天数</span><br><span class="line">        -mtime[+|-]n：更改天数</span><br><span class="line">        -user LoginID：属于某用户的所有文件</span><br><span class="line">        -type：某一类型的文件：</span><br><span class="line">                f：文件</span><br><span class="line">                d：目录</span><br><span class="line">                e t c</span><br><span class="line">        -perm：查找具有某些特定访问许可位的文件</span><br><span class="line">    •Actions：对找出的文件进行的操作：</span><br><span class="line">        -exec命令&#123;&#125; \;</span><br><span class="line">                在每一个所定位的文件上运行指定的命令。</span><br><span class="line">                “&#123;&#125;“  表明文件名将传给前面的命令。</span><br><span class="line">                “ \;” 表示命令的结束。</span><br><span class="line">                （在大括号与反斜线之间必须有一个空格。）</span><br><span class="line">        -ok命令&#123;&#125; \;</span><br><span class="line">                -exec命令的交互方式</span><br><span class="line">                （在find命令对每个定位的文件执行命令之前需要确认）</span><br><span class="line">        -print</span><br><span class="line">                指示find命令将当前的路径名打印在终端屏幕上</span><br><span class="line">                （默认方式）</span><br><span class="line">        -ls</span><br><span class="line">                显示当前路径名和相关的统计信息</span><br><span class="line">                如i节点（inode）数、以K字节为单位的大小（尺寸）、保护模式、硬连接和用户</span><br></pre></td></tr></table></figure>
+
+<pre><code>可用`find /etc -name passwd  2&gt;finderrs.txt`重定向，把权限不足的错误不在屏幕显示。</code></pre>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件及其操作"><span class="toc-number">1.</span> <span class="toc-text">文件及其操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux文件类型："><span class="toc-number">1.1.</span> <span class="toc-text">Linux文件类型：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件操作"><span class="toc-number">1.2.</span> <span class="toc-text">文件操作</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&text=linux-3.0.1-文件及其操作"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&is_video=false&description=linux-3.0.1-文件及其操作"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-3.0.1-文件及其操作&body=Check out this article: https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&title=linux-3.0.1-文件及其操作"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/&name=linux-3.0.1-文件及其操作&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

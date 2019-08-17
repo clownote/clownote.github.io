@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="文件的安全控制 Linux系统的安全模型  用户登录系统时必须提供用户名和密码。   /*  用户是由root用户创建的，最初的密码也是root用户设定的 */  使用用户和群组来控制使用者访问文件和其他资源的权限。  系统上的每一个文件都一定属于一个用户（一般该用户就是文件的创建者）并与一个群组相关。  每一个进程都会与一个用户和群组相关联。可以通过在所有的文件和资源上设定权限来只允许该文件的所">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-2.3-文件的安全控制">
+<meta property="og:url" content="https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="文件的安全控制 Linux系统的安全模型  用户登录系统时必须提供用户名和密码。   /*  用户是由root用户创建的，最初的密码也是root用户设定的 */  使用用户和群组来控制使用者访问文件和其他资源的权限。  系统上的每一个文件都一定属于一个用户（一般该用户就是文件的创建者）并与一个群组相关。  每一个进程都会与一个用户和群组相关联。可以通过在所有的文件和资源上设定权限来只允许该文件的所">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006tNc79gy1g60eo9tu5zj306n02j74b.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79gy1g60ep4llfaj30ax02fglj.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006tNc79ly1g60epak066j30go072aak.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79ly1g60eps4gcej30go03nmxf.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006tNc79ly1g60eq5o2mej30go05i3z4.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g60eqx53n4j30e204jwep.jpg">
+<meta property="og:updated_time" content="2019-08-17T05:28:09.905Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-2.3-文件的安全控制">
+<meta name="twitter:description" content="文件的安全控制 Linux系统的安全模型  用户登录系统时必须提供用户名和密码。   /*  用户是由root用户创建的，最初的密码也是root用户设定的 */  使用用户和群组来控制使用者访问文件和其他资源的权限。  系统上的每一个文件都一定属于一个用户（一般该用户就是文件的创建者）并与一个群组相关。  每一个进程都会与一个用户和群组相关联。可以通过在所有的文件和资源上设定权限来只允许该文件的所">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/006tNc79gy1g60eo9tu5zj306n02j74b.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>linux-2.3-文件的安全控制</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/12/25/Linux/linux-3-0-0-Directory/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/12/23/Linux/linux-2-2-Group/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&text=linux-2.3-文件的安全控制"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&is_video=false&description=linux-2.3-文件的安全控制"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-2.3-文件的安全控制&body=Check out this article: https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&name=linux-2.3-文件的安全控制&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件的安全控制"><span class="toc-number">1.</span> <span class="toc-text">文件的安全控制</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        linux-2.3-文件的安全控制
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2016-12-24T07:38:20.000Z" itemprop="datePublished">2016-12-24</time>
+        
+        (Updated: <time datetime="2019-08-17T05:28:09.905Z" itemprop="dateModified">2019-08-17</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="文件的安全控制"><a href="#文件的安全控制" class="headerlink" title="文件的安全控制"></a>文件的安全控制</h1><ul>
+<li><p>Linux系统的安全模型</p>
+</li>
+<li><p>用户<strong>登录</strong>系统时必须<strong>提供用户名和密码</strong>。</p>
+</li>
+</ul>
+<p>/*  用户是由root用户创建的，最初的密码也是root用户设定的 */</p>
+<ul>
+<li><p>使用<strong>用户</strong>和<strong>群组</strong>来控制使用者<strong>访问</strong>文件和其他资源的<strong>权限</strong>。</p>
+</li>
+<li><p>系统上的每一个<strong>文件</strong>都一定<strong>属于</strong>一个<strong>用户</strong>（一般该用户就是文件的创建者）并<strong>与</strong>一个<strong>群组相关</strong>。</p>
+</li>
+<li><p>每一个<strong>进程</strong>都会<strong>与</strong>一个<strong>用户和群组</strong>相<strong>关联</strong>。可以通过在所有的文件和资源上设定权限来只允许该文件的<strong>所有者</strong>或者某个<strong>群组</strong>的成员访问它们。</p>
+</li>
+<li><p>Linux 上文件有三种类型的权限：</p>
+</li>
+<li><p>所有者  ：（u）：文件的<strong><u>所有者</u></strong>的权限</p>
+</li>
+<li><p>同组用户：（g）：与所有者<strong><u>同一群组</u></strong>的其他用户的权限</p>
+</li>
+<li><p>其他用户：（o）：非所有者也<strong><u>不同群</u></strong>的用户的权限</p>
+</li>
+</ul>
+<p>/* root用户不受权限限制，可以访问Linux上的任何资源 */</p>
+<ul>
+<li><p>权限的表示：</p>
+<table>
+<thead>
+<tr>
+<th>字母表示</th>
+<th>数字表示</th>
+<th>含义</th>
+<th>对文件的权限</th>
+<th>对目录的权限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r</td>
+<td>4</td>
+<td>Read</td>
+<td>可阅读文件</td>
+<td>使用ls列出目录内容</td>
+</tr>
+<tr>
+<td>w</td>
+<td>2</td>
+<td>Write</td>
+<td>可编辑文件</td>
+<td>编辑目录(在其中创建、删除等)</td>
+</tr>
+<tr>
+<td>x</td>
+<td>1</td>
+<td>eXecute</td>
+<td>可执行程序(可执行文件)</td>
+<td>使用cd进入目录，用ls -l查看目录详情</td>
+</tr>
+<tr>
+<td>- （连字符）</td>
+<td>0</td>
+<td>no</td>
+<td>没用相应的权限(同位的r|w|x)</td>
+<td>没用相应的权限(同位的r|w|x)</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>查看文件的权限</p>
+</li>
+</ul>
+<p>用 *<em>ls -l *</em>命令：显示结果中的第1列（10个字符）表示文件的mode：</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79gy1g60eo9tu5zj306n02j74b.jpg" alt="IMG_1065"></p>
+<p align="left">其中第1个字符表示文件的类型：</p>
+- 如果是d就表示是目录
+
+<ul>
+<li>如果是-就表示是文件。</li>
+</ul>
+<p>紧接其后的9个字符是这个文件或命令的权限：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79gy1g60ep4llfaj30ax02fglj.jpg" alt="IMG_1062"></p>
+<ul>
+<li>Linux 的安全检测流程</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g60epak066j30go072aak.jpg" alt="IMG_1060"></p>
+<ul>
+<li>设定文件或目录上的权限要用chmod命令：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod [-R] mode 文件或目录名</span><br><span class="line">        -R：递归的，设置同时应用于目录中的子目录和所有文件，只有root可用。</span><br><span class="line">        mode: 详见👇</span><br></pre></td></tr></table></figure>
+
+<p><span style="color: rgb(38, 180, 80);"><em>*.</em></span><strong><em>mode</em></strong>：</p>
+<ol>
+<li>用<strong>表达式</strong>表示：</li>
+</ol>
+<p><em>用“{who}  {operator}  {permission}”表示mode：</em></p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g60eps4gcej30go03nmxf.jpg" alt="IMG_1061"></p>
+<p>权限状态可以分成3个部分：</p>
+<ul>
+<li><p>第1部分，表示要设定<strong>谁</strong>的状态：</p>
+</li>
+<li><p>u：<span style="background-color: rgb(255, 250, 165);">所有者</span>的权限。</p>
+</li>
+<li><p>g：<span style="background-color: rgb(255, 250, 165);">群组</span>的权限。</p>
+</li>
+<li><p>o：既不是owner也不与owner在同一个group的<span style="background-color: rgb(255, 250, 165);">其他用户</span>的权限。</p>
+</li>
+<li><p>a：所以，以上3组，也就是<span style="background-color: rgb(255, 250, 165);"><u>所有用户</u></span>的权限。</p>
+</li>
+<li><p>第2部分，<strong>运算符</strong>（操作符）</p>
+</li>
+<li><p>+：<span style="background-color: rgb(255, 250, 165);">加入</span>权限。</p>
+</li>
+<li><ul>
+<li>：<span style="background-color: rgb(255, 250, 165);">去掉</span>权限。</li>
+</ul>
+</li>
+<li><p>=：<span style="background-color: rgb(255, 250, 165);">设定</span>权限。</p>
+</li>
+<li><p>第3部分，<strong>权限</strong>（permission）</p>
+</li>
+<li><p>r  ：read权限。</p>
+</li>
+<li><p>w：write权限。</p>
+</li>
+<li><p>x ：execute权限。</p>
+</li>
+</ul>
+<p>e.g.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ chmod ug+x tastingFile</span><br><span class="line">        在tastingFile文件上添加上所有者和同组用户的可执行权限</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>用<strong>数字</strong>表示：</li>
+</ol>
+<p><em>用  一组三位数  表示mode：</em></p>
+<p>（1）第1个数字  代表  所有者      (own user)    的权限   （u）</p>
+<p>（2）第2个数字  代表  群组       （group）       的权限   （g）</p>
+<p>（3）第3个数字  代表  其他用户（other）        的权限   （o）</p>
+<p>这组3位数中的每一位数字都是由以下表示资源权限状态的数字（即4、2、1和0）相加而获得的总和：</p>
+<pre><code>4：100(2)：表示具有    read       权限。
+
+2：010(2)：表示具有    write      权限。
+
+1：001(2)：表示具有  execute   权限。
+
+0：000(2)：表示  没有相应的权限。</code></pre><p>即：</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g60eq5o2mej30go05i3z4.jpg" alt="IMG_1064"></p>
+<p>e.g.</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g60eqx53n4j30e204jwep.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># chmod -R 754 /home/foo/bar</span><br><span class="line"></span><br><span class="line">        对owner(foo)开放家目录的bar子目录和其中所有文件的一切权限，但是对同组用户开放读和执行权限而对其他用户只开放读权限</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>特殊权限</strong>（第4组权限）</li>
+</ul>
+<p>第4组权限包括suid、sgid和sticky 3种权限。</p>
+<p>其中，</p>
+<ul>
+<li><p>suid  ：100：4：借用u的可执行权限位，并以 <strong>s</strong> 来表示；  </p>
+</li>
+<li><p>sgid  ：  10：2：借用g的可执行权限位，并以 <strong>s</strong> 来表示；</p>
+</li>
+<li><p>sticky ：    1：1：借用o的可执行权限位，并以 <strong>t</strong> 来表示；</p>
+</li>
+</ul>
+<p>当在一个文件上加入suid|sgid|sticky特殊权限时：</p>
+<p>如果原来的文件的u|g|o具有x权限：</p>
+<p>就使用小写的s|s|t来代替x；</p>
+<p>如果原来没有x：</p>
+<p>就用大写的S|S|T来代替；</p>
+<p><u>设置</u>特殊权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 字符：</span><br><span class="line">$ chmod [u|g|o][+,-,=][s|s|t] file</span><br><span class="line"># 数字：（第四组表示特殊权限）</span><br><span class="line">$ chmod [0-7][0-7][0-7][0-7] file</span><br></pre></td></tr></table></figure>
+
+<p>特殊权限<u>作用</u>：</p>
+<p>将suid和sgid设定在<em>可执行文件</em>上：</p>
+<ul>
+<li><p>运行有suid特殊权限的可执行文件时：是以可执行文件的<strong>所有者权限来运行</strong>这一可执行文件的，而不是以执行者的权限来运行该命令。</p>
+</li>
+<li><p>sgid特殊权限与suid类似，是以命令的群组的权限来运行这一命令的。</p>
+</li>
+</ul>
+<p>将sgid和sticky设定在<em>目录</em>上：  </p>
+<ul>
+<li><p>一个目录上设置了sticky权限，就只有文件的所有者和root用户才可以删除该目录中的文件，而Linux系统不会理会group或other的写权限。</p>
+</li>
+<li><p>一个目录上设置了sgid权限，只要是同一群组的成员，都可以在这个目录中创建文件。</p>
+</li>
+<li><p>通常会对目录同时设置sticky和sgid这两个特殊权限以方便项目的管理（将同一个项目的文件都放到这一个目录中以方便同一项目的成员之间共享信息）。</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件的安全控制"><span class="toc-number">1.</span> <span class="toc-text">文件的安全控制</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&text=linux-2.3-文件的安全控制"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&is_video=false&description=linux-2.3-文件的安全控制"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-2.3-文件的安全控制&body=Check out this article: https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&title=linux-2.3-文件的安全控制"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/12/24/Linux/linux-2-3-fileSafe/&name=linux-2.3-文件的安全控制&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
