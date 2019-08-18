@@ -1562,6 +1562,7 @@ pre {
 pre code {
   display: block;
   padding: 0;
+  font-family: "Menlo", "Meslo LG", monospace;
   border: none;
 }
 code {
@@ -1622,6 +1623,7 @@ code {
 .highlight pre {
   padding: 0;
   border: none;
+  font-family: "Menlo", "Meslo LG", monospace;
   background: none;
 }
 .highlight table {
