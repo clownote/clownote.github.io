@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Notes of Andrew Ng’s Machine Learning —— (0) IntroductionWelcomeMachine Learning   Grew out of work in AI New capability for computers  Examples:  Database miningLarge datasets from growth of automati">
+<meta name="keywords" content="MachineLearning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AndrewNg-MachineLearning-0-Introduction">
+<meta property="og:url" content="https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Notes of Andrew Ng’s Machine Learning —— (0) IntroductionWelcomeMachine Learning   Grew out of work in AI New capability for computers  Examples:  Database miningLarge datasets from growth of automati">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-18T08:44:03.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AndrewNg-MachineLearning-0-Introduction">
+<meta name="twitter:description" content="Notes of Andrew Ng’s Machine Learning —— (0) IntroductionWelcomeMachine Learning   Grew out of work in AI New capability for computers  Examples:  Database miningLarge datasets from growth of automati">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>AndrewNg-MachineLearning-0-Introduction</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/08/15/GitHub加Hexo打造个人博客/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&text=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&is_video=false&description=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AndrewNg-MachineLearning-0-Introduction&body=Check out this article: https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&name=AndrewNg-MachineLearning-0-Introduction&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-0-Introduction"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (0) Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Welcome"><span class="toc-number">1.1.</span> <span class="toc-text">Welcome</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-machine-learning"><span class="toc-number">1.2.</span> <span class="toc-text">What is machine learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Machine-Learning-definition"><span class="toc-number">1.2.1.</span> <span class="toc-text">Machine Learning definition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Machine-Learning-algorithms"><span class="toc-number">1.2.2.</span> <span class="toc-text">Machine Learning algorithms</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Supervised-Learning"><span class="toc-number">1.3.</span> <span class="toc-text">Supervised Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Categories-of-supervised-learning-problems"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">Categories of supervised learning problems</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unsupervised-Learning"><span class="toc-number">1.4.</span> <span class="toc-text">Unsupervised Learning</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        AndrewNg-MachineLearning-0-Introduction
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-08-18T08:37:53.000Z" itemprop="datePublished">2019-08-18</time>
+        
+        (Updated: <time datetime="2019-08-18T08:44:03.304Z" itemprop="dateModified">2019-08-18</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/MachineLearning/">MachineLearning</a> › <a class="category-link" href="/categories/MachineLearning/AndrewNg/">AndrewNg</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/MachineLearning/">MachineLearning</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Notes-of-Andrew-Ng’s-Machine-Learning-——-0-Introduction"><a href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-0-Introduction" class="headerlink" title="Notes of Andrew Ng’s Machine Learning —— (0) Introduction"></a>Notes of Andrew Ng’s Machine Learning —— (0) Introduction</h1><h2 id="Welcome"><a href="#Welcome" class="headerlink" title="Welcome"></a>Welcome</h2><p>Machine Learning </p>
+<ul>
+<li>Grew out of work in AI</li>
+<li>New capability for computers</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><p>Database mining<br>Large datasets from growth of automation / web.<br>  E.g. Web click data, medical records, biology, engineering</p>
+</li>
+<li><p>Applications can’t program by hand.<br>  E.g. Autonomous helicopter, handwriting recognition, most of Natural Language Progressing (NLP), Computer Vision.</p>
+</li>
+<li><p>Self-customizing programs<br>  E.g. Amazon, Netflix product recommendations</p>
+</li>
+<li><p>Understanding human learning (brain, real AI)</p>
+</li>
+</ul>
+<h2 id="What-is-machine-learning"><a href="#What-is-machine-learning" class="headerlink" title="What is machine learning"></a>What is machine learning</h2><h3 id="Machine-Learning-definition"><a href="#Machine-Learning-definition" class="headerlink" title="Machine Learning definition"></a>Machine Learning definition</h3><ul>
+<li><em>Arthur Samuel (1959)</em> : Machine Learning: Field of study that gives computers the ability to learn without being explicitly programmed.</li>
+<li><em>Tom Mitchell (1998)</em>, <em>a more modern definition</em> : Well-posed Learning Problem: A computer program is said to learn from experience <code>E</code> with respect to some task <code>T</code> and some prformance measure <code>P</code>, if its performance on T, as measured by P, improves with experience E.</li>
+</ul>
+<p>Example:</p>
+<ul>
+<li><p>Playing checkers.</p>
+<p><code>E</code> = the experience of playing many games of checkers<br><code>T</code> = the task of playing checkers.<br><code>P</code> = the probability that the program will win the next game.</p>
+</li>
+<li><p>Spam Filter</p>
+<p><code>E</code> = Watching you label emails as spam or not spam<br><code>T</code> = Classifying emails as spam or not spam<br><code>P</code> = The number (or fraction) of emails correctly classified as spam / not spam.</p>
+</li>
+</ul>
+<h3 id="Machine-Learning-algorithms"><a href="#Machine-Learning-algorithms" class="headerlink" title="Machine Learning algorithms"></a>Machine Learning algorithms</h3><ul>
+<li>Supervised learning</li>
+<li>Unsupervised learning</li>
+</ul>
+<p>Others: Reinforcement learning, recommender system</p>
+<h2 id="Supervised-Learning"><a href="#Supervised-Learning" class="headerlink" title="Supervised Learning"></a>Supervised Learning</h2><p>In supervised learning, we are:</p>
+<ul>
+<li>given a data set</li>
+<li>given “right answers” (already know what our correct output should look like)</li>
+<li>having the idea that there is a relationship between the input and the output.</li>
+</ul>
+<h4 id="Categories-of-supervised-learning-problems"><a href="#Categories-of-supervised-learning-problems" class="headerlink" title="Categories of supervised learning problems"></a>Categories of supervised learning problems</h4><ol>
+<li><p><code>Regression</code>: Predict continuous valued output</p>
+<p>Trying to map input variables to some continuous function.</p>
+<p><em>[To predict how much]</em></p>
+<p>E.g.</p>
+<ul>
+<li>You have a large inventory of identical items. You want to predict how many of these items will sell over the next 3 months.</li>
+<li>Given a picture of a person, we have to predict their age on the basis of the given picture</li>
+</ul>
+</li>
+<li><p><code>Classification</code>: Discrete valued output (0/1 or 0/1/2/3…)</p>
+<p>Trying to map input variables into discrete categories.</p>
+<p><em>[To predict whether / which]</em></p>
+<p>E.g.</p>
+<ul>
+<li>Given a patient with a tumor, we have to predict whether the tumor is malignant or benign.</li>
+<li>You’d like software to examine individual customer accounts, and for each accout decide if it has been hacked/ compromised.</li>
+</ul>
+</li>
+</ol>
+<h2 id="Unsupervised-Learning"><a href="#Unsupervised-Learning" class="headerlink" title="Unsupervised Learning"></a>Unsupervised Learning</h2><p>In unsupervised learning we can:</p>
+<ul>
+<li>approach problems with little or no idea what our results should look like</li>
+<li>derive structure from data where we don’t necessarily know the effect of the variables.</li>
+<li>derive this structure by <strong>clustering the data</strong> based on relationships among the variables in the data.</li>
+</ul>
+<p>With unsupervised learning there is <strong>no feedback based on the prediction results</strong>.</p>
+<p>E.g.</p>
+<ol>
+<li><p><code>Clustering</code>: </p>
+<ul>
+<li><p>Google news looks for tens of thousands of news stories and automatically cluster them together. So, the news stories that are all about the same topic get displayed together.</p>
+</li>
+<li><p>Take a collection of 1,000,000 different genes, and find a way to automatically group these genes into groups that are somehow similar or related by different variables, such as lifespan, location, roles, and so on.</p>
+</li>
+</ul>
+</li>
+<li><p><code>Non-clustering</code>:</p>
+<p>The “Cocktail Party Algorithm”, allows you to find structure in a chaotic environment. (i.e. identifying individual voices and music from a mesh of sounds at a cocktail party).</p>
+</li>
+</ol>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-0-Introduction"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (0) Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Welcome"><span class="toc-number">1.1.</span> <span class="toc-text">Welcome</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-machine-learning"><span class="toc-number">1.2.</span> <span class="toc-text">What is machine learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Machine-Learning-definition"><span class="toc-number">1.2.1.</span> <span class="toc-text">Machine Learning definition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Machine-Learning-algorithms"><span class="toc-number">1.2.2.</span> <span class="toc-text">Machine Learning algorithms</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Supervised-Learning"><span class="toc-number">1.3.</span> <span class="toc-text">Supervised Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Categories-of-supervised-learning-problems"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">Categories of supervised learning problems</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unsupervised-Learning"><span class="toc-number">1.4.</span> <span class="toc-text">Unsupervised Learning</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&text=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&is_video=false&description=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AndrewNg-MachineLearning-0-Introduction&body=Check out this article: https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&title=AndrewNg-MachineLearning-0-Introduction"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/08/18/AndrewNg-MachineLearning-0-Introduction/&name=AndrewNg-MachineLearning-0-Introduction&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>

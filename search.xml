@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>AndrewNg-MachineLearning-0-Introduction</title>
+      <link href="/2019/08/18/AndrewNg-MachineLearning-0-Introduction/"/>
+      <url>/2019/08/18/AndrewNg-MachineLearning-0-Introduction/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Notes-of-Andrew-Ng’s-Machine-Learning-——-0-Introduction"><a href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-0-Introduction" class="headerlink" title="Notes of Andrew Ng’s Machine Learning —— (0) Introduction"></a>Notes of Andrew Ng’s Machine Learning —— (0) Introduction</h1><h2 id="Welcome"><a href="#Welcome" class="headerlink" title="Welcome"></a>Welcome</h2><p>Machine Learning </p><ul><li>Grew out of work in AI</li><li>New capability for computers</li></ul><p>Examples:</p><ul><li><p>Database mining<br>Large datasets from growth of automation / web.<br>  E.g. Web click data, medical records, biology, engineering</p></li><li><p>Applications can’t program by hand.<br>  E.g. Autonomous helicopter, handwriting recognition, most of Natural Language Progressing (NLP), Computer Vision.</p></li><li><p>Self-customizing programs<br>  E.g. Amazon, Netflix product recommendations</p></li><li><p>Understanding human learning (brain, real AI)</p></li></ul><h2 id="What-is-machine-learning"><a href="#What-is-machine-learning" class="headerlink" title="What is machine learning"></a>What is machine learning</h2><h3 id="Machine-Learning-definition"><a href="#Machine-Learning-definition" class="headerlink" title="Machine Learning definition"></a>Machine Learning definition</h3><ul><li><em>Arthur Samuel (1959)</em> : Machine Learning: Field of study that gives computers the ability to learn without being explicitly programmed.</li><li><em>Tom Mitchell (1998)</em>, <em>a more modern definition</em> : Well-posed Learning Problem: A computer program is said to learn from experience <code>E</code> with respect to some task <code>T</code> and some prformance measure <code>P</code>, if its performance on T, as measured by P, improves with experience E.</li></ul><p>Example:</p><ul><li><p>Playing checkers.</p><p><code>E</code> = the experience of playing many games of checkers<br><code>T</code> = the task of playing checkers.<br><code>P</code> = the probability that the program will win the next game.</p></li><li><p>Spam Filter</p><p><code>E</code> = Watching you label emails as spam or not spam<br><code>T</code> = Classifying emails as spam or not spam<br><code>P</code> = The number (or fraction) of emails correctly classified as spam / not spam.</p></li></ul><h3 id="Machine-Learning-algorithms"><a href="#Machine-Learning-algorithms" class="headerlink" title="Machine Learning algorithms"></a>Machine Learning algorithms</h3><ul><li>Supervised learning</li><li>Unsupervised learning</li></ul><p>Others: Reinforcement learning, recommender system</p><h2 id="Supervised-Learning"><a href="#Supervised-Learning" class="headerlink" title="Supervised Learning"></a>Supervised Learning</h2><p>In supervised learning, we are:</p><ul><li>given a data set</li><li>given “right answers” (already know what our correct output should look like)</li><li>having the idea that there is a relationship between the input and the output.</li></ul><h4 id="Categories-of-supervised-learning-problems"><a href="#Categories-of-supervised-learning-problems" class="headerlink" title="Categories of supervised learning problems"></a>Categories of supervised learning problems</h4><ol><li><p><code>Regression</code>: Predict continuous valued output</p><p>Trying to map input variables to some continuous function.</p><p><em>[To predict how much]</em></p><p>E.g.</p><ul><li>You have a large inventory of identical items. You want to predict how many of these items will sell over the next 3 months.</li><li>Given a picture of a person, we have to predict their age on the basis of the given picture</li></ul></li><li><p><code>Classification</code>: Discrete valued output (0/1 or 0/1/2/3…)</p><p>Trying to map input variables into discrete categories.</p><p><em>[To predict whether / which]</em></p><p>E.g.</p><ul><li>Given a patient with a tumor, we have to predict whether the tumor is malignant or benign.</li><li>You’d like software to examine individual customer accounts, and for each accout decide if it has been hacked/ compromised.</li></ul></li></ol><h2 id="Unsupervised-Learning"><a href="#Unsupervised-Learning" class="headerlink" title="Unsupervised Learning"></a>Unsupervised Learning</h2><p>In unsupervised learning we can:</p><ul><li>approach problems with little or no idea what our results should look like</li><li>derive structure from data where we don’t necessarily know the effect of the variables.</li><li>derive this structure by <strong>clustering the data</strong> based on relationships among the variables in the data.</li></ul><p>With unsupervised learning there is <strong>no feedback based on the prediction results</strong>.</p><p>E.g.</p><ol><li><p><code>Clustering</code>: </p><ul><li><p>Google news looks for tens of thousands of news stories and automatically cluster them together. So, the news stories that are all about the same topic get displayed together.</p></li><li><p>Take a collection of 1,000,000 different genes, and find a way to automatically group these genes into groups that are somehow similar or related by different variables, such as lifespan, location, roles, and so on.</p></li></ul></li><li><p><code>Non-clustering</code>:</p><p>The “Cocktail Party Algorithm”, allows you to find structure in a chaotic environment. (i.e. identifying individual voices and music from a mesh of sounds at a cocktail party).</p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> MachineLearning </category>
+          
+          <category> AndrewNg </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MachineLearning </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>GitHub加Hexo打造个人博客</title>
       <link href="/2019/08/15/GitHub%E5%8A%A0Hexo%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
       <url>/2019/08/15/GitHub%E5%8A%A0Hexo%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
