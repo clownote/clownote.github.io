@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Java 中的变量类型  局部变量  在方法或语句块中定义的变量被称为局部变量。变量声明和初始化都是在方法中，方法结束后，变量就会自动销毁。   局部变量声明在方法、构造方法或者语句块中； 局部变量在方法、构造方法、或者语句块被执行的时候创建，当它们执行完成后，变量将会被销毁； 访问修饰符不能用于局部变量； 局部变量只在声明它的方法、构造方法或者语句块中可见； 局部变量是在栈上分配的。 局部变量">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java-5-变量">
+<meta property="og:url" content="https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Java 中的变量类型  局部变量  在方法或语句块中定义的变量被称为局部变量。变量声明和初始化都是在方法中，方法结束后，变量就会自动销毁。   局部变量声明在方法、构造方法或者语句块中； 局部变量在方法、构造方法、或者语句块被执行的时候创建，当它们执行完成后，变量将会被销毁； 访问修饰符不能用于局部变量； 局部变量只在声明它的方法、构造方法或者语句块中可见； 局部变量是在栈上分配的。 局部变量">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-21T02:18:46.184Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java-5-变量">
+<meta name="twitter:description" content="Java 中的变量类型  局部变量  在方法或语句块中定义的变量被称为局部变量。变量声明和初始化都是在方法中，方法结束后，变量就会自动销毁。   局部变量声明在方法、构造方法或者语句块中； 局部变量在方法、构造方法、或者语句块被执行的时候创建，当它们执行完成后，变量将会被销毁； 访问修饰符不能用于局部变量； 局部变量只在声明它的方法、构造方法或者语句块中可见； 局部变量是在栈上分配的。 局部变量">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Java-5-变量</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/04/17/Java/Day6_Java_Modifier/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/04/15/Java/Day4_Java_Types/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&text=Java-5-变量"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&is_video=false&description=Java-5-变量"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java-5-变量&body=Check out this article: https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&name=Java-5-变量&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-中的变量类型"><span class="toc-number">1.</span> <span class="toc-text"> Java 中的变量类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#局部变量"><span class="toc-number">1.1.</span> <span class="toc-text"> 局部变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#成员变量实例变量"><span class="toc-number">1.2.</span> <span class="toc-text"> 成员变量(实例变量)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类变量"><span class="toc-number">1.3.</span> <span class="toc-text"> 类变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关于-类变量-的说明"><span class="toc-number">1.3.0.1.</span> <span class="toc-text"> 关于 类变量 的说明：</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Java-5-变量
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-16T08:37:53.000Z" itemprop="datePublished">2019-04-16</time>
+        
+        (Updated: <time datetime="2019-08-21T02:18:46.184Z" itemprop="dateModified">2019-08-21</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a> › <a class="category-link" href="/categories/Java/Beginning/">Beginning</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="java-中的变量类型"><a class="markdownIt-Anchor" href="#java-中的变量类型"></a> Java 中的变量类型</h1>
+<h2 id="局部变量"><a class="markdownIt-Anchor" href="#局部变量"></a> <strong>局部变量</strong></h2>
+<blockquote>
+<p>在<em>方法</em>或<em>语句块</em>中定义的变量被称为局部变量。变量声明和初始化都是在方法中，方法结束后，变量就会自动销毁。</p>
+</blockquote>
+<ul>
+<li>局部变量声明在方法、构造方法或者语句块中；</li>
+<li>局部变量在方法、构造方法、或者语句块被执行的时候创建，当它们执行完成后，变量将会被销毁；</li>
+<li>访问修饰符不能用于局部变量；</li>
+<li>局部变量只在声明它的方法、构造方法或者语句块中可见；</li>
+<li>局部变量是在栈上分配的。</li>
+<li>局部变量没有默认值，所以局部变量被声明后，必须经过初始化，才可以使用。</li>
+</ul>
+<h2 id="成员变量实例变量"><a class="markdownIt-Anchor" href="#成员变量实例变量"></a> <strong>成员变量(实例变量)</strong></h2>
+<blockquote>
+<p>成员变量是定义在类中，<em>方法体之外</em>的变量。这种变量在创建对象的时候实例化。成员变量可以被类中方法、构造方法和特定类的语句块访问。</p>
+</blockquote>
+<ul>
+<li>实例变量声明在一个类中，但在方法、构造方法和语句块之外；</li>
+<li>当一个对象被实例化之后，每个实例变量的值就跟着确定；</li>
+<li>实例变量在对象创建的时候创建，在对象被销毁的时候销毁；</li>
+<li>实例变量的值应该至少被一个方法、构造方法或者语句块引用，使得外部能够通过这些方式获取实例变量信息；</li>
+<li>实例变量可以声明在使用前或者使用后；</li>
+<li>访问修饰符可以修饰实例变量；</li>
+<li>实例变量对于类中的方法、构造方法或者语句块是可见的。一般情况下应该把实例变量设为私有。通过使用访问修饰符可以使实例变量对子类可见；</li>
+<li>实例变量具有默认值。数值型变量的默认值是<code>0</code>，布尔型变量的默认值是<code>false</code>，引用类型变量的默认值是<code>null</code>。变量的值可以在声明时指定，也可以在构造方法中指定；</li>
+<li>实例变量可以直接通过变量名访问。但在静态方法以及其他类中，就应该使用完全限定名：<code>ObejectReference.VariableName</code>。</li>
+</ul>
+<h2 id="类变量"><a class="markdownIt-Anchor" href="#类变量"></a> <strong>类变量</strong></h2>
+<blockquote>
+<p>类变量也声明在类中，方法体之外，但必须声明为 <code>static</code> 类型。</p>
+</blockquote>
+<ul>
+<li>类变量也称为静态变量，在类中以 <code>static</code> 关键字声明，但必须在方法之外。</li>
+<li>无论一个类创建了多少个对象，类只拥有类变量的一份拷贝。</li>
+<li>静态变量除了被声明为常量外很少使用。常量是指声明为 <code>public</code> / <code>private</code>, <code>final</code> 和 <code>static</code> 类型的变量。常量初始化后不可改变。</li>
+<li>静态变量储存在静态存储区。经常被声明为常量，很少单独使用 <code>static</code> 声明变量。</li>
+<li>静态变量在第一次被访问时创建，在程序结束时销毁。</li>
+<li>与实例变量具有相似的可见性。但为了对类的使用者可见，大多数静态变量声明为 <code>public</code> 类型。</li>
+<li>默认值和实例变量相似。数值型变量默认值是 <code>0</code>，布尔型默认值是 <code>false</code>，引用类型默认值是 <code>null</code>。变量的值可以在声明的时候指定，也可以在构造方法中指定。此外，静态变量还可以在静态语句块中初始化。</li>
+<li>静态变量可以通过：<code>ClassName.VariableName</code> 的方式访问。</li>
+<li>类变量被声明为 <code>public static final</code> 类型时，类变量名称一般建议使用大写字母。如果静态变量不是 <code>public</code> 和 <code>final</code> 类型，其命名方式与实例变量以及局部变量的命名方式一致。</li>
+</ul>
+<h4 id="关于-类变量-的说明"><a class="markdownIt-Anchor" href="#关于-类变量-的说明"></a> 关于 <strong>类变量</strong> 的说明：</h4>
+<blockquote>
+<p>The static keyword in Java is used for memory management mainly. We can apply java static keyword with variables, methods, blocks and nested class. The static keyword belongs to the class than an instance of the class. The static can be: Variable (also known as a class variable) Method (also known as a class method) Block.</p>
+</blockquote>
+<p>（部分翻译）</p>
+<blockquote>
+<p>Java 中的 <code>static</code> 关键字主要用于 <em>memory management</em>（谷歌翻译给出的翻译是“内存管理”, 但我对这个词的理解是：安排出一个内存空间来，供类的实例之间共享某个量）。我们可以将 java 的 <code>static</code> 关键字施用于变量、方法、语句块和嵌套类。<code>static</code> 定义的对象是属于整个类的, 而不是某个类的实例。</p>
+</blockquote>
+<p>普通的变量属于类的某一个特定的实例，但用 <code>static</code> 关键字修饰的变量将属于一个类。也就是说，我们通过类的某一个实例去修改一个一般的变量值，将只有这个实例中的值被修改，其他实例不受影响；而若是修改一个 <code>static</code> 关键字修饰的<strong>类变量</strong>，这个类的所有实例的这个值都会被修改。</p>
+<p>说起来比较麻烦，可以看一段示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Static</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Example foo = <span class="keyword">new</span> Example();</span><br><span class="line">		Example bar = <span class="keyword">new</span> Example();</span><br><span class="line"></span><br><span class="line">		foo.staticVar = foo.normalVar = <span class="string">"foobar"</span>;</span><br><span class="line"></span><br><span class="line">		System.out.println(foo.staticVar + <span class="string">"\t"</span> + foo.normalVar);</span><br><span class="line">		System.out.println(bar.staticVar + <span class="string">"\t"</span> + bar.normalVar);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> String staticVar = <span class="string">"Example"</span>;</span><br><span class="line">	String normalVar = <span class="string">"Example"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">foobar	foobar</span><br><span class="line">foobar	Example</span><br></pre></td></tr></table></figure>
+<p>可以看到，我们只改变了 <code>foo</code> 实例的值，但由 <code>static</code> 修饰的类变量 <code>staticVar</code> 的改变在 <code>bar</code> 中也出现了，而普通的成员变量则不然。</p>
+<p>利用这种特性，我们可以实现一种可以统计自己的实例个数的类，详见 <a href="src/CountingClass.java"><code>CountingClass.java</code></a></p>
+<hr>
+<p>相关代码：</p>
+<p><a href="src/Static.java"><code>Static.java</code></a><br>
+<a href="src/CountingClass.java"><code>CountingClass.java</code></a></p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-中的变量类型"><span class="toc-number">1.</span> <span class="toc-text"> Java 中的变量类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#局部变量"><span class="toc-number">1.1.</span> <span class="toc-text"> 局部变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#成员变量实例变量"><span class="toc-number">1.2.</span> <span class="toc-text"> 成员变量(实例变量)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类变量"><span class="toc-number">1.3.</span> <span class="toc-text"> 类变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关于-类变量-的说明"><span class="toc-number">1.3.0.1.</span> <span class="toc-text"> 关于 类变量 的说明：</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&text=Java-5-变量"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&is_video=false&description=Java-5-变量"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java-5-变量&body=Check out this article: https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&title=Java-5-变量"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/16/Java/Day5_Java_Variable/&name=Java-5-变量&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="正文.处理  unix2dos, dos2unix：Unix 与 DOS 正文转化 UNIX 系统的正文（纯文字）格式中只用换行符\n作为行结束符； DOS &amp;amp; Windows 系统的正文中是以回车符 \r 和换行符 \n 作为行结束符； 用 cat -A filename 可见二者区别。 将 DOS 格式的文件转换成 UNIX 格式的文件用 dos2unix file_name； 将">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-4.2-正文处理">
+<meta property="og:url" content="https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="正文.处理  unix2dos, dos2unix：Unix 与 DOS 正文转化 UNIX 系统的正文（纯文字）格式中只用换行符\n作为行结束符； DOS &amp;amp; Windows 系统的正文中是以回车符 \r 和换行符 \n 作为行结束符； 用 cat -A filename 可见二者区别。 将 DOS 格式的文件转换成 UNIX 格式的文件用 dos2unix file_name； 将">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-17T05:41:43.674Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-4.2-正文处理">
+<meta name="twitter:description" content="正文.处理  unix2dos, dos2unix：Unix 与 DOS 正文转化 UNIX 系统的正文（纯文字）格式中只用换行符\n作为行结束符； DOS &amp;amp; Windows 系统的正文中是以回车符 \r 和换行符 \n 作为行结束符； 用 cat -A filename 可见二者区别。 将 DOS 格式的文件转换成 UNIX 格式的文件用 dos2unix file_name； 将">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>linux-4.2-正文处理</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/01/04/Linux/linux-5-ShellShortcuts/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/01/02/Linux/linux-4-1-TextOperate/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&text=linux-4.2-正文处理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&is_video=false&description=linux-4.2-正文处理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-4.2-正文处理&body=Check out this article: https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&name=linux-4.2-正文处理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文处理"><span class="toc-number">1.</span> <span class="toc-text"> 正文.处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#unix2dos-dos2unixunix-与-dos-正文转化"><span class="toc-number">1.1.</span> <span class="toc-text"> unix2dos, dos2unix：Unix 与 DOS 正文转化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#diff-sdiff比较两个文件的差别"><span class="toc-number">1.2.</span> <span class="toc-text"> diff, sdiff：比较两个文件的差别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#diff-file_1-file_2只输出两者不同点"><span class="toc-number">1.2.1.</span> <span class="toc-text"> diff file_1 file_2：只输出两者不同点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sdiff-file_1-file_2side-by-side-输出两者所有行标示不同"><span class="toc-number">1.2.2.</span> <span class="toc-text"> sdiff file_1 file_2：side-by-side 输出两者所有行，标示不同</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aspell-look检查单词的拼写"><span class="toc-number">1.3.</span> <span class="toc-text"> aspell, look：检查单词的拼写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#aspell"><span class="toc-number">1.3.1.</span> <span class="toc-text"> aspell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#expand-fmt-pr-重新格式化正文"><span class="toc-number">1.4.</span> <span class="toc-text"> expand, fmt, pr: 重新格式化正文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#expand将tab化为空格"><span class="toc-number">1.4.1.</span> <span class="toc-text"> expand：将Tab化为空格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fmt-格式化文本"><span class="toc-number">1.4.2.</span> <span class="toc-text"> fmt: 格式化文本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pr按照打印机的格式重新编排纯文本文件中的内容"><span class="toc-number">1.4.3.</span> <span class="toc-text"> pr：按照打印机的格式重新编排纯文本文件中的内容</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        linux-4.2-正文处理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-01-03T04:55:26.000Z" itemprop="datePublished">2017-01-03</time>
+        
+        (Updated: <time datetime="2019-08-17T05:41:43.674Z" itemprop="dateModified">2019-08-17</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="正文处理"><a class="markdownIt-Anchor" href="#正文处理"></a> 正文.处理</h1>
+<h2 id="unix2dos-dos2unixunix-与-dos-正文转化"><a class="markdownIt-Anchor" href="#unix2dos-dos2unixunix-与-dos-正文转化"></a> <code>unix2dos</code>, <code>dos2unix</code>：Unix 与 DOS 正文转化</h2>
+<p>UNIX 系统的正文（纯文字）格式中只用换行符<code>\n</code>作为行结束符；</p>
+<p>DOS &amp; Windows 系统的正文中是以回车符 <code>\r</code> 和换行符 <code>\n</code> 作为行结束符；</p>
+<p>用 <code>cat -A filename</code> 可见二者区别。</p>
+<p>将 DOS 格式的文件转换成 UNIX 格式的文件用 <code>dos2unix file_name</code>；</p>
+<p>将 UNIX 格式的文件转换成 DOS 格式的文件用 <code>unix2dos file_name</code>；</p>
+<h2 id="diff-sdiff比较两个文件的差别"><a class="markdownIt-Anchor" href="#diff-sdiff比较两个文件的差别"></a> <code>diff</code>, <code>sdiff</code>：比较两个文件的差别</h2>
+<h3 id="diff-file_1-file_2只输出两者不同点"><a class="markdownIt-Anchor" href="#diff-file_1-file_2只输出两者不同点"></a> <code>diff file_1 file_2</code>：只输出两者不同点</h3>
+<p>显示结果中：</p>
+<ul>
+<li>字母c为 比较，比较某行二者不同点；</li>
+<li>字母d是 不同，显示一文无一文有的；</li>
+<li>“&lt;”表示第1个文件中的数据行。</li>
+<li>“&gt;”表示第2个文件中的数据行。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ diff letters.upper letters</span><br><span class="line">2c2        # 第1个文件的第2行与第2个文件的第2行比较。</span><br><span class="line">&lt; B        # 第1个文件的第2行为B。</span><br><span class="line">---</span><br><span class="line">&gt; b        # 第2个文件的第2行为b。</span><br><span class="line">6c6        # 第1个文件的第6行与第2个文件的第6行比较。</span><br><span class="line">&lt; F        # 第1个文件的第6行为F。</span><br><span class="line">---</span><br><span class="line">&gt; f        # 第2个文件的第6行为f。</span><br><span class="line">8d7        # 第1个文件一共有8行，而第2个文件一共有7行。</span><br><span class="line">&lt; H        # 第1个文件的第8行（也是最后一行）为H。</span><br></pre></td></tr></table></figure>
+<h3 id="sdiff-file_1-file_2side-by-side-输出两者所有行标示不同"><a class="markdownIt-Anchor" href="#sdiff-file_1-file_2side-by-side-输出两者所有行标示不同"></a> <code>sdiff file_1 file_2</code>：side-by-side 输出两者所有行，标示不同</h3>
+<p>显示结果中：</p>
+<ul>
+<li>
+<p>“|”左侧表示第1个文件中的数据行。</p>
+</li>
+<li>
+<p>“|”右侧表示第2个文件中的数据行。</p>
+</li>
+<li>
+<p>“&lt;”表示第1个文件中的数据行（当第1个文件中有数据，但第2个文件中没有时）。</p>
+</li>
+<li>
+<p>“&gt;”表示第2个文件中的数据行（当第2个文件中有数据，但第1个文件中没有时）。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sdiff letters.upper letters</span><br><span class="line">A                             A</span><br><span class="line">B                            | b            # 第1个文件中为B，第2个文件中为b。</span><br><span class="line">C                             C </span><br><span class="line">D                             D</span><br><span class="line">E                             E</span><br><span class="line">F                            | f            # 第1个文件中为F，第2个文件中为f。</span><br><span class="line">G                             G</span><br><span class="line">H                             &lt;            # 第1个文件中为H，第2个文件中的这一行为空。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>sdiff</code> 命令的显示结果更容易阅读。<br>
+但是如果比较的两个文件很大，而其中的差别又很少，使用 <code>diff</code> 命令可能更好些。</p>
+</blockquote>
+<h2 id="aspell-look检查单词的拼写"><a class="markdownIt-Anchor" href="#aspell-look检查单词的拼写"></a> <code>aspell</code>, <code>look</code>：检查单词的拼写</h2>
+<p>aspell，look 的字典是 <code>/usr/share/dict/words</code></p>
+<h3 id="aspell"><a class="markdownIt-Anchor" href="#aspell"></a> <code>aspell</code></h3>
+<p><code>aspell</code> 是Linux系统上的一个交互式的英语拼写检查程序，该程序通过一个简单的菜单驱动的界面来提供改正英文单词的建议。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ aspell check file_name</span><br><span class="line">        Enter后，</span><br><span class="line">        光标停留在第1个有拼写错误的单词上，</span><br><span class="line">        并在终端窗口下部给出一些可供选择的正确单词；</span><br><span class="line">        输入某个单词前面的编号来选择这个单词，</span><br><span class="line">        系统就会立即修改光标所在处的单词；</span><br><span class="line">        之后光标将移到下一个有拼写错误的单词。</span><br><span class="line">$ aspell list &lt; file_name</span><br><span class="line">            以非交互的方式在终端窗口中列出某个文件中的全部有拼法错误的英语单词</span><br></pre></td></tr></table></figure>
+<p>• <code>look &lt;sth&gt;</code>：列出所有以sth开头的英语单词以供选择。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ look progra</span><br><span class="line">prograde</span><br><span class="line">program</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<h2 id="expand-fmt-pr-重新格式化正文"><a class="markdownIt-Anchor" href="#expand-fmt-pr-重新格式化正文"></a> <code>expand</code>, <code>fmt</code>, <code>pr</code>: 重新格式化正文</h2>
+<h3 id="expand将tab化为空格"><a class="markdownIt-Anchor" href="#expand将tab化为空格"></a> <code>expand</code>：将Tab化为空格</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ expand [-t 1] data.tab &gt; data.spaces</span><br><span class="line">        -t n：表示将制表键转换成n个空格符。</span><br></pre></td></tr></table></figure>
+<h3 id="fmt-格式化文本"><a class="markdownIt-Anchor" href="#fmt-格式化文本"></a> <code>fmt</code>: 格式化文本</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ fmt -u -w48 news &gt; news.fmt</span><br><span class="line">        fmt将它的输入格式化成一些段落，</span><br><span class="line">        其中段落宽度是使用-wn选项来定义的（w为width，n为字符的数目，系统默认宽度为75个字符）。</span><br><span class="line">        利用-u选项将文件中的空格统一化（每个单词之间使用一个空格分隔，每个句子之间使用两个空格分隔）。</span><br><span class="line">            </span><br><span class="line">        fmt命令将它的输入中的空行当作段落分隔符看待。</span><br></pre></td></tr></table></figure>
+<h3 id="pr按照打印机的格式重新编排纯文本文件中的内容"><a class="markdownIt-Anchor" href="#pr按照打印机的格式重新编排纯文本文件中的内容"></a> <code>pr</code>：按照打印机的格式重新编排纯文本文件中的内容</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ pr file</span><br><span class="line">        pr命令的默认输出为每页66行，其中56行为正文内容，并包括表头。</span><br><span class="line">        若没有指定列表头（Header），系统默认使用文件名作为列表头，并在每页的页首部分显示。</span><br><span class="line">        另外，每页的页首部分还有页码和时间(inode.M_time)。</span><br><span class="line">$ pr -h&quot;English Dictionary on Linux&quot; -l18 -5 /usr/share/dict/words | more</span><br><span class="line">        -h选项为列表头（Header），</span><br><span class="line">        在h后面使用双引号括起来的就是要显示的表头信息，</span><br><span class="line">        -l选项用来定义每页的行数，-l18表示每页都有18行，</span><br><span class="line">                （-l选项后的数目不能太小，如果太小pr命令会忽略这一选项）</span><br><span class="line">        -5表示每页打印5列。</span><br><span class="line">        </span><br><span class="line">---------------------------</span><br><span class="line">        </span><br><span class="line"># Output：</span><br><span class="line"></span><br><span class="line">2006-10-08 02:00           English Dictionary on Linux            Page 1</span><br><span class="line">&amp;c             &apos;prentice      &apos;shun          &apos;tis          &apos;un</span><br><span class="line">&apos;d             &apos;re            &apos;slid          &apos;twas         &apos;ve</span><br><span class="line">......</span><br><span class="line">2006-10-08 02:00           English Dictionary on Linux            Page 2</span><br><span class="line">-acal          -acy          -age          -ana           -ar</span><br><span class="line">-acea          -ad           -agogue       -ance          -arch</span><br><span class="line">--More--</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文处理"><span class="toc-number">1.</span> <span class="toc-text"> 正文.处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#unix2dos-dos2unixunix-与-dos-正文转化"><span class="toc-number">1.1.</span> <span class="toc-text"> unix2dos, dos2unix：Unix 与 DOS 正文转化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#diff-sdiff比较两个文件的差别"><span class="toc-number">1.2.</span> <span class="toc-text"> diff, sdiff：比较两个文件的差别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#diff-file_1-file_2只输出两者不同点"><span class="toc-number">1.2.1.</span> <span class="toc-text"> diff file_1 file_2：只输出两者不同点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sdiff-file_1-file_2side-by-side-输出两者所有行标示不同"><span class="toc-number">1.2.2.</span> <span class="toc-text"> sdiff file_1 file_2：side-by-side 输出两者所有行，标示不同</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aspell-look检查单词的拼写"><span class="toc-number">1.3.</span> <span class="toc-text"> aspell, look：检查单词的拼写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#aspell"><span class="toc-number">1.3.1.</span> <span class="toc-text"> aspell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#expand-fmt-pr-重新格式化正文"><span class="toc-number">1.4.</span> <span class="toc-text"> expand, fmt, pr: 重新格式化正文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#expand将tab化为空格"><span class="toc-number">1.4.1.</span> <span class="toc-text"> expand：将Tab化为空格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fmt-格式化文本"><span class="toc-number">1.4.2.</span> <span class="toc-text"> fmt: 格式化文本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pr按照打印机的格式重新编排纯文本文件中的内容"><span class="toc-number">1.4.3.</span> <span class="toc-text"> pr：按照打印机的格式重新编排纯文本文件中的内容</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&text=linux-4.2-正文处理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&is_video=false&description=linux-4.2-正文处理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-4.2-正文处理&body=Check out this article: https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&title=linux-4.2-正文处理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/03/Linux/linux-4-2-TextHandle/&name=linux-4.2-正文处理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
