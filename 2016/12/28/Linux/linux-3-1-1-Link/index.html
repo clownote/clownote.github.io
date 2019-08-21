@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="连接(link) 符号连接（软连接）：指向另一个文件的文件  符号连接也只能包含一种类型的数据； 一个符号连接包含了它所指向的文件的路径； 因为符号连接使用的是指向其他文件的路径名， 所以符号连接可以指向其他文件系统上的文件。 º。查看符号连接：使用 ls -l： 文件类型码如果是“l”表示是一个连接。另外在显示结果的最后一列中， 在-&amp;gt;左边的是符号连接名， 在-&amp;gt;右边的是所指向对象的">
+    <meta name="description" content="连接(link)  符号连接（软连接）：指向另一个文件的文件  符号连接也只能包含一种类型的数据； 一个符号连接包含了它所指向的文件的路径； 因为符号连接使用的是指向其他文件的路径名， 所以符号连接可以指向其他文件系统上的文件。 º。查看符号连接：使用 ls -l：     文件类型码如果是“l”表示是一个连接。  另外在显示结果的最后一列中， 在-&amp;gt;左边的是符号连接名， 在-&amp;gt;右边">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-3.1.1-连接(link)">
 <meta property="og:url" content="https://clownote.github.io/2016/12/28/Linux/linux-3-1-1-Link/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="连接(link) 符号连接（软连接）：指向另一个文件的文件  符号连接也只能包含一种类型的数据； 一个符号连接包含了它所指向的文件的路径； 因为符号连接使用的是指向其他文件的路径名， 所以符号连接可以指向其他文件系统上的文件。 º。查看符号连接：使用 ls -l： 文件类型码如果是“l”表示是一个连接。另外在显示结果的最后一列中， 在-&amp;gt;左边的是符号连接名， 在-&amp;gt;右边的是所指向对象的">
+<meta property="og:description" content="连接(link)  符号连接（软连接）：指向另一个文件的文件  符号连接也只能包含一种类型的数据； 一个符号连接包含了它所指向的文件的路径； 因为符号连接使用的是指向其他文件的路径名， 所以符号连接可以指向其他文件系统上的文件。 º。查看符号连接：使用 ls -l：     文件类型码如果是“l”表示是一个连接。  另外在显示结果的最后一列中， 在-&amp;gt;左边的是符号连接名， 在-&amp;gt;右边">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-17T05:28:09.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-3.1.1-连接(link)">
-<meta name="twitter:description" content="连接(link) 符号连接（软连接）：指向另一个文件的文件  符号连接也只能包含一种类型的数据； 一个符号连接包含了它所指向的文件的路径； 因为符号连接使用的是指向其他文件的路径名， 所以符号连接可以指向其他文件系统上的文件。 º。查看符号连接：使用 ls -l： 文件类型码如果是“l”表示是一个连接。另外在显示结果的最后一列中， 在-&amp;gt;左边的是符号连接名， 在-&amp;gt;右边的是所指向对象的">
+<meta name="twitter:description" content="连接(link)  符号连接（软连接）：指向另一个文件的文件  符号连接也只能包含一种类型的数据； 一个符号连接包含了它所指向的文件的路径； 因为符号连接使用的是指向其他文件的路径名， 所以符号连接可以指向其他文件系统上的文件。 º。查看符号连接：使用 ls -l：     文件类型码如果是“l”表示是一个连接。  另外在显示结果的最后一列中， 在-&amp;gt;左边的是符号连接名， 在-&amp;gt;右边">
     
     
         
@@ -105,7 +105,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#连接-link"><span class="toc-number">1.</span> <span class="toc-text">连接(link)</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#连接link"><span class="toc-number">1.</span> <span class="toc-text"> 连接(link)</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -151,7 +151,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="连接-link"><a href="#连接-link" class="headerlink" title="连接(link)"></a>连接(link)</h1><ol>
+    <h1 id="连接link"><a class="markdownIt-Anchor" href="#连接link"></a> 连接(link)</h1>
+<ol>
 <li><strong>符号连接（软连接）</strong>：指向另一个文件的文件</li>
 </ol>
 <p>符号连接也只能包含一种类型的数据；</p>
@@ -159,13 +160,14 @@
 <p>因为符号连接使用的是指向其他文件的路径名，</p>
 <p>所以符号连接可以指向其他文件系统上的文件。</p>
 <p>º。查看符号连接：使用 <code>ls -l</code>：</p>
-<pre><code>文件类型码如果是“l”表示是一个连接。</code></pre><p>另外在显示结果的最后一列中，</p>
+<pre><code>    文件类型码如果是“l”表示是一个连接。
+</code></pre>
+<p>另外在显示结果的最后一列中，</p>
 <p>在-&gt;左边的是符号连接名，</p>
 <p>在-&gt;右边的是所指向对象的完整路径，</p>
-<p>显示结果中的大小为这个完整路径的字符个数。  </p>
-<p>º。创建软连接：  </p>
+<p>显示结果中的大小为这个完整路径的字符个数。</p>
+<p>º。创建软连接：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ln  -s  abs_path/文件名  abs_path/[连接名]</span><br><span class="line">    [⚠️]可以对目录建立软连接</span><br><span class="line">    文件名：连接指向的文件</span><br><span class="line">    连接名：新建的link file的名字</span><br><span class="line">            缺省为与指向文件同名</span><br><span class="line">    [⚠️]注意两文件的path都要写绝对路径</span><br><span class="line">            若使用相对路径会出现软连接断开的问题：</span><br><span class="line">                使用连接时会报错：</span><br><span class="line">                    Too many levels of symbolic links.</span><br><span class="line">                可对link file使用file命令发现错误：</span><br><span class="line">                    $ file link_file</span><br><span class="line">                    abs_path/link_file:broken symbolic links to &apos;pointing file&apos;</span><br></pre></td></tr></table></figure>
-
 <p>º。软连接的使用：</p>
 <p>对 link_file rwx == 对 pointing_file rwx</p>
 <p>º。软连接的工作原理</p>
@@ -177,19 +179,20 @@
 <p>（4）通过i节点中的指针查找到_pointing file_对应的数据块。</p>
 <p>（5）对_pointing file_的数据块中的数据进行操作。</p>
 <ol start="2">
-<li><strong>硬连接：</strong>把文件名对应到inode</li>
+<li>**硬连接：**把文件名对应到inode</li>
 </ol>
 <p>一个硬连接（Hard Link）是一个文件名与一个i节点之间的对应关系。</p>
 <p>添加一个硬连接是在所对应的文件上添加一个路径名。</p>
 <p>每一个文件都至少使用一个硬连接，</p>
 <p>在一个目录中的每一个记录都构成了一个硬连接。</p>
-<p>可以将每一个文件名都看成为对应于一个i节点的硬连接。  </p>
-<p>为文件添加额外的hard link可以避免一些重要的信息被误删，因为当存储信息的文件被删除后，还可以通过硬连接访问对应的i节点并找到存储信息的数据块。  </p>
+<p>可以将每一个文件名都看成为对应于一个i节点的硬连接。</p>
+<p>为文件添加额外的hard link可以避免一些重要的信息被误删，因为当存储信息的文件被删除后，还可以通过硬连接访问对应的i节点并找到存储信息的数据块。</p>
 <p>若将名为foo和bar的两个文件对应到一个i节点上：</p>
 <p>foo、bar使用相同的i节点记录。</p>
-<pre><code>将文件foo误删，还可以通过文件bar把信息找回来。</code></pre><p>º。创建hard link</p>
+<pre><code>    将文件foo误删，还可以通过文件bar把信息找回来。
+</code></pre>
+<p>º。创建hard link</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln 文件名 [连接名]</span><br><span class="line">    [⚠️]只能对文件建立硬连接，而不能对一个目录建立硬连接。</span><br></pre></td></tr></table></figure>
-
 
   </div>
 </article>
@@ -227,7 +230,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#连接-link"><span class="toc-number">1.</span> <span class="toc-text">连接(link)</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#连接link"><span class="toc-number">1.</span> <span class="toc-text"> 连接(link)</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -284,6 +287,7 @@
     <!-- styles -->
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
     <!-- jquery -->
 <script src="/lib/jquery/jquery.min.js"></script>

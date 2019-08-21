@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="群组（Group） Linux群组的特性：  Linux系统中，每一个用户都一定隶属于至少一个群组，而每一个群组都有一个group标识符（号码），即gid。  所有的群组和对应的gids都存放在_/etc/group_文件中。  Linux系统在创建用户时为每一个用户创建一个同名的群组并且把这个用户加入到该群组中，也就是说每个用户至少会加入一个与他同名的群组中，并且也可以加入到其他的群组中。加入到">
+    <meta name="description" content="群组（Group）   Linux群组的特性：   Linux系统中，每一个用户都一定隶属于至少一个群组，而每一个群组都有一个group标识符（号码），即gid。   所有的群组和对应的gids都存放在_/etc/group_文件中。   Linux系统在创建用户时为每一个用户创建一个同名的群组并且把这个用户加入到该群组中，也就是说每个用户至少会加入一个与他同名的群组中，并且也可以加入到其他的群">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-2.2-群组">
 <meta property="og:url" content="https://clownote.github.io/2016/12/23/Linux/linux-2-2-Group/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="群组（Group） Linux群组的特性：  Linux系统中，每一个用户都一定隶属于至少一个群组，而每一个群组都有一个group标识符（号码），即gid。  所有的群组和对应的gids都存放在_/etc/group_文件中。  Linux系统在创建用户时为每一个用户创建一个同名的群组并且把这个用户加入到该群组中，也就是说每个用户至少会加入一个与他同名的群组中，并且也可以加入到其他的群组中。加入到">
+<meta property="og:description" content="群组（Group）   Linux群组的特性：   Linux系统中，每一个用户都一定隶属于至少一个群组，而每一个群组都有一个group标识符（号码），即gid。   所有的群组和对应的gids都存放在_/etc/group_文件中。   Linux系统在创建用户时为每一个用户创建一个同名的群组并且把这个用户加入到该群组中，也就是说每个用户至少会加入一个与他同名的群组中，并且也可以加入到其他的群">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-17T05:28:09.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-2.2-群组">
-<meta name="twitter:description" content="群组（Group） Linux群组的特性：  Linux系统中，每一个用户都一定隶属于至少一个群组，而每一个群组都有一个group标识符（号码），即gid。  所有的群组和对应的gids都存放在_/etc/group_文件中。  Linux系统在创建用户时为每一个用户创建一个同名的群组并且把这个用户加入到该群组中，也就是说每个用户至少会加入一个与他同名的群组中，并且也可以加入到其他的群组中。加入到">
+<meta name="twitter:description" content="群组（Group）   Linux群组的特性：   Linux系统中，每一个用户都一定隶属于至少一个群组，而每一个群组都有一个group标识符（号码），即gid。   所有的群组和对应的gids都存放在_/etc/group_文件中。   Linux系统在创建用户时为每一个用户创建一个同名的群组并且把这个用户加入到该群组中，也就是说每个用户至少会加入一个与他同名的群组中，并且也可以加入到其他的群">
     
     
         
@@ -105,7 +105,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#群组（Group）"><span class="toc-number">1.</span> <span class="toc-text">群组（Group）</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#群组group"><span class="toc-number">1.</span> <span class="toc-text"> 群组（Group）</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -151,30 +151,37 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="群组（Group）"><a href="#群组（Group）" class="headerlink" title="群组（Group）"></a>群组（Group）</h1><ul>
-<li><p>Linux群组的<strong>特性</strong>：</p>
+    <h1 id="群组group"><a class="markdownIt-Anchor" href="#群组group"></a> 群组（Group）</h1>
+<ul>
+<li>
+<p>Linux群组的<strong>特性</strong>：</p>
 </li>
-<li><p>Linux系统中，每一个<strong>用户</strong>都一定<strong>隶属于</strong>至少一个<strong>群组</strong>，而每一个群组都有一个group标识符（号码），即gid。</p>
+<li>
+<p>Linux系统中，每一个<strong>用户</strong>都一定<strong>隶属于</strong>至少一个<strong>群组</strong>，而每一个群组都有一个group标识符（号码），即gid。</p>
 </li>
-<li><p>所有的群组和对应的gids都存放在_<u>/etc/group</u>_文件中。</p>
+<li>
+<p>所有的群组和对应的gids都存放在_<u>/etc/group</u>_文件中。</p>
 </li>
-<li><p>Linux系统在<strong>创建用户时</strong>为每一个用户<strong>创建</strong>一个<strong>同名的群组</strong>并且把这个用户加入到该群组中，也就是说每个用户至少会加入一个与他同名的群组中，并且也可以加入到其他的群组中。加入到其他群组的目的是为了获取适当的权限来访问（存取）特定的资源。</p>
+<li>
+<p>Linux系统在<strong>创建用户时</strong>为每一个用户<strong>创建</strong>一个<strong>同名的群组</strong>并且把这个用户加入到该群组中，也就是说每个用户至少会加入一个与他同名的群组中，并且也可以加入到其他的群组中。加入到其他群组的目的是为了获取适当的权限来访问（存取）特定的资源。</p>
 </li>
-<li><p>如果有一个文件属于某个群组，那么这个群组中所有的用户都可以存取这个文件。</p>
+<li>
+<p>如果有一个文件属于某个群组，那么这个群组中所有的用户都可以存取这个文件。</p>
 </li>
-<li><p><span style="color: #fd0404;"><span style="color: rgb(253, 4, 4);"><strong>group</strong></span></span>文件</p>
+<li>
+<p><span style="color: #fd0404;"><span style="color: rgb(253, 4, 4);"><strong>group</strong></span></span>文件</p>
 </li>
 </ul>
 <p><strong><em>/etc/group</em></strong> 保存着群组信息。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/etc/group的内容：</span><br><span class="line"></span><br><span class="line"> e.g.| foobar **:   **x   **: **503 **: **foo**,**bar</span><br><span class="line"></span><br><span class="line">means| 群组名  **: **密码否 **: **gid **: **群组成员</span><br></pre></td></tr></table></figure>
-
-<pre><code># 第二字段为x表示这个群组在登录Linux时必须使用密码。</code></pre><ul>
+<pre><code>    # 第二字段为x表示这个群组在登录Linux时必须使用密码。
+</code></pre>
+<ul>
 <li><span style="color: rgb(253, 4, 4);"><strong>gshadow</strong></span>文件</li>
 </ul>
-<p><strong>_/etc/gshadow _</strong>保存着群组信息。</p>
+<p>**_/etc/gshadow _**保存着群组信息。</p>
 <p>[⚠️]普通用户无权访问_<u>/etc/gshadow</u>_</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># more /etc/gshadow</span><br><span class="line"></span><br><span class="line">root:::root            # 在gshadow中，每个群组占一行记录</span><br><span class="line"></span><br><span class="line">bin:::root,bin,daemon ......</span><br><span class="line"></span><br><span class="line">foo:!::</span><br><span class="line"></span><br><span class="line">bar:!::</span><br><span class="line"></span><br><span class="line">群组名:加密后的密码::</span><br></pre></td></tr></table></figure>
-
 
   </div>
 </article>
@@ -212,7 +219,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#群组（Group）"><span class="toc-number">1.</span> <span class="toc-text">群组（Group）</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#群组group"><span class="toc-number">1.</span> <span class="toc-text"> 群组（Group）</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -269,6 +276,7 @@
     <!-- styles -->
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
     <!-- jquery -->
 <script src="/lib/jquery/jquery.min.js"></script>

@@ -1569,8 +1569,8 @@ code {
   padding: 0 5px;
   border: 1px dotted #666;
   font-family: "Menlo", "Meslo LG", monospace;
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
 }
 .highlight {
   overflow-x: auto;
@@ -1634,4 +1634,7 @@ code {
 }
 .highlight .line {
   height: 22px;
+}
+.katex * {
+  font-weight: bold;
 }

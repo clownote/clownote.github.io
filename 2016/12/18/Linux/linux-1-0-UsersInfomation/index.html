@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="用户信息 $ whoami输出当前用户名 $ users列出当前登录的所有用户名 $ who am i显示用户名，登录终端，当前时间，IP $ who比“who am i”多出 其他用户的信息 $ w信息更多的“who”：1234567[Me@Example ~]$ w 10:59:09 up 4 min,  1 user,  load average:  0.46 , 0.35 ,  0.15">
+    <meta name="description" content="用户信息  $ whoami 输出当前用户名 $ users 列出当前登录的所有用户名 $ who am i 显示用户名，登录终端，当前时间，IP $ who 比“who am i”多出 其他用户的信息 $ w 信息更多的“who”：  1234567[Me@Example ~]$ w 10:59:09 up 4 min,  1 user,  load average:  0.46 , 0.35">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-1.0-用户信息">
 <meta property="og:url" content="https://clownote.github.io/2016/12/18/Linux/linux-1-0-UsersInfomation/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="用户信息 $ whoami输出当前用户名 $ users列出当前登录的所有用户名 $ who am i显示用户名，登录终端，当前时间，IP $ who比“who am i”多出 其他用户的信息 $ w信息更多的“who”：1234567[Me@Example ~]$ w 10:59:09 up 4 min,  1 user,  load average:  0.46 , 0.35 ,  0.15">
+<meta property="og:description" content="用户信息  $ whoami 输出当前用户名 $ users 列出当前登录的所有用户名 $ who am i 显示用户名，登录终端，当前时间，IP $ who 比“who am i”多出 其他用户的信息 $ w 信息更多的“who”：  1234567[Me@Example ~]$ w 10:59:09 up 4 min,  1 user,  load average:  0.46 , 0.35">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-17T05:28:09.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-1.0-用户信息">
-<meta name="twitter:description" content="用户信息 $ whoami输出当前用户名 $ users列出当前登录的所有用户名 $ who am i显示用户名，登录终端，当前时间，IP $ who比“who am i”多出 其他用户的信息 $ w信息更多的“who”：1234567[Me@Example ~]$ w 10:59:09 up 4 min,  1 user,  load average:  0.46 , 0.35 ,  0.15">
+<meta name="twitter:description" content="用户信息  $ whoami 输出当前用户名 $ users 列出当前登录的所有用户名 $ who am i 显示用户名，登录终端，当前时间，IP $ who 比“who am i”多出 其他用户的信息 $ w 信息更多的“who”：  1234567[Me@Example ~]$ w 10:59:09 up 4 min,  1 user,  load average:  0.46 , 0.35">
     
     
         
@@ -105,7 +105,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户信息"><span class="toc-number">1.</span> <span class="toc-text">用户信息</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户信息"><span class="toc-number">1.</span> <span class="toc-text"> 用户信息</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -151,15 +151,20 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="用户信息"><a href="#用户信息" class="headerlink" title="用户信息"></a>用户信息</h1><ul>
-<li><code>$ whoami</code><br>输出当前用户名</li>
-<li><code>$ users</code><br>列出当前登录的所有用户名</li>
-<li><code>$ who am i</code><br>显示用户名，登录终端，当前时间，IP</li>
-<li><code>$ who</code><br>比“who am i”多出 其他用户的信息</li>
-<li><code>$ w</code><br>信息更多的“who”：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Me@Example ~]$ w</span><br><span class="line"> 10:59:09 up 4 min,  1 user,  load average:  0.46 , 0.35 ,  0.15</span><br><span class="line"> 当前时间 up 启动时长, 登录用户数, 平均提交任务数: 1min内, 10min内, 15min内</span><br><span class="line">USER     TTY      FROM              LOGIN@    IDLE       JCPU       	PCPU     	WHAT</span><br><span class="line">用户名    登录终端   登录地            登录时间   空闲时长    一共使用CPU时长    当前程序用CPU时长    当前任务CPU时长</span><br><span class="line">                                                        </span><br><span class="line">Me        pts/0    MyComputer       10:58     0.00s      0.06s      0.02s     w</span><br></pre></td></tr></table></figure>
-
-</li>
+    <h1 id="用户信息"><a class="markdownIt-Anchor" href="#用户信息"></a> 用户信息</h1>
+<ul>
+<li><code>$ whoami</code><br>
+输出当前用户名</li>
+<li><code>$ users</code><br>
+列出当前登录的所有用户名</li>
+<li><code>$ who am i</code><br>
+显示用户名，登录终端，当前时间，IP</li>
+<li><code>$ who</code><br>
+比“who am i”多出 其他用户的信息</li>
+<li><code>$ w</code><br>
+信息更多的“who”：</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Me@Example ~]$ w</span><br><span class="line"> 10:59:09 up 4 min,  1 user,  load average:  0.46 , 0.35 ,  0.15</span><br><span class="line"> 当前时间 up 启动时长, 登录用户数, 平均提交任务数: 1min内, 10min内, 15min内</span><br><span class="line">USER     TTY      FROM              LOGIN@    IDLE       JCPU       	PCPU     	WHAT</span><br><span class="line">用户名    登录终端   登录地            登录时间   空闲时长    一共使用CPU时长    当前程序用CPU时长    当前任务CPU时长</span><br><span class="line">                                                        </span><br><span class="line">Me        pts/0    MyComputer       10:58     0.00s      0.06s      0.02s     w</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -197,7 +202,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户信息"><span class="toc-number">1.</span> <span class="toc-text">用户信息</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户信息"><span class="toc-number">1.</span> <span class="toc-text"> 用户信息</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -254,6 +259,7 @@
     <!-- styles -->
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
     <!-- jquery -->
 <script src="/lib/jquery/jquery.min.js"></script>
