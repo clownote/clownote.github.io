@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="awk  awk命令的通用语法格式 12345awk &amp;apos;&amp;#123;commands&amp;#125;&amp;apos;    commands为一个或多个命令    常用选项：        -f，表明awk命令将从该标志之后的文件中读取指令而不是从命令行读取；        -Fc，这个标志表明字段之间的分隔符是c而不是默认的空白字符（如制表键、一个或多个空格符）。 常用点：  print：将">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-9.2-awk">
+<meta property="og:url" content="https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="awk  awk命令的通用语法格式 12345awk &amp;apos;&amp;#123;commands&amp;#125;&amp;apos;    commands为一个或多个命令    常用选项：        -f，表明awk命令将从该标志之后的文件中读取指令而不是从命令行读取；        -Fc，这个标志表明字段之间的分隔符是c而不是默认的空白字符（如制表键、一个或多个空格符）。 常用点：  print：将">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b0tm7hpgj30go04qjrv.jpg">
+<meta property="og:updated_time" content="2019-08-24T12:18:03.537Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-9.2-awk">
+<meta name="twitter:description" content="awk  awk命令的通用语法格式 12345awk &amp;apos;&amp;#123;commands&amp;#125;&amp;apos;    commands为一个或多个命令    常用选项：        -f，表明awk命令将从该标志之后的文件中读取指令而不是从命令行读取；        -Fc，这个标志表明字段之间的分隔符是c而不是默认的空白字符（如制表键、一个或多个空格符）。 常用点：  print：将">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b0tm7hpgj30go04qjrv.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>linux-9.2-awk</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/04/11/Java/Day0_Java_Begining/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/01/11/Linux/linux-9-1-Sed/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&text=linux-9.2-awk"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&is_video=false&description=linux-9.2-awk"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-9.2-awk&body=Check out this article: https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&name=linux-9.2-awk&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#awk"><span class="toc-number">1.</span> <span class="toc-text"> awk</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#awk命令的通用语法格式"><span class="toc-number">1.1.</span> <span class="toc-text"> awk命令的通用语法格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#n字段变量"><span class="toc-number">1.2.</span> <span class="toc-text"> $n：字段变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nf-nr变量"><span class="toc-number">1.3.</span> <span class="toc-text"> NF、NR变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk中计算"><span class="toc-number">1.4.</span> <span class="toc-text"> awk中计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#end-关键字"><span class="toc-number">1.5.</span> <span class="toc-text"> END 关键字：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将-commands表达式放入文件"><span class="toc-number">1.6.</span> <span class="toc-text"> 将 commands表达式放入文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk中使用if条件-for循环与-c-语言相似"><span class="toc-number">1.7.</span> <span class="toc-text"> awk中使用if条件、for循环与 C 语言相似</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        linux-9.2-awk
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-01-12T12:04:37.000Z" itemprop="datePublished">2017-01-12</time>
+        
+        (Updated: <time datetime="2019-08-24T12:18:03.537Z" itemprop="dateModified">2019-08-24</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a> › <a class="category-link" href="/categories/Linux/Beginning/">Beginning</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="awk"><a class="markdownIt-Anchor" href="#awk"></a> awk</h1>
+<h2 id="awk命令的通用语法格式"><a class="markdownIt-Anchor" href="#awk命令的通用语法格式"></a> awk命令的通用语法格式</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk &apos;&#123;commands&#125;&apos;</span><br><span class="line">    commands为一个或多个命令</span><br><span class="line">    常用选项：</span><br><span class="line">        -f，表明awk命令将从该标志之后的文件中读取指令而不是从命令行读取；</span><br><span class="line">        -Fc，这个标志表明字段之间的分隔符是c而不是默认的空白字符（如制表键、一个或多个空格符）。</span><br></pre></td></tr></table></figure>
+<p>常用点：</p>
+<ul>
+<li><strong>print</strong>：将一行接一行地打印出文件中的所有数据行。</li>
+</ul>
+<p>可用 <code>print str1 str2 int1,int2...</code></p>
+<p>也可<code>print(A,B,C,...)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ who | awk &apos;&#123; print &#125;&apos;</span><br><span class="line">        ==直接使用「who」</span><br></pre></td></tr></table></figure>
+<p>awk 中也可以用 c 风格的 printf()：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">printf(&quot;Total: %s\n&quot;,totalsize)</span><br><span class="line">    用printf注意&apos;\n&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="n字段变量"><a class="markdownIt-Anchor" href="#n字段变量"></a> <code>$n</code>：字段变量</h2>
+<p>在文件和Linux命令的结果显示中:</p>
+<pre><code>    每行信息被指定的分隔符分隔成若干个字段，
+
+    每个字段都被赋予一个唯一的标识符。
+
+    如，字段1的标识符是 `$1`，字段2的标识符是 `$2` 等。
+
+    特殊地，有变量 `$0` 表示整行 「`$0=re('^\*$')`」
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ who | awk &apos;&#123; print $1 &#125;&apos;</span><br><span class="line">    列出who命令显示结果中每行的第1个字段，即目前登录Linux系统的用户名</span><br><span class="line">$ who | awk &apos;&#123; print &quot;User  &quot; $1 &quot; is on terminal line &quot; $2&#125;&apos;</span><br><span class="line">    再上一个命令的基础上加入一些解释性的话</span><br><span class="line">$ awk &apos;&#123; print &quot;Employee  &quot; $2 &quot; has salary &quot; $4&#125;&apos; emp.data</span><br><span class="line">    emp.data文件中的第2个字段为员工姓，第4个字段为工资，</span><br><span class="line">    在员工姓前加上Employee，</span><br><span class="line">    在员工的姓和工资之间加上has salary字符串</span><br><span class="line">$ egrep &apos;foo|bar&apos; /etc/passwd | awk -F: &apos;&#123; print $1&quot; has &quot; $7 &quot; as loggin shell.&quot; &#125;&apos;</span><br><span class="line">        # 在/etc/passwd中所有的字段都是以:分隔的。</span><br><span class="line">  获取某些用户登录时使用的shell：</span><br><span class="line">    egrep命令从/etc/passwd文件中抽取包含foo或bar的数据行；</span><br><span class="line">    awk命令把冒号看成字段的分隔符并将列出第1个（用户名）和第7个字段（登录时的shell），</span><br><span class="line">    同时还将在显示结果中加入一些描述信息以帮助阅读和理解；</span><br><span class="line">$ awk -F: &apos;&#123; print $7 &#125;&apos; /etc/passwd | sort | uniq -c</span><br><span class="line">    获取系统上各个shell分别被几个用户默认使用</span><br><span class="line">$ grep /bin/ /etc/passwd | awk -F: &apos;&#123; print $1&quot; &quot; $7 &#125;&apos; | sed &apos;/sync/d&apos; | sort</span><br><span class="line">    获取哪些用户在登录时使用的shell是存放在/bin目录中以及这个shell的名字；</span><br><span class="line">    并且有个用/bin/sync的sync用户，不让它出现在显示的结果；</span><br><span class="line">    最后进行排序。</span><br><span class="line">$ who | awk &apos;&#123; print $6&quot;: &quot;$0&#125;&apos;</span><br><span class="line">     在每个用户记录的最前面显示这个用户登录Linux系统所使用的计算机</span><br><span class="line">     # who显示结果中的最后一个字段是用户登录Linux系统所使用的计算机的IP地址，如果为空表示是本机登录</span><br></pre></td></tr></table></figure>
+<h2 id="nf-nr变量"><a class="markdownIt-Anchor" href="#nf-nr变量"></a> <code>NF</code>、<code>NR</code>变量</h2>
+<ul>
+<li><code>NF</code></li>
+</ul>
+<p>若 在命令表达式中使用没有 <code>$</code> 符号的NF变量：</p>
+<pre><code>     `NF` 将显示一行记录中**有多少个字段**。
+</code></pre>
+<p>若 在命令表达式中使用带有<code>$</code>符号的NF变量，</p>
+<pre><code>     `$NF` 将显示一行记录中**最后一个字段**(即，第NF个字段 -&gt; 最后一个字段)
+</code></pre>
+<ul>
+<li><code>NR</code></li>
+</ul>
+<p>变量 <code>NR</code> 用来追踪所显示的数据行的数目，即<strong>显示数据行的编号</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ who | awk &apos;&#123; print NF &#125;&apos;</span><br><span class="line">    列出who命令显示结果中每一行的字段数（列数）</span><br><span class="line">$ who | awk &apos;&#123; print $NF &#125;&apos;</span><br><span class="line">    列出who命令显示结果中每一行的最后一个字段</span><br><span class="line">$ egrep &apos;bin|sbin&apos; /etc/passwd | awk -F: &apos;&#123; print $NF &#125;&apos; | sort | uniq -c | sort -n</span><br><span class="line">    egrep    ：从/etc/passwd文件中抽取包含bin或sbin的数据行</span><br><span class="line">    awk      ：把冒号看成字段的分隔符，列出每一行的最后一个字段</span><br><span class="line">    sort     ：将那些字段进行排序</span><br><span class="line">    uniq -c  ：合并相同行，并在每行前面冠以该行出现次数</span><br><span class="line">    sort -n  ：按次数的大小进行排序。</span><br><span class="line">$ ls -l ~/wolf | awk &apos;&#123; print NR&quot;: &quot;$0&#125;&apos;        # 用N给每行一个编号</span><br><span class="line">1: total 16</span><br><span class="line">2: drwxrwxr-x  2 dog dog 4096 Jan 25  2009 boywolf</span><br><span class="line">3: -rw-rw-r--  1 dog dog   84 Dec 22 19:07 delete_disable\</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<ul>
+<li>awk的command中print可打印 <code>\n</code>, <code>\t</code> 等</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ls -lF /boot | awk &apos;&#123; print $5 &quot;\t&quot; $9&#125;&apos; | sort -rn | head -3</span><br><span class="line">    列出/boot目录中每一个文件的文件名和大小，文件的大小在前，而文件名随后，文件大小和文件名由制表键隔开。</span><br><span class="line">    按大小反序排列（从大到小）</span><br><span class="line">    把其中最大的3个文件</span><br></pre></td></tr></table></figure>
+<h2 id="awk中计算"><a class="markdownIt-Anchor" href="#awk中计算"></a> awk中计算</h2>
+<p>变量使用前不用声明</p>
+<p>使用c语言的运算符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ls -lF /boot | awk &apos;&#123; totalsize += $5; print totalsize &#125;&apos;</span><br><span class="line">    获取/boot目录中所有文件大小的总和</span><br><span class="line">    （将得到累加过程中每一步的totalsize值）</span><br><span class="line">为得到最终结果，不输出中间值：</span><br><span class="line">$ ls -lF /boot | awk &apos;&#123; totalsize += $5; print totalsize &#125;&apos; | tail -1</span><br><span class="line">    除了使用tail命令之外，一种更好的方法是在awk命令中使用END关键字：</span><br><span class="line">$ ls -lF /boot | awk &apos;&#123; totalsize += $5&#125; END &#123; print totalsize &#125;&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="end-关键字"><a class="markdownIt-Anchor" href="#end-关键字"></a> <code>END</code> 关键字：</h2>
+<p>在最后一步执行END后的{statements}，如上例最后一个命令。</p>
+<h2 id="将-commands表达式放入文件"><a class="markdownIt-Anchor" href="#将-commands表达式放入文件"></a> 将 <code>commands</code>表达式放入文件</h2>
+<ul>
+<li>用cat</li>
+</ul>
+<p>框中为要输入的（注意末尾新行键入EOF后回车（&lt;&lt;EOF）可以自动退出）</p>
+<p>（直接用cat &gt; script2写完后ctrl+D也可以）</p>
+<p>用此法会有写完后文件中“$5”字样缺失的问题。</p>
+<ul>
+<li>用vi直接写完保存更好（不用写EOF，也没有$n缺失的问题）</li>
+</ul>
+<p>保存入文件后可以：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ls -lF /boot | awk -f script1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将awk写入shell脚本</li>
+</ul>
+<p>将一些经常使用的命令放入一个正文文件，这个文件就是所谓的shell脚本文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">写入：（注意用&quot;&quot;把命令括起来，否则将把&quot;$(ls ...)&quot;写入）</span><br><span class="line">$ echo &quot;ls -lF /boot | awk -f script1&quot; &gt; boot_size</span><br><span class="line">调用：</span><br><span class="line">$ bash boot_size</span><br><span class="line">$ sh boot_size</span><br><span class="line">$ ksh boot_size</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="awk中使用if条件-for循环与-c-语言相似"><a class="markdownIt-Anchor" href="#awk中使用if条件-for循环与-c-语言相似"></a> awk中使用if条件、for循环与 C 语言相似</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ awk  &apos;&#123; if (length($4) == 3  ) print $0 &#125;&apos; emp.data | wc -l</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b0tm7hpgj30go04qjrv.jpg" alt="IMG_1074"></p>
+<p><code>count[length($1)]++</code>：将第1个字段的长度作为数组元素的下标，并将这个数组元素的个数加1再重新存回到原来的数组元素中。（似动态语言）</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#awk"><span class="toc-number">1.</span> <span class="toc-text"> awk</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#awk命令的通用语法格式"><span class="toc-number">1.1.</span> <span class="toc-text"> awk命令的通用语法格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#n字段变量"><span class="toc-number">1.2.</span> <span class="toc-text"> $n：字段变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nf-nr变量"><span class="toc-number">1.3.</span> <span class="toc-text"> NF、NR变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk中计算"><span class="toc-number">1.4.</span> <span class="toc-text"> awk中计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#end-关键字"><span class="toc-number">1.5.</span> <span class="toc-text"> END 关键字：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将-commands表达式放入文件"><span class="toc-number">1.6.</span> <span class="toc-text"> 将 commands表达式放入文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#awk中使用if条件-for循环与-c-语言相似"><span class="toc-number">1.7.</span> <span class="toc-text"> awk中使用if条件、for循环与 C 语言相似</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&text=linux-9.2-awk"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&is_video=false&description=linux-9.2-awk"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-9.2-awk&body=Check out this article: https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&title=linux-9.2-awk"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/12/Linux/linux-9-2-Awk/&name=linux-9.2-awk&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="grep/egrep/fgrep grep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。 （UNIX中的patterns被称为 Regular Expressions）  grep=“Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”  grep、egrep能在一个或">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-9.0-grep">
+<meta property="og:url" content="https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="grep/egrep/fgrep grep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。 （UNIX中的patterns被称为 Regular Expressions）  grep=“Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”  grep、egrep能在一个或">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-24T12:16:51.752Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-9.0-grep">
+<meta name="twitter:description" content="grep/egrep/fgrep grep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。 （UNIX中的patterns被称为 Regular Expressions）  grep=“Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”  grep、egrep能在一个或">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>linux-9.0-grep</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/01/11/Linux/linux-9-1-Sed/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/01/09/Linux/linux-8-Mail/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&text=linux-9.0-grep"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&is_video=false&description=linux-9.0-grep"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-9.0-grep&body=Check out this article: https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&name=linux-9.0-grep&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#grepegrepfgrep"><span class="toc-number">1.</span> <span class="toc-text"> grep/egrep/fgrep</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-number">1.0.1.</span> <span class="toc-text"> grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#egrep"><span class="toc-number">1.0.2.</span> <span class="toc-text"> egrep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fgrep"><span class="toc-number">1.0.3.</span> <span class="toc-text"> fgrep</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        linux-9.0-grep
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-01-10T11:51:00.000Z" itemprop="datePublished">2017-01-10</time>
+        
+        (Updated: <time datetime="2019-08-24T12:16:51.752Z" itemprop="dateModified">2019-08-24</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a> › <a class="category-link" href="/categories/Linux/Beginning/">Beginning</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="grepegrepfgrep"><a class="markdownIt-Anchor" href="#grepegrepfgrep"></a> grep/egrep/fgrep</h1>
+<p>grep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。</p>
+<p>（UNIX中的patterns被称为 <em>Regular Expressions</em>）</p>
+<blockquote>
+<p>grep=“Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”</p>
+</blockquote>
+<p>grep、egrep能在一个或多个文件等内容中搜索某一特定的Character Pattern（R.E.）。</p>
+<h3 id="grep"><a class="markdownIt-Anchor" href="#grep"></a> grep</h3>
+<p>grep命令支持以下几种正则表达式的元字符（regular expression metacharacters），即通配符：</p>
+<ul>
+<li><code>c*</code> ：将匹配0个（即空白）或多个字符c（c为任一字符）。</li>
+<li><code>.</code> ：将匹配任何一个字符而且只能是一个字符。</li>
+<li><code>[xyz]</code> ：将匹配方括号中的任意一个字符。</li>
+<li><code>[^xyz]</code>  ：将匹配不包括方括号中的字符的所有字符。</li>
+<li><code>^</code> ：锁定行的开头。</li>
+<li><code>$</code> ：锁定行的结尾。</li>
+</ul>
+<p>在基本正则表达式中：</p>
+<p>如元字符<code>*</code>、<code>+</code>、<code>{</code>、<code>|</code>、<code>(</code> 和 <code>)</code> 已经失去了它们原来的含义，</p>
+<p>如果要恢复它们原本的含义要在之前冠以反斜线’\’，如 <code>\*</code>、<code>\+</code>、<code>\{</code>、<code>\|</code>、<code>\(</code> 和 <code>\)</code>。</p>
+<p>grep命令是用来在每一个文件中或标准输出上搜索特定的模式。</p>
+<p>当使用grep命令时，包含一个指定字符模式的每一行都会被打印在屏幕上，</p>
+<p>使用grep命令并不改变文件中的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">grep 选项 模式 文件名</span><br><span class="line">        选项可以改变grep命令的搜寻方式：</span><br><span class="line">            -c：仅列出包含模式的行的数量。</span><br><span class="line">            -i：忽略模式中的字母大小写。</span><br><span class="line">            -l：列出带有匹配行的文件名。</span><br><span class="line">            -n：在每行的最前面列出行号。</span><br><span class="line">            -v：列出没有匹配模式的行。</span><br><span class="line">            -w：把表达式作为一个完整的单字来搜寻，忽略那些部分匹配的行。</span><br><span class="line">[⚠️]除了-w选项之外，其他的每个选项都可以在egrep和fgrep命令中使用。</span><br><span class="line">[⚠️]如果是搜索多个文件，grep命令的结果只显示在文件中发现匹配模式的文件名，而搜索的是单一的文件，grep命令的结果将显示每一个包含匹配模式的行。</span><br></pre></td></tr></table></figure>
+<p><em>e.g.</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ grep CLERK emp.data        #显示包含了CLERK的行</span><br><span class="line">7369    SMITH   CLERK   800     17-DEC-80</span><br><span class="line">7876    ADAMS  CLERK   1100    23-MAY-87</span><br><span class="line">$ grep -c CLERK emp.data        # 只显示用几个满足行</span><br><span class="line">2</span><br><span class="line">$ grep ^78 emp.data      # 列出在emp.data文件中所有以78开始的数据行</span><br><span class="line">$ grep &apos;1..0&apos; emp.data    #&apos;1..0&apos;表示以1开始随后是两个任意字符最后是0的字符串。</span><br><span class="line">$ grep &apos;[12]..0&apos;        # &apos;[12]..0&apos;表示以1或2开始随后是两个任意字符最后是0的字符串。</span><br><span class="line">$ grep -l root group passwd hosts    # 在当前目录中的group、passwd和hosts 3个文件中搜索模式root并列出包含这一模式的文件名。</span><br><span class="line">$ grep &apos;/bash$&apos; passwd    # 列出在passwd文件中所有以/bash结尾的行（Get所有默认使用bash的用户）。</span><br><span class="line">$ ps -e | grep ftp    # 获取目前系统使用的ftp服务的进程名</span><br><span class="line">$ ps -e | grep ora    # To know is Oracle Database runing</span><br></pre></td></tr></table></figure>
+<h3 id="egrep"><a class="markdownIt-Anchor" href="#egrep"></a> egrep</h3>
+<p align="left"><span style="color: rgb(253, 4, 4);">/* egrep 在RHEL等Linux上其实是「grep -E」的别名 \*/</span></p>
+<p align="left">egrep的语法格式与grep命令相同，</p>
+但egrep是用来在一个或多个文件的内容中利用**扩展的正则表达式**的元字符搜索特定的模式。
+<p>egrep所增加的元字符：</p>
+<ul>
+<li>+：匹配一个或多个前导字符。</li>
+<li>a|b：匹配a或b。</li>
+<li>(RE)：匹配括号中的正则表达式RE。</li>
+</ul>
+<p>e.g.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ egrep &apos;[1-5]+000&apos; emp.data        # 匹配1000，2000，3000，4000，5000</span><br><span class="line">$ egrep &apos;S[A-Z]+MAN&apos; emp.fmt        # 匹配“Sxx...xxMAN”</span><br><span class="line">$ egrep &apos;E(S|R) &apos; emp.fmt           # 在每一行数据中搜寻字母E后面紧跟着S或R</span><br></pre></td></tr></table></figure>
+<h3 id="fgrep"><a class="markdownIt-Anchor" href="#fgrep"></a> fgrep</h3>
+<p><span style="color: rgb(253, 4, 4);">/* fgrep 在RHEL等Linux上其实是「grep -F」的别名 */</span></p>
+<p>fgrep也用来在一个或多个文件中搜索与指定字符串匹配的行。</p>
+<p>搜索文件fgrep的速度要比grep快，</p>
+<p>fgrep可以一次迅速地搜索多个模式。</p>
+<p>与grep不同，fgrep命令不能搜索任何正则表达式，</p>
+<p>即将<strong>通配符当作普通字符</strong>来处理（按该字符的字面意思来处理）。</p>
+<p>搜索文件命令fgrep不能使用特殊字符，只能搜索确定的模式。</p>
+<p>fgrep既可以在命令行上键入搜索的模式，</p>
+<p>也可以使用-f选项从文件中读取要搜索的模式。</p>
+<p>e.g.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cat emp.fmt | fgrep -f conditions</span><br><span class="line">    # 等价于</span><br><span class="line">$  fgrep -f conditions.txt emp.fmt</span><br><span class="line">		# grep也可以如以上二者操作: 列出emp.fmt文件中所有与conditions.txt文件中内容相匹配的数据行。</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#grepegrepfgrep"><span class="toc-number">1.</span> <span class="toc-text"> grep/egrep/fgrep</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-number">1.0.1.</span> <span class="toc-text"> grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#egrep"><span class="toc-number">1.0.2.</span> <span class="toc-text"> egrep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fgrep"><span class="toc-number">1.0.3.</span> <span class="toc-text"> fgrep</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&text=linux-9.0-grep"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&is_video=false&description=linux-9.0-grep"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-9.0-grep&body=Check out this article: https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&title=linux-9.0-grep"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/&name=linux-9.0-grep&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>

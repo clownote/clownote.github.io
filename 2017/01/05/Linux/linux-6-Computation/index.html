@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="计算、逃逸  用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾  \——逃逸符号  1234$ echo &amp;quot;$6">
+    <meta name="description" content="计算与逃逸  用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾  \——逃逸符号  1234$ echo &amp;quot;$6">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux-6-Computation">
+<meta property="og:title" content="linux-6-计算与逃逸">
 <meta property="og:url" content="https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="计算、逃逸  用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾  \——逃逸符号  1234$ echo &amp;quot;$6">
+<meta property="og:description" content="计算与逃逸  用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾  \——逃逸符号  1234$ echo &amp;quot;$6">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-21T01:45:34.060Z">
+<meta property="og:updated_time" content="2019-08-24T12:16:38.771Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux-6-Computation">
-<meta name="twitter:description" content="计算、逃逸  用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾  \——逃逸符号  1234$ echo &amp;quot;$6">
+<meta name="twitter:title" content="linux-6-计算与逃逸">
+<meta name="twitter:description" content="计算与逃逸  用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾  \——逃逸符号  1234$ echo &amp;quot;$6">
     
     
         
@@ -37,7 +37,7 @@
         
     
     <!-- title -->
-    <title>linux-6-Computation</title>
+    <title>linux-6-计算与逃逸</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -75,7 +75,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/04/11/Java/Day0_Java_Begining/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2017/01/06/Linux/linux-7-0-IORedirections/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2017/01/04/Linux/linux-5-ShellShortcuts/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -92,20 +92,20 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&text=linux-6-Computation"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&is_video=false&description=linux-6-Computation"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=linux-6-Computation&body=Check out this article: https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&name=linux-6-Computation&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&text=linux-6-计算与逃逸"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&is_video=false&description=linux-6-计算与逃逸"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-6-计算与逃逸&body=Check out this article: https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&name=linux-6-计算与逃逸&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#计算-逃逸"><span class="toc-number">1.</span> <span class="toc-text"> 计算、逃逸</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#计算与逃逸"><span class="toc-number">1.</span> <span class="toc-text"> 计算与逃逸</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -117,7 +117,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        linux-6-Computation
+        linux-6-计算与逃逸
     </h1>
 
 
@@ -131,13 +131,18 @@
       
         <time datetime="2017-01-05T01:33:44.000Z" itemprop="datePublished">2017-01-05</time>
         
-        (Updated: <time datetime="2019-08-21T01:45:34.060Z" itemprop="dateModified">2019-08-21</time>)
+        (Updated: <time datetime="2019-08-24T12:16:38.771Z" itemprop="dateModified">2019-08-24</time>)
         
       
     </div>
 
 
       
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a> › <a class="category-link" href="/categories/Linux/Beginning/">Beginning</a>
+    </div>
+
 
       
     <div class="article-tag">
@@ -151,7 +156,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="计算-逃逸"><a class="markdownIt-Anchor" href="#计算-逃逸"></a> 计算、逃逸</h1>
+    <h1 id="计算与逃逸"><a class="markdownIt-Anchor" href="#计算与逃逸"></a> 计算与逃逸</h1>
 <ol>
 <li>用Linux命令进行数字运算</li>
 </ol>
@@ -212,21 +217,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#计算-逃逸"><span class="toc-number">1.</span> <span class="toc-text"> 计算、逃逸</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#计算与逃逸"><span class="toc-number">1.</span> <span class="toc-text"> 计算与逃逸</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&text=linux-6-Computation"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&is_video=false&description=linux-6-Computation"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=linux-6-Computation&body=Check out this article: https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-Computation"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&name=linux-6-Computation&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&text=linux-6-计算与逃逸"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&is_video=false&description=linux-6-计算与逃逸"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux-6-计算与逃逸&body=Check out this article: https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&title=linux-6-计算与逃逸"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/&name=linux-6-计算与逃逸&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
