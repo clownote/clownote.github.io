@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6ljh8xnnuj30g508ttam.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6mi7c257sj30eg07wt9v.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6mi84pb5bj30e807pjsd.jpg">
-<meta property="og:updated_time" content="2019-09-05T09:18:50.559Z">
+<meta property="og:updated_time" content="2019-09-05T11:17:09.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="吴恩达机器学习3-多变量线性回归">
 <meta name="twitter:description" content="Notes of Andrew Ng’s Machine Learning —— (3) Multivariate Linear Regression  Multiple Features Linear regression with multiple variables is alse known as “multivariate linear regression”.  Notations">
@@ -81,6 +81,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" href="/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" href="/2019/09/02/AndrewNg-MachineLearning-2-LinearAlgebraReview/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -135,7 +137,7 @@
       
         <time datetime="2019-09-05T09:11:21.000Z" itemprop="datePublished">2019-09-05</time>
         
-        (Updated: <time datetime="2019-09-05T09:18:50.559Z" itemprop="dateModified">2019-09-05</time>)
+        (Updated: <time datetime="2019-09-05T11:17:09.810Z" itemprop="dateModified">2019-09-05</time>)
         
       
     </div>
@@ -216,7 +218,7 @@
 -0.5 \le x_{i} \le 0.5
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7859700000000001em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord text"><span class="mord textrm">or</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7859700000000001em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span></span></span></span></span></p>
 <p>These aren’t exact requirements; we are only trying to speed things up. The goal is to get all input variables into roughly one of these ranges, give or take a few.</p>
-<p>Actually, we offen think it’s ok for variables in range $[-3,-\frac{1}{3}) \cup (+\frac{1}{3}, +3] $.</p>
+<p>In practice, we offen think it’s ok for variables in range $[-3,-\frac{1}{3}) \cup (+\frac{1}{3}, +3] $.</p>
 <p>Two techniques to help with this are <code>feature scaling</code> and <code>mean normalization</code>.</p>
 <h3 id="feature-scaling-2"><a class="markdownIt-Anchor" href="#feature-scaling-2"></a> Feature scaling</h3>
 <p>Feature scaling involves <strong>dividing the input values by <em>the range</em></strong> (i.e. the maximum value minus the minimum value) of input variable, resulting in a new range of just 1.</p>
