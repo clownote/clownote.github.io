@@ -9,14 +9,14 @@
     <meta name="description" content="包、变量和函数  § 包 每个 Go 程序都是由包构成的。 一般程序从 main 包的 main 函数开始运行，除非有 init 函数。 12345678910package mainimport (	&quot;fmt&quot;	&quot;math/rand&quot;)func main() &amp;#123;	fmt.Println(&quot;This is a rand int:&quot;, rand.Intn(10))&amp;#125; 输出： 1">
 <meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="go-1-包、变量和函数">
-<meta property="og:url" content="https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/index.html">
+<meta property="og:title" content="golang-包、变量和函数">
+<meta property="og:url" content="https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="包、变量和函数  § 包 每个 Go 程序都是由包构成的。 一般程序从 main 包的 main 函数开始运行，除非有 init 函数。 12345678910package mainimport (	&quot;fmt&quot;	&quot;math/rand&quot;)func main() &amp;#123;	fmt.Println(&quot;This is a rand int:&quot;, rand.Intn(10))&amp;#125; 输出： 1">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-31T02:18:54.727Z">
+<meta property="og:updated_time" content="2019-09-10T14:00:11.247Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="go-1-包、变量和函数">
+<meta name="twitter:title" content="golang-包、变量和函数">
 <meta name="twitter:description" content="包、变量和函数  § 包 每个 Go 程序都是由包构成的。 一般程序从 main 包的 main 函数开始运行，除非有 init 函数。 12345678910package mainimport (	&quot;fmt&quot;	&quot;math/rand&quot;)func main() &amp;#123;	fmt.Println(&quot;This is a rand int:&quot;, rand.Intn(10))&amp;#125; 输出： 1">
     
     
@@ -37,7 +37,7 @@
         
     
     <!-- title -->
-    <title>go-1-包、变量和函数</title>
+    <title>golang-包、变量和函数</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -77,10 +77,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/08/31/go-2-ControlStatements/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/08/31/Golang/go-2-ControlStatements/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/08/31/go-0-begining/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/08/31/Golang/go-0-begining/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -93,16 +93,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&text=go-1-包、变量和函数"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&is_video=false&description=go-1-包、变量和函数"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=go-1-包、变量和函数&body=Check out this article: https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&name=go-1-包、变量和函数&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&text=golang-包、变量和函数"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&is_video=false&description=golang-包、变量和函数"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=golang-包、变量和函数&body=Check out this article: https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&name=golang-包、变量和函数&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -119,7 +119,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        go-1-包、变量和函数
+        golang-包、变量和函数
     </h1>
 
 
@@ -133,7 +133,7 @@
       
         <time datetime="2019-08-31T02:17:18.000Z" itemprop="datePublished">2019-08-31</time>
         
-        (Updated: <time datetime="2019-08-31T02:18:54.727Z" itemprop="dateModified">2019-08-31</time>)
+        (Updated: <time datetime="2019-09-10T14:00:11.247Z" itemprop="dateModified">2019-09-10</time>)
         
       
     </div>
@@ -390,16 +390,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&text=go-1-包、变量和函数"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&is_video=false&description=go-1-包、变量和函数"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=go-1-包、变量和函数&body=Check out this article: https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&title=go-1-包、变量和函数"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/08/31/go-1-PackageVarFunc/&name=go-1-包、变量和函数&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&text=golang-包、变量和函数"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&is_video=false&description=golang-包、变量和函数"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=golang-包、变量和函数&body=Check out this article: https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&title=golang-包、变量和函数"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/08/31/Golang/go-1-PackageVarFunc/&name=golang-包、变量和函数&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

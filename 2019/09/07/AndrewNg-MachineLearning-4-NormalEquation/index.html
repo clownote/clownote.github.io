@@ -9,15 +9,15 @@
     <meta name="description" content="Notes of Andrew Ng’s Machine Learning —— (4) Normal Equation  Normal Equation Gradient dedcent gives one way of minimizing our cost function JJJ. Let’s discuss a second way of doing so – Normal Equat">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="吴恩达机器学习4——正规方程">
+<meta property="og:title" content="正规方程">
 <meta property="og:url" content="https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Notes of Andrew Ng’s Machine Learning —— (4) Normal Equation  Normal Equation Gradient dedcent gives one way of minimizing our cost function JJJ. Let’s discuss a second way of doing so – Normal Equat">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6oul2lb93j30gq09dgn1.jpg">
-<meta property="og:updated_time" content="2019-09-07T13:30:23.660Z">
+<meta property="og:updated_time" content="2019-09-10T14:19:40.260Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="吴恩达机器学习4——正规方程">
+<meta name="twitter:title" content="正规方程">
 <meta name="twitter:description" content="Notes of Andrew Ng’s Machine Learning —— (4) Normal Equation  Normal Equation Gradient dedcent gives one way of minimizing our cost function JJJ. Let’s discuss a second way of doing so – Normal Equat">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6oul2lb93j30gq09dgn1.jpg">
     
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>吴恩达机器学习4——正规方程</title>
+    <title>正规方程</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -79,6 +79,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" href="/2019/09/10/AndrewNg-MachineLearning-5-OctaveTutorial/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" href="/2019/09/05/AndrewNg-MachineLearning-3-MultivariateLinearRegression/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -94,15 +96,15 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&text=吴恩达机器学习4——正规方程"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&is_video=false&description=吴恩达机器学习4——正规方程"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=吴恩达机器学习4——正规方程&body=Check out this article: https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&name=吴恩达机器学习4——正规方程&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&text=正规方程"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&is_video=false&description=正规方程"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=正规方程&body=Check out this article: https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&name=正规方程&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -119,7 +121,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        吴恩达机器学习4——正规方程
+        正规方程
     </h1>
 
 
@@ -133,7 +135,7 @@
       
         <time datetime="2019-09-07T13:30:23.000Z" itemprop="datePublished">2019-09-07</time>
         
-        (Updated: <time datetime="2019-09-07T13:30:23.660Z" itemprop="dateModified">2019-09-07</time>)
+        (Updated: <time datetime="2019-09-10T14:19:40.260Z" itemprop="dateModified">2019-09-10</time>)
         
       
     </div>
@@ -247,15 +249,15 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&text=吴恩达机器学习4——正规方程"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&is_video=false&description=吴恩达机器学习4——正规方程"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=吴恩达机器学习4——正规方程&body=Check out this article: https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=吴恩达机器学习4——正规方程"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&name=吴恩达机器学习4——正规方程&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&text=正规方程"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&is_video=false&description=正规方程"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=正规方程&body=Check out this article: https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&title=正规方程"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/07/AndrewNg-MachineLearning-4-NormalEquation/&name=正规方程&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
