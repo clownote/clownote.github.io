@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="爬虫基础  本文主要介绍爬虫涉及到的基础知识。   HTTP 基本原理  URI &amp;amp; URL    简写 全名 中文 说明     URI Uniform Resource Identifier 统一资源标志符 对应着一个资源   URL Uniform Resource Locator 统一资源定位符 说明从哪里可以找到一个资源   URN Universal Resource Nam">
+<meta name="keywords" content="Crawler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫基础">
+<meta property="og:url" content="https://clownote.github.io/2019/02/10/crawler-1-basic/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="爬虫基础  本文主要介绍爬虫涉及到的基础知识。   HTTP 基本原理  URI &amp;amp; URL    简写 全名 中文 说明     URI Uniform Resource Identifier 统一资源标志符 对应着一个资源   URL Uniform Resource Locator 统一资源定位符 说明从哪里可以找到一个资源   URN Universal Resource Nam">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-10T15:02:08.912Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫基础">
+<meta name="twitter:description" content="爬虫基础  本文主要介绍爬虫涉及到的基础知识。   HTTP 基本原理  URI &amp;amp; URL    简写 全名 中文 说明     URI Uniform Resource Identifier 统一资源标志符 对应着一个资源   URL Uniform Resource Locator 统一资源定位符 说明从哪里可以找到一个资源   URN Universal Resource Nam">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>爬虫基础</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/02/11/crawler-2-urllib/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/02/09/crawler-0-env/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/02/10/crawler-1-basic/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&text=爬虫基础"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&is_video=false&description=爬虫基础"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=爬虫基础&body=Check out this article: https://clownote.github.io/2019/02/10/crawler-1-basic/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&name=爬虫基础&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#爬虫基础"><span class="toc-number">1.</span> <span class="toc-text"> 爬虫基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http-基本原理"><span class="toc-number">1.1.</span> <span class="toc-text"> HTTP 基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#uri-url"><span class="toc-number">1.1.1.</span> <span class="toc-text"> URI &amp; URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超文本"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 超文本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#http-https"><span class="toc-number">1.1.3.</span> <span class="toc-text"> HTTP &amp; HTTPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#http-请求过程"><span class="toc-number">1.1.4.</span> <span class="toc-text"> HTTP 请求过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求request"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 请求（Request）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应response"><span class="toc-number">1.1.6.</span> <span class="toc-text"> 响应（Response）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页基础"><span class="toc-number">1.2.</span> <span class="toc-text"> 网页基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#html-超文本标记语言"><span class="toc-number">1.2.1.</span> <span class="toc-text"> HTML, 超文本标记语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css-层叠样式表"><span class="toc-number">1.2.2.</span> <span class="toc-text"> CSS, 层叠样式表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript-脚本语言"><span class="toc-number">1.2.3.</span> <span class="toc-text"> JavaScript, 脚本语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网页结构"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 网页结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择器"><span class="toc-number">1.2.5.</span> <span class="toc-text"> 选择器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爬虫的基本原理"><span class="toc-number">1.3.</span> <span class="toc-text"> 爬虫的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#获取网页"><span class="toc-number">1.3.0.1.</span> <span class="toc-text"> 获取网页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提取信息"><span class="toc-number">1.3.0.2.</span> <span class="toc-text"> 提取信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#保存数据"><span class="toc-number">1.3.0.3.</span> <span class="toc-text"> 保存数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动化程序"><span class="toc-number">1.3.0.4.</span> <span class="toc-text"> 自动化程序</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#会话-和-cookies"><span class="toc-number">1.4.</span> <span class="toc-text"> 会话 和 Cookies</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#会话"><span class="toc-number">1.4.0.1.</span> <span class="toc-text"> 会话</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cookies"><span class="toc-number">1.4.0.2.</span> <span class="toc-text"> Cookies</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代理的基本原理"><span class="toc-number">1.5.</span> <span class="toc-text"> 代理的基本原理</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        爬虫基础
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-02-10T14:49:55.000Z" itemprop="datePublished">2019-02-10</time>
+        
+        (Updated: <time datetime="2019-09-10T15:02:08.912Z" itemprop="dateModified">2019-09-10</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Crawler/">Crawler</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Crawler/">Crawler</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="爬虫基础"><a class="markdownIt-Anchor" href="#爬虫基础"></a> 爬虫基础</h1>
+<blockquote>
+<p>本文主要介绍爬虫涉及到的基础知识。</p>
+</blockquote>
+<h2 id="http-基本原理"><a class="markdownIt-Anchor" href="#http-基本原理"></a> HTTP 基本原理</h2>
+<h3 id="uri-url"><a class="markdownIt-Anchor" href="#uri-url"></a> URI &amp; URL</h3>
+<table>
+<thead>
+<tr>
+<th>简写</th>
+<th>全名</th>
+<th>中文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URI</td>
+<td>Uniform Resource Identifier</td>
+<td>统一资源标志符</td>
+<td>对应着一个资源</td>
+</tr>
+<tr>
+<td>URL</td>
+<td>Uniform Resource Locator</td>
+<td>统一资源定位符</td>
+<td>说明从哪里可以找到一个资源</td>
+</tr>
+<tr>
+<td>URN</td>
+<td>Universal Resource Name</td>
+<td>统一资源名称</td>
+<td>说明一个资源的唯一名字</td>
+</tr>
+</tbody>
+</table>
+<p>URI 包含着 URL 和 URN。</p>
+<p>通常，我们使用的网址，就是一个URI，同时也是一个URL。</p>
+<h3 id="超文本"><a class="markdownIt-Anchor" href="#超文本"></a> 超文本</h3>
+<blockquote>
+<p>超文本是用超链接的方法，将各种不同空间的文字信息组织在一起的网状文本。</p>
+</blockquote>
+<p>我们平时看到的网页的源代码使用 HTML 写出的，HTML 就是一种超文本。</p>
+<h3 id="http-https"><a class="markdownIt-Anchor" href="#http-https"></a> HTTP &amp; HTTPS</h3>
+<p>我们用URL访问资源需要指定使用的协议类型，协议就是URL地址一开始的那个字段。</p>
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>全称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP</td>
+<td>Hyper Text Transfer Protocol（超文本传输协议）</td>
+<td>用于从网络传输超文本数据到本地浏览器的传送协议，它能保证高效而准确地传送超文本文档</td>
+</tr>
+<tr>
+<td>HTTPS</td>
+<td>Hyper Text Transfer Protocol over Secure Socket Layer（在SSL上的HTTP）</td>
+<td>以安全为目标的 HTTP 通道，是 HTTP 的安全版</td>
+</tr>
+</tbody>
+</table>
+<p>HTTPS 相较于 HTTP 有以下优点：</p>
+<ul>
+<li>建立一个信息安全通道来保证数据传输的安全。</li>
+<li>确认网站的真实性，凡是使用了 HTTPS 的网站，都可以通过点击浏览器地址栏的锁头标志来<br>
+查看网站认证之后的真实信息，也可以通过 CA 机构颁发的安全签章来查询。</li>
+</ul>
+<h3 id="http-请求过程"><a class="markdownIt-Anchor" href="#http-请求过程"></a> HTTP 请求过程</h3>
+<p>我们在浏览器中输入网址，便显示出一个网页的过程实际上是：</p>
+<ol start="0">
+<li>浏览器向网站的服务器发送了一个请求；</li>
+<li>服务器接收到这个请求后进行解析和处理；</li>
+<li>服务器返回对应的响应；</li>
+<li>浏览器对收到的响应解析；</li>
+<li>浏览器将解析的结果显示出来，即最后我们看到的网页。</li>
+</ol>
+<p>我们可以在 Chrome浏览器 的开发者工具的“Network”页面看到的一个条目就是一次 <em>发送请求和接收响应</em> 的过程。</p>
+<table>
+<thead>
+<tr>
+<th>Network的列</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>请求的名称，一般会将 URL 的最后一部分内容当作名称 。</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>响应的状态码，这里显示为 200， 代表响应是正常的 。 通过状态码，我们可以判断发送了请求之后是杏得到了正常的响应 。</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>请求的文梢类型 。 这里为 document，代表我们这次请求的是一个 HTML文档， 内容就是一些 HTML代码。</td>
+</tr>
+<tr>
+<td>Initiator</td>
+<td>请求源 。 用来标记请求是由哪个对象或进程发起的 。</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>从服务器下载的文件和请求的资源大小 。 如果是从缓存中取得的资源，则该列会显示from cache。</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>发起请求到获取响应所用的总时间 。</td>
+</tr>
+<tr>
+<td>Waterfall</td>
+<td>网络请求的可视化瀑布流 。</td>
+</tr>
+</tbody>
+</table>
+<p>点击条目，我们将看到更加详细的请求、响应信息。</p>
+<h3 id="请求request"><a class="markdownIt-Anchor" href="#请求request"></a> 请求（Request）</h3>
+<p>请求，是由 <strong>客户端</strong> 向 <strong>服务端</strong> 发出的。</p>
+<p>请求分为4部分：</p>
+<ul>
+<li>
+<p><strong>请求方法</strong>（Request Method）：常见的请求方法分为两种 GET 和 POST：</p>
+<ul>
+<li><code>GET</code> 请求中的参数包含在 URL 里面，数据可以在 URL 中看到（可能暴露敏感信息）。GET请求提交的数据最多只有 1024 字节。</li>
+<li><code>POST</code> 请求中的 URL 不包含数据，数据都是通过表单形式传输的，会包含在请求体中。POST方式没有大小限制（可以传文件）。</li>
+<li>我们输入一个网址，这是一个 GET 请求。</li>
+<li>其实还有一些其他的请求方法，可以参考 <a href="http://www.runoob.com/http/http-methods.html" target="_blank" rel="noopener">HTTP请求方法</a></li>
+</ul>
+</li>
+<li>
+<p><strong>请求地址</strong>（Request URL）：统一资惊定位符 URL，唯一确定我们想请求的资源。</p>
+</li>
+<li>
+<p><strong>请求头</strong>（Request Headers）：用来说明服务器要使用的附加信息，比较重要的信息有 Cookie、 Referer、 User-Agent：</p>
+<ul>
+<li><code>Accept</code>: 请求报头域，用于指定客户端可 <strong>接受哪些类型的信息</strong>。</li>
+<li><code>Accept-Language</code>: 指定客户端可接受的 <strong>语言类型</strong>。</li>
+<li><code>Acceot-Encoding</code>: 指定客户端可接受的 <strong>内容编码</strong>。</li>
+<li><code>Host</code>: 指定 <strong>请求资源的主机 IP 和端口号</strong>，其内容为 <strong>请求 URL 的原始服务器或网关的位置</strong>。</li>
+<li><code>Cookies</code>: 网站为了辨别用户进行会话跟踪而 <strong>存储在用户本地的数据</strong>。它的主要功能是 <strong>维持当前访问会话</strong>，如检查用户登录。</li>
+<li><code>Referer</code>: 此内容用来标识这个请求是从哪个页面发过来的，服务器可以拿到这一信息并做相 应的处理，如做来源统计、防盗链处理等 。</li>
+<li><code>User-Agent</code>: 简称 UA，它可以使服务器识别客户使用的操作系统及版本、浏览器及版本等信息。 <strong>在做爬虫时加上此信息，可以伪装为浏览器; 如果不加，很可能会被识别州为爬虫 。</strong></li>
+<li><code>Content-Type</code>: 也叫互联网媒体类型( Internet Media Type )或者 MIME类型，在 HTTP协议消息头中，它用来表示具体请求中的媒体类型信息。请求头是请求的重要组成部分，在写爬虫时，大部分情况下都需要设定请求头。
+<ul>
+<li>text/html 代表 HTML 格式</li>
+<li>image/gif代表 GIF 图片</li>
+<li>application/json代表 JSON类型</li>
+<li>详见 <a href="http://tool.oschina.net/commons/" target="_blank" rel="noopener">Content-Type 请求头是请求的重要组成部分，在写爬虫时，大部分情况下都需要设定请求头。对照表</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>请求体</strong>（Request Body）：</p>
+<ul>
+<li><code>POST</code> 的请求体是表单数据;</li>
+<li><code>GET</code> 的请求体为空;</li>
+</ul>
+</li>
+</ul>
+<h3 id="响应response"><a class="markdownIt-Anchor" href="#响应response"></a> 响应（Response）</h3>
+<p>响应，由 <strong>服务端</strong> 返回给 <strong>客户端</strong>：</p>
+<ul>
+<li><strong>响应状态码</strong>（Response Status Code）：表示服务器的响应状态
+<ul>
+<li>HTTP状态码分类，具体HTTP状态码列表，见<a href="http://www.runoob.com/http/http-status-codes.html" target="_blank" rel="noopener">HTTP状态码</a></li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>分类描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1**</td>
+<td>信息，服务器收到请求，需要请求者继续执行操作</td>
+</tr>
+<tr>
+<td>2**</td>
+<td>成功，操作被成功接收并处理</td>
+</tr>
+<tr>
+<td>3**</td>
+<td>重定向，需要进一步的操作以完成请求</td>
+</tr>
+<tr>
+<td>4**</td>
+<td>客户端错误，请求包含语法错误或无法完成请求</td>
+</tr>
+<tr>
+<td>5**</td>
+<td>服务器错误，服务器在处理请求的过程中发生了错误</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong>响应头</strong>（Response Headers）: 响应头包含了服务器对请求的应答信息</p>
+<ul>
+<li><code>Date</code>: 标识 <strong>响应产生的时间</strong></li>
+<li><code>Last-Modified</code>: 指定 <strong>资源的最后修改时间</strong></li>
+<li><code>Content-Encoding</code>: 指定响应 <strong>内容的编码</strong></li>
+<li><code>Server</code>: 包含 <strong>服务器的信息</strong>，比如名称、版本号等</li>
+<li><code>Content-Type</code>: 文档类型，指定 <strong>返回的数据类型</strong> 是什么（和 Request 的一样）</li>
+<li><code>Set-Cookie</code>: <strong>设置 Cookies</strong>。告诉浏览器需要将此内容放在 Cookies 中， 下次请求携带 Cookies 请求</li>
+<li><code>Expires</code>: <strong>指定响应的过期时间</strong>，可以使代理服务器或浏览器将加载的内容更新到缓存中。如果再次访问时，就可以直接从<strong>缓存</strong>中加载，降低服务器负载，缩短加载时间。</li>
+</ul>
+</li>
+<li>
+<p><strong>响应体</strong>（Response Body）响应的正文数据都在响应体中</p>
+<ul>
+<li>请求网页时，它的响应体就 是网页的 HTML代码</li>
+<li>请求一张图片时， 它的响应体就是图片的二进制数据</li>
+<li>我们做爬虫请求网页后，要解析的内容就是响应体</li>
+</ul>
+</li>
+</ul>
+<h2 id="网页基础"><a class="markdownIt-Anchor" href="#网页基础"></a> 网页基础</h2>
+<p>网页分为三大部分 ———— HTML（框架），CSS（样式），JavaScript（逻辑）。</p>
+<h3 id="html-超文本标记语言"><a class="markdownIt-Anchor" href="#html-超文本标记语言"></a> HTML, 超文本标记语言</h3>
+<p>详见 <a href="http://www.w3school.com.cn/html/index.asp" target="_blank" rel="noopener">HTML 教程</a></p>
+<h3 id="css-层叠样式表"><a class="markdownIt-Anchor" href="#css-层叠样式表"></a> CSS, 层叠样式表</h3>
+<p>详见 <a href="http://www.w3school.com.cn/css/index.asp" target="_blank" rel="noopener">CSS 教程</a></p>
+<h3 id="javascript-脚本语言"><a class="markdownIt-Anchor" href="#javascript-脚本语言"></a> JavaScript, 脚本语言</h3>
+<p>详见 <a href="http://www.w3school.com.cn/js/index.asp" target="_blank" rel="noopener">JavaScript 教程</a></p>
+<h3 id="网页结构"><a class="markdownIt-Anchor" href="#网页结构"></a> 网页结构</h3>
+<p>在 HTML 中，所有标签定义的内容都是节点，它们构成了一个 HTML DOM 树。（DOM：文档对象模型）<br>
+通过 HTML DOM，树中的所有节点均可通过 JavaScript访问，所有 HTML 节点元素均可被修改，也可以被创建或删除 。</p>
+<p>详见 <a href="http://www.w3school.com.cn/htmldom/index.asp" target="_blank" rel="noopener">HTML DOM 教程</a></p>
+<h3 id="选择器"><a class="markdownIt-Anchor" href="#选择器"></a> 选择器</h3>
+<p>在 css 中，我们使用 css 选择器来定位节点。</p>
+<p>详见 <a href="http://www.w3school.com.cn/cssref/css_selectors.asp" target="_blank" rel="noopener">CSS 选择器表</a></p>
+<h2 id="爬虫的基本原理"><a class="markdownIt-Anchor" href="#爬虫的基本原理"></a> 爬虫的基本原理</h2>
+<p>爬虫是<strong>获取</strong>网页并<strong>提取</strong>和<strong>保存</strong>信息的<strong>自动化程序</strong>。</p>
+<p>可以说，我们能在浏览器中看到的一切内容，都可以通过爬虫得到（包括那些由JavaScript渲染出来的网页）。</p>
+<p>爬虫主要解决以下几个问题：</p>
+<h4 id="获取网页"><a class="markdownIt-Anchor" href="#获取网页"></a> 获取网页</h4>
+<p>构造一个请求并发送给服务器，然后接收到响应并将其解析出来。</p>
+<p>我们可以用urllib、 requests 等库来帮助我们实现 HTTP请求操作，请求和响应都可以用类库提供的数据结构来表示，得到响应之后只需要解析数据结构中的 Body 部分即可，即得到网页的源代码。</p>
+<h4 id="提取信息"><a class="markdownIt-Anchor" href="#提取信息"></a> 提取信息</h4>
+<p>分析网页源代码，从中提取我们想要的数据。</p>
+<p>最通用的方法是采用 <strong>正则表达式</strong> 提取，这是一个万能的方法，但是在构造正则表达式时比较复杂且容易出错。<br>
+使用 Beautiful Soup、 pyquery、 lxml 等库，我们可以高效快速地从中提 取网页信息，如节点的属性、文本值等。</p>
+<h4 id="保存数据"><a class="markdownIt-Anchor" href="#保存数据"></a> 保存数据</h4>
+<p>将提取到的数据保存到某处以便后续使用。</p>
+<h4 id="自动化程序"><a class="markdownIt-Anchor" href="#自动化程序"></a> 自动化程序</h4>
+<p>让爬虫来代替人，完成上述这些操作。<br>
+并在抓取过程中进行各种异常处理、错误重试等操作，确保爬取持续高效地运行。</p>
+<h2 id="会话-和-cookies"><a class="markdownIt-Anchor" href="#会话-和-cookies"></a> 会话 和 Cookies</h2>
+<p>HTTP 本身是<em>无状态</em>的，这是指 HTTP 协议对事物的处理是没有记忆能力的。<br>
+换言之，服务器 不知道 客户端是说明状态。</p>
+<p>然而，我们日常接触的很多网页都可以实现用户登录等需要服务器<em>记住</em>客户端的操作。<br>
+实现这一类操作，就会用到 <strong>会话</strong> 和 <strong>Cookies</strong>。</p>
+<h4 id="会话"><a class="markdownIt-Anchor" href="#会话"></a> 会话</h4>
+<p><strong>会话</strong>，是一系列有始有终的动作/消息。例如，从拿起电话拨号到挂断 电话这中间的一系列过程可以称为一个会话。</p>
+<p>在 Web 中，<strong>会话对象</strong> 用来存储特定用户会话所需的属性及配置信息。</p>
+<p>当用户在应用程序的 Web 页之间跳转时，存储在会话对象中的变量将不会丢失（如用户的登录状态）；<br>
+当用户请求来自应用程序的 Web 页时如果该用户还没有会话，则服务器将自动创建一个会话对象 ；<br>
+当会话过期或被放弃后，服务器将终止该会话；</p>
+<h4 id="cookies"><a class="markdownIt-Anchor" href="#cookies"></a> Cookies</h4>
+<p>Cookies指某些网站为了辨别用户身份、进行会话跟踪而存储在用户本地终端上的数据。</p>
+<p>服务器可以通过 Cookies 得知 那个客户端对应着那个会话、那个用户。<br>
+在 <strong>客户端</strong> 的 <em>Cookies</em> 和 <strong>服务端</strong> 的 <em>会话</em> 的协作下，我们便可以实现会话的维持。</p>
+<p>Cookie有如下几个属性 ：</p>
+<ul>
+<li>
+<p><code>Name</code>: 该 Cookie 的名称。一旦创建，该名称便不可更改。</p>
+</li>
+<li>
+<p><code>Value</code>: 该 Cookie 的值。</p>
+<ul>
+<li>如果值为 <code>Unicode</code> 字符，需要为字符编码。</li>
+<li>如果值为二进制数据，则需要使用 <code>BASE64</code> 编码。</li>
+</ul>
+</li>
+<li>
+<p><code>Domain</code>: 可以访问该 Cookie的域名。例如，如果设置为 <code>.zhihu.com</code>，则所有以 <code>zhihu.com</code> 结尾的域名都可以访问该 Cookie。</p>
+</li>
+<li>
+<p><code>MaxAge</code>: 该 Cookie失效的时间，单位为秒，也常和 <code>Expires</code> 一起使用，通过它可以计算有效时间。</p>
+<ul>
+<li>MaxAge 如果为正数，则该Cookie在MaxAge秒之后失效。</li>
+<li>如果为负数，则关闭 浏览器时 Cookie 即失效，浏览器也不会以任何形式保存该 Cookie。</li>
+</ul>
+</li>
+<li>
+<p><code>Path</code> : 该 Cookie 的使用路径。<br>
+如果设置为 <code>/path/</code>，则只有路径为 <code>/path/</code> 的页面可以访问该 Cookie。<br>
+如果设置为 <code>/</code> 则本域名下的所有页面都可以访问该 Cookie。</p>
+</li>
+<li>
+<p><code>Size</code>字段: 此 Cookie 的大小。</p>
+</li>
+<li>
+<p><code>HTTP</code> 字段: Cookie 的 httponly 属性。</p>
+<ul>
+<li>若此属性为 true，则只有在 HTTP 头中会带有此 Cookie的信息，而不能通过 document.cookie来访问此 Cookie。</li>
+</ul>
+</li>
+<li>
+<p><code>Secure</code>: 该 Cookie 是否仅被使用安全协议传输。安全协议有 HTTPS 和 SSL 等，在网络上传输数据之前先将数据加密。默认为 false。</p>
+</li>
+</ul>
+<h2 id="代理的基本原理"><a class="markdownIt-Anchor" href="#代理的基本原理"></a> 代理的基本原理</h2>
+<p>在我们正常请求一个网站时，我们直接把请求发给了Web服务器，Web服务器又直接把响应回传给我们。</p>
+<p>而如果我们使用 <strong>代理服务</strong>，就等于是多了一个中间人，即<em>代理服务器</em>，这个过程变成了：<br>
+我们直接把请求发给 代理服务器，代理服务器 把响应回传给 代理服务器，代理服务器再把这个消息传给我们。</p>
+<p>通过代理，我们就可以伪装IP，防制在爬虫时被查出来封IP或事需要提供验证码，影响爬虫运行。</p>
+<p>⚠️【注意】并不是所有的 代理 都可以让我们隐藏 IP！<br>
+有的 代理服务 会在向 web服务器 的请求 时，不会原封不动的转发我们的消息，而是在其中添加上我们的真实IP等信息，这时就隐藏不了了。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#爬虫基础"><span class="toc-number">1.</span> <span class="toc-text"> 爬虫基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http-基本原理"><span class="toc-number">1.1.</span> <span class="toc-text"> HTTP 基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#uri-url"><span class="toc-number">1.1.1.</span> <span class="toc-text"> URI &amp; URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超文本"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 超文本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#http-https"><span class="toc-number">1.1.3.</span> <span class="toc-text"> HTTP &amp; HTTPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#http-请求过程"><span class="toc-number">1.1.4.</span> <span class="toc-text"> HTTP 请求过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求request"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 请求（Request）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应response"><span class="toc-number">1.1.6.</span> <span class="toc-text"> 响应（Response）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页基础"><span class="toc-number">1.2.</span> <span class="toc-text"> 网页基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#html-超文本标记语言"><span class="toc-number">1.2.1.</span> <span class="toc-text"> HTML, 超文本标记语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css-层叠样式表"><span class="toc-number">1.2.2.</span> <span class="toc-text"> CSS, 层叠样式表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript-脚本语言"><span class="toc-number">1.2.3.</span> <span class="toc-text"> JavaScript, 脚本语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网页结构"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 网页结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择器"><span class="toc-number">1.2.5.</span> <span class="toc-text"> 选择器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爬虫的基本原理"><span class="toc-number">1.3.</span> <span class="toc-text"> 爬虫的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#获取网页"><span class="toc-number">1.3.0.1.</span> <span class="toc-text"> 获取网页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提取信息"><span class="toc-number">1.3.0.2.</span> <span class="toc-text"> 提取信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#保存数据"><span class="toc-number">1.3.0.3.</span> <span class="toc-text"> 保存数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动化程序"><span class="toc-number">1.3.0.4.</span> <span class="toc-text"> 自动化程序</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#会话-和-cookies"><span class="toc-number">1.4.</span> <span class="toc-text"> 会话 和 Cookies</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#会话"><span class="toc-number">1.4.0.1.</span> <span class="toc-text"> 会话</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cookies"><span class="toc-number">1.4.0.2.</span> <span class="toc-text"> Cookies</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代理的基本原理"><span class="toc-number">1.5.</span> <span class="toc-text"> 代理的基本原理</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/02/10/crawler-1-basic/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&text=爬虫基础"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&is_video=false&description=爬虫基础"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=爬虫基础&body=Check out this article: https://clownote.github.io/2019/02/10/crawler-1-basic/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&title=爬虫基础"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/02/10/crawler-1-basic/&name=爬虫基础&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
