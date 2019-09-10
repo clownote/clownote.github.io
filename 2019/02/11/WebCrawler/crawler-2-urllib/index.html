@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="爬虫请求库的使用之Urllib  本文主要介绍 Urllib 库。   urllib urllib 是 Python 内置的 HTTP 请求库。 urllib 有 request，error，parse，robotparser 四个模块。  urllib.request 发送请求  urlopen(): 发送请求 12345678910# 获取 python 官网 HTML 源码import u">
+<meta name="keywords" content="Crawler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python请求库urllib">
+<meta property="og:url" content="https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="爬虫请求库的使用之Urllib  本文主要介绍 Urllib 库。   urllib urllib 是 Python 内置的 HTTP 请求库。 urllib 有 request，error，parse，robotparser 四个模块。  urllib.request 发送请求  urlopen(): 发送请求 12345678910# 获取 python 官网 HTML 源码import u">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-10T15:02:14.569Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python请求库urllib">
+<meta name="twitter:description" content="爬虫请求库的使用之Urllib  本文主要介绍 Urllib 库。   urllib urllib 是 Python 内置的 HTTP 请求库。 urllib 有 request，error，parse，robotparser 四个模块。  urllib.request 发送请求  urlopen(): 发送请求 12345678910# 获取 python 官网 HTML 源码import u">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>python请求库urllib</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/02/12/WebCrawler/crawler-3-requests/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/02/10/WebCrawler/crawler-1-basic/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&text=python请求库urllib"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&is_video=false&description=python请求库urllib"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=python请求库urllib&body=Check out this article: https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&name=python请求库urllib&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#爬虫请求库的使用之urllib"><span class="toc-number">1.</span> <span class="toc-text"> 爬虫请求库的使用之Urllib</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#urllib"><span class="toc-number">1.1.</span> <span class="toc-text"> urllib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#urllibrequest-发送请求"><span class="toc-number">1.1.1.</span> <span class="toc-text"> urllib.request 发送请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#urlopen-发送请求"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> urlopen(): 发送请求</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#urlopen-带-data-参数-用-post-发送一些数据"><span class="toc-number">1.1.1.1.1.</span> <span class="toc-text"> urlopen() 带 data 参数: 用 POST 发送一些数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#urlopen-带-timeout-参数-如果请求超出了设置的这个时间还没有得到响应就会抛出异常"><span class="toc-number">1.1.1.1.2.</span> <span class="toc-text"> urlopen() 带 timeout 参数: 如果请求超出了设置的这个时间，还没有得到响应，就会抛出异常。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#request-类构建-headers"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> Request 类构建 Headers</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#request类-的构建参数"><span class="toc-number">1.1.1.2.1.</span> <span class="toc-text"> Request类 的构建参数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高级用法"><span class="toc-number">1.1.1.3.</span> <span class="toc-text"> 高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#handler"><span class="toc-number">1.1.1.3.1.</span> <span class="toc-text"> Handler</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opener"><span class="toc-number">1.1.1.3.2.</span> <span class="toc-text"> Opener</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#处理-http-基本认证"><span class="toc-number">1.1.1.3.3.</span> <span class="toc-text"> 处理 HTTP 基本认证</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用-代理"><span class="toc-number">1.1.1.3.4.</span> <span class="toc-text"> 使用 代理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#处理-cookies"><span class="toc-number">1.1.1.3.5.</span> <span class="toc-text"> 处理 Cookies</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#获取-cookies"><span class="toc-number">1.1.1.3.5.1.</span> <span class="toc-text"> 获取 Cookies</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#取用-cookies"><span class="toc-number">1.1.1.3.5.2.</span> <span class="toc-text"> 取用 Cookies</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#urlliberror-处理异常"><span class="toc-number">1.1.2.</span> <span class="toc-text"> urllib.error 处理异常</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#urlerror"><span class="toc-number">1.1.2.1.</span> <span class="toc-text"> URLError:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#httperror"><span class="toc-number">1.1.2.2.</span> <span class="toc-text"> HTTPError</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#综合使用"><span class="toc-number">1.1.2.3.</span> <span class="toc-text"> 综合使用：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#urllibparse-解析链接"><span class="toc-number">1.1.3.</span> <span class="toc-text"> urllib.parse 解析链接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#quote-将内容转化为-url-编码的格式"><span class="toc-number">1.1.3.1.</span> <span class="toc-text"> quote() 将内容转化为 URL 编码的格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#urlparse-url的识别和分段"><span class="toc-number">1.1.3.2.</span> <span class="toc-text"> urlparse() URL的识别和分段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#urlunparse-合成url"><span class="toc-number">1.1.3.3.</span> <span class="toc-text"> urlunparse() 合成URL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#urlencode-字典类型-转化为-get请求参数"><span class="toc-number">1.1.3.4.</span> <span class="toc-text"> urlencode()  字典类型 转化为 GET请求参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#parse_qs-get请求参数-转化为-字典类型"><span class="toc-number">1.1.3.5.</span> <span class="toc-text"> parse_qs()  GET请求参数 转化为 字典类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他"><span class="toc-number">1.1.3.6.</span> <span class="toc-text"> 其他</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#urllibrobotparser-分析robots协议"><span class="toc-number">1.1.4.</span> <span class="toc-text"> urllib.robotparser 分析Robots协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#robots协议"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> Robots协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解析-robotstxt-urllibrobotparserrobotfileparser-类"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 解析 Robots.txt ---- urllib.robotparser.RobotFileParser 类</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#robotfileparser-实例的构造"><span class="toc-number">1.1.4.2.1.</span> <span class="toc-text"> RobotFileParser 实例的构造</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#robotfileparser-常用方法"><span class="toc-number">1.1.4.2.2.</span> <span class="toc-text"> RobotFileParser 常用方法</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        python请求库urllib
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-02-11T14:49:55.000Z" itemprop="datePublished">2019-02-11</time>
+        
+        (Updated: <time datetime="2019-09-10T15:02:14.569Z" itemprop="dateModified">2019-09-10</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Crawler/">Crawler</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Crawler/">Crawler</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="爬虫请求库的使用之urllib"><a class="markdownIt-Anchor" href="#爬虫请求库的使用之urllib"></a> 爬虫请求库的使用之Urllib</h1>
+<blockquote>
+<p>本文主要介绍 <strong>Urllib 库</strong>。</p>
+</blockquote>
+<h2 id="urllib"><a class="markdownIt-Anchor" href="#urllib"></a> urllib</h2>
+<p><code>urllib</code> 是 Python 内置的 HTTP 请求库。</p>
+<p>urllib 有 request，error，parse，robotparser 四个模块。</p>
+<h3 id="urllibrequest-发送请求"><a class="markdownIt-Anchor" href="#urllibrequest-发送请求"></a> urllib.request 发送请求</h3>
+<h4 id="urlopen-发送请求"><a class="markdownIt-Anchor" href="#urlopen-发送请求"></a> <code>urlopen()</code>: 发送请求</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取 python 官网 HTML 源码</span></span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">response = urllib.request.urlopen(<span class="string">'https://www.python.org'</span>)</span><br><span class="line"></span><br><span class="line">print(response.read().decode(<span class="string">'utf-8'</span>))  <span class="comment"># 查看response内容</span></span><br><span class="line">print(type(response))                   <span class="comment"># 查看response类型</span></span><br><span class="line">print(response.status)                  <span class="comment"># 查看response状态码</span></span><br><span class="line">print(response.getheaders())            <span class="comment"># 查看响应头</span></span><br><span class="line">print(response.getheader(<span class="string">'Server'</span>))     <span class="comment"># 查看特定的响应头项</span></span><br></pre></td></tr></table></figure>
+<p><code>urllib.request.urlopen(url, data=None, [timeout, ]*, cafile=None, capath=None, cadefault=False, context=None)</code></p>
+<h5 id="urlopen-带-data-参数-用-post-发送一些数据"><a class="markdownIt-Anchor" href="#urlopen-带-data-参数-用-post-发送一些数据"></a> <code>urlopen()</code> 带 <code>data</code> 参数: 用 POST 发送一些数据</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.parse</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">data = bytes(</span><br><span class="line">    urllib.parse.urlencode(&#123;<span class="string">'Hello'</span>: <span class="string">'World'</span>&#125;),</span><br><span class="line">    encoding=<span class="string">'utf-8'</span></span><br><span class="line">    )</span><br><span class="line">response = urllib.request.urlopen(<span class="string">'http://httpbin.org/post'</span>, data=data)</span><br><span class="line">print(response.read().decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+<h5 id="urlopen-带-timeout-参数-如果请求超出了设置的这个时间还没有得到响应就会抛出异常"><a class="markdownIt-Anchor" href="#urlopen-带-timeout-参数-如果请求超出了设置的这个时间还没有得到响应就会抛出异常"></a> <code>urlopen()</code> 带 <code>timeout</code> 参数: 如果请求超出了设置的这个时间，还没有得到响应，就会抛出异常。</h5>
+<p>设置<code>timeout=Sec</code>，Sce 为超时的秒数（可以为小数）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = urllib.request.urlopen(<span class="string">'http://httpbin.org/get'</span>, timeout=<span class="number">0.1</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    print(e)</span><br><span class="line">        </span><br><span class="line">print(response.read().decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="request-类构建-headers"><a class="markdownIt-Anchor" href="#request-类构建-headers"></a> Request 类构建 Headers</h4>
+<p>利用更强大的 Request类来构建一个完整的请求。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">request = urllib.request.Request(<span class="string">'http://python.org'</span>)</span><br><span class="line">response = urllib.request.urlopen(request)</span><br><span class="line">print(response.read().decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+<h5 id="request类-的构建参数"><a class="markdownIt-Anchor" href="#request类-的构建参数"></a> Request类 的构建参数</h5>
+<p><code>class urllib.request.Request(ur1, data=None, headers={},origin_req_host=None, unverifiable=False, method=None)</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request, parse</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://httpbin.org/post'</span></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15'</span>,</span><br><span class="line">        <span class="string">'Host'</span>: <span class="string">'httpbin.org'</span></span><br><span class="line">        &#125;</span><br><span class="line">dic = &#123;</span><br><span class="line">        <span class="string">'name'</span>: <span class="string">'CDFMLR'</span></span><br><span class="line">        &#125;</span><br><span class="line">data = bytes(parse.urlencode(dic), encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line">req = request.Request(url=url, data=data, headers=headers, method=<span class="string">'POST'</span>)</span><br><span class="line">response = request.urlopen(req)</span><br><span class="line">print(response.read().decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="高级用法"><a class="markdownIt-Anchor" href="#高级用法"></a> 高级用法</h4>
+<h5 id="handler"><a class="markdownIt-Anchor" href="#handler"></a> Handler</h5>
+<p>Handler 包含 各种处理器，有专门处理登录验证的，有处理 Cookies 的，有处理代理设置的…</p>
+<p>urllib.request 模块里的 <code>BaseHandler</code> 类是所有其他 Handler 的父类，它提供最基本的方法。</p>
+<p>其他的 Handler 详见 <a href="https://docs.python.org/3/library/urllib.request.html#urllib.request.BaseHandler" target="_blank" rel="noopener">Handler</a></p>
+<h5 id="opener"><a class="markdownIt-Anchor" href="#opener"></a> Opener</h5>
+<p>之前用过 urlopen()方法，实际上就是 urllib 提供的一个 Opener。</p>
+<p>urlopen() 相当于类库封装好了极其常用的请求方法，利用它可以完成基本的请求，但如果需要实现更高级的功能，就需要深入一层进行配置，使用更底层的实例来完成操作，就用到了 Opener。</p>
+<p>Opener 可以使用 open()方法，返回的类型和 urlopen()如出一辙。</p>
+<p>我们需要利用 Handler来构建 Opener。</p>
+<hr>
+<p>（以下是几个 Hander &amp; Opener 的应用）</p>
+<h5 id="处理-http-基本认证"><a class="markdownIt-Anchor" href="#处理-http-基本认证"></a> 处理 <code>HTTP 基本认证</code></h5>
+<p><code>HTTP基本认证</code>：</p>
+<blockquote>
+<p>有一种 web 登录方式不是通过 <code>cookie</code>，而是把 <code>用户名:密码</code> 用 <code>base64</code> 编码之后的字符串放在 request 中的 <code>header Authorization</code> 中发送给服务端。<br>
+当打开网页提示需要输入账号和密码时，假设密码/账号错误，服务器会返回401错误。</p>
+</blockquote>
+<p>这种网站在打开时就会弹出提示框，直接提示输入用户名和密码，验证成功后才能查看页面，我们现在来处理这种页面。</p>
+<p>要请求这种页面，可以借用 <code>HTTPBasicAuthHandler</code> 完成：</p>
+<p><em>在我们打算自己实现一个使用 http基本认证 的示例网站时，我们发现了 <a href="http://pythonscraping.com/pages/auth/login.php" target="_blank" rel="noopener">一个很好的例子</a>，所以，我们现在来爬取它。</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> HTTPPasswordMgrWithDefaultRealm, HTTPBasicAuthHandler, build_opener</span><br><span class="line"><span class="keyword">from</span> urllib.error <span class="keyword">import</span> URLError</span><br><span class="line"></span><br><span class="line">username = <span class="string">'username'</span></span><br><span class="line">password = <span class="string">'password'</span></span><br><span class="line">url = <span class="string">'http://pythonscraping.com/pages/auth/login.php'</span></span><br><span class="line"></span><br><span class="line">p = HTTPPasswordMgrWithDefaultRealm()</span><br><span class="line">p.add_password(<span class="literal">None</span>, url, username, password)</span><br><span class="line">auth_handler = HTTPBasicAuthHandler(p)</span><br><span class="line">opener = build_opener(auth_handler)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    result = opener.open(url)</span><br><span class="line">    html = result.read().decode(<span class="string">'utf-8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">    print(html)</span><br><span class="line"><span class="keyword">except</span> URLError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason)</span><br></pre></td></tr></table></figure>
+<p>在此，我们也想附上这种 <code>http基本认证</code> 的 php 实现，以供实践：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">isset</span>($_SERVER[<span class="string">'PHP_AUTH_USER'</span>])) &#123;</span><br><span class="line">    header(<span class="string">'WWW-Authenticate: Basic realm="My Realm"'</span>);</span><br><span class="line">    header(<span class="string">'HTTP/1.0 401 Unauthorized'</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Text to send if user hits Cancel button'</span>;</span><br><span class="line">    <span class="keyword">exit</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;p&gt;Hello &#123;$_SERVER['PHP_AUTH_USER']&#125;.&lt;/p&gt;"</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;p&gt;You entered &#123;$_SERVER['PHP_AUTH_PW']&#125; as your password.&lt;/p&gt;"</span>;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="使用-代理"><a class="markdownIt-Anchor" href="#使用-代理"></a> 使用 <code>代理</code></h5>
+<p>尝试找一个<a href="https://www.xicidaili.com/nn/" target="_blank" rel="noopener">免费的代理服务器</a>，然后用这个服务器来代理：</p>
+<p><em>寻找可用代理的时候可以尝试在浏览器中访问代理服务器的 IP:Port，可用的是会出现结果的:)</em></p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.error <span class="keyword">import</span> URLError</span><br><span class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> ProxyHandler, build_opener</span><br><span class="line"></span><br><span class="line">proxy_handler = ProxyHandler(&#123;</span><br><span class="line">    <span class="string">'http'</span>: <span class="string">'http://171.41.80.197:9999'</span>,        <span class="comment"># 用 ‘&lt;http||https&gt;://代理服务器_IP:代理服务器_端口’</span></span><br><span class="line">    <span class="string">'https'</span>: <span class="string">'https://171.41.80.197:9999'</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">opener = build_opener(proxy_handler)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = opener.open(<span class="string">'http://www.baidu.com'</span>)  <span class="comment"># 要通过代理爬取的网页</span></span><br><span class="line">    print(response.read().decode(<span class="string">'utf-8'</span>, errors=<span class="string">'ignore'</span>))</span><br><span class="line">    print(response.getheaders())</span><br><span class="line"><span class="keyword">except</span> URLError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason)</span><br></pre></td></tr></table></figure>
+<h5 id="处理-cookies"><a class="markdownIt-Anchor" href="#处理-cookies"></a> 处理 Cookies</h5>
+<h6 id="获取-cookies"><a class="markdownIt-Anchor" href="#获取-cookies"></a> 获取 Cookies</h6>
+<p>获取 <code>http://www.baidu.com</code> 的 Cookies，依次打印出 name = value：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> http.cookiejar</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">cookie = http.cookiejar.CookieJar()</span><br><span class="line">handler = urllib.request.HTTPCookieProcessor(cookie)</span><br><span class="line">opener = urllib.request.build_opener(handler)</span><br><span class="line"></span><br><span class="line">response = opener.open(<span class="string">'http://www.baidu.com'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> cookie:</span><br><span class="line">    print(item.name, <span class="string">'='</span>, item.value)</span><br></pre></td></tr></table></figure>
+<p>还是获取 <code>http://www.baidu.com</code> 的 Cookies，把它们保存到文件中（正如实际上 Cookies 的保存方式那样）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> http.cookiejar</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">filename = <span class="string">'cookies_from_baidu.txt'</span></span><br><span class="line"></span><br><span class="line">cookie = http.cookiejar.MozillaCookieJar(filename)      <span class="comment"># 用 MozillaCookieJar 类把 Cookies 储存为 Mozilla 型浏览器的格式。</span></span><br><span class="line"><span class="comment"># cookie = http.cookiejar.LWPCookieJar(filename)         # 用这行代替上一行，可以把 Cookies 储存为 libwww-perl(LWP) 的格式。</span></span><br><span class="line"></span><br><span class="line">handler = urllib.request.HTTPCookieProcessor(cookie)</span><br><span class="line">opener = urllib.request.build_opener(handler)</span><br><span class="line"></span><br><span class="line">response = opener.open(<span class="string">'http://www.baidu.com'</span>)</span><br><span class="line"></span><br><span class="line">cookie.save(ignore_discard=<span class="literal">True</span>, ignore_expires=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p><code>MozillaCookieJar</code> 和 <code>LWPCookieJar</code> 都可以<strong>读取</strong>和<strong>保存</strong> Cookies。只是它们的保存格式有别。</p>
+<h6 id="取用-cookies"><a class="markdownIt-Anchor" href="#取用-cookies"></a> 取用 Cookies</h6>
+<p>取用我们刚才保存下来的 Cookies：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> http.cookiejar</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">cookie = http.cookiejar.MozillaCookieJar()</span><br><span class="line">cookie.load(<span class="string">'cookies_from_baidu.txt'</span>, ignore_discard=<span class="literal">True</span>, ignore_expires=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">handler = urllib.request.HTTPCookieProcessor(cookie)</span><br><span class="line">opener = urllib.request.build_opener(handler)</span><br><span class="line"></span><br><span class="line">response = opener.open(<span class="string">'http://www.baidu.com'</span>)</span><br><span class="line">print(response.read().decode(<span class="string">'utf-8'</span>, errors=<span class="string">'ignore'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="urlliberror-处理异常"><a class="markdownIt-Anchor" href="#urlliberror-处理异常"></a> urllib.error 处理异常</h3>
+<h4 id="urlerror"><a class="markdownIt-Anchor" href="#urlerror"></a> URLError:</h4>
+<p><code>URLError</code> 类来自 <code>Urllib</code> 库的 <code>error</code> 模块，它继承自 <code>OSError</code> 类，是 error 异常模块的基类，由 request 模块生的异常都可以通过捕获这个类来处理。</p>
+<p>它具有一个属性 <code>reason</code>，即返回错误的原因:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request, error</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = request.urlopen(<span class="string">'http://www.google.com'</span>)</span><br><span class="line"><span class="keyword">except</span> error.URLError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason)</span><br></pre></td></tr></table></figure>
+<p>通过如上操作，我们就可以避免程序异常终止，同时异常得到了有效处理。</p>
+<h4 id="httperror"><a class="markdownIt-Anchor" href="#httperror"></a> HTTPError</h4>
+<p><code>HTTPError</code> 是 <code>URLError</code> 的子类。用来处理 <strong>HTTP 请求错误</strong>，比如认证请求失败等等。</p>
+<p><code>HTTPError</code> 的属性：</p>
+<ul>
+<li><code>code</code>，返回 HTTP Status Code，即状态码，比如 404 网页不存在，500 服务器内部错误等等。</li>
+<li><code>reason</code>，同父类一样，返回错误的原因。</li>
+<li><code>headers</code>，返回 Request Headers。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request,error</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = request.urlopen(<span class="string">'http://cr0123.gz01.bdysite.com/no_such_a_page.html'</span>)</span><br><span class="line"><span class="keyword">except</span> error.HTTPError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">'\n[Reason]'</span>, e.reason,</span><br><span class="line">        <span class="string">'\n[code]'</span>, e.code,</span><br><span class="line">        <span class="string">'\n[headers]'</span>, e.headers</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<h4 id="综合使用"><a class="markdownIt-Anchor" href="#综合使用"></a> 综合使用：</h4>
+<p>在实际的使用过程中，我们可以先选择捕获子类的错误，再去捕获父类的错误，从而使处理完整，层次清晰。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request, error</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = request.urlopen(<span class="string">'http://www.google.com'</span>)</span><br><span class="line"><span class="keyword">except</span> error.HTTPError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">'HTTPError:'</span>)</span><br><span class="line">    print(<span class="string">'[Reason]'</span>, e.reason, <span class="string">'[code]'</span>, e.code, <span class="string">'[headers]'</span>, e.headers, sep=<span class="string">'\n'</span>)</span><br><span class="line"><span class="keyword">except</span> error.URLError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">'URLError:'</span>)</span><br><span class="line">    print(<span class="string">'[Error Reason]\n'</span>, e.reason)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">'Exception:'</span>)</span><br><span class="line">    print(e)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'Request Successfully'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="urllibparse-解析链接"><a class="markdownIt-Anchor" href="#urllibparse-解析链接"></a> urllib.parse 解析链接</h3>
+<p><code>urllib.parse</code> 模块定义了处理 URL 的标准接口，例如实现 URL 各部分的抽取，合并以及链接转换。</p>
+<h4 id="quote-将内容转化为-url-编码的格式"><a class="markdownIt-Anchor" href="#quote-将内容转化为-url-编码的格式"></a> quote() 将内容转化为 URL 编码的格式</h4>
+<p>可以用来把中文字符转化为 URL 编码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> quote</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>quote(<span class="string">'中文'</span>)</span><br><span class="line"><span class="string">'%E4%B8%AD%E6%96%87'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'https://www.baidu.com/s?wd='</span> + quote(<span class="string">'URL 编码'</span>)    <span class="comment"># 合成的网址即可百度搜索‘URL 编码’</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(url)</span><br><span class="line">https://www.baidu.com/s?wd=URL%20%E7%BC%96%E7%A0%81</span><br></pre></td></tr></table></figure>
+<p>要解码，可是使用对应的 <code>unquote()</code>。</p>
+<h4 id="urlparse-url的识别和分段"><a class="markdownIt-Anchor" href="#urlparse-url的识别和分段"></a> urlparse() URL的识别和分段</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlparse</span><br><span class="line"></span><br><span class="line">result = urlparse(<span class="string">'http://www.baidu.com/index.html;user?id=5#comment'</span>)</span><br><span class="line">print(type(result))</span><br><span class="line">print(result)</span><br><span class="line">print(result.netloc)</span><br><span class="line"></span><br><span class="line"><span class="string">'''(results)</span></span><br><span class="line"><span class="string">&lt;class 'urllib.parse.ParseResult'&gt;</span></span><br><span class="line"><span class="string">ParseResult(scheme='http', netloc='www.baidu.com', path='/index.html', params='user', query='id=5', fragment='comment')</span></span><br><span class="line"><span class="string">www.baidu.com</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>ParseResult 包含：</p>
+<ul>
+<li>scheme ———— 协议</li>
+<li>netloc ———— 主机名</li>
+<li>path ———— 路径</li>
+<li>params ———— <code>;XXX</code></li>
+<li>query ———— <code>?XXX</code></li>
+<li>fragment ———— <code>#XXX</code></li>
+</ul>
+<h4 id="urlunparse-合成url"><a class="markdownIt-Anchor" href="#urlunparse-合成url"></a> urlunparse() 合成URL</h4>
+<p><strong>依次</strong>传入六个部分：(scheme, netloc, path, params, query, fragment)，<br>
+将合成一个: <code>scheme://netloc/path;params?query#fragment</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlunparse</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>data = [<span class="string">'https'</span>, <span class="string">'www.baidu.com'</span>, <span class="string">'/index.php'</span>, <span class="string">'user'</span>, <span class="string">'id=5'</span>, <span class="string">'123'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>urlunparse(data)</span><br><span class="line"><span class="string">'https://www.baidu.com/index.php;user?id=5#123'</span></span><br></pre></td></tr></table></figure>
+<h4 id="urlencode-字典类型-转化为-get请求参数"><a class="markdownIt-Anchor" href="#urlencode-字典类型-转化为-get请求参数"></a> urlencode()  字典类型 转化为 GET请求参数</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlencode</span><br><span class="line"></span><br><span class="line">params = &#123;</span><br><span class="line">    <span class="string">'name'</span>: <span class="string">'germey'</span>,</span><br><span class="line">    <span class="string">'age'</span>: <span class="number">22</span></span><br><span class="line">&#125;</span><br><span class="line">base_url = <span class="string">'http://www.baidu.com?'</span></span><br><span class="line">url = base_url + urlencode(params)</span><br><span class="line">print(url)</span><br><span class="line"></span><br><span class="line"><span class="string">'''(result)</span></span><br><span class="line"><span class="string">http://www.baidu.com?name=germey&amp;age=22</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h4 id="parse_qs-get请求参数-转化为-字典类型"><a class="markdownIt-Anchor" href="#parse_qs-get请求参数-转化为-字典类型"></a> parse_qs()  GET请求参数 转化为 字典类型</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> parse_qs</span><br><span class="line"></span><br><span class="line">query = <span class="string">'name=germey&amp;age=22'</span></span><br><span class="line">print(parse_qs(query))</span><br><span class="line"></span><br><span class="line"><span class="string">'''(result)</span></span><br><span class="line"><span class="string">&#123;'name': ['germey'], 'age': ['22']&#125;</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>另有一个 <code>parse_qsl()</code> 与 <code>parse_qs()</code> 类似，只是得到的结果是 元组</p>
+<h4 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h4>
+<p>这个库中还有一些 <code>urljoin</code> 等方式，可以在 <a href="https://germey.gitbooks.io/python3webspider/content/3.1.3-%E8%A7%A3%E6%9E%90%E9%93%BE%E6%8E%A5.html" target="_blank" rel="noopener">这里</a> 查看。</p>
+<h3 id="urllibrobotparser-分析robots协议"><a class="markdownIt-Anchor" href="#urllibrobotparser-分析robots协议"></a> urllib.robotparser 分析Robots协议</h3>
+<h4 id="robots协议"><a class="markdownIt-Anchor" href="#robots协议"></a> Robots协议</h4>
+<p>网络爬虫排除标准（Robots Exclusion Protocol），用来告诉爬虫和搜索引擎哪些页面可以抓取，哪些不可以抓取。<br>
+它通常是一个叫做 robots.txt 的文本文件，放在网站的根目录下。</p>
+<p>Robots协议的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">User-agent: *               这里的*代表的所有的搜索引擎种类，*是一个通配符</span><br><span class="line">Disallow: /admin/           这里定义是禁止爬寻admin目录下面的目录</span><br><span class="line">Disallow: /require/         这里定义是禁止爬寻require目录下面的目录</span><br><span class="line">Disallow: /ABC/             这里定义是禁止爬寻ABC目录下面的目录</span><br><span class="line">Disallow: /cgi-bin/*.htm    禁止访问/cgi-bin/目录下的所有以&quot;.htm&quot;为后缀的URL(包含子目录)。</span><br><span class="line">Disallow: /*?*              禁止访问网站中所有包含问号 (?) 的网址</span><br><span class="line">Disallow: /.jpg$            禁止抓取网页所有的.jpg格式的图片</span><br><span class="line">Disallow:/ab/adc.html       禁止爬取ab文件夹下面的adc.html文件。</span><br><span class="line">Allow: /cgi-bin/　          这里定义是允许爬寻cgi-bin目录下面的目录</span><br><span class="line">Allow: /tmp                 这里定义是允许爬寻tmp的整个目录</span><br><span class="line">Allow: .htm$                仅允许访问以&quot;.htm&quot;为后缀的URL。</span><br><span class="line">Allow: .gif$                允许抓取网页和gif格式图片</span><br><span class="line">Sitemap:                    网站地图 告诉爬虫这个页面是网站地图</span><br></pre></td></tr></table></figure>
+<p>使用例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">禁止所有搜索引擎访问网站的任何部分</span><br><span class="line">User-agent: *</span><br><span class="line">Disallow: /</span><br><span class="line"></span><br><span class="line">允许所有的robot访问</span><br><span class="line">User-agent: *</span><br><span class="line">Allow:　/</span><br><span class="line"></span><br><span class="line">允许某个搜索引擎的访问</span><br><span class="line">User-agent: Baiduspider</span><br><span class="line">allow:/</span><br></pre></td></tr></table></figure>
+<h4 id="解析-robotstxt-urllibrobotparserrobotfileparser-类"><a class="markdownIt-Anchor" href="#解析-robotstxt-urllibrobotparserrobotfileparser-类"></a> 解析 Robots.txt ---- <code>urllib.robotparser.RobotFileParser</code> 类</h4>
+<p>robotparser 模块提供了一个 <code>RobotFileParser</code> 类。它可以根据某网站的 robots.txt 文件来判断一个爬取爬虫是否有权限来爬取这个网页。</p>
+<h5 id="robotfileparser-实例的构造"><a class="markdownIt-Anchor" href="#robotfileparser-实例的构造"></a> <code>RobotFileParser</code> 实例的构造</h5>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urllib.robotparser.RobotFileParser(url=&apos;&apos;)      # 传入 robots.txt 的链接</span><br></pre></td></tr></table></figure>
+<h5 id="robotfileparser-常用方法"><a class="markdownIt-Anchor" href="#robotfileparser-常用方法"></a> <code>RobotFileParser</code> 常用方法</h5>
+<ul>
+<li><code>set_url(url)</code> 用来设置 robots.txt 的链接</li>
+<li><code>read()</code> 读取 robots.txt 文件并进行分析。<br>
+⚠️【注意】如果不 read()，所有的判断函数都会返回 False！</li>
+<li><code>parse()</code> 用来解析 robots.txt 文件，传入的参数是 robots.txt 某些行的内容，它会按照 robots.txt 的语法规则来分析这些内容。</li>
+<li><code>can_fetch()</code> 传入两个参数，第一个是 User-agent，第二个是要抓取的 URL，返回的内容是该搜索引擎是否可以抓取这个 URL，返回结果是 True 或 False。</li>
+<li><code>mtime()</code>，返回的是上次抓取和分析 robots.txt 的时间，这个对于长时间分析和抓取的搜索爬虫是很有必要的，你可能需要定期检查来抓取最新的 robots.txt。</li>
+<li><code>modified()</code>，同样的对于长时间分析和抓取的搜索爬虫很有帮助，将当前时间设置为上次抓取和分析 robots.txt 的时间。</li>
+</ul>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#爬虫请求库的使用之urllib"><span class="toc-number">1.</span> <span class="toc-text"> 爬虫请求库的使用之Urllib</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#urllib"><span class="toc-number">1.1.</span> <span class="toc-text"> urllib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#urllibrequest-发送请求"><span class="toc-number">1.1.1.</span> <span class="toc-text"> urllib.request 发送请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#urlopen-发送请求"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> urlopen(): 发送请求</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#urlopen-带-data-参数-用-post-发送一些数据"><span class="toc-number">1.1.1.1.1.</span> <span class="toc-text"> urlopen() 带 data 参数: 用 POST 发送一些数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#urlopen-带-timeout-参数-如果请求超出了设置的这个时间还没有得到响应就会抛出异常"><span class="toc-number">1.1.1.1.2.</span> <span class="toc-text"> urlopen() 带 timeout 参数: 如果请求超出了设置的这个时间，还没有得到响应，就会抛出异常。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#request-类构建-headers"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> Request 类构建 Headers</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#request类-的构建参数"><span class="toc-number">1.1.1.2.1.</span> <span class="toc-text"> Request类 的构建参数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高级用法"><span class="toc-number">1.1.1.3.</span> <span class="toc-text"> 高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#handler"><span class="toc-number">1.1.1.3.1.</span> <span class="toc-text"> Handler</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opener"><span class="toc-number">1.1.1.3.2.</span> <span class="toc-text"> Opener</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#处理-http-基本认证"><span class="toc-number">1.1.1.3.3.</span> <span class="toc-text"> 处理 HTTP 基本认证</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用-代理"><span class="toc-number">1.1.1.3.4.</span> <span class="toc-text"> 使用 代理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#处理-cookies"><span class="toc-number">1.1.1.3.5.</span> <span class="toc-text"> 处理 Cookies</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#获取-cookies"><span class="toc-number">1.1.1.3.5.1.</span> <span class="toc-text"> 获取 Cookies</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#取用-cookies"><span class="toc-number">1.1.1.3.5.2.</span> <span class="toc-text"> 取用 Cookies</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#urlliberror-处理异常"><span class="toc-number">1.1.2.</span> <span class="toc-text"> urllib.error 处理异常</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#urlerror"><span class="toc-number">1.1.2.1.</span> <span class="toc-text"> URLError:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#httperror"><span class="toc-number">1.1.2.2.</span> <span class="toc-text"> HTTPError</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#综合使用"><span class="toc-number">1.1.2.3.</span> <span class="toc-text"> 综合使用：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#urllibparse-解析链接"><span class="toc-number">1.1.3.</span> <span class="toc-text"> urllib.parse 解析链接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#quote-将内容转化为-url-编码的格式"><span class="toc-number">1.1.3.1.</span> <span class="toc-text"> quote() 将内容转化为 URL 编码的格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#urlparse-url的识别和分段"><span class="toc-number">1.1.3.2.</span> <span class="toc-text"> urlparse() URL的识别和分段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#urlunparse-合成url"><span class="toc-number">1.1.3.3.</span> <span class="toc-text"> urlunparse() 合成URL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#urlencode-字典类型-转化为-get请求参数"><span class="toc-number">1.1.3.4.</span> <span class="toc-text"> urlencode()  字典类型 转化为 GET请求参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#parse_qs-get请求参数-转化为-字典类型"><span class="toc-number">1.1.3.5.</span> <span class="toc-text"> parse_qs()  GET请求参数 转化为 字典类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他"><span class="toc-number">1.1.3.6.</span> <span class="toc-text"> 其他</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#urllibrobotparser-分析robots协议"><span class="toc-number">1.1.4.</span> <span class="toc-text"> urllib.robotparser 分析Robots协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#robots协议"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> Robots协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解析-robotstxt-urllibrobotparserrobotfileparser-类"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 解析 Robots.txt ---- urllib.robotparser.RobotFileParser 类</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#robotfileparser-实例的构造"><span class="toc-number">1.1.4.2.1.</span> <span class="toc-text"> RobotFileParser 实例的构造</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#robotfileparser-常用方法"><span class="toc-number">1.1.4.2.2.</span> <span class="toc-text"> RobotFileParser 常用方法</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&text=python请求库urllib"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&is_video=false&description=python请求库urllib"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=python请求库urllib&body=Check out this article: https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&title=python请求库urllib"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/02/11/WebCrawler/crawler-2-urllib/&name=python请求库urllib&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
