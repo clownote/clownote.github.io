@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Mac 本地快照占用空间问题  问题描述  在使用 Mac 的过程中，可能遇到如下问题：  当我们在 App Store 中下载一个比较大的软件时（如 Xcode，&amp;gt;6GB），弹出对话框提示说：“可用的磁盘空间不足，无法安装此产品”。 这时，我们点击菜单栏左上角&amp;quot;🍎&amp;quot;图标-&amp;gt;“关于本机”-&amp;gt;“储存空间”，或查看 Finder(访达)底部，发现显示的可用空间">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-18T12:48:55.849Z">
+<meta property="og:updated_time" content="2019-11-26T07:06:04.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mac 本地快照占用空间问题">
 <meta name="twitter:description" content="Mac 本地快照占用空间问题  问题描述  在使用 Mac 的过程中，可能遇到如下问题：  当我们在 App Store 中下载一个比较大的软件时（如 Xcode，&amp;gt;6GB），弹出对话框提示说：“可用的磁盘空间不足，无法安装此产品”。 这时，我们点击菜单栏左上角&amp;quot;🍎&amp;quot;图标-&amp;gt;“关于本机”-&amp;gt;“储存空间”，或查看 Finder(访达)底部，发现显示的可用空间">
@@ -77,6 +77,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" href="/2019/11/26/AndrewNg-MachineLearning-15-AnomalyDetection/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" href="/2019/11/13/AndrewNg-MachineLearning-14-DimensionalityReduction/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -131,7 +133,7 @@
       
         <time datetime="2019-11-18T12:45:01.000Z" itemprop="datePublished">2019-11-18</time>
         
-        (Updated: <time datetime="2019-11-18T12:48:55.849Z" itemprop="dateModified">2019-11-18</time>)
+        (Updated: <time datetime="2019-11-26T07:06:04.556Z" itemprop="dateModified">2019-11-26</time>)
         
       
     </div>
@@ -190,6 +192,7 @@
 <p>问题解决💪！</p>
 <p>P.S. 参考&quot;文本式截图&quot;😜：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[foo@His-MacBook:] 06:06  ~ !501 $ tmutil listlocalsnapshotdates</span><br><span class="line">Snapshot dates for all disks:</span><br><span class="line">2066-06-20-133724</span><br><span class="line">2066-06-20-140056</span><br><span class="line">[foo@His-MacBook:] 06:06  ~ !502 $ tmutil deletelocalsnapshots 2066-06-20-133724</span><br><span class="line">Deleted local snapshot &apos;2066-06-20-133724&apos;</span><br><span class="line">[foo@His-MacBook:] 06:06  ~ !503 $</span><br></pre></td></tr></table></figure>
+<p>【注】我也经历过在上述操作后完全没解决问题的情况。而在我做完上述所有操作并且重启，再重复一遍这些操作后，It works.</p>
 <h2 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h2>
 <p>好的，问题解决了，但为什么可以这样操作呢？答案就藏在我们解决的办法里。</p>
 <p>首先，“<code>tmutil</code>” 是什么东西，通过 <code>$ whatis tmutil</code>，我们可以知道，它的学名叫做“时间机器实用工具（Time Machine utility）”，又通过 <code>$ man tmutil</code>，我们会明白，我们刚才是列出(listlocalsnapshotdates)并逐个删除(deletelocalsnapshots)了磁盘中储存的“<strong>时间机器本地快照</strong>（local Time Machine snapshots）”。</p>
@@ -200,7 +203,7 @@
 您无需考虑本地快照所占用的储存空间大小，因为它们不会占用诸如下载文件、拷贝文件或安装新软件等任务所需的空间。<br>
 您的 Mac 将快照占用的空间计为可用储存空间。即便如此，“时间机器”只会将快照储存在具有大量可用空间的磁盘上，并且会在快照过旧或其他内容需要空间时自动删除相应的快照。</p>
 </blockquote>
-<p>emmm，这就可以解释问题了。这个自动的快照本来是不应该影响我们下载安装软件的，但可能它有点抽（正如 Apple 如今之于 Mac😜），不听系统使唤终至恶果。</p>
+<p>emmm，这就可以解释问题了。这个自动的快照本来是不应该影响我们下载安装软件的，但可能它有点抽不听系统使唤了。</p>
 <p>我们的解决方案是手动删除了那些快照，当然，读完了 Apple 的文档，我们知道也可以通过设置”取消选择’自动备份‘”来达到同样的效果。<strong>但！是！</strong>，这些快照平时感觉用处并不大，但偶尔或许还真有大用（备份这种东西就像保险一样，希望一辈子都用不到，但该买的还是应该买），所以 Apple 和我们都并不推荐取消这个功能，我们只要在不时之需到来时，懂得如何手动释放一些空间就好了。</p>
 <p>That’s it.😉</p>
 
