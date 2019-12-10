@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Python爬虫储存库的使用之Redis  本文主要介绍 Python 下 Redis 的使用（RedisPy库）。   Redis 简介  Redis 是一个基于内存的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。  RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。 推荐使用的是 StrictRedis，它实现了绝大部">
+<meta name="keywords" content="Crawler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python之Redis">
+<meta property="og:url" content="https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Python爬虫储存库的使用之Redis  本文主要介绍 Python 下 Redis 的使用（RedisPy库）。   Redis 简介  Redis 是一个基于内存的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。  RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。 推荐使用的是 StrictRedis，它实现了绝大部">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-10T15:03:21.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python之Redis">
+<meta name="twitter:description" content="Python爬虫储存库的使用之Redis  本文主要介绍 Python 下 Redis 的使用（RedisPy库）。   Redis 简介  Redis 是一个基于内存的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。  RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。 推荐使用的是 StrictRedis，它实现了绝大部">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Python之Redis</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/02/22/PythonAndCrawler/crawler-13-ajax/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/02/20/PythonAndCrawler/crawler-11-mongodb/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&text=Python之Redis"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&is_video=false&description=Python之Redis"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python之Redis&body=Check out this article: https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&name=Python之Redis&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#python爬虫储存库的使用之redis"><span class="toc-number">1.</span> <span class="toc-text"> Python爬虫储存库的使用之Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#redis-简介"><span class="toc-number">1.1.</span> <span class="toc-text"> Redis 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接-redis"><span class="toc-number">1.2.</span> <span class="toc-text"> 连接 Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-strictredis-连接"><span class="toc-number">1.2.0.1.</span> <span class="toc-text"> 使用 StrictRedis 连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-connectionpool-连接"><span class="toc-number">1.2.0.2.</span> <span class="toc-text"> 使用 ConnectionPool 连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#key-操作"><span class="toc-number">1.3.</span> <span class="toc-text"> Key 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#string-操作"><span class="toc-number">1.4.</span> <span class="toc-text"> String 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list-操作"><span class="toc-number">1.5.</span> <span class="toc-text"> List 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set-sorted-set操作"><span class="toc-number">1.6.</span> <span class="toc-text"> Set 、Sorted Set操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hash-操作"><span class="toc-number">1.7.</span> <span class="toc-text"> Hash 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redisdump"><span class="toc-number">1.8.</span> <span class="toc-text"> RedisDump</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Python之Redis
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-02-21T14:49:55.000Z" itemprop="datePublished">2019-02-21</time>
+        
+        (Updated: <time datetime="2019-09-10T15:03:21.371Z" itemprop="dateModified">2019-09-10</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Crawler/">Crawler</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Crawler/">Crawler</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="python爬虫储存库的使用之redis"><a class="markdownIt-Anchor" href="#python爬虫储存库的使用之redis"></a> Python爬虫储存库的使用之Redis</h1>
+<blockquote>
+<p>本文主要介绍 Python 下 Redis 的使用（RedisPy库）。</p>
+</blockquote>
+<h2 id="redis-简介"><a class="markdownIt-Anchor" href="#redis-简介"></a> Redis 简介</h2>
+<blockquote>
+<p>Redis 是一个<strong>基于内存</strong>的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。</p>
+</blockquote>
+<p>RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。<br>
+推荐使用的是 StrictRedis，它实现了绝大部分Redis的命令，参数也一一对应。<br>
+Redis 主要用来兼容旧版本。</p>
+<h2 id="连接-redis"><a class="markdownIt-Anchor" href="#连接-redis"></a> 连接 Redis</h2>
+<p>首先需要确定正确在本地安装了Redis，并开启了服务。</p>
+<h4 id="使用-strictredis-连接"><a class="markdownIt-Anchor" href="#使用-strictredis-连接"></a> 使用 StrictRedis 连接</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> StrictRedis</span><br><span class="line"></span><br><span class="line">redis = StrictRedis(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>, password=<span class="literal">None</span>)</span><br><span class="line"><span class="comment"># 这里使用的这几个参数和默认值是等效的，即可以直接使用 `StrictRedis()` 来代替。</span></span><br><span class="line"></span><br><span class="line">redis.set(<span class="string">'name'</span>, <span class="string">'Foo'</span>)    <span class="comment"># 设置了一个键值对</span></span><br><span class="line">print(redis.get(<span class="string">'name'</span>))    <span class="comment"># 获取一个数据</span></span><br></pre></td></tr></table></figure>
+<h4 id="使用-connectionpool-连接"><a class="markdownIt-Anchor" href="#使用-connectionpool-连接"></a> 使用 ConnectionPool 连接</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> StrictRedis, ConnectionPool</span><br><span class="line"></span><br><span class="line">pool = ConnectionPool(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>, password=<span class="literal">None</span>)</span><br><span class="line">redis = StrictRedis(connection_pool=pool)</span><br><span class="line"></span><br><span class="line">redis.set(<span class="string">'age'</span>, <span class="number">100</span>)</span><br><span class="line">print(redis.get(<span class="string">'age'</span>))</span><br></pre></td></tr></table></figure>
+<p>使用 ConnectionPool 还可以用 URL 来构建：</p>
+<p>有三种可用的 URL 格式：</p>
+<ul>
+<li>Redis TCP 连接：<code>redis://[:password]@host:port/db</code></li>
+<li>Redis TCP+SSL 连接：<code>rediss://[:password]@host:port/db</code></li>
+<li>Redis Unix Socket连接：<code>unix://[:password]@/path/to/socket.sock?db=db</code></li>
+</ul>
+<p>使用的姿势如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> StrictRedis, ConnectionPool</span><br><span class="line"><span class="comment"># 注意多导入了一个ConnectionPool。</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">'redis://@localhost:6379/0'</span></span><br><span class="line">pool = ConnectionPool.from_url(url)</span><br><span class="line">redis = StrictRedis(connection_pool=pool)</span><br><span class="line"></span><br><span class="line">redis.set(<span class="string">"test"</span>, <span class="string">'test'</span>)</span><br><span class="line">r = redis.get(<span class="string">'test'</span>)</span><br><span class="line">print(type(r), r, sep=<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="key-操作"><a class="markdownIt-Anchor" href="#key-操作"></a> Key 操作</h2>
+<p>这是一些常用的对 key 的操作，通过使用如 <code>redis.exists('neme')</code> 这样的语句来使用他们：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>参数说明</th>
+<th>示例</th>
+<th>示例说明</th>
+<th>示例结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>exists(name)</td>
+<td>判断一个key是否存在</td>
+<td>name: key名</td>
+<td>redis.exists(‘name’)</td>
+<td>是否存在name这个key</td>
+<td>1</td>
+</tr>
+<tr>
+<td>delete(name)</td>
+<td>删除一个key</td>
+<td>name: key名</td>
+<td>redis.delete(‘name’)</td>
+<td>删除name这个key</td>
+<td>1</td>
+</tr>
+<tr>
+<td>type(name)</td>
+<td>判断key类型</td>
+<td>name: key名</td>
+<td>redis.type(‘name’)</td>
+<td>判断name这个key类型</td>
+<td>b’string’</td>
+</tr>
+<tr>
+<td>keys(pattern)</td>
+<td>获取所有符合规则的key</td>
+<td>pattern: 匹配规则</td>
+<td>redis.keys(‘n*’)</td>
+<td>获取所有以n开头的key</td>
+<td>[b’name’]</td>
+</tr>
+<tr>
+<td>randomkey()</td>
+<td>获取随机的一个key</td>
+<td></td>
+<td>randomkey()</td>
+<td>获取随机的一个key</td>
+<td>b’name’</td>
+</tr>
+<tr>
+<td>rename(src, dst)</td>
+<td>将key重命名</td>
+<td>src: 原key名 dst: 新key名</td>
+<td>redis.rename(‘name’, ‘nickname’)</td>
+<td>将name重命名为nickname</td>
+<td>True</td>
+</tr>
+<tr>
+<td>dbsize()</td>
+<td>获取当前数据库中key的数目</td>
+<td></td>
+<td>dbsize()</td>
+<td>获取当前数据库中key的数目</td>
+<td>100</td>
+</tr>
+<tr>
+<td>expire(name, time)</td>
+<td>设定key的过期时间，单位秒</td>
+<td>name: key名 time: 秒数</td>
+<td>redis.expire(‘name’, 2)</td>
+<td>将name这key的过期时间设置2秒</td>
+<td>True</td>
+</tr>
+<tr>
+<td>ttl(name)</td>
+<td>获取key的过期时间，单位秒，-1为永久不过期</td>
+<td>name: key名</td>
+<td>redis.ttl(‘name’)</td>
+<td>获取name这key的过期时间</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>move(name, db)</td>
+<td>将key移动到其他数据库</td>
+<td>name: key名 db: 数据库代号</td>
+<td>move(‘name’, 2)</td>
+<td>将name移动到2号数据库</td>
+<td>True</td>
+</tr>
+<tr>
+<td>flushdb()</td>
+<td>删除当前选择数据库中的所有key</td>
+<td></td>
+<td>flushdb()</td>
+<td>删除当前选择数据库中的所有key</td>
+<td>True</td>
+</tr>
+<tr>
+<td>flushall()</td>
+<td>删除所有数据库中的所有key</td>
+<td></td>
+<td>flushall()</td>
+<td>删除所有数据库中的所有key</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<h2 id="string-操作"><a class="markdownIt-Anchor" href="#string-操作"></a> String 操作</h2>
+<p>String 是 Redis 中最基本的Value储存方式，他的操作如下，</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>参数说明</th>
+<th>示例</th>
+<th>示例说明</th>
+<th>示例结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>set(name, value)</td>
+<td>给数据库中key为name的string赋予值value</td>
+<td>name: key名 value: 值</td>
+<td>redis.set(‘name’, ‘Bob’)</td>
+<td>给name这个key的value赋值为Bob</td>
+<td>True</td>
+</tr>
+<tr>
+<td>get(name)</td>
+<td>返回数据库中key为name的string的value</td>
+<td>name: key名</td>
+<td>redis.get(‘name’)</td>
+<td>返回name这个key的value</td>
+<td>b’Bob’</td>
+</tr>
+<tr>
+<td>getset(name, value)</td>
+<td>给数据库中key为name的string赋予值value并返回上次的value</td>
+<td>name: key名 value: 新值</td>
+<td>redis.getset(‘name’, ‘Mike’)</td>
+<td>赋值name为Mike并得到上次的value</td>
+<td>b’Bob’</td>
+</tr>
+<tr>
+<td>mget(keys, *args)</td>
+<td>返回多个key对应的value</td>
+<td>keys: key的列表</td>
+<td>redis.mget([‘name’, ‘nickname’])</td>
+<td>返回name和nickname的value</td>
+<td>[b’Mike’, b’Miker’]</td>
+</tr>
+<tr>
+<td>setnx(name, value)</td>
+<td>如果key不存在才设置value</td>
+<td>name: key名</td>
+<td>redis.setnx(‘newname’, ‘James’)</td>
+<td>如果newname这key不存在则设置值为James</td>
+<td>第一次运行True，第二次False</td>
+</tr>
+<tr>
+<td>setex(name, time, value)</td>
+<td>设置可以对应的值为string类型的value，并指定此键值对应的有效期</td>
+<td>name: key名 time: 有效期 value: 值</td>
+<td>redis.setex(‘name’, 1, ‘James’)</td>
+<td>将name这key的值设为James，有效期1秒</td>
+<td>True</td>
+</tr>
+<tr>
+<td>setrange(name, offset, value)</td>
+<td>设置指定key的value值的子字符串</td>
+<td>name: key名 offset: 偏移量 value: 值</td>
+<td>redis.set(‘name’, ‘Hello’) redis.setrange(‘name’, 6, ‘World’)</td>
+<td>设置name为Hello字符串，并在index为6的位置补World</td>
+<td>11，修改后的字符串长度</td>
+</tr>
+<tr>
+<td>mset(mapping)</td>
+<td>批量赋值</td>
+<td>mapping: 字典</td>
+<td>redis.mset({‘name1’: ‘Durant’, ‘name2’: ‘James’})</td>
+<td>将name1设为Durant，name2设为James</td>
+<td>True</td>
+</tr>
+<tr>
+<td>msetnx(mapping)</td>
+<td>key均不存在时才批量赋值</td>
+<td>mapping: 字典</td>
+<td>redis.msetnx({‘name3’: ‘Smith’, ‘name4’: ‘Curry’})</td>
+<td>在name3和name4均不存在的情况下才设置二者值</td>
+<td>True</td>
+</tr>
+<tr>
+<td>incr(name, amount=1)</td>
+<td>key为name的value增值操作，默认1，key不存在则被创建并设为amount</td>
+<td>name: key名 amount:增长的值</td>
+<td>redis.incr(‘age’, 1)</td>
+<td>age对应的值增1，若不存在则会创建并设置为1</td>
+<td>1，即修改后的值</td>
+</tr>
+<tr>
+<td>decr(name, amount=1)</td>
+<td>key为name的value减值操作，默认1，key不存在则被创建并设置为-amount</td>
+<td>name: key名 amount:减少的值</td>
+<td>redis.decr(‘age’, 1)</td>
+<td>age对应的值减1，若不存在则会创建并设置为-1</td>
+<td>-1，即修改后的值</td>
+</tr>
+<tr>
+<td>append(key, value)</td>
+<td>key为name的string的值附加value</td>
+<td>key: key名</td>
+<td>redis.append(‘nickname’, ‘OK’)</td>
+<td>向key为nickname的值后追加OK</td>
+<td>13，即修改后的字符串长度</td>
+</tr>
+<tr>
+<td>substr(name, start, end=-1)</td>
+<td>返回key为name的string的value的子串</td>
+<td>name: key名 start: 起始索引 end: 终止索引，默认-1截取到末尾</td>
+<td>redis.substr(‘name’, 1, 4)</td>
+<td>返回key为name的值的字符串，截取索引为1-4的字符</td>
+<td>b’ello’</td>
+</tr>
+<tr>
+<td>getrange(key, start, end)</td>
+<td>获取key的value值从start到end的子字符串</td>
+<td>key: key名 start: 起始索引 end: 终止索引</td>
+<td>redis.getrange(‘name’, 1, 4)</td>
+<td>返回key为name的值的字符串，截取索引为1-4的字符</td>
+<td>b’ello’</td>
+</tr>
+</tbody>
+</table>
+<h2 id="list-操作"><a class="markdownIt-Anchor" href="#list-操作"></a> List 操作</h2>
+<p>List 是 Redis 中 value 为列表的一种数据。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>参数说明</th>
+<th>示例</th>
+<th>示例说明</th>
+<th>示例结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rpush(name, *values)</td>
+<td>在key为name的list尾添加值为value的元素，可以传多个</td>
+<td>name: key名 values: 值</td>
+<td>redis.rpush(‘list’, 1, 2, 3)</td>
+<td>给list这个key的list尾添加1、2、3</td>
+<td>3，list大小</td>
+</tr>
+<tr>
+<td>lpush(name, *values)</td>
+<td>在key为name的list头添加值为value的元素，可以传多个</td>
+<td>name: key名 values: 值</td>
+<td>redis.lpush(‘list’, 0)</td>
+<td>给list这个key的list头添加0</td>
+<td>4，list大小</td>
+</tr>
+<tr>
+<td>llen(name)</td>
+<td>返回key为name的list的长度</td>
+<td>name: key名</td>
+<td>redis.llen(‘list’)</td>
+<td>返回key为list的列表的长度</td>
+<td>4</td>
+</tr>
+<tr>
+<td>lrange(name, start, end)</td>
+<td>返回key为name的list中start至end之间的元素</td>
+<td>name: key名 start: 起始索引 end: 终止索引</td>
+<td>redis.lrange(‘list’, 1, 3)</td>
+<td>返回起始为1终止为3的索引范围对应的list</td>
+<td>[b’3’, b’2’, b’1’]</td>
+</tr>
+<tr>
+<td>ltrim(name, start, end)</td>
+<td>截取key为name的list，保留索引为start到end的内容</td>
+<td>name:key名 start: 起始索引 end: 终止索引</td>
+<td>ltrim(‘list’, 1, 3)</td>
+<td>保留key为list的索引为1到3的元素</td>
+<td>True</td>
+</tr>
+<tr>
+<td>lindex(name, index)</td>
+<td>返回key为name的list中index位置的元素</td>
+<td>name: key名 index: 索引</td>
+<td>redis.lindex(‘list’, 1)</td>
+<td>返回key为list的列表index为1的元素</td>
+<td>b’2’</td>
+</tr>
+<tr>
+<td>lset(name, index, value)</td>
+<td>给key为name的list中index位置的元素赋值，越界则报错</td>
+<td>name: key名 index: 索引位置 value: 值</td>
+<td>redis.lset(‘list’, 1, 5)</td>
+<td>将key为list的list索引1位置赋值为5</td>
+<td>True</td>
+</tr>
+<tr>
+<td>lrem(name, count, value)</td>
+<td>删除count个key的list中值为value的元素</td>
+<td>name: key名 count: 删除个数 value: 值</td>
+<td>redis.lrem(‘list’, 2, 3)</td>
+<td>将key为list的列表删除2个3</td>
+<td>1，即删除的个数</td>
+</tr>
+<tr>
+<td>lpop(name)</td>
+<td>返回并删除key为name的list中的首元素</td>
+<td>name: key名</td>
+<td>redis.lpop(‘list’)</td>
+<td>返回并删除名为list的list第一个元素</td>
+<td>b’5’</td>
+</tr>
+<tr>
+<td>rpop(name)</td>
+<td>返回并删除key为name的list中的尾元素</td>
+<td>name: key名</td>
+<td>redis.rpop(‘list’)</td>
+<td>返回并删除名为list的list最后一个元素</td>
+<td>b’2’</td>
+</tr>
+<tr>
+<td>blpop(keys, timeout=0)</td>
+<td>返回并删除名称为在keys中的list中的首元素，如果list为空，则会一直阻塞等待</td>
+<td>keys: key列表 timeout: 超时等待时间，0为一直等待</td>
+<td>redis.blpop(‘list’)</td>
+<td>返回并删除名为list的list的第一个元素</td>
+<td>[b’5’]</td>
+</tr>
+<tr>
+<td>brpop(keys, timeout=0)</td>
+<td>返回并删除key为name的list中的尾元素，如果list为空，则会一直阻塞等待</td>
+<td>keys: key列表 timeout: 超时等待时间，0为一直等待</td>
+<td>redis.brpop(‘list’)</td>
+<td>返回并删除名为list的list的最后一个元素</td>
+<td>[b’2’]</td>
+</tr>
+<tr>
+<td>rpoplpush(src, dst)</td>
+<td>返回并删除名称为src的list的尾元素，并将该元素添加到名称为dst的list的头部</td>
+<td>src: 源list的key dst: 目标list的key</td>
+<td>redis.rpoplpush(‘list’, ‘list2’)</td>
+<td>将key为list的list尾元素删除并返回并将其添加到key为list2的list头部</td>
+<td>b’2’</td>
+</tr>
+</tbody>
+</table>
+<h2 id="set-sorted-set操作"><a class="markdownIt-Anchor" href="#set-sorted-set操作"></a> Set 、Sorted Set操作</h2>
+<p>详见 <a href="https://germey.gitbooks.io/python3webspider/content/5.3.2-Redis%E5%AD%98%E5%82%A8.html" target="_blank" rel="noopener">Redis教程</a>。</p>
+<h2 id="hash-操作"><a class="markdownIt-Anchor" href="#hash-操作"></a> Hash 操作</h2>
+<p>Redis 中可以用name指定一个哈希表的名称，然后表内存储了各个键值对。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>参数说明</th>
+<th>示例</th>
+<th>示例说明</th>
+<th>示例结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hset(name, key, value)</td>
+<td>向key为name的hash中添加映射</td>
+<td>name: key名 key: 映射键名 value: 映射键值</td>
+<td>hset(‘price’, ‘cake’, 5)</td>
+<td>向key为price的hash中添加映射关系，cake的值为5</td>
+<td>1，即添加的映射个数</td>
+</tr>
+<tr>
+<td>hsetnx(name, key, value)</td>
+<td>向key为name的hash中添加映射，如果映射键名不存在</td>
+<td>name: key名 key: 映射键名 value: 映射键值</td>
+<td>hsetnx(‘price’, ‘book’, 6)</td>
+<td>向key为price的hash中添加映射关系，book的值为6</td>
+<td>1，即添加的映射个数</td>
+</tr>
+<tr>
+<td>hget(name, key)</td>
+<td>返回key为name的hash中field对应的value</td>
+<td>name: key名 key: 映射键名</td>
+<td>redis.hget(‘price’, ‘cake’)</td>
+<td>获取key为price的hash中键名为cake的value</td>
+<td>5</td>
+</tr>
+<tr>
+<td>hmget(name, keys, *args)</td>
+<td>返回key为name的hash中各个键对应的value</td>
+<td>name: key名 keys: 映射键名列表</td>
+<td>redis.hmget(‘price’, [‘apple’, ‘orange’])</td>
+<td>获取key为price的hash中apple和orange的值</td>
+<td>[b’3’, b’7’]</td>
+</tr>
+<tr>
+<td>hmset(name, mapping)</td>
+<td>向key为name的hash中批量添加映射</td>
+<td>name: key名 mapping: 映射字典</td>
+<td>redis.hmset(‘price’, {‘banana’: 2, ‘pear’: 6})</td>
+<td>向key为price的hash中批量添加映射</td>
+<td>True</td>
+</tr>
+<tr>
+<td>hincrby(name, key, amount=1)</td>
+<td>将key为name的hash中映射的value增加amount</td>
+<td>name: key名 key: 映射键名 amount: 增长量</td>
+<td>redis.hincrby(‘price’, ‘apple’, 3)</td>
+<td>key为price的hash中apple的值增加3</td>
+<td>6，修改后的值</td>
+</tr>
+<tr>
+<td>hexists(name, key)</td>
+<td>key为namehash中是否存在键名为key的映射</td>
+<td>name: key名 key: 映射键名</td>
+<td>redis.hexists(‘price’, ‘banana’)</td>
+<td>key为price的hash中banana的值是否存在</td>
+<td>True</td>
+</tr>
+<tr>
+<td>hdel(name, *keys)</td>
+<td>key为namehash中删除键名为key的映射</td>
+<td>name: key名 key: 映射键名</td>
+<td>redis.hdel(‘price’, ‘banana’)</td>
+<td>从key为price的hash中删除键名为banana的映射</td>
+<td>True</td>
+</tr>
+<tr>
+<td>hlen(name)</td>
+<td>从key为name的hash中获取映射个数</td>
+<td>name: key名</td>
+<td>redis.hlen(‘price’)</td>
+<td>从key为price的hash中获取映射个数</td>
+<td>6</td>
+</tr>
+<tr>
+<td>hkeys(name)</td>
+<td>从key为name的hash中获取所有映射键名</td>
+<td>name: key名</td>
+<td>redis.hkeys(‘price’)</td>
+<td>从key为price的hash中获取所有映射键名</td>
+<td>[b’cake’, b’book’, b’banana’, b’pear’]</td>
+</tr>
+<tr>
+<td>hvals(name)</td>
+<td>从key为name的hash中获取所有映射键值</td>
+<td>name: key名</td>
+<td>redis.hvals(‘price’)</td>
+<td>从key为price的hash中获取所有映射键值</td>
+<td>[b’5’, b’6’, b’2’, b’6’]</td>
+</tr>
+<tr>
+<td>hgetall(name)</td>
+<td>从key为name的hash中获取所有映射键值对</td>
+<td>name: key名</td>
+<td>redis.hgetall(‘price’)</td>
+<td>从key为price的hash中获取所有映射键值对</td>
+<td>{b’cake’: b’5’, b’book’: b’6’, b’orange’: b’7’, b’pear’: b’6’}</td>
+</tr>
+</tbody>
+</table>
+<h2 id="redisdump"><a class="markdownIt-Anchor" href="#redisdump"></a> RedisDump</h2>
+<p>RedisDump 提供了 Redis 数据的导入和导出功能。</p>
+<p>RedisDump 提供两个可执行命令：</p>
+<ul>
+<li><code>redis-dump</code> 用于 导出 数据；详见 <code>redis-dump -h</code>
+<ul>
+<li>e.g. <code>$ redis-dump -u :foobared@localhost:6379 &gt; ./redis_data.jl</code></li>
+</ul>
+</li>
+<li><code>redis-load</code> 用于 导入 数据；详见 <code>redis-load -h</code>
+<ul>
+<li>e.g. <code>$ redis-load -u :foobared@localhost:6379 &lt; redis_data.json</code></li>
+<li>等价于<code>$ cat redis_data.json | redis-load -u :foobared@localhost:6379</code></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#python爬虫储存库的使用之redis"><span class="toc-number">1.</span> <span class="toc-text"> Python爬虫储存库的使用之Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#redis-简介"><span class="toc-number">1.1.</span> <span class="toc-text"> Redis 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接-redis"><span class="toc-number">1.2.</span> <span class="toc-text"> 连接 Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-strictredis-连接"><span class="toc-number">1.2.0.1.</span> <span class="toc-text"> 使用 StrictRedis 连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-connectionpool-连接"><span class="toc-number">1.2.0.2.</span> <span class="toc-text"> 使用 ConnectionPool 连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#key-操作"><span class="toc-number">1.3.</span> <span class="toc-text"> Key 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#string-操作"><span class="toc-number">1.4.</span> <span class="toc-text"> String 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list-操作"><span class="toc-number">1.5.</span> <span class="toc-text"> List 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set-sorted-set操作"><span class="toc-number">1.6.</span> <span class="toc-text"> Set 、Sorted Set操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hash-操作"><span class="toc-number">1.7.</span> <span class="toc-text"> Hash 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redisdump"><span class="toc-number">1.8.</span> <span class="toc-text"> RedisDump</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&text=Python之Redis"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&is_video=false&description=Python之Redis"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python之Redis&body=Check out this article: https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&title=Python之Redis"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/&name=Python之Redis&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>

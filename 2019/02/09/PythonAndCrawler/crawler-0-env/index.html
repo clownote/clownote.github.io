@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="开发环境配置  本文主要介绍 Python 3 网络爬虫 所需要的软件的安装及配置。   开发环境  我们在 macOS X 上使用 Python 3.7 来开发爬虫。   请求库 安装 网络爬虫，首先要获取网络上的数据，即抓取页面，这就需要我们模拟浏览器向服务器发出请求。 我们可以安装一些 Python 库来帮助我们比较容易地完成这个操作。 让我们来安装它们吧：   requests : 网络">
+<meta name="keywords" content="Crawler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python3爬虫环境配置">
+<meta property="og:url" content="https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="开发环境配置  本文主要介绍 Python 3 网络爬虫 所需要的软件的安装及配置。   开发环境  我们在 macOS X 上使用 Python 3.7 来开发爬虫。   请求库 安装 网络爬虫，首先要获取网络上的数据，即抓取页面，这就需要我们模拟浏览器向服务器发出请求。 我们可以安装一些 Python 库来帮助我们比较容易地完成这个操作。 让我们来安装它们吧：   requests : 网络">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-10T15:01:59.463Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python3爬虫环境配置">
+<meta name="twitter:description" content="开发环境配置  本文主要介绍 Python 3 网络爬虫 所需要的软件的安装及配置。   开发环境  我们在 macOS X 上使用 Python 3.7 来开发爬虫。   请求库 安装 网络爬虫，首先要获取网络上的数据，即抓取页面，这就需要我们模拟浏览器向服务器发出请求。 我们可以安装一些 Python 库来帮助我们比较容易地完成这个操作。 让我们来安装它们吧：   requests : 网络">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Python3爬虫环境配置</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/02/10/PythonAndCrawler/crawler-1-basic/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/01/12/Linux/linux-9-2-Awk/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&text=Python3爬虫环境配置"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&is_video=false&description=Python3爬虫环境配置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python3爬虫环境配置&body=Check out this article: https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&name=Python3爬虫环境配置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#开发环境配置"><span class="toc-number">1.</span> <span class="toc-text"> 开发环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发环境"><span class="toc-number">1.1.</span> <span class="toc-text"> 开发环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求库-安装"><span class="toc-number">1.2.</span> <span class="toc-text"> 请求库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析库-安装"><span class="toc-number">1.3.</span> <span class="toc-text"> 解析库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库-安装"><span class="toc-number">1.4.</span> <span class="toc-text"> 数据库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#储存库-安装"><span class="toc-number">1.5.</span> <span class="toc-text"> 储存库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web库-安装"><span class="toc-number">1.6.</span> <span class="toc-text"> Web库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app爬取相关库-安装"><span class="toc-number">1.7.</span> <span class="toc-text"> App爬取相关库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爬虫框架-安装"><span class="toc-number">1.8.</span> <span class="toc-text"> 爬虫框架 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署相关库的安装"><span class="toc-number">1.9.</span> <span class="toc-text"> 部署相关库的安装</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Python3爬虫环境配置
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-02-09T14:49:55.000Z" itemprop="datePublished">2019-02-09</time>
+        
+        (Updated: <time datetime="2019-09-10T15:01:59.463Z" itemprop="dateModified">2019-09-10</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Crawler/">Crawler</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Crawler/">Crawler</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="开发环境配置"><a class="markdownIt-Anchor" href="#开发环境配置"></a> 开发环境配置</h1>
+<blockquote>
+<p>本文主要介绍 Python 3 网络爬虫 所需要的软件的安装及配置。</p>
+</blockquote>
+<h2 id="开发环境"><a class="markdownIt-Anchor" href="#开发环境"></a> 开发环境</h2>
+<ul>
+<li>我们在 <code>macOS X</code> 上使用 <code>Python 3.7</code> 来开发爬虫。</li>
+</ul>
+<h2 id="请求库-安装"><a class="markdownIt-Anchor" href="#请求库-安装"></a> <strong>请求库</strong> 安装</h2>
+<p>网络爬虫，首先要获取网络上的数据，即抓取页面，这就需要我们模拟浏览器向服务器发出请求。<br>
+我们可以安装一些 Python 库来帮助我们比较容易地完成这个操作。</p>
+<p>让我们来安装它们吧：</p>
+<ul>
+<li>
+<p><strong>requests</strong> : 网络请求:</p>
+<ul>
+<li><code>pip3 inastal requests</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Selenium</strong> : 自动测试工具（驱动浏览器执行特定的动作，如点击、下拉等 操作 ）:</p>
+<ul>
+<li><code>pip3 install selenium</code></li>
+</ul>
+</li>
+<li>
+<p><strong>ChromeDriver</strong> : 用 <em>Chrome</em> 与 Selenium 配合工作:</p>
+<ul>
+<li>安装 Chrome 浏览器</li>
+<li>在 Chrome 菜单（“···”） -&gt; “关于 Google Chrome”，查看当前Chrome版本。</li>
+<li>从 <a href="http://chromedriver.chromium.org/" target="_blank" rel="noopener">ChromeDriver官网</a> 下载配对 Chrome 版本的 ChromeDriver（⚠️【注意】ChromeDriver 一定要与 Chrome 的版本兼容！）。</li>
+<li>解压下载的文件，得到可执行文件，将其加入环境变量（可以简单地把它放到环境变量中有的目录下）。</li>
+</ul>
+</li>
+<li>
+<p><strong>GeckoDriver</strong>: 用 <em>Firefox</em> 与 Selenium 配合工作:</p>
+<ul>
+<li><em>暂时并没有使用 Firefox，所以没有安装这个😂。</em></li>
+</ul>
+</li>
+<li>
+<p>~~<strong>PhantomJS</strong>: 还是配合 Selenium 工作的:</p>
+<ul>
+<li>(PhantomJS 简介)PhantomJS是一个无界面的、可脚本编程的 WebKit浏览器引擎，它原生支持多种 Web标准: DOM操作、 css选择器、 JSON、 Canvas以及 SVG。Selenium支持 PhantomJS，这样在运行的时候就不会再弹出 一个浏览器了 。 而且 PhantomJS 的运行效率也很高，还支持各种参数配置，使用非常方便。</li>
+<li>从 <a href="http://phantomjs.org" target="_blank" rel="noopener">PhantomJS官网</a> 下载 PhantomJS。</li>
+<li>将下载得到的目录中的 可执行文件 加入环境变量。</li>
+<li>⚠️【注意】在 2018年3月4日， PhantomJS 宣布<a href="https://github.com/ariya/phantomjs/issues/15344" target="_blank" rel="noopener">暂停开发</a>了！Selenium 也不再赞同使用 PhantomJS了。~~</li>
+</ul>
+</li>
+<li>
+<p><strong>aiohttp</strong>: 一个异步的 Web 服务库（相比之下 <code>requests</code> 是阻塞式的）:</p>
+<ul>
+<li><code>pip3 install aiohttp</code></li>
+</ul>
+</li>
+<li>
+<p><strong>cchardet</strong>: 字符编码检测库（aiohttp官方推荐安装的）:</p>
+<ul>
+<li><code>pip3 install cchardet</code></li>
+</ul>
+</li>
+<li>
+<p><strong>aiodns</strong>: 加速 DNS 的解析库（aiohttp官方推荐安装的）:</p>
+<ul>
+<li><code>pip3 install aiodns</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="解析库-安装"><a class="markdownIt-Anchor" href="#解析库-安装"></a> <strong>解析库</strong> 安装</h2>
+<p>抓取网页之后，我们就要从中提取有用的信息了。<br>
+我们当然可以使用令人望而生畏的 <strong>正则表达式</strong> 来完成这一操作；<br>
+不过，有很多强大的库可以帮助我们更优雅地处理这一问题。</p>
+<p>下面，我们将安装这些库：</p>
+<ul>
+<li>
+<p><strong>lxml</strong>: 一个 Python 的 HTML、XML 解析库，支持XPath:</p>
+<ul>
+<li><code>pip3 install lxml</code></li>
+<li>这个库安装常有问题，主要可能是缺少必要的库，不同的平台，解决办法差异太大，应自行Google。</li>
+</ul>
+</li>
+<li>
+<p><strong>Beautiful Soup</strong>: 一个 Python 的 HTML、XML 解析库，拥有强大的API和多种解析方式:</p>
+<ul>
+<li><code>pip3 install beautifulsoup4</code></li>
+<li>⚠️【注意】Beautiful Soup 安装好之后的库名是<code>bs4</code>，所以 import 的时候是<code>import bs4</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>pyquery</strong>: 一个提供了类似于 jQuery 的语法的 HTML 解析工具，支持 CSS 选择器:</p>
+<ul>
+<li><code>pip3 install pyquery</code></li>
+</ul>
+</li>
+<li>
+<p><strong>tesserocr</strong>: 一个 OCR 库，用来处理验证码:</p>
+<ul>
+<li>tesserocr 是对 tesseract 的 Python API 封装，故要先安装 <strong>tesseract</strong>
+<ul>
+<li><code>$ brew install imagemagick</code></li>
+<li><code>$ brew install tesseract</code></li>
+</ul>
+</li>
+<li><code>pip3 install tesserocr pillow</code></li>
+<li>⚠️ 这时，在 Mac 上试图 <code>&gt;&gt;&gt; import tesserocr</code> 会遇到 <code>!strcmp(locale, &quot;C&quot;):Error:Assert failed:in file baseapi.cpp</code> 的断言失败，导致 <code>Illegal instruction: 4</code> 使 Python 错误退出。</li>
+<li>要解决上述问题，可以通过 <code>$ export LC_ALL=C</code>（临时性），或把 <code>export LC_ALL=C</code> 写入 <code>~/.bashrc</code>（永久性）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据库-安装"><a class="markdownIt-Anchor" href="#数据库-安装"></a> 数据库 安装</h2>
+<ul>
+<li>
+<p><strong>MySQL</strong>: 关系型数据库:</p>
+<ul>
+<li><code>$ brew install mysql</code></li>
+</ul>
+</li>
+<li>
+<p><strong>MongoDB</strong>: 非关系型数据库:</p>
+<ul>
+<li><code>$ brew install mongodb</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Redis</strong>: 一个基于内存的高效非关系型数据库:</p>
+<ul>
+<li><code>$ brew install redis</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="储存库-安装"><a class="markdownIt-Anchor" href="#储存库-安装"></a> <strong>储存库</strong> 安装</h2>
+<p>储存库 是让 Python 使用我们之前安装好的数据库的库。</p>
+<ul>
+<li>
+<p><strong>PyMySQL</strong>: 让 Python 与 MySQL 交互:</p>
+<ul>
+<li><code>pip3 install pymysql</code></li>
+</ul>
+</li>
+<li>
+<p><strong>PyMongo</strong>: 让 Python 与 MongoDB 交互:</p>
+<ul>
+<li><code>pip3 install pymongo</code></li>
+</ul>
+</li>
+<li>
+<p><strong>redis-py</strong>: 让 Python 与 Redis 交互:</p>
+<ul>
+<li><code>pip3 install redis</code></li>
+</ul>
+</li>
+<li>
+<p><strong>RedisDump</strong>: 一个用于 Redis 数据导入/导出的工具，基于Ruby:</p>
+<ul>
+<li>安装 RedisDump 首先要安装 <code>Ruby</code>，这里我们使用 MacOS 自带的 Ruby。</li>
+<li>使用 Ruby 的 gem（类似于pip）安装 RedisDump：
+<ul>
+<li><code>$ sudo gem install redis-dump</code></li>
+<li>⚠️【注意】由于安装目录是 MacOS 的一部分，必须要sudo，否则无权安装！</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="web库-安装"><a class="markdownIt-Anchor" href="#web库-安装"></a> <strong>Web库</strong> 安装</h2>
+<p>我们需要用到 Web服务程序 来搭建一些 API接口，供爬虫使用。</p>
+<ul>
+<li>
+<p><strong>Flask</strong>: 一个轻量级 Web 服务程序，这里用来做一些 API 服务:</p>
+<ul>
+<li><code>pip3 install flask</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Tornado</strong>: 一个异步的 Web 框架:</p>
+<ul>
+<li><code>pip3 install tornado</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="app爬取相关库-安装"><a class="markdownIt-Anchor" href="#app爬取相关库-安装"></a> <strong>App爬取相关库</strong> 安装</h2>
+<h2 id="爬虫框架-安装"><a class="markdownIt-Anchor" href="#爬虫框架-安装"></a> <strong>爬虫框架</strong> 安装</h2>
+<ul>
+<li>
+<p><strong>pyspider</strong>:</p>
+<ul>
+<li>首先要<em>解决一个依赖问题</em>：<code>$ PYCURL_SSL_LIBRARY=openssl LDFLAGS=&quot;-L/usr/local/opt/openssl/lib&quot; CPPFLAGS=&quot;-I/usr/local/opt/openssl/include&quot; pip3 install --no-cache-dir pycurl</code></li>
+<li><code>$ pip3 install pyspider</code></li>
+<li>pyspider v0.3.10 中使用了一个名为 <code>async</code> 的变量，这个名字在 <code>Python 3.7</code> 中被列为了保留字，这意味着二者合作将无法运行！</li>
+<li>在这里，我们为了解决这个问题，简单地把 pyspider 模块中所有的 <code>async</code> 替换成了 <code>async_</code>😂。</li>
+</ul>
+</li>
+<li>
+<p><strong>Scrapy</strong>:</p>
+<ul>
+<li>大多数的安装教程都要先: <code>$ xcode-select --install</code>，但我们跳过了这一步，并没有遇到问题。</li>
+<li><code>pip3 install Scrapy</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Scrapy-Splash</strong>: 一个 Scripy 中支持 JavaScript 渲染的工具:</p>
+<ul>
+<li>这是一个安装的链条：Scrapy-Splash &lt;- Splash &lt;- Docker</li>
+<li>安装 <strong>Docker</strong>：<code>$ brew cask install docker</code></li>
+<li>登录 <strong>Docker</strong>：<code>$ docker login</code></li>
+<li>安装 <strong>Splash</strong>：<code>$ docker run -p 8050:8050 scrapinghub/splash</code></li>
+<li>安装 <strong>Scrapy-Splash</strong>：<code>pip3 install scrapy-splash</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Scrapy-Redis</strong>: Scrapy 的分布式拓展模块:</p>
+<ul>
+<li><code>pip3 install scrapy_redis</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="部署相关库的安装"><a class="markdownIt-Anchor" href="#部署相关库的安装"></a> 部署相关库的安装</h2>
+<ul>
+<li>
+<p>安装 &amp; 配置 <strong>Docker</strong>：</p>
+<ul>
+<li><code>$ brew cask install docker</code></li>
+<li><a href="https://www.daocloud.io/mirror" target="_blank" rel="noopener">使用 Docker 加速器</a></li>
+</ul>
+</li>
+<li>
+<p>安装 <strong>Scrapyd</strong>：</p>
+<ul>
+<li><code>pip3 install scrapyd</code></li>
+<li><code>$ sudo mkdir /etc/scrapyd</code></li>
+<li><code>$ sudo vim /etc/scrapyd/scrapyd.conf</code>，当然，也可以使用其他任何文本编辑器打开。</li>
+<li>在其中写入以下内容（主要是参考<a href="https://scrapyd.readthedocs.io/en/stable/config.html#example" target="_blank" rel="noopener">官方文档</a>，但做了有限的改动。）：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[scrapyd]</span><br><span class="line">eggs_dir    = eggs</span><br><span class="line">logs_dir    = logs</span><br><span class="line">items_dir   =</span><br><span class="line">jobs_to_keep = 5</span><br><span class="line">dbs_dir     = dbs</span><br><span class="line">max_proc    = 0</span><br><span class="line">max_proc_per_cpu = 4</span><br><span class="line">finished_to_keep = 100</span><br><span class="line">poll_interval = 5.0</span><br><span class="line">bind_address = 0.0.0.0</span><br><span class="line">http_port   = 6800</span><br><span class="line">debug       = off</span><br><span class="line">runner      = scrapyd.runner</span><br><span class="line">application = scrapyd.app.application</span><br><span class="line">launcher    = scrapyd.launcher.Launcher</span><br><span class="line">webroot     = scrapyd.website.Root</span><br><span class="line"></span><br><span class="line">[services]</span><br><span class="line">schedule.json     = scrapyd.webservice.Schedule</span><br><span class="line">cancel.json       = scrapyd.webservice.Cancel</span><br><span class="line">addversion.json   = scrapyd.webservice.AddVersion</span><br><span class="line">listprojects.json = scrapyd.webservice.ListProjects</span><br><span class="line">listversions.json = scrapyd.webservice.ListVersions</span><br><span class="line">listspiders.json  = scrapyd.webservice.ListSpiders</span><br><span class="line">delproject.json   = scrapyd.webservice.DeleteProject</span><br><span class="line">delversion.json   = scrapyd.webservice.DeleteVersion</span><br><span class="line">listjobs.json     = scrapyd.webservice.ListJobs</span><br><span class="line">daemonstatus.json = scrapyd.webservice.DaemonStatus</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>Scrapyrt</strong>:</p>
+<ul>
+<li><code>pip3 install scrapyrt</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Gerapy</strong>:</p>
+<ul>
+<li><code>pip3 install gerapy</code></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#开发环境配置"><span class="toc-number">1.</span> <span class="toc-text"> 开发环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发环境"><span class="toc-number">1.1.</span> <span class="toc-text"> 开发环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求库-安装"><span class="toc-number">1.2.</span> <span class="toc-text"> 请求库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析库-安装"><span class="toc-number">1.3.</span> <span class="toc-text"> 解析库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库-安装"><span class="toc-number">1.4.</span> <span class="toc-text"> 数据库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#储存库-安装"><span class="toc-number">1.5.</span> <span class="toc-text"> 储存库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web库-安装"><span class="toc-number">1.6.</span> <span class="toc-text"> Web库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app爬取相关库-安装"><span class="toc-number">1.7.</span> <span class="toc-text"> App爬取相关库 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爬虫框架-安装"><span class="toc-number">1.8.</span> <span class="toc-text"> 爬虫框架 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署相关库的安装"><span class="toc-number">1.9.</span> <span class="toc-text"> 部署相关库的安装</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&text=Python3爬虫环境配置"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&is_video=false&description=Python3爬虫环境配置"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python3爬虫环境配置&body=Check out this article: https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&title=Python3爬虫环境配置"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/02/09/PythonAndCrawler/crawler-0-env/&name=Python3爬虫环境配置&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
