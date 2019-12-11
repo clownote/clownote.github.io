@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwly1g9qes7ga8nj30ea0ehmxj.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwly1g9qtdimzaxj31f20u0wop.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwly1g9qey1safbj305b05bmx7.jpg">
-<meta property="og:updated_time" content="2019-12-10T04:59:21.678Z">
+<meta property="og:updated_time" content="2019-12-11T14:59:20.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用 C# 语言实现跨平台小闹钟">
 <meta name="twitter:description" content="利用 C# 语言实现跨平台小闹钟  前言 学校的课程要求做一个 C# 小闹钟程序设计，具体要求如下：  做一个小闹钟窗体应用程序。 具备实时显示数字时钟的功能，方便使用者获取当前的时间。 具备实时绘制表盘时钟的功能，根据当前时间再来绘制秒针、分针和时针。 具备整点报时的功能，当处于整点时，系统进行报时。 具备定点报时的功能，根据使用者的设定，进行报时。 把使用者设置的报时时间，记录在文本文件中，">
@@ -136,7 +136,7 @@
       
         <time datetime="2019-12-10T04:59:21.000Z" itemprop="datePublished">2019-12-10</time>
         
-        (Updated: <time datetime="2019-12-10T04:59:21.678Z" itemprop="dateModified">2019-12-10</time>)
+        (Updated: <time datetime="2019-12-11T14:59:20.500Z" itemprop="dateModified">2019-12-11</time>)
         
       
     </div>
@@ -255,7 +255,7 @@
 <p>WindowsForms 毕竟是上一个年代的产物了，它设计出来的东西也还是老的 Windows 样式，跟微软现在的 Fluent Design 一点边都不沾，除了历史遗留下来那些部分微软现在自家软件的开发也不用这个了，这东西在 VS 2019 里的设计界面里显示的居然都是个 Windows vista/7 样子的窗体😂。</p>
 <p>我没有好好研究 C# 写 WindowsForms 的知识，整个实现基本就是凭 直觉 + 马老师的文章 + 小时候学的 VB 残存的记忆。而且由于我不熟悉 Windows 和 Visual Studio 的操作，我甚至连对新建出来的类的命名都没做（吐槽一下 Windows 下 VS 的逻辑，新建一个 Class 或者其他什么东西的时候居然没有输入名称的地方，自动搞出些 Class1、Class2 之类的东西来，然后咱也不敢去重命名它，怕解决方案里注册的信息不对了（VS For Mac 有这个毛病，不知道 Win 上的如何）），所以不打算详细写了，大致的设计如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">WindowsForms 小闹钟程序</span><br><span class="line">    |-- UI</span><br><span class="line">    |    |-- 在程序载入时绘制界面，读取储存的闹钟数据</span><br><span class="line">    |    |-- 在 Timer Tick (每1秒) 时:</span><br><span class="line">    |	 |	 	动态更新圆盘时钟</span><br><span class="line">    |	 |		检测是否整点报时或闹钟提醒</span><br><span class="line">    |    |-- 在用户添加新闹钟时创建 Alarm 实例</span><br><span class="line">    |	 |	 	借助 AlarmDatabase 储存，并写入磁盘</span><br><span class="line">    |    |-- 在用户编辑/删除闹钟时:</span><br><span class="line">    |	 |		借助 AlarmDatabase 修改/删除 Alarm 实例</span><br><span class="line">    |	 |	 	同时也从磁盘文件中修改/删除数据</span><br><span class="line">    |    |-- 在最小化/关闭时处理最小化到系统托盘</span><br><span class="line">    |</span><br><span class="line">    |-- 相关类</span><br><span class="line">         |-- class Alarm: 闹钟类，代表程序运行时的一个闹钟对象</span><br><span class="line">         |-- class AlarmDatabase: 闹钟数据库</span><br><span class="line">         |      	处理将内存中的闹钟数据储存到磁盘以及从磁盘读取已保存的数据</span><br><span class="line">         |-- class TickMarkDrawHelper: 计算表盘刻度坐标的辅助类</span><br></pre></td></tr></table></figure>
-<p>写这个实现收获就没有太多了，无非是再熟悉了一下 C# 还有 WindowsForms，但感触倒是颇多。写这个东西的时候，我想起自己一开始学编程的时候接触的 VB，当时用一台磁盘只有 10 GB 的 Windows 98 笔记本，跑年纪比自己还大的 VS6.0 （当时好像还是一个个分开的 VC6.0、VB6.0 什么的），那个时候写的 VB 就和现在这个 WindowsForms in C# 一样，还是那几个熟悉的控件，只是开发语言从 BASIC 变成了 C#。这个时候才猛然回忆起，从我的第一个 Hello World 到今天也有8年了…今后也还会一直继续这段程序人生，写代码从来都不是我最喜欢的事，但没办法，谁让我乐意呢…</p>
+<p>写这个实现收获就没有太多了，无非是再熟悉了一下 C# 还有 WindowsForms，但感触倒是颇多。写这个东西的时候，我想起自己一开始学编程的时候接触的 VB，当时用一台磁盘只有 10 GB 的 Windows 98 笔记本，跑年纪比自己还大的 VS6.0 （当时好像还是一个个分开的 VC6.0、VB6.0 什么的），那个时候写的 VB 就和现在这个 WindowsForms in C# 一样，还是那几个熟悉的控件，只是开发语言从 BASIC 变成了 C#。这个时候才猛然回忆起，从我的第一个 Hello World 到今天也有8年了…今后也还会一直继续这段程序人生，虽然写代码从来都不是我最喜欢的事，但是没办法，谁让我乐意呢…</p>
 
   </div>
 </article>
