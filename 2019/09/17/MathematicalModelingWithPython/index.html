@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="用 Python 做数学建模  线性规划  第三方依赖库：scipy。  用 scipy.optimize.linprog 可以解线性规划问题： 1linprog(c, A_ub=None, b_ub=None, A_eq=None, b_eq=None, bounds=None, method=&apos;simplex&apos;, callback=None, options=None) 其规定的问题标准型式">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-22T14:12:00.783Z">
+<meta property="og:updated_time" content="2019-12-20T05:02:23.175Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用 Python 做数学建模">
 <meta name="twitter:description" content="用 Python 做数学建模  线性规划  第三方依赖库：scipy。  用 scipy.optimize.linprog 可以解线性规划问题： 1linprog(c, A_ub=None, b_ub=None, A_eq=None, b_eq=None, bounds=None, method=&apos;simplex&apos;, callback=None, options=None) 其规定的问题标准型式">
@@ -133,7 +133,7 @@
       
         <time datetime="2019-09-17T07:00:38.000Z" itemprop="datePublished">2019-09-17</time>
         
-        (Updated: <time datetime="2019-09-22T14:12:00.783Z" itemprop="dateModified">2019-09-22</time>)
+        (Updated: <time datetime="2019-12-20T05:02:23.175Z" itemprop="dateModified">2019-12-20</time>)
         
       
     </div>
@@ -292,6 +292,8 @@ y^2+x-6=0\\
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> sympy</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x, y = sympy.symbols(<span class="string">'x y'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = sympy.solve((x**<span class="number">2</span>+y<span class="number">-6</span>, y**<span class="number">2</span>+x<span class="number">-6</span>))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s</span><br><span class="line">[&#123;x: <span class="number">-3</span>, y: <span class="number">-3</span>&#125;, &#123;x: <span class="number">2</span>, y: <span class="number">2</span>&#125;, &#123;x: <span class="number">6</span> - (<span class="number">1</span>/<span class="number">2</span> - sqrt(<span class="number">21</span>)/<span class="number">2</span>)**<span class="number">2</span>, y: <span class="number">1</span>/<span class="number">2</span> - sqrt(<span class="number">21</span>)/<span class="number">2</span>&#125;, &#123;x: <span class="number">6</span> - (<span class="number">1</span>/<span class="number">2</span> + sqrt(<span class="number">21</span>)/<span class="number">2</span>)**<span class="number">2</span>, y: <span class="number">1</span>/<span class="number">2</span> + sqrt(<span class="number">21</span>)/<span class="number">2</span>&#125;]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> s:</span><br><span class="line"><span class="meta">... </span>    print(<span class="string">'(&#123;x&#125;, &#123;y&#125;)'</span>.format(x=i[x].evalf(), y=i[y].evalf()))</span><br><span class="line"><span class="meta">... </span></span><br><span class="line">(<span class="number">-3.00000000000000</span>, <span class="number">-3.00000000000000</span>)</span><br><span class="line">(<span class="number">2.00000000000000</span>, <span class="number">2.00000000000000</span>)</span><br><span class="line">(<span class="number">2.79128784747792</span>, <span class="number">-1.79128784747792</span>)</span><br><span class="line">(<span class="number">-1.79128784747792</span>, <span class="number">2.79128784747792</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="约束极值问题"><a class="markdownIt-Anchor" href="#约束极值问题"></a> 约束极值问题</h3>
 <p>参考上文 “无约束问题的 Python 解法”。</p>
+<p>…</p>
+<p><strong>未完但不用待续了，应该没有后续了，我对用 python 做数学建模以及数学建模都失去兴趣了。</strong></p>
 <h2 id="附numpy"><a class="markdownIt-Anchor" href="#附numpy"></a> 附：numpy</h2>
 <p>推荐一份质量比较高的 numpy 中文文档：<a href="https://www.numpy.org.cn/index.html" target="_blank" rel="noopener">https://www.numpy.org.cn/index.html</a>.</p>
 <h3 id="创建-向量矩阵"><a class="markdownIt-Anchor" href="#创建-向量矩阵"></a> 创建 向量/矩阵</h3>
@@ -375,7 +377,7 @@ y^2+x-6=0\\
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2019 CDFMLR
+    Copyright &copy; 2020 CDFMLR
   </div>
   <div class="footer-right">
     <nav>
