@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Java 修饰符  修饰符用来定义类、方法或者变量，通常放在语句的最前端。  Java 中的修饰符主要分为两类：  访问修饰符：Java 通过访问控制符来保护对类、变量、方法和构造方法的访问； 非访问修饰符：Java 为了实现一些其他的功能而设定的修饰符；   访问修饰符 Java中，可以使用访问控制符来保护对类、变量、方法和构造方法的访问。Java 支持 4 种不同的访问权限。  defaul">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java-修饰符">
+<meta property="og:url" content="https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Java 修饰符  修饰符用来定义类、方法或者变量，通常放在语句的最前端。  Java 中的修饰符主要分为两类：  访问修饰符：Java 通过访问控制符来保护对类、变量、方法和构造方法的访问； 非访问修饰符：Java 为了实现一些其他的功能而设定的修饰符；   访问修饰符 Java中，可以使用访问控制符来保护对类、变量、方法和构造方法的访问。Java 支持 4 种不同的访问权限。  defaul">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-10T14:00:51.469Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java-修饰符">
+<meta name="twitter:description" content="Java 修饰符  修饰符用来定义类、方法或者变量，通常放在语句的最前端。  Java 中的修饰符主要分为两类：  访问修饰符：Java 通过访问控制符来保护对类、变量、方法和构造方法的访问； 非访问修饰符：Java 为了实现一些其他的功能而设定的修饰符；   访问修饰符 Java中，可以使用访问控制符来保护对类、变量、方法和构造方法的访问。Java 支持 4 种不同的访问权限。  defaul">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Java-修饰符</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/04/18/Java_intro/Day7_Java_Operators/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/04/16/Java_intro/Day5_Java_Variable/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&text=Java-修饰符"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&is_video=false&description=Java-修饰符"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java-修饰符&body=Check out this article: https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&name=Java-修饰符&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-修饰符"><span class="toc-number">1.</span> <span class="toc-text"> Java 修饰符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#访问修饰符"><span class="toc-number">1.1.</span> <span class="toc-text"> 访问修饰符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#访问控制符的继承"><span class="toc-number">1.1.0.1.</span> <span class="toc-text"> 访问控制符的继承</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非访问修饰符"><span class="toc-number">1.2.</span> <span class="toc-text"> 非访问修饰符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#static-修饰符"><span class="toc-number">1.2.0.1.</span> <span class="toc-text"> static 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#final-修饰符"><span class="toc-number">1.2.0.2.</span> <span class="toc-text"> final 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#abstract-修饰符"><span class="toc-number">1.2.0.3.</span> <span class="toc-text"> abstract 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#synchronized-修饰符"><span class="toc-number">1.2.0.4.</span> <span class="toc-text"> synchronized 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#transient-修饰符"><span class="toc-number">1.2.0.5.</span> <span class="toc-text"> transient 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile-修饰符"><span class="toc-number">1.2.0.6.</span> <span class="toc-text"> volatile 修饰符</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Java-修饰符
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-17T08:37:53.000Z" itemprop="datePublished">2019-04-17</time>
+        
+        (Updated: <time datetime="2019-09-10T14:00:51.469Z" itemprop="dateModified">2019-09-10</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a> › <a class="category-link" href="/categories/Java/Beginning/">Beginning</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="java-修饰符"><a class="markdownIt-Anchor" href="#java-修饰符"></a> Java 修饰符</h1>
+<blockquote>
+<p>修饰符用来定义类、方法或者变量，通常放在语句的最前端。</p>
+</blockquote>
+<p>Java 中的<strong>修饰符</strong>主要分为两类：</p>
+<ul>
+<li>访问修饰符：Java 通过访问控制符来保护对类、变量、方法和构造方法的访问；</li>
+<li>非访问修饰符：Java 为了实现一些其他的功能而设定的修饰符；</li>
+</ul>
+<h2 id="访问修饰符"><a class="markdownIt-Anchor" href="#访问修饰符"></a> 访问修饰符</h2>
+<p>Java中，可以使用访问控制符来保护对类、变量、方法和构造方法的访问。Java 支持 4 种不同的访问权限。</p>
+<ul>
+<li><code>default</code> (缺省值）: 在同一包内可见，不使用任何修饰符。使用对象：类、接口、变量、方法。</li>
+<li><code>private</code> : 在同一类内可见。使用对象：变量、方法。 注意：不能修饰类（外部类）</li>
+<li><code>public</code> : 对所有类可见。使用对象：类、接口、变量、方法</li>
+<li><code>protected</code> : 对同一包内的类和所有子类可见。使用对象：变量、方法。 注意：不能修饰类（外部类）。
+<ul>
+<li>子类与基类在同一包中：被声明为 <code>protected</code> 的变量、方法和构造器能被同一个包中的任何其他类访问；</li>
+<li>子类与基类不在同一包中：那么在子类中，子类实例可以访问其从基类继承而来的 <code>protected</code> 方法，而不能访问基类实例的 <code>protected</code> 方法。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>修饰符</th>
+<th>当前类</th>
+<th>同一包内</th>
+<th>子孙类(同一包)</th>
+<th>子孙类(不同包)</th>
+<th>其他包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y/N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>default</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>private</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️【注意】</p>
+<ol>
+<li>在不写任何修饰符的情况下（如 <code>int a = 1;</code>），<strong>接口</strong> 里的变量都隐式声明为 <code>public static final</code>,而接口里的方法默认情况下访问权限为 <code>public</code>。</li>
+<li><code>protected</code> 可以修饰数据成员，构造方法，方法成员，不能修饰类（内部类除外）。接口及接口的成员变量和成员方法不能声明为 <code>protected</code>。详见<a href="http://www.runoob.com/w3cnote/java-protected-keyword-detailed-explanation.html" target="_blank" rel="noopener">参考</a> 。</li>
+</ol>
+<h4 id="访问控制符的继承"><a class="markdownIt-Anchor" href="#访问控制符的继承"></a> 访问控制符的继承</h4>
+<ul>
+<li>父类中声明为 <code>public</code> 的方法在子类中也必须为 <code>public</code> 。</li>
+<li>父类中声明为 <code>protected</code> 的方法在子类中要么声明为 <code>protected</code> ，要么声明为 <code>public</code> ，不能声明为 <code>private</code> 。</li>
+<li>父类中声明为 <code>private</code> 的方法，不能够被继承。</li>
+</ul>
+<h2 id="非访问修饰符"><a class="markdownIt-Anchor" href="#非访问修饰符"></a> 非访问修饰符</h2>
+<h4 id="static-修饰符"><a class="markdownIt-Anchor" href="#static-修饰符"></a> <code>static</code> 修饰符</h4>
+<ul>
+<li>
+<p>静态变量：<br>
+<code>static</code> 关键字用来声明独立于对象的静态变量，无论一个类实例化多少对象，它的静态变量只有一份拷贝。 静态变量也被称为类变量。局部变量不能被声明为 <code>static</code> 变量。</p>
+</li>
+<li>
+<p>静态方法：<br>
+<code>static</code> 关键字用来声明独立于对象的静态方法。静态方法不能使用类的非静态变量。静态方法从参数列表得到数据，然后计算这些数据。</p>
+</li>
+</ul>
+<p>对类变量和方法的访问可以直接使用 <code>classname.variablename</code> 和 <code>classname.methodname</code> 的方式访问。</p>
+<h4 id="final-修饰符"><a class="markdownIt-Anchor" href="#final-修饰符"></a> <code>final</code> 修饰符</h4>
+<ul>
+<li><code>final</code> 变量:<br>
+常量，一旦赋值后，不能被重新赋值。</li>
+<li><code>final</code> 类:<br>
+不能被继承，没有类能够继承 <code>final</code> 类的任何特性。</li>
+<li><code>final</code> 方法:<br>
+类中的 final 方法可以被子类继承，但是不能被子类修改。<br>
+声明 final 方法的主要目的是防止该方法的内容被修改。</li>
+</ul>
+<p><code>final</code> 修饰符通常和 static 修饰符一起使用来创建类常量。</p>
+<h4 id="abstract-修饰符"><a class="markdownIt-Anchor" href="#abstract-修饰符"></a> <code>abstract</code> 修饰符</h4>
+<ul>
+<li>抽象类：<br>
+抽象类不能用来实例化对象，声明抽象类的唯一目的是为了将来对该类进行扩充。</li>
+</ul>
+<p>一个类不能同时被 abstract 和 final 修饰。</p>
+<p>抽象类可以包含抽象方法和非抽象方法。</p>
+<p>任何继承抽象类的子类必须实现父类的所有抽象方法，除非该子类也是抽象类。</p>
+<ul>
+<li>抽象方法：<br>
+抽象方法是一种没有任何实现的方法，该方法的的具体实现由子类提供。</li>
+</ul>
+<p>抽象方法不能被声明成 final 和 static。</p>
+<p>⚠️【注意】如果一个类包含抽象方法，那么该类一定要声明为抽象类，否则将出现编译错误。</p>
+<h4 id="synchronized-修饰符"><a class="markdownIt-Anchor" href="#synchronized-修饰符"></a> <code>synchronized</code> 修饰符</h4>
+<p><code>synchronized</code> 关键字声明的方法同一时间只能被一个线程访问。</p>
+<h4 id="transient-修饰符"><a class="markdownIt-Anchor" href="#transient-修饰符"></a> <code>transient</code> 修饰符</h4>
+<p>详见 <a href="http://www.runoob.com/java/java-modifier-types.html" target="_blank" rel="noopener">参考</a>。</p>
+<h4 id="volatile-修饰符"><a class="markdownIt-Anchor" href="#volatile-修饰符"></a> <code>volatile</code> 修饰符</h4>
+<p>详见 <a href="http://www.runoob.com/java/java-modifier-types.html" target="_blank" rel="noopener">参考</a>。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-修饰符"><span class="toc-number">1.</span> <span class="toc-text"> Java 修饰符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#访问修饰符"><span class="toc-number">1.1.</span> <span class="toc-text"> 访问修饰符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#访问控制符的继承"><span class="toc-number">1.1.0.1.</span> <span class="toc-text"> 访问控制符的继承</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非访问修饰符"><span class="toc-number">1.2.</span> <span class="toc-text"> 非访问修饰符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#static-修饰符"><span class="toc-number">1.2.0.1.</span> <span class="toc-text"> static 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#final-修饰符"><span class="toc-number">1.2.0.2.</span> <span class="toc-text"> final 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#abstract-修饰符"><span class="toc-number">1.2.0.3.</span> <span class="toc-text"> abstract 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#synchronized-修饰符"><span class="toc-number">1.2.0.4.</span> <span class="toc-text"> synchronized 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#transient-修饰符"><span class="toc-number">1.2.0.5.</span> <span class="toc-text"> transient 修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile-修饰符"><span class="toc-number">1.2.0.6.</span> <span class="toc-text"> volatile 修饰符</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&text=Java-修饰符"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&is_video=false&description=Java-修饰符"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java-修饰符&body=Check out this article: https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&title=Java-修饰符"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/17/Java_intro/Day6_Java_Modifier/&name=Java-修饰符&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
