@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="流程控制语句：for、if、else、switch 和 defer  § for Go 只有一种循环结构：for 循环。 基本的 for 循环由三部分组成，它们用分号隔开：  初始化语句：在第一次迭代前执行 条件表达式，则前后的;会被去掉，若有：在每次迭代前求值 后置语句：在每次迭代的结尾执行  初始化语句通常为一句短变量声明，该变量声明仅在 for 语句的作用域中可见。 一旦条件表达式的布尔值">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-10T14:00:16.766Z">
+<meta property="og:updated_time" content="2020-02-06T13:40:21.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="golang-流程控制语句：for、if、else、switch 和 defer">
 <meta name="twitter:description" content="流程控制语句：for、if、else、switch 和 defer  § for Go 只有一种循环结构：for 循环。 基本的 for 循环由三部分组成，它们用分号隔开：  初始化语句：在第一次迭代前执行 条件表达式，则前后的;会被去掉，若有：在每次迭代前求值 后置语句：在每次迭代的结尾执行  初始化语句通常为一句短变量声明，该变量声明仅在 for 语句的作用域中可见。 一旦条件表达式的布尔值">
@@ -133,7 +133,7 @@
       
         <time datetime="2019-08-31T02:21:42.000Z" itemprop="datePublished">2019-08-31</time>
         
-        (Updated: <time datetime="2019-09-10T14:00:16.766Z" itemprop="dateModified">2019-09-10</time>)
+        (Updated: <time datetime="2020-02-06T13:40:21.616Z" itemprop="dateModified">2020-02-06</time>)
         
       
     </div>
@@ -235,7 +235,7 @@ C 的 while 在 Go 中也叫做 <code>for</code>。</p>
 <p>输出：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hello</span><br><span class="line">world</span><br></pre></td></tr></table></figure>
 <h4 id="defer-栈"><a class="markdownIt-Anchor" href="#defer-栈"></a> <a href="https://tour.golang.org/flowcontrol/13" target="_blank" rel="noopener">defer 栈</a></h4>
-<p>推迟的函数调用会被压入一个栈中。当外层函数返回时，被推迟的函数会按照后进先出的顺序调用。</p>
+<p>推迟的函数调用会被压入一个栈中。当外层函数返回时，被推迟的函数会按照<strong>后进先出</strong>的顺序调用。</p>
 <p>更多关于 <code>defer</code> 语句的信息，<a href="https://blog.golang.org/defer-panic-and-recover" target="_blank" rel="noopener">参考阅读此文</a>。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"counting..."</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">defer</span> fmt.Println(i)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">"done."</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
