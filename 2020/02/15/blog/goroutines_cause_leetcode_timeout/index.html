@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="什么？导致我leetcode超时的不是算法是并发？ （我写这篇文章真的只是为了打发时间，内容严重逻辑不清，既不易懂也不深入，我不认为这篇文章具有阅读价值，所以看到这里就可以把它关掉了！）  问题的提出 Emmmm，我很久很久（快半年了吧）没有刷过题了，昨天晚上无聊就打开了 leetcode 随便写了一道题：  给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000">
+<meta name="keywords" content="CDFMLR, blogs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么？导致我leetcode超时的不是算法是并发？">
+<meta property="og:url" content="https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="什么？导致我leetcode超时的不是算法是并发？ （我写这篇文章真的只是为了打发时间，内容严重逻辑不清，既不易懂也不深入，我不认为这篇文章具有阅读价值，所以看到这里就可以把它关掉了！）  问题的提出 Emmmm，我很久很久（快半年了吧）没有刷过题了，昨天晚上无聊就打开了 leetcode 随便写了一道题：  给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybpgy1gbx40vkouzj30u00xxtd1.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybpgy1gbx415ayr5j30tu0yo78f.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybpgy1gbx419iuzqj30tw0ysq77.jpg">
+<meta property="og:updated_time" content="2020-02-16T07:01:05.286Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="什么？导致我leetcode超时的不是算法是并发？">
+<meta name="twitter:description" content="什么？导致我leetcode超时的不是算法是并发？ （我写这篇文章真的只是为了打发时间，内容严重逻辑不清，既不易懂也不深入，我不认为这篇文章具有阅读价值，所以看到这里就可以把它关掉了！）  问题的提出 Emmmm，我很久很久（快半年了吧）没有刷过题了，昨天晚上无聊就打开了 leetcode 随便写了一道题：  给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0082zybpgy1gbx40vkouzj30u00xxtd1.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>什么？导致我leetcode超时的不是算法是并发？</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/02/07/Golang/go-5-Concurrency/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&text=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&is_video=false&description=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=什么？导致我leetcode超时的不是算法是并发？&body=Check out this article: https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&name=什么？导致我leetcode超时的不是算法是并发？&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么导致我leetcode超时的不是算法是并发"><span class="toc-number">1.</span> <span class="toc-text"> 什么？导致我leetcode超时的不是算法是并发？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题的提出"><span class="toc-number">1.1.</span> <span class="toc-text"> 问题的提出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题的分析"><span class="toc-number">1.2.</span> <span class="toc-text"> 问题的分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题的总结"><span class="toc-number">1.3.</span> <span class="toc-text"> 问题的总结</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        什么？导致我leetcode超时的不是算法是并发？
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-15T09:06:25.214Z" itemprop="datePublished">2020-02-15</time>
+        
+        (Updated: <time datetime="2020-02-16T07:01:05.286Z" itemprop="dateModified">2020-02-16</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="什么导致我leetcode超时的不是算法是并发"><a class="markdownIt-Anchor" href="#什么导致我leetcode超时的不是算法是并发"></a> 什么？导致我leetcode超时的不是算法是并发？</h1>
+<p>（我写这篇文章真的只是为了<strong>打发时间</strong>，内容严重<em>逻辑不清</em>，既<em>不易懂</em>也<em>不深入</em>，我不认为这篇文章具有阅读价值，所以看到这里就可以<strong>把它关掉</strong>了！）</p>
+<h2 id="问题的提出"><a class="markdownIt-Anchor" href="#问题的提出"></a> 问题的提出</h2>
+<p>Emmmm，我很久很久（快半年了吧）没有刷过题了，昨天晚上无聊就打开了 leetcode 随便写了一道题：</p>
+<blockquote>
+<p>给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。</p>
+<p>示例 1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; 输入: &quot;babad&quot;</span><br><span class="line">&gt; 输出: &quot;bab&quot;</span><br><span class="line">&gt; 注意: &quot;aba&quot; 也是一个有效答案。</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>示例 2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; 输入: &quot;cbbd&quot;</span><br><span class="line">&gt; 输出: &quot;bb&quot;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>来源：力扣（LeetCode）<br>
+链接：<a href="https://leetcode-cn.com/problems/longest-palindromic-substring" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-palindromic-substring</a><br>
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</blockquote>
+<p>emmmm，首先的想法是<strong>动规</strong>，我一般都不爱用动规，空间消耗大。做了那么久开发再回来看算法，就觉得，时间稍微慢点可以等，内存一满就彻底炸了。</p>
+<p>然后，我想到了最长公共子串，把这个字符串和它的反串求一个最长公共子串就是最长回文子串了。。。最长公共子串又是动规。😠</p>
+<p>不想用动规，又不齿于暴力，那就硬写吧。</p>
+<p>我的思路是遍历一次字符串，尝试以每个字符为回文中心，尽量去往两边“拓展”，得到以每个字符为中心的最长回文串，取这些拓展得的回文串中最长的输出。</p>
+<p>我这个思路时间应该也许大概是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 吧（颓废到连这个都不会算了😭）；空间可能比较好，都是调整指针的值，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 吧。</p>
+<p>然后，我准备开始写代码，突然意识到回文有两！种！情！况！</p>
+<ul>
+<li>第一种，形如 <code>aba</code>，中心是一个字符 <code>b</code>；</li>
+<li>第二种，形如 <code>abba</code>，中心在两个字符 <code>b</code> 之间，或者也可以看作中心是两个字符 <code>bb</code></li>
+</ul>
+<p>所以，遍历字符串时，每个迭代要拓展两次，一次是以当前字符为中心（<code>aba</code> 型），一次是以当前字符+后一个字符为中心（<code>abba</code> 型）。</p>
+<p>Golang 实现如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">longestPalindrome</span><span class="params">(s <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> s == <span class="string">""</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> s</span><br><span class="line">	&#125;</span><br><span class="line">	b := []<span class="keyword">byte</span>(s)</span><br><span class="line">	l, r := <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(b); i++ &#123;</span><br><span class="line">		laba := ext(b, i, i)</span><br><span class="line">		labba := ext(b, i, i+<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">var</span> m <span class="keyword">int</span></span><br><span class="line">		<span class="keyword">if</span> laba &gt; labba &#123;</span><br><span class="line">			m = laba</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			m = labba</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> m &gt; r-l+<span class="number">1</span> &#123;</span><br><span class="line">			l = i - (m<span class="number">-1</span>)/<span class="number">2</span></span><br><span class="line">			r = i + m/<span class="number">2</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">string</span>(b[l : r+<span class="number">1</span>])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ext</span><span class="params">(b []<span class="keyword">byte</span>, l, r <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> l &gt;= <span class="number">0</span> &amp;&amp; r &lt; <span class="built_in">len</span>(b) &amp;&amp; b[l] == b[r] &#123;</span><br><span class="line">		l--</span><br><span class="line">		r++</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> r - l - <span class="number">1</span> <span class="comment">// r - l + 1 - 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>提交跑一下，4ms（击败91.02%），2.3MB（击败49.75%）。</p>
+<p>emmm，我不理解为什么空间占用这么高，传参到时候 Golang 里的 <code>[]byte</code> 应该是传了引用呀（可以理解成也就是传指针），其他的基本都是 <code>int</code> 了，我暂时想不到好办法继续在空间上做优化。</p>
+<p>所以我考虑了一下能不能在时间上更进一步。考虑这一段代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">laba := ext(b, i, i)</span><br><span class="line">labba := ext(b, i, i+<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>就是分别计算 <code>aba</code> 型和 <code>abba</code> 型的回文拓展。先算完一个，再算另一个，我想这里会比较耗时。如果让他们同时算会发生什么？</p>
+<p>试试看，主要的改动就是开两个 goroutine 去执行这两个函数：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ext</span><span class="params">(b []<span class="keyword">byte</span>, l, r <span class="keyword">int</span>, cl <span class="keyword">chan</span> <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> l &gt;= <span class="number">0</span> &amp;&amp; r &lt; <span class="built_in">len</span>(b) &amp;&amp; b[l] == b[r] &#123;</span><br><span class="line">		l--;</span><br><span class="line">		r++;</span><br><span class="line">	&#125;</span><br><span class="line">	cl &lt;- r - l <span class="number">-1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">longestPalindrome</span><span class="params">(s <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> s == <span class="string">""</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> s</span><br><span class="line">	&#125;</span><br><span class="line">	b := []<span class="keyword">byte</span>(s )</span><br><span class="line">	l, r := <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(b); i++ &#123;</span><br><span class="line">        </span><br><span class="line">		cl1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line">		cl2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">go</span> ext(b, i, i, cl1)</span><br><span class="line">		<span class="keyword">go</span> ext(b, i, i+<span class="number">1</span>, cl2)</span><br><span class="line"></span><br><span class="line">		laba := &lt;- cl1</span><br><span class="line">		labba := &lt;- cl2</span><br><span class="line"></span><br><span class="line">		<span class="keyword">var</span> m <span class="keyword">int</span></span><br><span class="line">		<span class="keyword">if</span> laba &gt; labba &#123;</span><br><span class="line">			m = laba</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			m = labba</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> m &gt; r - l + <span class="number">1</span> &#123;</span><br><span class="line">			l = i - (m - <span class="number">1</span>) / <span class="number">2</span></span><br><span class="line">			r = i + m / <span class="number">2</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">string</span>(b[l: r + <span class="number">1</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>提交，😱😱😱，40ms，6.2MB，发生了什么？</p>
+<p>我以为问题出在这里：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">laba := &lt;- cl1</span><br><span class="line">labba := &lt;- cl2</span><br></pre></td></tr></table></figure>
+<p>这里是先阻塞在 <code>laba</code> 这里等 <code>cl1</code> 传出来，然后再等 <code>cl2</code> 出来。万一 <code>cl2</code> 先算完出来了，还是要阻塞到 <code>cl1</code> 出来，可能这里耗时了。所以再改一下 <code>longestPalindrome</code>的策略，用一个 <code>for-select</code>：</p>
+<p><code>select</code> 不能 <code>fallthrough</code>，所以为了及时 break，减少一次阻塞把每个 <code>case</code> 里都写了退出判断，恶心了一点。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">longestPalindrome</span><span class="params">(s <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> s == <span class="string">""</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> s</span><br><span class="line">	&#125;</span><br><span class="line">	b := []<span class="keyword">byte</span>(s )</span><br><span class="line">	l, r := <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(b); i++ &#123;</span><br><span class="line">		<span class="comment">// laba := ext(b, i, i)</span></span><br><span class="line">		<span class="comment">// labba := ext(b, i, i+1)</span></span><br><span class="line">		cl1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line">		cl2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">go</span> ext(b, i, i, cl1)</span><br><span class="line">		<span class="keyword">go</span> ext(b, i, i+<span class="number">1</span>, cl2)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">var</span> laba <span class="keyword">int</span></span><br><span class="line">		<span class="keyword">var</span> labba <span class="keyword">int</span></span><br><span class="line">		cnt := <span class="number">0</span></span><br><span class="line">LOOP:		<span class="keyword">for</span> &#123;</span><br><span class="line">			<span class="keyword">select</span> &#123;</span><br><span class="line">			<span class="keyword">case</span> laba = &lt;- cl1:</span><br><span class="line">				cnt++</span><br><span class="line">				<span class="keyword">if</span> (cnt &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">					<span class="keyword">break</span> LOOP</span><br><span class="line">				&#125;</span><br><span class="line">			<span class="keyword">case</span> labba = &lt;- cl2:</span><br><span class="line">				cnt++</span><br><span class="line">				<span class="keyword">if</span> (cnt &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">					<span class="keyword">break</span> LOOP</span><br><span class="line">				&#125;</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="keyword">if</span> (cnt &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">					<span class="keyword">break</span> LOOP</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">var</span> m <span class="keyword">int</span></span><br><span class="line">		<span class="keyword">if</span> laba &gt; labba &#123;</span><br><span class="line">			m = laba</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			m = labba</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> m &gt; r - l + <span class="number">1</span> &#123;</span><br><span class="line">			l = i - (m - <span class="number">1</span>) / <span class="number">2</span></span><br><span class="line">			r = i + m / <span class="number">2</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">string</span>(b[l: r + <span class="number">1</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再提交，应该会快一点吧，结果是——<strong>超。出。时。间。限。制</strong>。而且超的还很多，只过了22个测试用例。</p>
+<p>我哭了，并发了不是应该更快吗？是 leetcode 的锅吧。</p>
+<p>还是在本地测试一下吧：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := []<span class="keyword">string</span>&#123;<span class="string">"babad"</span>, <span class="string">"cbbd"</span>, <span class="string">""</span>, <span class="string">"a"</span>, <span class="string">"aa"</span>, <span class="string">"aaa"</span>, <span class="string">"aaaa"</span>&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++ &#123;</span><br><span class="line">		longestPalindrome(s[i%<span class="number">7</span>])</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>随便搞几个例子循环着跑10000次，<code>$ time go run</code> 看一下。</p>
+<p>第一个版本（不并发）:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">real    0m0.246s</span><br><span class="line">user    0m0.216s</span><br><span class="line">sys     0m0.137s</span><br></pre></td></tr></table></figure>
+<p>最后一个版本（<code>for-select</code>）:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">real    0m1.005s</span><br><span class="line">user    0m1.036s</span><br><span class="line">sys     0m0.518s</span><br></pre></td></tr></table></figure>
+<p>\拍桌 还真的是并发导致了慢啊！</p>
+<p>但是，为什么？</p>
+<h2 id="问题的分析"><a class="markdownIt-Anchor" href="#问题的分析"></a> 问题的分析</h2>
+<p>为了研究这个问题，我们把刚才三个版本的代码都简化一下：</p>
+<p>v1，不并发：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// v1.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"math/rand"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">somethingCost</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="comment">// time.Sleep(time.Duration(rand.Intn(10)) * time.Millisecond)</span></span><br><span class="line">	time.Sleep(<span class="number">1</span> * time.Millisecond)</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	rand.Seed(time.Now().UnixNano())</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">100</span>; i++ &#123;</span><br><span class="line">		foo := somethingCost()</span><br><span class="line">		bar := somethingCost()</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> foo == bar &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>v2，并发，阻塞在第一个 channel：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// v2.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"math/rand"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">somethingCost</span><span class="params">(ch <span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">// time.Sleep(time.Duration(rand.Intn(10)) * time.Millisecond)</span></span><br><span class="line">	time.Sleep(<span class="number">1</span> * time.Millisecond)</span><br><span class="line">	ch &lt;- <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	rand.Seed(time.Now().UnixNano())</span><br><span class="line"></span><br><span class="line">	ch1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>)</span><br><span class="line">	ch2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">100</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">go</span> somethingCost(ch1)</span><br><span class="line">		<span class="keyword">go</span> somethingCost(ch2)</span><br><span class="line"></span><br><span class="line">		foo := &lt;-ch1</span><br><span class="line">		bar := &lt;-ch2</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> foo == bar &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>v3，运用 <code>select</code>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// v3.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"math/rand"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">somethingCost</span><span class="params">(ch <span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">// time.Sleep(time.Duration(rand.Intn(10)) * time.Millisecond)</span></span><br><span class="line">	time.Sleep(<span class="number">1</span> * time.Millisecond)</span><br><span class="line">	ch &lt;- <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	rand.Seed(time.Now().UnixNano())</span><br><span class="line"></span><br><span class="line">	ch1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>)</span><br><span class="line">	ch2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">100</span>; i++ &#123;</span><br><span class="line">		cnt := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">go</span> somethingCost(ch1)</span><br><span class="line">		<span class="keyword">go</span> somethingCost(ch2)</span><br><span class="line"></span><br><span class="line">	LOOP:</span><br><span class="line">		<span class="keyword">for</span> &#123;</span><br><span class="line">			<span class="keyword">select</span> &#123;</span><br><span class="line">			<span class="keyword">case</span> &lt;-ch1:</span><br><span class="line">				cnt++</span><br><span class="line">			<span class="keyword">case</span> &lt;-ch2:</span><br><span class="line">				cnt++</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="keyword">if</span> cnt &gt;= <span class="number">2</span> &#123;</span><br><span class="line">					<span class="keyword">break</span> LOOP</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们首先在 <code>somethingCost</code> 里睡眠了相同的时间，来模拟执行一个慢速任务，运行代码得到类似如下的结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ time go run v1.go</span><br><span class="line"></span><br><span class="line">real    0m0.553s</span><br><span class="line">user    0m0.204s</span><br><span class="line">sys     0m0.159s</span><br><span class="line"></span><br><span class="line">$ time go run v2.go</span><br><span class="line"></span><br><span class="line">real    0m0.379s</span><br><span class="line">user    0m0.182s</span><br><span class="line">sys     0m0.135s</span><br><span class="line"></span><br><span class="line">$ time go run v3.go</span><br><span class="line"></span><br><span class="line">real    0m0.362s</span><br><span class="line">user    0m0.314s</span><br><span class="line">sys     0m0.138s</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>【补充】real时间、user时间和sys时间。</p>
+<ul>
+<li>real时间是指挂钟时间，也就是命令开始执行到结束的时间。这个短时间包括其他进程所占用的时间片，和进程被阻塞时所花费的时间。</li>
+<li>user时间是指进程花费在用户模式中的CPU时间，这是唯一真正用于执行进程所花费的时间，其他进程和花费阻塞状态中的时间没有计算在内。</li>
+<li>sys时间是指花费在内核模式中的CPU时间，代表在内核中执系统调用所花费的时间，这也是真正由进程使用的CPU时间。</li>
+</ul>
+<p>参考： Linux命令大全. time命令[OL].<a href="https://man.linuxde.net/time" target="_blank" rel="noopener">https://man.linuxde.net/time</a>, 2020</p>
+</blockquote>
+<p>用<strong>物理实验</strong>的方法，多次重复实验，得到如下结果：</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gbx40vkouzj30u00xxtd1.jpg" alt="屏幕快照 2020-02-15 15.18.22"></p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gbx415ayr5j30tu0yo78f.jpg" alt="屏幕快照 2020-02-15 15.18.33"></p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gbx419iuzqj30tw0ysq77.jpg" alt="屏幕快照 2020-02-15 15.18.40"></p>
+<blockquote>
+<p>【注】实验环境：</p>
+<ul>
+<li>
+<p>Computer: MacBook Pro (13-inch, 2017, Two Thunderbolt 3 ports)</p>
+</li>
+<li>
+<p>CPU: 2.3 GHz Intel Core i5</p>
+</li>
+<li>
+<p>RAM: 8 GB 2133 MHz LPDDR3</p>
+</li>
+<li>
+<p>OS: macOS Mojave 10.14.6</p>
+</li>
+<li>
+<p>Golang: go version go1.12 darwin/amd64</p>
+</li>
+</ul>
+</blockquote>
+<p>实验次数少，数据不太好，不管了，我懒得搞大规模的实验（其实我只是边研究边写这篇文章打发时间）。</p>
+<p>从实验的结果来看，有两点比较肯定：</p>
+<ol>
+<li>Real 时间上，v3 略优于 v2 优于 v1</li>
+<li>User 时间上，v1 约等于 v2 优于 v3</li>
+</ol>
+<p>由此，可以推知：</p>
+<ol>
+<li>在现实环境（正常的多核计算机）使用中，如 v3 版本的程序，使用 <code>goroutine-for-select</code> 的方案可以运行得比较快（real time，与不并发相比），但在等待返回的 channel 不多时与不使用 <code>for-select</code> 区别不大。</li>
+<li>在 goroutine 和 channel 比较少的时候使用 <code>for-select</code> 的策略，进程所花费的时间（user time）会明显加大。</li>
+</ol>
+<p>注意，是在 goroutine 和 channel 比较少的时候 v2 的 user time 优于 v3。当我们增多 goroutine，比如开到 1000 个，结果就不一样了（我不想用 v1 依次执行1000次函数，结果可想而知，没有可比性了）：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ time <span class="keyword">go</span> run v2.<span class="keyword">go</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">real</span>    <span class="number">0</span>m5<span class="number">.824</span>s</span><br><span class="line">user    <span class="number">0</span>m8<span class="number">.036</span>s</span><br><span class="line">sys     <span class="number">0</span>m3<span class="number">.967</span>s</span><br><span class="line"></span><br><span class="line">$ time <span class="keyword">go</span> run v3.<span class="keyword">go</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">real</span>    <span class="number">0</span>m1<span class="number">.919</span>s</span><br><span class="line">user    <span class="number">0</span>m3<span class="number">.006</span>s</span><br><span class="line">sys     <span class="number">0</span>m0<span class="number">.244</span>s</span><br></pre></td></tr></table></figure>
+<p>所以，在慢速任务比较多的时候，使用类似于 v3 的 <code>for-select</code> 会大幅度提高效率。</p>
+<p>我们再来看一下如果任务速度比较快，例如我们直接把 Sleep 注释掉，然后开最外层的循环次加到100次：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ time go run v1.go</span><br><span class="line"></span><br><span class="line">real    0m0.302s</span><br><span class="line">user    0m0.168s</span><br><span class="line">sys     0m0.127s</span><br><span class="line"></span><br><span class="line">$ time go run v2.go</span><br><span class="line"></span><br><span class="line">real    0m0.373s</span><br><span class="line">user    0m0.198s</span><br><span class="line">sys     0m0.149s</span><br><span class="line"></span><br><span class="line">$ time go run v3.go</span><br><span class="line"></span><br><span class="line">real    0m0.353s</span><br><span class="line">user    0m0.301s</span><br><span class="line">sys     0m0.142s</span><br></pre></td></tr></table></figure>
+<p>这种情况下 v2、 v3 就显得没有优势了，这时多线程上下午切换等等的开支会造成比较大的额外开支，导致整体运行效率低下。这也就是我们提交到 leetcode 的代码超时的问题所在。</p>
+<h2 id="问题的总结"><a class="markdownIt-Anchor" href="#问题的总结"></a> 问题的总结</h2>
+<p>这个故事告诉我们，不要在需要并发的任务少，通信不复杂的情况下（比如刷 leetcode 的算法题）尝试使用处理高并发的手段，异步的方法还是用来处理比较慢的任务比较好。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么导致我leetcode超时的不是算法是并发"><span class="toc-number">1.</span> <span class="toc-text"> 什么？导致我leetcode超时的不是算法是并发？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题的提出"><span class="toc-number">1.1.</span> <span class="toc-text"> 问题的提出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题的分析"><span class="toc-number">1.2.</span> <span class="toc-text"> 问题的分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题的总结"><span class="toc-number">1.3.</span> <span class="toc-text"> 问题的总结</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&text=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&is_video=false&description=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=什么？导致我leetcode超时的不是算法是并发？&body=Check out this article: https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&title=什么？导致我leetcode超时的不是算法是并发？"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/02/15/blog/goroutines_cause_leetcode_timeout/&name=什么？导致我leetcode超时的不是算法是并发？&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
