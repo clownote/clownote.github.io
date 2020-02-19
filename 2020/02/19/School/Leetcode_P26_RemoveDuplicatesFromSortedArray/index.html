@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Leetcode P26 删除排序数组中的重复项 还是写学校作业，依然是 leetcode 简单题。  题目描述 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1)O(1)O(1) 额外空间的条件下完成。 示例 1: 12345给定数组 nums = [1,1,2], 函数应该返回">
+<meta name="keywords" content="School">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode P26 删除排序数组中的重复项">
+<meta property="og:url" content="https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Leetcode P26 删除排序数组中的重复项 还是写学校作业，依然是 leetcode 简单题。  题目描述 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1)O(1)O(1) 额外空间的条件下完成。 示例 1: 12345给定数组 nums = [1,1,2], 函数应该返回">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybpgy1gc21h8o0kqj31to0n479r.jpg">
+<meta property="og:updated_time" content="2020-02-19T14:11:24.926Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Leetcode P26 删除排序数组中的重复项">
+<meta name="twitter:description" content="Leetcode P26 删除排序数组中的重复项 还是写学校作业，依然是 leetcode 简单题。  题目描述 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1)O(1)O(1) 额外空间的条件下完成。 示例 1: 12345给定数组 nums = [1,1,2], 函数应该返回">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0082zybpgy1gc21h8o0kqj31to0n479r.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Leetcode P26 删除排序数组中的重复项</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/02/18/School/Leetcode_P1_TwoSum/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&text=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&is_video=false&description=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Leetcode P26 删除排序数组中的重复项&body=Check out this article: https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&name=Leetcode P26 删除排序数组中的重复项&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-p26-删除排序数组中的重复项"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode P26 删除排序数组中的重复项</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一行代码的解法"><span class="toc-number">1.2.</span> <span class="toc-text"> 一行代码的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双指针法"><span class="toc-number">1.3.</span> <span class="toc-text"> 双指针法</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Leetcode P26 删除排序数组中的重复项
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-19T13:58:03.847Z" itemprop="datePublished">2020-02-19</time>
+        
+        (Updated: <time datetime="2020-02-19T14:11:24.926Z" itemprop="dateModified">2020-02-19</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/School/">School</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="leetcode-p26-删除排序数组中的重复项"><a class="markdownIt-Anchor" href="#leetcode-p26-删除排序数组中的重复项"></a> Leetcode P26 删除排序数组中的重复项</h1>
+<p>还是写学校作业，依然是 leetcode 简单题。</p>
+<h2 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h2>
+<p>给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。</p>
+<p>不要使用额外的数组空间，你必须在原地修改输入数组并在使用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 额外空间的条件下完成。</p>
+<p><strong>示例 1</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">给定数组 nums = [1,1,2], </span><br><span class="line"></span><br><span class="line">函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。 </span><br><span class="line"></span><br><span class="line">你不需要考虑数组中超出新长度后面的元素。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">给定 nums = [0,0,1,1,1,2,2,3,3,4],</span><br><span class="line"></span><br><span class="line">函数应该返回新的长度 5, 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4。</span><br><span class="line"></span><br><span class="line">你不需要考虑数组中超出新长度后面的元素。</span><br></pre></td></tr></table></figure>
+<p><strong>说明</strong>:</p>
+<p>为什么返回数值是整数，但输出的答案是数组呢?</p>
+<p>请注意，输入数组是以“引用”方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。</p>
+<p>你可以想象内部操作如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// nums 是以“引用”方式传递的。也就是说，不对实参做任何拷贝</span><br><span class="line">int len = removeDuplicates(nums);</span><br><span class="line"></span><br><span class="line">// 在函数里修改输入数组对于调用者是可见的。</span><br><span class="line">// 根据你的函数返回的长度, 它会打印出数组中该长度范围内的所有元素。</span><br><span class="line">for (int i = 0; i &lt; len; i++) &#123;</span><br><span class="line">    print(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>来源：力扣（LeetCode）<br>
+链接：<a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array" target="_blank" rel="noopener">https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array</a><br>
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="一行代码的解法"><a class="markdownIt-Anchor" href="#一行代码的解法"></a> 一行代码的解法</h2>
+<p>这个问题很！简！单！就是过滤重复项嘛，这个问题在生活中很常见，我一般是用 <code>set</code> 保证元素不重复的性质来解决这个问题的，具体实现是把列表转成集合再转回来就完成了。但这个题目还要要求排序，<code>set</code> 不一定能保证有序性，那就再套一个排序好了。</p>
+<p>虽然这个方法在时间、空间上消耗都不小，但代码十分简洁，emmmm，再利用合适的语言 + 一小点奇技淫巧，大概就一行代码：</p>
+<p>Python3 解法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeDuplicates</span><span class="params">(self, nums: List[int])</span> -&gt; int:</span></span><br><span class="line">        nums[:] = sorted(set(nums))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>执行用时 :248 ms, 在所有 Python3 提交中击败了11.22%的用户</p>
+<p>内存消耗 :30.7 MB, 在所有 Python3 提交中击败了5.05%的用户</p>
+</blockquote>
+<p>😂</p>
+<p>但是这种方法有个小问题，在 Golang 里没有 <code>Set</code> 怎么办？用类似的思想，哈希表可以保证键唯一，把 <code>nums</code> 里的值做 key，全放入一个 <code>map</code> 里，迭代出来再排序也就完了。</p>
+<hr>
+<p>以上纯属娱乐，下面开始正解：</p>
+<h2 id="双指针法"><a class="markdownIt-Anchor" href="#双指针法"></a> 双指针法</h2>
+<p>因为题目给的数组是已经排好序的，所以某一元素要么等于其前面一个元素，要么大与前面一个元素。</p>
+<p>对某一元素，若等于前一元素，则说明改项重复，即需要“删除”。</p>
+<p>我们不容易从数组中直接“删除”一个元素，但可以考虑用其他合适的元素来覆盖它。在这个问题中， 我们可以用一个不重复的元素来覆盖掉一个重复的元素。</p>
+<p>所以，我们算法的思路就是：用指针 <code>i</code> 遍历数组，维护指针 <code>t</code> 保证 <code>t</code> 前的数组不重复，若 <code>i</code> 遍历到的元素不在 <code>t</code> 前的不重复部分（由于已经排序，也就是 <code>elementAt(i) != elementAt(t)</code> ），则将其加入（即将它与 <code>t</code> 后一个元素交换位置并且 <code>t</code> 自增 1。）。</p>
+<p>具体的实现上，，，emmm，我不想写了，直接抄一下题解吧。（难得自己的算法几乎和题解<strong>一摸一样</strong>）</p>
+<blockquote>
+<p>数组完成排序后，我们可以放置两个指针 <code>i</code> 和 <code>j</code>，其中 <code>i</code> 是慢指针，而 <code>j</code> 是快指针。只要 <code>nums[i]=nums[j]</code>，我们就增加 <code>j</code> 以跳过重复项。当我们遇到 <code>nums[j] != nums[i]</code> 时，跳过重复项的运行已经结束，因此我们必须把它（<code>nums[j]</code>）的值复制到 <code>nums[i+1]</code>。然后递增 <code>i</code>，接着我们将再次重复相同的过程，直到 <code>j</code> 到达数组的末尾为止。</p>
+<p>作者：LeetCode<br>
+链接：<a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/solution/shan-chu-pai-xu-shu-zu-zhong-de-zhong-fu-xiang-by-/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/solution/shan-chu-pai-xu-shu-zu-zhong-de-zhong-fu-xiang-by-/</a><br>
+来源：力扣（LeetCode）<br>
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+</blockquote>
+<p>Golang 实现：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">removeDuplicates</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) &lt;= <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(nums)</span><br><span class="line">    &#125;</span><br><span class="line">    t := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        <span class="keyword">if</span> nums[i] != nums[t] &#123;</span><br><span class="line">            t++</span><br><span class="line">            nums[t] = nums[i]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> t + <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>执行用时 :8 ms, 在所有 Go 提交中击败了93.95%的用户</p>
+<p>内存消耗 :4.6 MB, 在所有 Go 提交中击败了62.06%的用户</p>
+</blockquote>
+<hr>
+<p>吐槽一句，我不认为我写的比这没有缩进的丑陋 0 ms 的写的差！</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc21h8o0kqj31to0n479r.jpg" alt="image-20200219213850376"></p>
+<p>唯一的区别就是我把长度为 1 的也直接返回了，一个元素肯定也不重复嘛！但就多一个 <code>len()</code> 的调用我不认为可以把时间拉慢这么多，事实上，我把我的代码改成和他一模一样的依然是 8 ms。</p>
+<p>还有在时间上，我跑了好几次，有的时候是 4.5 MB 击败 100%，有的时候是 4.6 MB 击败 62.06%。咱也不知道这个运气问题要怎么解决🤷‍♂️。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-p26-删除排序数组中的重复项"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode P26 删除排序数组中的重复项</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目描述"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一行代码的解法"><span class="toc-number">1.2.</span> <span class="toc-text"> 一行代码的解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双指针法"><span class="toc-number">1.3.</span> <span class="toc-text"> 双指针法</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&text=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&is_video=false&description=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Leetcode P26 删除排序数组中的重复项&body=Check out this article: https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&title=Leetcode P26 删除排序数组中的重复项"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/02/19/School/Leetcode_P26_RemoveDuplicatesFromSortedArray/&name=Leetcode P26 删除排序数组中的重复项&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
