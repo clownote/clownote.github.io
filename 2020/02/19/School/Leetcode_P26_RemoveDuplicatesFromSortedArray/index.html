@@ -15,7 +15,7 @@
 <meta property="og:description" content="Leetcode P26 删除排序数组中的重复项 还是写学校作业，依然是 leetcode 简单题。  题目描述 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1)O(1)O(1) 额外空间的条件下完成。 示例 1: 12345给定数组 nums = [1,1,2], 函数应该返回">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybpgy1gc21h8o0kqj31to0n479r.jpg">
-<meta property="og:updated_time" content="2020-02-19T14:11:24.926Z">
+<meta property="og:updated_time" content="2020-02-19T14:12:20.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode P26 删除排序数组中的重复项">
 <meta name="twitter:description" content="Leetcode P26 删除排序数组中的重复项 还是写学校作业，依然是 leetcode 简单题。  题目描述 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1)O(1)O(1) 额外空间的条件下完成。 示例 1: 12345给定数组 nums = [1,1,2], 函数应该返回">
@@ -133,7 +133,7 @@
       
         <time datetime="2020-02-19T13:58:03.847Z" itemprop="datePublished">2020-02-19</time>
         
-        (Updated: <time datetime="2020-02-19T14:11:24.926Z" itemprop="dateModified">2020-02-19</time>)
+        (Updated: <time datetime="2020-02-19T14:12:20.962Z" itemprop="dateModified">2020-02-19</time>)
         
       
     </div>
@@ -184,7 +184,7 @@
 <hr>
 <p>以上纯属娱乐，下面开始正解：</p>
 <h2 id="双指针法"><a class="markdownIt-Anchor" href="#双指针法"></a> 双指针法</h2>
-<p>因为题目给的数组是已经排好序的，所以某一元素要么等于其前面一个元素，要么大与前面一个元素。</p>
+<p>因为题目给的数组是已经排好序的，所以某一元素要么等于其前面一个元素，要么大于前面一个元素。</p>
 <p>对某一元素，若等于前一元素，则说明改项重复，即需要“删除”。</p>
 <p>我们不容易从数组中直接“删除”一个元素，但可以考虑用其他合适的元素来覆盖它。在这个问题中， 我们可以用一个不重复的元素来覆盖掉一个重复的元素。</p>
 <p>所以，我们算法的思路就是：用指针 <code>i</code> 遍历数组，维护指针 <code>t</code> 保证 <code>t</code> 前的数组不重复，若 <code>i</code> 遍历到的元素不在 <code>t</code> 前的不重复部分（由于已经排序，也就是 <code>elementAt(i) != elementAt(t)</code> ），则将其加入（即将它与 <code>t</code> 后一个元素交换位置并且 <code>t</code> 自增 1。）。</p>
