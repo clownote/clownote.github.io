@@ -15,7 +15,7 @@
 <meta property="og:description" content="Leetcode P26 删除排序数组中的重复项 还是写学校作业，依然是 leetcode 简单题。  题目描述 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1)O(1)O(1) 额外空间的条件下完成。 示例 1: 12345给定数组 nums = [1,1,2], 函数应该返回">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybpgy1gc21h8o0kqj31to0n479r.jpg">
-<meta property="og:updated_time" content="2020-02-19T14:12:20.962Z">
+<meta property="og:updated_time" content="2020-02-20T04:00:06.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode P26 删除排序数组中的重复项">
 <meta name="twitter:description" content="Leetcode P26 删除排序数组中的重复项 还是写学校作业，依然是 leetcode 简单题。  题目描述 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1)O(1)O(1) 额外空间的条件下完成。 示例 1: 12345给定数组 nums = [1,1,2], 函数应该返回">
@@ -79,6 +79,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" href="/2020/02/20/School/Leetcode_P27_RemoveElement/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" href="/2020/02/18/School/Leetcode_P1_TwoSum/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -133,7 +135,7 @@
       
         <time datetime="2020-02-19T13:58:03.847Z" itemprop="datePublished">2020-02-19</time>
         
-        (Updated: <time datetime="2020-02-19T14:12:20.962Z" itemprop="dateModified">2020-02-19</time>)
+        (Updated: <time datetime="2020-02-20T04:00:06.299Z" itemprop="dateModified">2020-02-20</time>)
         
       
     </div>
@@ -171,7 +173,7 @@
 链接：<a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array" target="_blank" rel="noopener">https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array</a><br>
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h2 id="一行代码的解法"><a class="markdownIt-Anchor" href="#一行代码的解法"></a> 一行代码的解法</h2>
-<p>这个问题很！简！单！就是过滤重复项嘛，这个问题在生活中很常见，我一般是用 <code>set</code> 保证元素不重复的性质来解决这个问题的，具体实现是把列表转成集合再转回来就完成了。但这个题目还要要求排序，<code>set</code> 不一定能保证有序性，那就再套一个排序好了。</p>
+<p>这个问题很！简！单！就是过滤重复项嘛，这个问题在生活中很常见，我一般是用 <code>Set</code> 保证元素不重复的性质来解决这个问题的，具体实现是把列表转成集合再转回来就完成了。但这个题目还要要求排序，<code>Set</code> 不一定能保证有序性，那就再套一个排序好了。</p>
 <p>虽然这个方法在时间、空间上消耗都不小，但代码十分简洁，emmmm，再利用合适的语言 + 一小点奇技淫巧，大概就一行代码：</p>
 <p>Python3 解法：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeDuplicates</span><span class="params">(self, nums: List[int])</span> -&gt; int:</span></span><br><span class="line">        nums[:] = sorted(set(nums))</span><br></pre></td></tr></table></figure>
@@ -187,7 +189,7 @@
 <p>因为题目给的数组是已经排好序的，所以某一元素要么等于其前面一个元素，要么大于前面一个元素。</p>
 <p>对某一元素，若等于前一元素，则说明改项重复，即需要“删除”。</p>
 <p>我们不容易从数组中直接“删除”一个元素，但可以考虑用其他合适的元素来覆盖它。在这个问题中， 我们可以用一个不重复的元素来覆盖掉一个重复的元素。</p>
-<p>所以，我们算法的思路就是：用指针 <code>i</code> 遍历数组，维护指针 <code>t</code> 保证 <code>t</code> 前的数组不重复，若 <code>i</code> 遍历到的元素不在 <code>t</code> 前的不重复部分（由于已经排序，也就是 <code>elementAt(i) != elementAt(t)</code> ），则将其加入（即将它与 <code>t</code> 后一个元素交换位置并且 <code>t</code> 自增 1。）。</p>
+<p>所以，我们算法的思路就是：用指针 <code>i</code> 遍历数组，维护指针 <code>t</code> 保证 <code>t</code> 前的数组不重复，若 <code>i</code> 遍历到的元素不在 <code>t</code> 前的不重复部分（由于已经排序，也就是 <code>elementAt(i) != elementAt(t)</code> ），则将其加入（即用它覆盖 <code>t</code> 后一个元素，并且 <code>t</code> 自增 1）。</p>
 <p>具体的实现上，，，emmm，我不想写了，直接抄一下题解吧。（难得自己的算法几乎和题解<strong>一摸一样</strong>）</p>
 <blockquote>
 <p>数组完成排序后，我们可以放置两个指针 <code>i</code> 和 <code>j</code>，其中 <code>i</code> 是慢指针，而 <code>j</code> 是快指针。只要 <code>nums[i]=nums[j]</code>，我们就增加 <code>j</code> 以跳过重复项。当我们遇到 <code>nums[j] != nums[i]</code> 时，跳过重复项的运行已经结束，因此我们必须把它（<code>nums[j]</code>）的值复制到 <code>nums[i+1]</code>。然后递增 <code>i</code>，接着我们将再次重复相同的过程，直到 <code>j</code> 到达数组的末尾为止。</p>
