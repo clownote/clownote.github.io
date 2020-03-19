@@ -15,7 +15,7 @@
 <meta property="og:description" content="用 Docker 部署 WordPress  前言 我们都爱用 WordPress，(几乎)一行代码都不用写，就能得到一个好看、实用的动态网站。 这东西用来敷衍帮助各种找你写奇怪小网站的朋友再好不过了。通常，帮朋友部署 WordPress 的这个场景下，你可以找朋友开一台新的服务器，初始化一套 LAMP，直接把 WordPress 给 wget 进去，就可以在你的浏览器里完成配置了。 有时候，比">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcvuveckw8j30m80dfqfs.jpg">
-<meta property="og:updated_time" content="2020-03-16T09:19:17.713Z">
+<meta property="og:updated_time" content="2020-03-19T14:20:14.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用Docker部署WordPress">
 <meta name="twitter:description" content="用 Docker 部署 WordPress  前言 我们都爱用 WordPress，(几乎)一行代码都不用写，就能得到一个好看、实用的动态网站。 这东西用来敷衍帮助各种找你写奇怪小网站的朋友再好不过了。通常，帮朋友部署 WordPress 的这个场景下，你可以找朋友开一台新的服务器，初始化一套 LAMP，直接把 WordPress 给 wget 进去，就可以在你的浏览器里完成配置了。 有时候，比">
@@ -135,7 +135,7 @@
       
         <time datetime="2020-03-16T08:31:44.356Z" itemprop="datePublished">2020-03-16</time>
         
-        (Updated: <time datetime="2020-03-16T09:19:17.713Z" itemprop="dateModified">2020-03-16</time>)
+        (Updated: <time datetime="2020-03-19T14:20:14.737Z" itemprop="dateModified">2020-03-19</time>)
         
       
     </div>
@@ -185,7 +185,7 @@
 <p>Google 会告诉您，这个问题是由于 mysql 8 的默认用户认证方式改了，wordpress 不认识。要解决不难，打开 mysql 设置一下，把认证方式改成 Wordpress 认识的样子就行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it Mysql_Test mysql -p</span><br></pre></td></tr></table></figure>
 <p>执行 mysql 命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use mysql;</span><br><span class="line">mysql&gt; select host, user, plugin from user;</span><br><span class="line">mysql&gt; ALTER USER &apos;root&apos;@&apos;%&apos; IDENTIFIED WITH mysql_native_password BY &apos;123abczMF&apos;;</span><br><span class="line">mysql&gt; select host, user, plugin from user;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use mysql;</span><br><span class="line">mysql&gt; select host, user, plugin from user;</span><br><span class="line">mysql&gt; ALTER USER &apos;root&apos;@&apos;%&apos; IDENTIFIED WITH mysql_native_password BY &apos;233333&apos;;</span><br><span class="line">mysql&gt; select host, user, plugin from user;</span><br></pre></td></tr></table></figure>
 <p>我们把 root 的 plugin 从 <code>caching_sha2_password</code> 改成了 <code>mysql_native_password</code>，这样就没问题了。</p>
 <p>然后再次浏览器访问 <code>http://xxx:2020/wp-admin/index.php</code>，这次就应该是 “著名的” wordpress 5分钟安装了，您可以自行完成 😃</p>
 
