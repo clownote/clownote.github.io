@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcow9pl2aqj30rt0dtjsl.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcovabfugbj31dw0ev143.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcowy32x5bj31lt0c64aj.jpg">
-<meta property="og:updated_time" content="2020-03-10T12:09:34.388Z">
+<meta property="og:updated_time" content="2020-06-28T07:45:26.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Golang 实战——微信公众号课程提醒系统">
 <meta name="twitter:description" content="Golang 实战——微信公众号课程提醒系统  起因 最早开始学 Golang 已经是整整一年前了，当时就把基础语法那一块学完了，然后拿 Golang 写了点 leetcode 题。之后由于项目里一直用 Python 和 Java，Golang 这一块就搁置下来没学了。 之前寒假本来是打算学 iOS、Mac 开发这一块的，搞了两个星期，感觉暂时不想学下去了。（我想学 SwiftUI，我觉得这才够">
@@ -154,7 +154,7 @@
       
         <time datetime="2020-03-04T08:08:15.941Z" itemprop="datePublished">2020-03-04</time>
         
-        (Updated: <time datetime="2020-03-10T12:09:34.388Z" itemprop="dateModified">2020-03-10</time>)
+        (Updated: <time datetime="2020-06-28T07:45:26.191Z" itemprop="dateModified">2020-06-28</time>)
         
       
     </div>
@@ -186,7 +186,7 @@
 <p>所以就搬出 Golang 来接着学了。看完了函数、接口、并发这一块，然后就学了一些 Web 开发方面的。（这才实在，不然语言学完就只能刷 leetcode。）</p>
 <p>学完了差不多就开学了，刚好我一直憎恶超级课程表广告的烦扰，所以就打算写一个可以自动从教务系统获取课程表、在上课前提醒的课程表项目。这个照理来说是个前端项目，但 iOS 开发这一块还没学完。本来 Android 也行，但我用 iPhone 啊。所以想了个曲线救国的方法——微信公众号开发，纯后端，拿来练习 Golang 再好不过。</p>
 <hr>
-<p>由于时间、空间有限很多地方我写的不太清晰。所以在开始阅读本文之前，我建议你打开源码，对照阅读。：<a href="https://github.com/cdfmlr/CoursesNotifier" target="_blank" rel="noopener">https://github.com/cdfmlr/CoursesNotifier</a>。</p>
+<p>由于时间、空间有限很多地方我写的不太清晰。所以在开始阅读本文之前，我建议你打开源码，对照阅读。：<a href="https://github.com/cdfmlr/CoursesNotifier" target="_blank" rel="noopener">https://github.com/cdfmlr/CoursesNotifier</a>（我仍在持续对该项目进行其调整和拓展，本文所述试用于 <code>72e6165</code> 版本，which is committed on Mar 25, 2020）</p>
 <hr>
 <p>我在这个项目中的很多地方尝试了 Golang 的“面向对象”。Go 不是一个面向对象的语言，这给写惯了 Java、Python 的我们还是带来了一些不适应的。但没关系，正如它的发明者们所说，Go 是用来构建系统的实用语言。面向对象不可否认是构建系统的强有力工具，Golang 当然会有所支持。当然，也只是有所支持，而不是真正的面向对象，我在 coding 的时候，就在一个需要多态的地方碰到了困难，最后不得不更改设计，稍微没那么优雅了。</p>
 <p>在这篇文章中，我尝试记录我开发这个系统的整个过程、解释尽可能多的代码设计。但因为毕竟整个项目有接近3000行代码，我不可能逐一解释到位。如果你想看懂所有东西，请去 GitHub 打开这个项目的源码对照来看，我也是个初学者，写出的代码应该还是很简单的。</p>
