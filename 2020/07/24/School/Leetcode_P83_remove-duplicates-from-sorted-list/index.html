@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Leetcode P83 删除排序链表中的重复元素  题目 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。 示例 1: 12输入: 1-&amp;gt;1-&amp;gt;2输出: 1-&amp;gt;2 示例 2: 12输入: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3输出: 1-&amp;gt;2-&amp;gt;3 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/pr">
+<meta name="keywords" content="School">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode P83 删除排序链表中的重复元素">
+<meta property="og:url" content="https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Leetcode P83 删除排序链表中的重复元素  题目 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。 示例 1: 12输入: 1-&amp;gt;1-&amp;gt;2输出: 1-&amp;gt;2 示例 2: 12输入: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3输出: 1-&amp;gt;2-&amp;gt;3 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/pr">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcq2u4ysbpj31d60u0e7f.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcq3j6dznqj31d60u04qp.jpg">
+<meta property="og:updated_time" content="2020-07-24T15:16:23.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Leetcode P83 删除排序链表中的重复元素">
+<meta name="twitter:description" content="Leetcode P83 删除排序链表中的重复元素  题目 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。 示例 1: 12输入: 1-&amp;gt;1-&amp;gt;2输出: 1-&amp;gt;2 示例 2: 12输入: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3输出: 1-&amp;gt;2-&amp;gt;3 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/pr">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcq2u4ysbpj31d60u0e7f.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Leetcode P83 删除排序链表中的重复元素</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/07/24/School/Leetcode_P78_subsets/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/07/24/School/Leetcode_P88_MergeSortedArray/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&text=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&is_video=false&description=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Leetcode P83 删除排序链表中的重复元素&body=Check out this article: https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&name=Leetcode P83 删除排序链表中的重复元素&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-p83-删除排序链表中的重复元素"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode P83 删除排序链表中的重复元素</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双指针法"><span class="toc-number">1.2.</span> <span class="toc-text"> 双指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化单指针"><span class="toc-number">1.3.</span> <span class="toc-text"> 优化：单指针</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Leetcode P83 删除排序链表中的重复元素
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-07-24T15:16:23.258Z" itemprop="datePublished">2020-07-24</time>
+        
+        (Updated: <time datetime="2020-07-24T15:16:23.258Z" itemprop="dateModified">2020-07-24</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/School/">School</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="leetcode-p83-删除排序链表中的重复元素"><a class="markdownIt-Anchor" href="#leetcode-p83-删除排序链表中的重复元素"></a> Leetcode P83 删除排序链表中的重复元素</h1>
+<h2 id="题目"><a class="markdownIt-Anchor" href="#题目"></a> 题目</h2>
+<p>给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。</p>
+<p>示例 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: 1-&gt;1-&gt;2</span><br><span class="line">输出: 1-&gt;2</span><br></pre></td></tr></table></figure>
+<p>示例 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: 1-&gt;1-&gt;2-&gt;3-&gt;3</span><br><span class="line">输出: 1-&gt;2-&gt;3</span><br></pre></td></tr></table></figure>
+<p>来源：力扣（LeetCode）<br>
+链接：<a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list" target="_blank" rel="noopener">https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list</a><br>
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="双指针法"><a class="markdownIt-Anchor" href="#双指针法"></a> 双指针法</h2>
+<p>这道题还是很容易的，双指针法，和 <a href="https://blog.csdn.net/u012419550/article/details/104402182" target="_blank" rel="noopener">Leetcode P26 删除排序数组中的重复项</a> 一样的算法，只是把数组改成链表（甚至我还觉得更简单了？）</p>
+<p>就搞两个指针 <code>current</code> 和 <code>toDel</code>，<code>current</code> 遍历链表，维护 <code>toDel</code> 前的节点值不重复。直接上代码吧，Golang：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">deleteDuplicates</span><span class="params">(head *ListNode)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line">    current := head</span><br><span class="line">    toDel := head</span><br><span class="line">    <span class="keyword">for</span> current != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> current.Val != toDel.Val &#123;</span><br><span class="line">            toDel.Next = current</span><br><span class="line">            toDel = current</span><br><span class="line">        &#125;</span><br><span class="line">        current = current.Next</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> toDel != <span class="literal">nil</span> &amp;&amp; toDel.Next != <span class="literal">nil</span> &amp;&amp; toDel.Next.Val == toDel.Val &#123;</span><br><span class="line">        toDel.Next = <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcq2u4ysbpj31d60u0e7f.jpg" alt="屏幕快照 2020-03-11 16.36.36"></p>
+<h2 id="优化单指针"><a class="markdownIt-Anchor" href="#优化单指针"></a> 优化：单指针</h2>
+<p>这个题还可以只用一个指针完成，因为链表是用指针指下一个的嘛，我们可以方便地把任意节点的下一节点改成其后的某一节点，来达到“删除”中间的一些节点的目的。比如<code>current.Next = current.Next.Next</code>，就相当于把 <code>current.Next</code> 删除了。</p>
+<p>用这个思路就可以用一个指针把链表中的重复元素删除：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">deleteDuplicates</span><span class="params">(head *ListNode)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line">    current := head</span><br><span class="line">    <span class="keyword">for</span> (current != <span class="literal">nil</span>) &amp;&amp; (current.Next != <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> current.Next.Val == current.Val &#123;</span><br><span class="line">            current.Next = current.Next.Next</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            current = current.Next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcq3j6dznqj31d60u04qp.jpg" alt="image-20200311170330484"></p>
+<p>哈哈，一开始我没写 else 分句，<code>current = current.Next</code> 写在外面，这么做是错的，如果输入是 <code>[1,1,1,1]</code>，就会输出 <code>[1,1]</code>，少了尾部最后的处理。然后我改这个的时候顺手把 for 条件里的 <code>current != nil</code> 也删了，但他有 <code>[]</code> 的输入，又错了一次🤦‍♂️</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-p83-删除排序链表中的重复元素"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode P83 删除排序链表中的重复元素</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双指针法"><span class="toc-number">1.2.</span> <span class="toc-text"> 双指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化单指针"><span class="toc-number">1.3.</span> <span class="toc-text"> 优化：单指针</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&text=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&is_video=false&description=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Leetcode P83 删除排序链表中的重复元素&body=Check out this article: https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&title=Leetcode P83 删除排序链表中的重复元素"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/24/School/Leetcode_P83_remove-duplicates-from-sorted-list/&name=Leetcode P83 删除排序链表中的重复元素&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>

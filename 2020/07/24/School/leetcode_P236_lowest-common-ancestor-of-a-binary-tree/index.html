@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="leetcode 236. 二叉树的最近公共祖先  题目 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。” 例如，给定如下二叉树:  root = [3,5,1,6,2,0,8,null,null,7">
+<meta name="keywords" content="School">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode 236. 二叉树的最近公共祖先">
+<meta property="og:url" content="https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="leetcode 236. 二叉树的最近公共祖先  题目 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。” 例如，给定如下二叉树:  root = [3,5,1,6,2,0,8,null,null,7">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge9c56ruw6j305k05aa9z.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge99q4zyelj31cn0u04qp.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge9a8pvmnnj31cn0u01kx.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge9bp875ekj31cn0u01kx.jpg">
+<meta property="og:updated_time" content="2020-07-24T15:16:23.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Leetcode 236. 二叉树的最近公共祖先">
+<meta name="twitter:description" content="leetcode 236. 二叉树的最近公共祖先  题目 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。” 例如，给定如下二叉树:  root = [3,5,1,6,2,0,8,null,null,7">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge9c56ruw6j305k05aa9z.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Leetcode 236. 二叉树的最近公共祖先</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/07/24/School/TrySLinkList_CityList/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/07/24/SwiftUI/SwiftUI_Essentials_1_Creating_and_Combining_Views/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&text=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&is_video=false&description=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Leetcode 236. 二叉树的最近公共祖先&body=Check out this article: https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&name=Leetcode 236. 二叉树的最近公共祖先&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-236-二叉树的最近公共祖先"><span class="toc-number">1.</span> <span class="toc-text"> leetcode 236. 二叉树的最近公共祖先</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#暴力法"><span class="toc-number">1.2.</span> <span class="toc-text"> 暴力法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#并发"><span class="toc-number">1.3.</span> <span class="toc-text"> 并发</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Leetcode 236. 二叉树的最近公共祖先
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-07-24T15:16:23.258Z" itemprop="datePublished">2020-07-24</time>
+        
+        (Updated: <time datetime="2020-07-24T15:16:23.258Z" itemprop="dateModified">2020-07-24</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/School/">School</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="leetcode-236-二叉树的最近公共祖先"><a class="markdownIt-Anchor" href="#leetcode-236-二叉树的最近公共祖先"></a> leetcode <a href="https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/" target="_blank" rel="noopener">236. 二叉树的最近公共祖先</a></h1>
+<h2 id="题目"><a class="markdownIt-Anchor" href="#题目"></a> 题目</h2>
+<p>给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。</p>
+<p>百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”</p>
+<p>例如，给定如下二叉树:  root = [3,5,1,6,2,0,8,null,null,7,4]</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge9c56ruw6j305k05aa9z.jpg" alt="img"></p>
+<p>示例 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1</span><br><span class="line">输出: 3</span><br><span class="line">解释: 节点 5 和节点 1 的最近公共祖先是节点 3。</span><br></pre></td></tr></table></figure>
+<p>示例 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4</span><br><span class="line">输出: 5</span><br><span class="line">解释: 节点 5 和节点 4 的最近公共祖先是节点 5。因为根据定义最近公共祖先节点可以为节点本身。</span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<p>所有节点的值都是唯一的。<br>
+p、q 为不同节点且均存在于给定的二叉树中。</p>
+<p>来源：力扣（LeetCode）<br>
+链接：<a href="https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree</a><br>
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<hr>
+<p>。。。这个题，以前肯定刷过，记不得是哪个 OJ 的了。最简洁的方法应该是递归回溯，但不想写了。直接拿暴力法 ac 了，再改成并发玩玩吧。。。</p>
+<h2 id="暴力法"><a class="markdownIt-Anchor" href="#暴力法"></a> 暴力法</h2>
+<p>首先，实现一个辅助函数 <code>rewalk(root, node *TreeNode) []*TreeNode</code> ：遍历树，找到从某节点到根节点到一条路径，即找到这个节点的所有祖先节点。</p>
+<p>通过这个 rewalk 函数，获得 p、q 的所有祖先节点，然后从里面找距离 p、q 最近的公共祖先节点返回即可。</p>
+<p>Golang 实现：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for TreeNode.</span></span><br><span class="line"><span class="comment"> * type TreeNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Left *ListNode</span></span><br><span class="line"><span class="comment"> *     Right *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">lowestCommonAncestor</span><span class="params">(root, p, q *TreeNode)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    rp := rewalk(root, p)</span><br><span class="line">    rq := rewalk(root, q)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, pp := <span class="keyword">range</span> rp &#123;</span><br><span class="line">        <span class="keyword">for</span> _, qq := <span class="keyword">range</span> rq &#123;</span><br><span class="line">            <span class="keyword">if</span> pp == qq &#123;</span><br><span class="line">                <span class="keyword">return</span> pp</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &amp;TreeNode&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rewalk</span><span class="params">(root, node *TreeNode)</span> []*<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> []*TreeNode&#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> root.Left == node || root.Right == node &#123;</span><br><span class="line">        <span class="keyword">return</span> []*TreeNode&#123;node, root&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> r := rewalk(root.Left, node); <span class="built_in">len</span>(r) &gt; <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">append</span>(r, root)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> r := rewalk(root.Right, node); <span class="built_in">len</span>(r) &gt; <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">append</span>(r, root)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> []*TreeNode&#123;node&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge99q4zyelj31cn0u04qp.jpg" alt="image-20200428102347236"></p>
+<p>Swift:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     public var val: Int</span></span><br><span class="line"><span class="comment"> *     public var left: TreeNode?</span></span><br><span class="line"><span class="comment"> *     public var right: TreeNode?</span></span><br><span class="line"><span class="comment"> *     public init(_ val: Int) &#123;</span></span><br><span class="line"><span class="comment"> *         self.val = val</span></span><br><span class="line"><span class="comment"> *         self.left = nil</span></span><br><span class="line"><span class="comment"> *         self.right = nil</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">lowestCommonAncestor</span><span class="params">(<span class="number">_</span> root: TreeNode?, <span class="number">_</span> p: TreeNode?, <span class="number">_</span> q: TreeNode?)</span></span> -&gt; <span class="type">TreeNode?</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> pp <span class="keyword">in</span> rewalk(root, p) &#123;</span><br><span class="line">            <span class="keyword">for</span> qq <span class="keyword">in</span> rewalk(root, q) &#123;</span><br><span class="line">                <span class="keyword">if</span> pp?.val == qq?.val &#123;</span><br><span class="line">                    <span class="keyword">return</span> pp</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">rewalk</span><span class="params">(<span class="number">_</span> root: TreeNode?, <span class="number">_</span> node: TreeNode?)</span></span> -&gt; [<span class="type">TreeNode?</span>] &#123;</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="type">TreeNode?</span>]()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> root?.<span class="keyword">left</span>?.val == node?.val || root?.<span class="keyword">right</span>?.val == node?.val &#123;</span><br><span class="line">            <span class="keyword">return</span> [node, root]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> rl = rewalk(root?.<span class="keyword">left</span>, node)</span><br><span class="line">        <span class="keyword">if</span> rl.<span class="built_in">count</span> &gt; <span class="number">1</span> &#123;</span><br><span class="line">            rl.append(root)</span><br><span class="line">            <span class="keyword">return</span> rl</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> rr = rewalk(root?.<span class="keyword">right</span>, node)</span><br><span class="line">        <span class="keyword">if</span> rr.<span class="built_in">count</span> &gt; <span class="number">1</span> &#123;</span><br><span class="line">            rr.append(root)</span><br><span class="line">            <span class="keyword">return</span> rr</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> [node]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge9a8pvmnnj31cn0u01kx.jpg" alt="image-20200428104142149"></p>
+<h2 id="并发"><a class="markdownIt-Anchor" href="#并发"></a> 并发</h2>
+<p>在前几天写的 <a href="https://clownote.github.io/2020/04/21/School/Leetcode_P100_same-tree/">从「Leetcode 100. 相同的树」出发讨论为什么用「并发」</a> 一文里，我讨论过，有的时候用并发并不是为了跑的快，只是让解决问题的思路变得更清晰、操作更加“原子化”、避免时间不同步造成的额外储存使用。这里也是一样的，我们可以把刚才的暴力法改成用 goroutine 和 channel，Golang 实现：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">lowestCommonAncestor</span><span class="params">(root, p, q *TreeNode)</span> *<span class="title">TreeNode</span></span> &#123;</span><br><span class="line">    cp := <span class="built_in">make</span>(<span class="keyword">chan</span> *TreeNode)</span><br><span class="line">    cq := <span class="built_in">make</span>(<span class="keyword">chan</span> *TreeNode)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">go</span> rewalk(root, p, cp)</span><br><span class="line">    <span class="keyword">go</span> rewalk(root, q, cq)</span><br><span class="line"></span><br><span class="line">    ans := <span class="built_in">make</span>(<span class="keyword">chan</span> *TreeNode)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        ap := []*TreeNode&#123;&#125;</span><br><span class="line">        aq := []*TreeNode&#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> &#123;</span><br><span class="line">            <span class="keyword">select</span> &#123;</span><br><span class="line">            <span class="keyword">case</span> p := &lt;- cp:</span><br><span class="line">                <span class="keyword">for</span> _, q := <span class="keyword">range</span> aq &#123;</span><br><span class="line">                    <span class="keyword">if</span> p == q &#123;</span><br><span class="line">                        ans &lt;- p</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                ap = <span class="built_in">append</span>(ap, p)</span><br><span class="line">            <span class="keyword">case</span> q := &lt;- cq:</span><br><span class="line">                <span class="keyword">for</span> _, p := <span class="keyword">range</span> ap &#123;</span><br><span class="line">                    <span class="keyword">if</span> q == p &#123;</span><br><span class="line">                        ans &lt;- q</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                aq = <span class="built_in">append</span>(aq, q)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &lt;-ans</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rewalk</span><span class="params">(root, node *TreeNode, ch <span class="keyword">chan</span> *TreeNode)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> root.Left == node || root.Right == node &#123;</span><br><span class="line">        ch &lt;- node</span><br><span class="line">        ch &lt;- root</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> r := rewalk(root.Left, node, ch); r &#123;</span><br><span class="line">        ch &lt;- root</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> r := rewalk(root.Right, node, ch); r &#123;</span><br><span class="line">        ch &lt;- root</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    ch &lt;- node</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge9bp875ekj31cn0u01kx.jpg" alt="image-20200428113206480"></p>
+<p>通过调整超时（就是在 select 里加一个 <code>case &lt;- time.After(...*time.Microsecond)</code>），我去卡了 leetcode 的测试用例出来看，他的数据规模都比较小，给的树都不大，所以这个用并发优势体现不出来。但如果你的树炒鸡大，这个用并发的算法肯定是会有一定优势的。比如如果给的 p、q 距离树根都有 10,000,000 个祖先节点，暴力法要全部跑一边、存下来、再嵌套for  10,000,000 个  10,000,000 个的去遍历，而如果它们的最近公共祖先只距离 1000 个节点，那并发只要跑 1000 个就结束了、检查的遍历也是在 1000 * 1000 里的，这要快得多、省得多了。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-236-二叉树的最近公共祖先"><span class="toc-number">1.</span> <span class="toc-text"> leetcode 236. 二叉树的最近公共祖先</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#暴力法"><span class="toc-number">1.2.</span> <span class="toc-text"> 暴力法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#并发"><span class="toc-number">1.3.</span> <span class="toc-text"> 并发</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&text=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&is_video=false&description=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Leetcode 236. 二叉树的最近公共祖先&body=Check out this article: https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&title=Leetcode 236. 二叉树的最近公共祖先"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/24/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/&name=Leetcode 236. 二叉树的最近公共祖先&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>

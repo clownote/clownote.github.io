@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="贪心算法  这是篇很老的博客了，是我刚学贪心的时候写的笔记。今天无意间翻到，就分享一下。 内容没写多少，主要是看例子，这几个题都比较经典，都是当时我参考大佬的博客自己研究了写的（都是运行了测试过的，但时间长了，我不保证都对）。   算法描述 贪心选择是采用从顶向下（问题拆分）、以迭代的方法做出相继选择（循环处理拆分出的部分），每做一次贪心选择就将所求问题简化为一个规模更小的子问题（找出这个部分的">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贪心算法">
+<meta property="og:url" content="https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="贪心算法  这是篇很老的博客了，是我刚学贪心的时候写的笔记。今天无意间翻到，就分享一下。 内容没写多少，主要是看例子，这几个题都比较经典，都是当时我参考大佬的博客自己研究了写的（都是运行了测试过的，但时间长了，我不保证都对）。   算法描述 贪心选择是采用从顶向下（问题拆分）、以迭代的方法做出相继选择（循环处理拆分出的部分），每做一次贪心选择就将所求问题简化为一个规模更小的子问题（找出这个部分的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gd68gim7rwj30x808w0z0.jpg">
+<meta property="og:updated_time" content="2020-07-24T15:16:23.250Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贪心算法">
+<meta name="twitter:description" content="贪心算法  这是篇很老的博客了，是我刚学贪心的时候写的笔记。今天无意间翻到，就分享一下。 内容没写多少，主要是看例子，这几个题都比较经典，都是当时我参考大佬的博客自己研究了写的（都是运行了测试过的，但时间长了，我不保证都对）。   算法描述 贪心选择是采用从顶向下（问题拆分）、以迭代的方法做出相继选择（循环处理拆分出的部分），每做一次贪心选择就将所求问题简化为一个规模更小的子问题（找出这个部分的">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gd68gim7rwj30x808w0z0.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>贪心算法</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/07/24/School/Leetcode_P101_symmetric-tree/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/07/24/DeepLearningWithPython/Deep-Learning with-Python-ch2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&text=贪心算法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&is_video=false&description=贪心算法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=贪心算法&body=Check out this article: https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&name=贪心算法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#贪心算法"><span class="toc-number">1.</span> <span class="toc-text"> 贪心算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#算法描述"><span class="toc-number">1.0.1.</span> <span class="toc-text"> 算法描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法过程"><span class="toc-number">1.0.2.</span> <span class="toc-text"> 算法过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法实例"><span class="toc-number">1.0.3.</span> <span class="toc-text"> 算法实例</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        贪心算法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-07-24T15:16:23.250Z" itemprop="datePublished">2020-07-24</time>
+        
+        (Updated: <time datetime="2020-07-24T15:16:23.250Z" itemprop="dateModified">2020-07-24</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Algorithm/">Algorithm</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="贪心算法"><a class="markdownIt-Anchor" href="#贪心算法"></a> 贪心算法</h1>
+<blockquote>
+<p>这是篇很老的博客了，是我刚学贪心的时候写的笔记。今天无意间翻到，就分享一下。</p>
+<p>内容没写多少，主要是看例子，这几个题都比较经典，都是当时我参考大佬的博客自己研究了写的（都是运行了测试过的，但时间长了，我不保证都对）。</p>
+</blockquote>
+<h3 id="算法描述"><a class="markdownIt-Anchor" href="#算法描述"></a> 算法描述</h3>
+<p>贪心选择是采用从顶向下（问题拆分）、以迭代的方法做出相继选择（循环处理拆分出的部分），每做一次贪心选择就将所求问题简化为一个规模更小的子问题（找出这个部分的贪心最优解）。</p>
+<p>贪心算法追求的不是问题整体上的最优解，只是迭代找到各部分贪心较优解（最关注的那一项），并将循环结果作为较为满意的解（贪心算法的每一次操作都对结果产生直接影响）。</p>
+<p>找到最优解要穷举所有可能，因此会消耗大量时间。而贪心算法常以每一个迭代的情况为基础做最优选择，而不考虑整体情况（贪心算法不需要回溯），因此可以快速找到较优解。</p>
+<h3 id="算法过程"><a class="markdownIt-Anchor" href="#算法过程"></a> 算法过程</h3>
+<ul>
+<li>建立数学模型来描述问题；</li>
+<li>把求解的问题分成若干个子问题；</li>
+<li>对每一子问题求解，得到子问题的局部最优解；</li>
+<li>把子问题的解局部最优解合成原来解问题的一个解。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fat = 问题</span><br><span class="line">sub = 拆分(fat)</span><br><span class="line"><span class="keyword">for</span> a_part <span class="keyword">in</span> sub:</span><br><span class="line">    res.append(贪心最优解(a_part))</span><br><span class="line">    </span><br><span class="line">print(<span class="string">"问题的较优解"</span>, res)</span><br></pre></td></tr></table></figure>
+<h3 id="算法实例"><a class="markdownIt-Anchor" href="#算法实例"></a> 算法实例</h3>
+<ol>
+<li>
+<p>背包问题<br>
+<em>有一个背包，背包容量是M=150kg。有几个物品，。要求尽可能让装入背包中的物品总价值最大，但不能超过总容量。</em></p>
+<p>（1）物品<strong>不可以</strong>分割成任意大小<br>
+这里以物体的价值与质量比作为标准，每次迭代都找比值较优的。</p>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//coding : c++ 11</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 7</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> WEIGHT_OF_BAG 150</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> id;</span><br><span class="line">	<span class="keyword">double</span> weight;</span><br><span class="line">	<span class="keyword">double</span> value;</span><br><span class="line">	<span class="keyword">double</span> value_pre_weight;</span><br><span class="line">	<span class="keyword">bool</span> chosen;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Node arr[MAX];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">double</span> weights[MAX] = &#123;<span class="number">35</span>, <span class="number">30</span>, <span class="number">60</span>, <span class="number">50</span>, <span class="number">40</span>, <span class="number">15</span>, <span class="number">20</span>&#125;;</span><br><span class="line">	<span class="keyword">double</span> values[MAX]  = &#123;<span class="number">10</span>, <span class="number">40</span>, <span class="number">30</span>, <span class="number">50</span>, <span class="number">35</span>, <span class="number">40</span>, <span class="number">30</span>&#125;;</span><br><span class="line">        <span class="comment">/*拆分问题*/</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX; ++i) &#123;</span><br><span class="line">		arr[i].id = i;</span><br><span class="line">		arr[i].weight = weights[i];</span><br><span class="line">		arr[i].value = values[i];</span><br><span class="line">		arr[i].value_pre_weight = values[i]/weights[i];</span><br><span class="line">		arr[i].chosen = <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*寻求部分贪心最优解*/</span></span><br><span class="line">	<span class="keyword">double</span> total_weight = <span class="number">0</span>, total_value = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">vector</span>&lt;Node&gt; chosen_list;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (total_weight &lt; WEIGHT_OF_BAG) &#123;</span><br><span class="line">		<span class="keyword">double</span> greatest = <span class="number">0.0</span>;</span><br><span class="line">		<span class="keyword">int</span> choice = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX; ++i) &#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[i].chosen == <span class="literal">false</span> &amp;&amp; total_weight + arr[i].weight &lt;= <span class="number">150</span> &amp;&amp; arr[i].value_pre_weight &gt;= greatest) &#123;</span><br><span class="line">				greatest = arr[i].value_pre_weight;</span><br><span class="line">				choice = i;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		arr[choice].chosen = <span class="literal">true</span>;</span><br><span class="line">		chosen_list.push_back(arr[choice]);</span><br><span class="line">		total_weight += arr[choice].weight;</span><br><span class="line">		total_value += arr[choice].value;</span><br><span class="line">		greatest = arr[choice].value_pre_weight;</span><br><span class="line">	&#125;</span><br><span class="line">        <span class="comment">/*将结果循环作为问题的较优解*/</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Chosen:\n"</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> item : chosen_list)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"\tThe "</span> &lt;&lt; <span class="keyword">int</span>(item.id) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span>	&lt;&lt; <span class="string">"Total weight:\t"</span> &lt;&lt; total_weight</span><br><span class="line">		&lt;&lt; <span class="string">"\nTotal value:\t"</span> &lt;&lt; total_value</span><br><span class="line">		&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(2)物品<strong>可以</strong>分割成任意大小<br>
+这里以物体质量为标准</p>
+   <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">   <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bag</span><span class="params">(<span class="keyword">double</span> m, <span class="keyword">double</span> *v, <span class="keyword">double</span> *w, <span class="keyword">double</span> *x)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> maxWeight = <span class="number">50</span>;</span><br><span class="line">	<span class="keyword">double</span> wts[] = &#123; <span class="number">10</span>,  <span class="number">30</span>,  <span class="number">20</span>,  <span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">double</span> vls[] = &#123;<span class="number">200</span>, <span class="number">400</span>, <span class="number">100</span>, <span class="number">10</span>&#125;;</span><br><span class="line">	<span class="keyword">double</span> res[N] = &#123;<span class="number">0</span>&#125;;		<span class="comment">// 记录装物品的比例</span></span><br><span class="line"></span><br><span class="line">	bag(maxWeight, vls, wts, res);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;N; ++i)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"--[%d]: %lf\n"</span>, i, res[i]);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 寻找贪心最优解*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bag</span><span class="params">(<span class="keyword">double</span> m, <span class="keyword">double</span> *v, <span class="keyword">double</span> *w, <span class="keyword">double</span> *x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span> (i=<span class="number">0</span>; i &lt; N; ++i) &#123;</span><br><span class="line">		<span class="keyword">if</span> (m - w[i] &lt; <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		x[i] = <span class="number">1.0</span>;</span><br><span class="line">		m -= w[i];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (i &lt; N)</span><br><span class="line">		x[i] = m/w[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>换零钱问题<br>
+假设1元、2元、5元、10元、20元、50元、100元的纸币分别有c0, c1, c2, c3, c4, c5, c6张。现在要用这些钱来支付K元，至少要用多少张纸币？用贪心算法的思想，很显然，每一步尽可能用面值大的纸币即可。在日常生活中我们自然而然也是这么做的。在程序中已经事先将Value按照从小到大的顺序排好。</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Chosen</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> value;</span><br><span class="line">	<span class="keyword">int</span> count;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">7</span>;</span><br><span class="line"><span class="keyword">int</span> Count[N] = &#123;<span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> Value[N] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">50</span>, <span class="number">100</span>&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;Chosen&gt; got;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> money)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = N - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">		<span class="keyword">int</span> c = min(money/Value[i], Count[i]);</span><br><span class="line">		money = money - c * Value[i];</span><br><span class="line">		num += c;</span><br><span class="line"></span><br><span class="line">		Chosen temp;</span><br><span class="line">		temp.value = Value[i];</span><br><span class="line">		temp.count = c;</span><br><span class="line">		got.push_back(temp);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (money &gt; <span class="number">0</span>)</span><br><span class="line">		num = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> money;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter money: "</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; money;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> res = solve(money);</span><br><span class="line">	<span class="keyword">if</span> (res != <span class="number">-1</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"\n共"</span>&lt;&lt; res &lt;&lt; <span class="string">" 张。"</span>&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> i : got)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%2d个%2d元\t"</span>, i.count, i.value);</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"\nCan't solve!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>活动安排<br>
+有n个需要在同一天使用同一个教室的活动a1,a2,…,an，教室同一时刻只能由一个活动使用。每个活动ai都有一个开始时间si和结束时间fi 。一旦被选择后，活动ai就占据半开时间区间[si,fi)。如果[si,fi]和[sj,fj]互不重叠，ai和aj两个活动就可以被安排在这一天。该问题就是要安排这些活动使得尽量多的活动能不冲突的举行。例如下图所示的活动集合S，其中各项活动按照结束时间单调递增排序。</li>
+</ol>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd68gim7rwj30x808w0z0.jpg" alt="屏幕快照 2020-03-25 16.02.45"></p>
+<p>贪心策略应该是每次选取结束时间最早的活动。直观上也很好理解，按这种方法选择相容活动为未安排活动留下尽可能多的时间。这也是把各项活动按照结束时间单调递增排序的原因。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Action</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> start;</span><br><span class="line">	<span class="keyword">int</span> end;</span><br><span class="line">&#125; act[<span class="number">100</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(struct Action a, struct Action b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a.end &lt; b.end;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">greedy</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> num = <span class="number">0</span>, i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= N; j++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (act[j].start &gt;= act[i].end) &#123;</span><br><span class="line">			i = j;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"\t%2d : From %2d To %2d\n"</span>, i, act[i].start, act[i].end);</span><br><span class="line">			num++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"几组测试数据: "</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;t);</span><br><span class="line">	<span class="keyword">while</span> (t--) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">" 共几个活动: "</span>;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;N);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"活动"</span> &lt;&lt; i &lt;&lt;<span class="string">"的始末："</span>;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;act[i].start, &amp;act[i].end);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		act[<span class="number">0</span>].start = act[<span class="number">0</span>].end = <span class="number">-1</span>;</span><br><span class="line">		sort(act + <span class="number">1</span>, act + N + <span class="number">1</span>, cmp);</span><br><span class="line">		<span class="keyword">int</span> res = greedy();</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"共可安排："</span>&lt;&lt; res &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>机器安排<br>
+n个作业组成的作业集，可由m台相同机器加工处理。要求给出一种作业调度方案，使所给的n个作业在尽可能短的时间内由m台机器加工处理完成。作业不能拆分成更小的子作业；每个作业均可在任何一台机器上加工处理。</li>
+</ol>
+<p>首先将n个作业从大到小排序，然后依此顺序将作业分配给空闲的处理机。也就是说从剩下的作业中，选择需要处理时间最长的，然后依次选择处理时间次长的，直到所有的作业全部处理完毕，或者机器不能再处理其他作业为止。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> Work = <span class="keyword">int</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m=<span class="number">0</span>, n=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">vector</span>&lt;Work&gt; arr;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"machines: "</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; m;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Works: "</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;Work&gt; mch(m, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		Work temp;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"[%d].length: "</span>, i);</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; temp;</span><br><span class="line">		arr.push_back(temp);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"-----\n"</span>;</span><br><span class="line">	sort(arr.begin(), arr.end(), [](<span class="keyword">auto</span> x,<span class="keyword">auto</span> y)&#123;<span class="keyword">return</span> x &gt; y;&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ) &#123;</span><br><span class="line">		<span class="keyword">int</span> flag = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(flag) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;		<span class="comment">// Check each machine</span></span><br><span class="line">				<span class="keyword">if</span> (mch[j] &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"Use (%d) to process [length_%d];\n"</span>, j, arr[i]);</span><br><span class="line">					mch[j] = arr[i];</span><br><span class="line">					i++;</span><br><span class="line">					flag = <span class="number">0</span>;</span><br><span class="line">				&#125; </span><br><span class="line">				</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;p : mch)</span><br><span class="line">				p--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#贪心算法"><span class="toc-number">1.</span> <span class="toc-text"> 贪心算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#算法描述"><span class="toc-number">1.0.1.</span> <span class="toc-text"> 算法描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法过程"><span class="toc-number">1.0.2.</span> <span class="toc-text"> 算法过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法实例"><span class="toc-number">1.0.3.</span> <span class="toc-text"> 算法实例</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&text=贪心算法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&is_video=false&description=贪心算法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=贪心算法&body=Check out this article: https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&title=贪心算法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/24/Algorithm/greedy_algorithm/&name=贪心算法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
