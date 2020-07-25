@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="SQL 基本使用 最近半年多一直都是用 MongoDB，好久没 SQL 了。 这学期有个数据库课，，上了几节课了，还没看过课本😂，但想来后面肯定是学 SQL，要复习一下了。 所以想在下一个项目里用用 SQL，所以先来复习一下基本的 SQL CRUD。  SQL 基本概念 SQL：Structured Query Language，结构化查询语言，访问和处理数据库用的。 SQL 有这几种能力：">
+<meta name="keywords" content="CDFMLR, blogs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL 基本使用">
+<meta property="og:url" content="https://clownote.github.io/2020/02/20/blog/SQL_CRUD/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="SQL 基本使用 最近半年多一直都是用 MongoDB，好久没 SQL 了。 这学期有个数据库课，，上了几节课了，还没看过课本😂，但想来后面肯定是学 SQL，要复习一下了。 所以想在下一个项目里用用 SQL，所以先来复习一下基本的 SQL CRUD。  SQL 基本概念 SQL：Structured Query Language，结构化查询语言，访问和处理数据库用的。 SQL 有这几种能力：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-07-25T16:13:11.220Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL 基本使用">
+<meta name="twitter:description" content="SQL 基本使用 最近半年多一直都是用 MongoDB，好久没 SQL 了。 这学期有个数据库课，，上了几节课了，还没看过课本😂，但想来后面肯定是学 SQL，要复习一下了。 所以想在下一个项目里用用 SQL，所以先来复习一下基本的 SQL CRUD。  SQL 基本概念 SQL：Structured Query Language，结构化查询语言，访问和处理数据库用的。 SQL 有这几种能力：">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>SQL 基本使用</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/02/25/School/Leetcode_P53_maxSubArray/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/20/School/Leetcode_P27_RemoveElement/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&text=SQL 基本使用"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&is_video=false&description=SQL 基本使用"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SQL 基本使用&body=Check out this article: https://clownote.github.io/2020/02/20/blog/SQL_CRUD/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&name=SQL 基本使用&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sql-基本使用"><span class="toc-number">1.</span> <span class="toc-text"> SQL 基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-基本概念"><span class="toc-number">1.1.</span> <span class="toc-text"> SQL 基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-语法特点"><span class="toc-number">1.2.</span> <span class="toc-text"> SQL 语法特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-数据类型"><span class="toc-number">1.3.</span> <span class="toc-text"> SQL 数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-基本语句"><span class="toc-number">1.4.</span> <span class="toc-text"> SQL 基本语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ddl"><span class="toc-number">1.4.1.</span> <span class="toc-text"> DDL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#库"><span class="toc-number">1.4.1.1.</span> <span class="toc-text"> 库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#-create"><span class="toc-number">1.4.1.1.1.</span> <span class="toc-text"> - CREATE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#-drop"><span class="toc-number">1.4.1.1.2.</span> <span class="toc-text"> - DROP</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#-use"><span class="toc-number">1.4.1.1.3.</span> <span class="toc-text"> - USE</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#表"><span class="toc-number">1.4.1.2.</span> <span class="toc-text"> 表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#-create-2"><span class="toc-number">1.4.1.2.1.</span> <span class="toc-text"> - CREATE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#-drop-2"><span class="toc-number">1.4.1.2.2.</span> <span class="toc-text"> - DROP</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dql"><span class="toc-number">1.4.2.</span> <span class="toc-text"> DQL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#select"><span class="toc-number">1.4.2.1.</span> <span class="toc-text"> SELECT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select-distinct"><span class="toc-number">1.4.2.2.</span> <span class="toc-text"> SELECT DISTINCT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#where"><span class="toc-number">1.4.2.3.</span> <span class="toc-text"> WHERE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#and-or"><span class="toc-number">1.4.2.4.</span> <span class="toc-text"> AND &amp; OR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#order-by"><span class="toc-number">1.4.2.5.</span> <span class="toc-text"> ORDER BY</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#limit"><span class="toc-number">1.4.2.6.</span> <span class="toc-text"> LIMIT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dml"><span class="toc-number">1.4.3.</span> <span class="toc-text"> DML</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#insert-into"><span class="toc-number">1.4.3.1.</span> <span class="toc-text"> INSERT INTO</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#update"><span class="toc-number">1.4.3.2.</span> <span class="toc-text"> UPDATE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#delete"><span class="toc-number">1.4.3.3.</span> <span class="toc-text"> DELETE</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        SQL 基本使用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-20T20:50:36.000Z" itemprop="datePublished">2020-02-20</time>
+        
+        (Updated: <time datetime="2020-07-25T16:13:11.220Z" itemprop="dateModified">2020-07-25</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="sql-基本使用"><a class="markdownIt-Anchor" href="#sql-基本使用"></a> SQL 基本使用</h1>
+<p>最近半年多一直都是用 MongoDB，好久没 SQL 了。</p>
+<p>这学期有个数据库课，，上了几节课了，还没看过课本😂，但想来后面肯定是学 SQL，要复习一下了。</p>
+<p>所以想在下一个项目里用用 SQL，所以先来复习一下基本的 SQL CRUD。</p>
+<h2 id="sql-基本概念"><a class="markdownIt-Anchor" href="#sql-基本概念"></a> SQL 基本概念</h2>
+<p>SQL：Structured Query Language，结构化查询语言，访问和处理数据库用的。</p>
+<p>SQL 有这几种能力：</p>
+<ul>
+<li><strong>DDL</strong>：Data Definition Language，定义数据的：建表、删表、修改表结构的；</li>
+<li><strong>DQL</strong>：Data Query Language，查询数据的；</li>
+<li><strong>DML</strong>：Data Manipulation Language，修改数据的：添加、删除、更新数据的；</li>
+</ul>
+<h2 id="sql-语法特点"><a class="markdownIt-Anchor" href="#sql-语法特点"></a> SQL 语法特点</h2>
+<ul>
+<li>
+<p>语句末要写分号</p>
+</li>
+<li>
+<p>关键字不区分大小写；</p>
+<p>表名、列名、(可能)区分大小写。</p>
+<p>一般情况下，我们可以把 SQL 关键字大写，表名、列名等使用小写。</p>
+</li>
+<li>
+<p>文本字段用单引号包裹（e.g. <code>'String'</code>），数值字段不能加引号。</p>
+</li>
+</ul>
+<h2 id="sql-数据类型"><a class="markdownIt-Anchor" href="#sql-数据类型"></a> SQL 数据类型</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">INT</td>
+<td style="text-align:left">整型</td>
+<td style="text-align:left">4字节整数类型，范围约+/-21亿</td>
+</tr>
+<tr>
+<td style="text-align:left">BIGINT</td>
+<td style="text-align:left">长整型</td>
+<td style="text-align:left">8字节整数类型，范围约+/-922亿亿</td>
+</tr>
+<tr>
+<td style="text-align:left">REAL</td>
+<td style="text-align:left">浮点型</td>
+<td style="text-align:left">4字节浮点数，范围约+/-1038</td>
+</tr>
+<tr>
+<td style="text-align:left">DOUBLE</td>
+<td style="text-align:left">浮点型</td>
+<td style="text-align:left">8字节浮点数，范围约+/-10308</td>
+</tr>
+<tr>
+<td style="text-align:left">DECIMAL(M,N)</td>
+<td style="text-align:left">高精度小数</td>
+<td style="text-align:left">由用户指定精度的小数，例如，DECIMAL(20,10)表示一共20位，其中小数10位，通常用于财务计算</td>
+</tr>
+<tr>
+<td style="text-align:left">CHAR(N)</td>
+<td style="text-align:left">定长字符串</td>
+<td style="text-align:left">存储指定长度的字符串，例如，CHAR(100)总是存储100个字符的字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">VARCHAR(N)</td>
+<td style="text-align:left">变长字符串</td>
+<td style="text-align:left">存储可变长度的字符串，例如，VARCHAR(100)可以存储0~100个字符的字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">BOOLEAN</td>
+<td style="text-align:left">布尔类型</td>
+<td style="text-align:left">存储True或者False</td>
+</tr>
+<tr>
+<td style="text-align:left">DATE</td>
+<td style="text-align:left">日期类型</td>
+<td style="text-align:left">存储日期，例如，2018-06-22</td>
+</tr>
+<tr>
+<td style="text-align:left">TIME</td>
+<td style="text-align:left">时间类型</td>
+<td style="text-align:left">存储时间，例如，12:20:59</td>
+</tr>
+<tr>
+<td style="text-align:left">DATETIME</td>
+<td style="text-align:left">日期和时间类型</td>
+<td style="text-align:left">存储日期+时间，例如，2018-06-22 12:20:59</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sql-基本语句"><a class="markdownIt-Anchor" href="#sql-基本语句"></a> SQL 基本语句</h2>
+<h3 id="ddl"><a class="markdownIt-Anchor" href="#ddl"></a> DDL</h3>
+<h4 id="库"><a class="markdownIt-Anchor" href="#库"></a> 库</h4>
+<h5 id="-create"><a class="markdownIt-Anchor" href="#-create"></a> - CREATE</h5>
+<blockquote>
+<p><code>CREATE DATABASE</code> 用来建数据库。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> database_name;</span><br></pre></td></tr></table></figure>
+<h5 id="-drop"><a class="markdownIt-Anchor" href="#-drop"></a> - DROP</h5>
+<blockquote>
+<p><code>DROP DATABASE</code> 用来删库。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">DATABASE</span> database_name;</span><br></pre></td></tr></table></figure>
+<h5 id="-use"><a class="markdownIt-Anchor" href="#-use"></a> - USE</h5>
+<blockquote>
+<p><code>USE</code> 用来选择要操作的数据库。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USE</span> database_name;</span><br></pre></td></tr></table></figure>
+<h4 id="表"><a class="markdownIt-Anchor" href="#表"></a> 表</h4>
+<h5 id="-create-2"><a class="markdownIt-Anchor" href="#-create-2"></a> - CREATE</h5>
+<blockquote>
+<p><code>CREATE TABLE</code> 创建数据表。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE [IF NOT EXISTS] table_name (</span><br><span class="line">    `column_name` column_type,</span><br><span class="line">    `column_name` column_type,</span><br><span class="line">    ...,</span><br><span class="line">    PRIMARY KEY ( `key_column_name` )</span><br><span class="line">)[ENGINE=InnoDB DEFAULT CHARSET=utf8];</span><br></pre></td></tr></table></figure>
+<p>注：<code>[]</code>里的是可选的。</p>
+<h5 id="-drop-2"><a class="markdownIt-Anchor" href="#-drop-2"></a> - DROP</h5>
+<blockquote>
+<p><code>DROP TABLE</code> 用来删除表。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> table_name ;</span><br></pre></td></tr></table></figure>
+<h3 id="dql"><a class="markdownIt-Anchor" href="#dql"></a> DQL</h3>
+<h4 id="select"><a class="markdownIt-Anchor" href="#select"></a> SELECT</h4>
+<blockquote>
+<p><code>SELECT</code> 语句用于从数据库中选取数据。</p>
+</blockquote>
+<p>SELECT 从数据库中选取字段，把结构放到一个结果表中，成为结果集。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name,column_name</span><br><span class="line"><span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>
+<p>也可以：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>
+<h4 id="select-distinct"><a class="markdownIt-Anchor" href="#select-distinct"></a> SELECT DISTINCT</h4>
+<blockquote>
+<p><code>SELECT DISTINCT</code> 语句用于返回列里唯一不同的值</p>
+</blockquote>
+<p>SELECT DISTINCT 是把所选列去重输出，给你看这一列里有多少种不同情况的，如果查询的是多列会输出每一种不同组合。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> column_name,column_name</span><br><span class="line"><span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>
+<p>比如一张放了全国人名的表，<code>SELECT DISTINCT sex FROM people</code> 会输出 <code>男</code>，<code>女</code> 两项）</p>
+<p>再举个🌰：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM userinfo;</span><br><span class="line">+-----+----------+-------------+------------+</span><br><span class="line">| uid | username | department  | created    |</span><br><span class="line">+-----+----------+-------------+------------+</span><br><span class="line">|   2 | Foo      | Bar         | 2020-02-20 |</span><br><span class="line">|   3 | Fuzz     | Bar         | 2020-02-09 |</span><br><span class="line">|   4 | Joe      | Development | 2020-02-02 |</span><br><span class="line">|   5 | Ann      | Development | 2020-02-20 |</span><br><span class="line">+-----+----------+-------------+------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT DISTINCT department FROM userinfo;</span><br><span class="line">+-------------+</span><br><span class="line">| department  |</span><br><span class="line">+-------------+</span><br><span class="line">| Bar         |</span><br><span class="line">| Development |</span><br><span class="line">+-------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT DISTINCT department,created FROM userinfo;</span><br><span class="line">+-------------+------------+</span><br><span class="line">| department  | created    |</span><br><span class="line">+-------------+------------+</span><br><span class="line">| Bar         | 2020-02-20 |</span><br><span class="line">| Bar         | 2020-02-09 |</span><br><span class="line">| Development | 2020-02-02 |</span><br><span class="line">| Development | 2020-02-20 |</span><br><span class="line">+-------------+------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<h4 id="where"><a class="markdownIt-Anchor" href="#where"></a> WHERE</h4>
+<blockquote>
+<p><code>WHERE</code> 子句用于过滤记录，提取满足指定条件的记录。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name,column_name</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> column_name <span class="keyword">operator</span> <span class="keyword">value</span>;</span><br></pre></td></tr></table></figure>
+<p>operator 运算符有以下几种：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">运算符</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">=</td>
+<td style="text-align:left">等于</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;&gt;</td>
+<td style="text-align:left">不等于。**注释：**在 SQL 的一些版本中，该操作符可被写成 !=</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;</td>
+<td style="text-align:left">大于</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;</td>
+<td style="text-align:left">小于</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;=</td>
+<td style="text-align:left">大于等于</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;=</td>
+<td style="text-align:left">小于等于</td>
+</tr>
+<tr>
+<td style="text-align:left">BETWEEN</td>
+<td style="text-align:left">在某个范围内</td>
+</tr>
+<tr>
+<td style="text-align:left">LIKE</td>
+<td style="text-align:left">搜索某种模式</td>
+</tr>
+<tr>
+<td style="text-align:left">IN</td>
+<td style="text-align:left">指定针对某个列的多个可能值</td>
+</tr>
+</tbody>
+</table>
+<p>栗子🌰（还是上面那个例子的表）：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM userinfo WHERE department='Bar';</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">| uid | username | department | created    |</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">|   2 | Foo      | Bar        | 2020-02-20 |</span><br><span class="line">|   3 | Fuzz     | Bar        | 2020-02-09 |</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h4 id="and-or"><a class="markdownIt-Anchor" href="#and-or"></a> AND &amp; OR</h4>
+<blockquote>
+<p><code>AND</code> &amp; <code>OR</code> 运算符用于基于一个以上的条件对记录进行过滤（用在 WHERE 里）。</p>
+</blockquote>
+<p>e.g.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM userinfo WHERE department='Bar' AND created='2020-02-20';</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">| uid | username | department | created    |</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">|   2 | Foo      | Bar        | 2020-02-20 |</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> userinfo <span class="keyword">WHERE</span> department=<span class="string">'Bar'</span> <span class="keyword">OR</span> created=<span class="string">'2020-02-20'</span>;</span><br><span class="line">+<span class="comment">-----+----------+-------------+------------+</span></span><br><span class="line">| uid | username | department  | created    |</span><br><span class="line">+<span class="comment">-----+----------+-------------+------------+</span></span><br><span class="line">|   2 | Foo      | Bar         | 2020-02-20 |</span><br><span class="line">|   3 | Fuzz     | Bar         | 2020-02-09 |</span><br><span class="line">|   5 | Ann      | Development | 2020-02-20 |</span><br><span class="line">+<span class="comment">-----+----------+-------------+------------+</span></span><br><span class="line">3 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h4 id="order-by"><a class="markdownIt-Anchor" href="#order-by"></a> ORDER BY</h4>
+<blockquote>
+<p><code>ORDER BY</code> 用于对结果集进行排序。</p>
+</blockquote>
+<p>ORDER BY 默认按照<strong>升序</strong>(ASC)对记录进行排序。降序要使用 <code>DESC</code> 关键字。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name,column_name</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> column_name,column_name <span class="keyword">ASC</span>|<span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="limit"><a class="markdownIt-Anchor" href="#limit"></a> LIMIT</h4>
+<blockquote>
+<p><code>LIMIT</code> 或 <code>ROWNUM</code> 或 <code>TOP</code> 用于规定要返回的记录的数目。</p>
+</blockquote>
+<p>TOP、LIMIT、ROWNUM 是不同家的数据库里不同的写法。</p>
+<ul>
+<li>
+<p><code>LIMIT</code>：MySQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name(s)</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">LIMIT</span> <span class="built_in">number</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>ROWNUM</code>：Oracle</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name(s)</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= <span class="built_in">number</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>TOP</code>：SQL Server，Access</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TOP <span class="built_in">number</span>|<span class="keyword">percent</span> column_name(s)</span><br><span class="line"><span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="dml"><a class="markdownIt-Anchor" href="#dml"></a> DML</h3>
+<h4 id="insert-into"><a class="markdownIt-Anchor" href="#insert-into"></a> INSERT INTO</h4>
+<blockquote>
+<p><code>INSERT INTO</code> 语句用于向表中插入新记录。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name (column1,column2,column3,...)</span><br><span class="line"><span class="keyword">VALUES</span> (value1,value2,value3,...);</span><br></pre></td></tr></table></figure>
+<p>或不指定要插入数据的列名，需要列出插入行的每一列数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name</span><br><span class="line"><span class="keyword">VALUES</span> (value1,value2,value3,...);</span><br></pre></td></tr></table></figure>
+<p>e.g.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT INTO userinfo (username, department, created) VALUES ('WhoKnown','Market','2001-10-12');</span><br><span class="line"></span><br><span class="line">Query OK, 1 row affected (0.03 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT * FROM userinfo WHERE created &lt; '2020-01-01';</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">| uid | username | department | created    |</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">|   6 | WhoKnown | Market     | 2001-10-12 |</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+<h4 id="update"><a class="markdownIt-Anchor" href="#update"></a> UPDATE</h4>
+<blockquote>
+<p><code>UPDATE</code> 语句用于更新表中已存在的记录。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> table_name</span><br><span class="line"><span class="keyword">SET</span> column1=value1,column2=value2,...</span><br><span class="line"><span class="keyword">WHERE</span> some_column=some_value;</span><br></pre></td></tr></table></figure>
+<p>如果没写 WHERE，表示更新<strong>所有记录</strong>。</p>
+<p>e.g.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE userinfo </span><br><span class="line">    -&gt; SET username='Jack'</span><br><span class="line">    -&gt; WHERE uid=6;</span><br><span class="line">Query OK, 1 row affected (0.03 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT * FROM userinfo WHERE created &lt; '2020-01-01';</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">| uid | username | department | created    |</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">|   6 | Jack     | Market     | 2001-10-12 |</span><br><span class="line">+<span class="comment">-----+----------+------------+------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h4 id="delete"><a class="markdownIt-Anchor" href="#delete"></a> DELETE</h4>
+<blockquote>
+<p><code>DELETE</code> 用于删除表中的记录。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> some_column=some_value;</span><br></pre></td></tr></table></figure>
+<p>⚠️注意，漏写 WHERE 就<strong>删除所有记录</strong>了（不如 <code>sudo rm -rf /*</code> 得劲🤪）。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sql-基本使用"><span class="toc-number">1.</span> <span class="toc-text"> SQL 基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-基本概念"><span class="toc-number">1.1.</span> <span class="toc-text"> SQL 基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-语法特点"><span class="toc-number">1.2.</span> <span class="toc-text"> SQL 语法特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-数据类型"><span class="toc-number">1.3.</span> <span class="toc-text"> SQL 数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-基本语句"><span class="toc-number">1.4.</span> <span class="toc-text"> SQL 基本语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ddl"><span class="toc-number">1.4.1.</span> <span class="toc-text"> DDL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#库"><span class="toc-number">1.4.1.1.</span> <span class="toc-text"> 库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#-create"><span class="toc-number">1.4.1.1.1.</span> <span class="toc-text"> - CREATE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#-drop"><span class="toc-number">1.4.1.1.2.</span> <span class="toc-text"> - DROP</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#-use"><span class="toc-number">1.4.1.1.3.</span> <span class="toc-text"> - USE</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#表"><span class="toc-number">1.4.1.2.</span> <span class="toc-text"> 表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#-create-2"><span class="toc-number">1.4.1.2.1.</span> <span class="toc-text"> - CREATE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#-drop-2"><span class="toc-number">1.4.1.2.2.</span> <span class="toc-text"> - DROP</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dql"><span class="toc-number">1.4.2.</span> <span class="toc-text"> DQL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#select"><span class="toc-number">1.4.2.1.</span> <span class="toc-text"> SELECT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select-distinct"><span class="toc-number">1.4.2.2.</span> <span class="toc-text"> SELECT DISTINCT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#where"><span class="toc-number">1.4.2.3.</span> <span class="toc-text"> WHERE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#and-or"><span class="toc-number">1.4.2.4.</span> <span class="toc-text"> AND &amp; OR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#order-by"><span class="toc-number">1.4.2.5.</span> <span class="toc-text"> ORDER BY</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#limit"><span class="toc-number">1.4.2.6.</span> <span class="toc-text"> LIMIT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dml"><span class="toc-number">1.4.3.</span> <span class="toc-text"> DML</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#insert-into"><span class="toc-number">1.4.3.1.</span> <span class="toc-text"> INSERT INTO</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#update"><span class="toc-number">1.4.3.2.</span> <span class="toc-text"> UPDATE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#delete"><span class="toc-number">1.4.3.3.</span> <span class="toc-text"> DELETE</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&text=SQL 基本使用"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&is_video=false&description=SQL 基本使用"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SQL 基本使用&body=Check out this article: https://clownote.github.io/2020/02/20/blog/SQL_CRUD/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&title=SQL 基本使用"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/02/20/blog/SQL_CRUD/&name=SQL 基本使用&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
