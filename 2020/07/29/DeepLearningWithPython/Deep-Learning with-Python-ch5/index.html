@@ -58,7 +58,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gh83vzik31j30oz0goq7t.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gh8669908hj3078076mx8.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gh84yvepspj30oz0go7a9.jpg">
-<meta property="og:updated_time" content="2020-07-29T13:52:44.147Z">
+<meta property="og:updated_time" content="2020-07-29T14:15:18.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python深度学习之计算机视觉">
 <meta name="twitter:description" content="Deep Learning with Python for computer vision 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去">
@@ -178,7 +178,7 @@
       
         <time datetime="2020-07-29T21:09:00.000Z" itemprop="datePublished">2020-07-29</time>
         
-        (Updated: <time datetime="2020-07-29T13:52:44.147Z" itemprop="dateModified">2020-07-29</time>)
+        (Updated: <time datetime="2020-07-29T14:15:18.911Z" itemprop="dateModified">2020-07-29</time>)
         
       
     </div>
@@ -347,18 +347,6 @@ Epoch 5/5
 </ul>
 <p>除了最大池化，下采样的方式还有很多：比如步进卷积、平均池化之类的。但一般用最大池化效果比较好，我们要的是知道有没有某个特征嘛，如果用平均去就把这个特征“减淡”了，如果用步进卷积又可能把这个信息错过了。</p>
 <p>总而言之，使用最大池化/其他下采样的原因，一是减少需要处理的特征图的元素个数，二是通过让一系列的卷积层观察到越来越大的窗口(看到的覆盖越来越多比例的原始输入)，从而学到空间层级结构。</p>
-<hr>
-<p>categories:</p>
-<ul>
-<li>Machine Learning</li>
-<li>Deep Learning with Python<br>
-date: 2020-07-24 23:18:05<br>
-tag:</li>
-<li>Machine Learning</li>
-<li>Deep Learning<br>
-title: Python深度学习之小型数据集上训练卷积神经网络</li>
-</ul>
-<hr>
 <h2 id="在小型数据集上从头训练一个卷积神经网络"><a class="markdownIt-Anchor" href="#在小型数据集上从头训练一个卷积神经网络"></a> 在小型数据集上从头训练一个卷积神经网络</h2>
 <blockquote>
 <p>5.2 Training a convnet from scratch on a small dataset</p>
@@ -441,58 +429,7 @@ labels_batch: [1. 1. 1. 1. 1. 1. 1. 1. 1. 0. 1. 1. 1. 1. 0. 0. 1. 1. 0. 1.]
 100/100 [==============================] - 97s 967ms/step - loss: 0.6901 - acc: 0.5450 - val_loss: 0.6785 - val_acc: 0.5270
 Epoch 2/30
 100/100 [==============================] - 86s 865ms/step - loss: 0.6661 - acc: 0.5875 - val_loss: 0.6525 - val_acc: 0.6060
-Epoch 3/30
-100/100 [==============================] - 109s 1s/step - loss: 0.6344 - acc: 0.6405 - val_loss: 0.6360 - val_acc: 0.6450
-Epoch 4/30
-100/100 [==============================] - 122s 1s/step - loss: 0.5856 - acc: 0.6905 - val_loss: 0.6407 - val_acc: 0.6170
-Epoch 5/30
-100/100 [==============================] - 113s 1s/step - loss: 0.5503 - acc: 0.7160 - val_loss: 0.6254 - val_acc: 0.6530
-Epoch 6/30
-100/100 [==============================] - 86s 858ms/step - loss: 0.5258 - acc: 0.7495 - val_loss: 0.6445 - val_acc: 0.6410
-Epoch 7/30
-100/100 [==============================] - 117s 1s/step - loss: 0.4907 - acc: 0.7550 - val_loss: 0.5918 - val_acc: 0.6910
-Epoch 8/30
-100/100 [==============================] - 132s 1s/step - loss: 0.4614 - acc: 0.7825 - val_loss: 0.5789 - val_acc: 0.6830
-Epoch 9/30
-100/100 [==============================] - 143s 1s/step - loss: 0.4379 - acc: 0.7835 - val_loss: 0.5427 - val_acc: 0.7360
-Epoch 10/30
-100/100 [==============================] - 132s 1s/step - loss: 0.4063 - acc: 0.8240 - val_loss: 0.5462 - val_acc: 0.7370
-Epoch 11/30
-100/100 [==============================] - 133s 1s/step - loss: 0.3821 - acc: 0.8305 - val_loss: 0.5641 - val_acc: 0.7290
-Epoch 12/30
-100/100 [==============================] - 138s 1s/step - loss: 0.3583 - acc: 0.8465 - val_loss: 0.5581 - val_acc: 0.7280
-Epoch 13/30
-100/100 [==============================] - 134s 1s/step - loss: 0.3359 - acc: 0.8615 - val_loss: 0.5796 - val_acc: 0.7260
-Epoch 14/30
-100/100 [==============================] - 144s 1s/step - loss: 0.3173 - acc: 0.8610 - val_loss: 0.5668 - val_acc: 0.7220
-Epoch 15/30
-100/100 [==============================] - 146s 1s/step - loss: 0.2967 - acc: 0.8800 - val_loss: 0.5762 - val_acc: 0.7340
-Epoch 16/30
-100/100 [==============================] - 149s 1s/step - loss: 0.2738 - acc: 0.8810 - val_loss: 0.6362 - val_acc: 0.7270
-Epoch 17/30
-100/100 [==============================] - 152s 2s/step - loss: 0.2511 - acc: 0.8960 - val_loss: 0.6082 - val_acc: 0.7270
-Epoch 18/30
-100/100 [==============================] - 153s 2s/step - loss: 0.2276 - acc: 0.9115 - val_loss: 0.6246 - val_acc: 0.7250
-Epoch 19/30
-100/100 [==============================] - 154s 2s/step - loss: 0.1992 - acc: 0.9230 - val_loss: 0.6372 - val_acc: 0.7240
-Epoch 20/30
-100/100 [==============================] - 155s 2s/step - loss: 0.1783 - acc: 0.9360 - val_loss: 0.7024 - val_acc: 0.7280
-Epoch 21/30
-100/100 [==============================] - 161s 2s/step - loss: 0.1674 - acc: 0.9445 - val_loss: 0.6692 - val_acc: 0.7260
-Epoch 22/30
-100/100 [==============================] - 157s 2s/step - loss: 0.1470 - acc: 0.9515 - val_loss: 0.7322 - val_acc: 0.7180
-Epoch 23/30
-100/100 [==============================] - 157s 2s/step - loss: 0.1231 - acc: 0.9585 - val_loss: 0.9741 - val_acc: 0.7060
-Epoch 24/30
-100/100 [==============================] - 156s 2s/step - loss: 0.1123 - acc: 0.9640 - val_loss: 0.7344 - val_acc: 0.7230
-Epoch 25/30
-100/100 [==============================] - 163s 2s/step - loss: 0.0958 - acc: 0.9670 - val_loss: 0.7832 - val_acc: 0.7300
-Epoch 26/30
-100/100 [==============================] - 160s 2s/step - loss: 0.0862 - acc: 0.9750 - val_loss: 0.8550 - val_acc: 0.7290
-Epoch 27/30
-100/100 [==============================] - 162s 2s/step - loss: 0.0683 - acc: 0.9810 - val_loss: 0.9302 - val_acc: 0.7190
-Epoch 28/30
-100/100 [==============================] - 163s 2s/step - loss: 0.0601 - acc: 0.9845 - val_loss: 0.8815 - val_acc: 0.7300
+......
 Epoch 29/30
 100/100 [==============================] - 160s 2s/step - loss: 0.0533 - acc: 0.9860 - val_loss: 0.9298 - val_acc: 0.7310
 Epoch 30/30
@@ -877,47 +814,6 @@ _________________________________________________________________
    [0. 0. 0.]
    [0. 0. 0.]
    ...
-   [0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]]
-
-  [[0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]
-   ...
-   [0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]]
-
-  [[0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]
-   ...
-   [0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]]
-
-  ...
-
-  [[0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]
-   ...
-   [0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]]
-
-  [[0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]
-   ...
-   [0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]]
-
-  [[0. 0. 0.]
-   [0. 0. 0.]
-   [0. 0. 0.]
    ...
    [0. 0. 0.]
    [0. 0. 0.]
@@ -929,7 +825,7 @@ _________________________________________________________________
 </code></pre>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gh8673z1cwj30790700sy.jpg" alt="png"></p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gh86752ufkj307907074x.jpg" alt="png"></p>
-<p>Emmm，刚才这个画图是我随便写的啦，为了正规地画出图来,下面好好处理一下：</p>
+<p>Emmm，刚才这个画图是我随便写的啦，所以爆了个 Warning，为了正规地画出图来,下面好好处理一下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将张量转换为有效图像的 utility 函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deprocess_image</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="comment"># 标准化，均值为 0， 标准差为 0.1</span></span><br><span class="line">    x -= x.mean()</span><br><span class="line">    x /= (x.std() + <span class="number">1e-5</span>)</span><br><span class="line">    x *= <span class="number">0.1</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 裁剪到 [0, 1]</span></span><br><span class="line">    x += <span class="number">0.5</span></span><br><span class="line">    x = np.clip(x, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 将 x 转换为 RGB 数组</span></span><br><span class="line">    x *= <span class="number">255</span></span><br><span class="line">    x = np.clip(x, <span class="number">0</span>, <span class="number">255</span>).astype(<span class="string">'uint8'</span>)</span><br><span class="line">    <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
 <p>把上面那些东西全部拼起来就可以得到完整的生成过滤器可视化的函数了：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成过滤器可视化的函数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">tf.compat.v1.disable_eager_execution()  <span class="comment"># See https://github.com/tensorflow/tensorflow/issues/33135</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_pattern</span><span class="params">(layer_name, filter_index, size=<span class="number">150</span>)</span>:</span></span><br><span class="line">    <span class="comment"># 构建一个损失函数，将 layer_name 层第 filter_index 个过滤器的激活最大化</span></span><br><span class="line">    layer_output = model.get_layer(layer_name).output</span><br><span class="line">    loss = K.mean(layer_output[:, :, :, filter_index])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算损失相对于输入图像的梯度，并将梯度标准化</span></span><br><span class="line">    grads = K.gradients(loss, model.input)[<span class="number">0</span>]</span><br><span class="line">    grads /= (K.sqrt(K.mean(K.square(grads))) + <span class="number">1e-5</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 返回给定输入图像的损失和梯度</span></span><br><span class="line">    iterate = K.function([model.input], [loss, grads])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 从带有噪声的灰度图开始，梯度上升 40 次</span></span><br><span class="line">    input_img_data = np.random.random((<span class="number">1</span>, size, size, <span class="number">3</span>)) * <span class="number">20</span> + <span class="number">128.</span></span><br><span class="line">    step = <span class="number">1.</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">40</span>):</span><br><span class="line">        loss_value, grads_value = iterate([input_img_data])</span><br><span class="line">        input_img_data += grads_value * step</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 输出结果</span></span><br><span class="line">    img = input_img_data[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">return</span> deprocess_image(img)</span><br></pre></td></tr></table></figure>
@@ -952,10 +848,6 @@ _________________________________________________________________
 <p>具体来说，我们用 [Grad-CAM](<a href="https://arxiv.org/abs/" target="_blank" rel="noopener">https://arxiv.org/abs/</a> 1610.02391.) 这个方法：给定一张输入图像，对于一个卷积层的输出特征图，用类别相对于通道的梯度对这个特征图中的每个通道进行加权。说人话就是用「每个通道对分类的重要程度」对「输入图像对不同通道的激活的强弱程度」的空间图进行加权，从而得到「输入图像对类别的激活强度」的空间图。（emmm，这种超长的句子看原文比较好😭：Intuitively, one way to understand this trick is that you’re weighting a spatial map of “how intensely the input image activates different channels” by “how important each channel is with regard to the class,” resulting in a spatial map of “how intensely the input image activates the class.”）</p>
 <p>我们在 VGG16 模型来演示这个方法：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加载带有预训练权重的 VGG16 网络</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.applications.vgg16 <span class="keyword">import</span> VGG16</span><br><span class="line"></span><br><span class="line">model = VGG16(weights=<span class="string">'imagenet'</span>)    <span class="comment"># 注意这个是带有分类器的，比较大，下载稍慢（有500+MB）</span></span><br></pre></td></tr></table></figure>
-<pre><code>WARNING:tensorflow:From /usr/local/lib/python3.7/site-packages/tensorflow_core/python/ops/resource_variable_ops.py:1630: calling BaseResourceVariable.__init__ (from tensorflow.python.ops.resource_variable_ops) with constraint is deprecated and will be removed in a future version.
-Instructions for updating:
-If using Keras pass *_constraint arguments to layers.
-</code></pre>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.summary()</span><br></pre></td></tr></table></figure>
 <pre><code>Model: &quot;vgg16&quot;
 _________________________________________________________________
@@ -1015,9 +907,6 @@ _________________________________________________________________
 <p>然后我们照一张用来测试的图片：</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gh83vzik31j30oz0goq7t.jpg" alt="creative_commons_elephant"></p>
 <p>这是两只亚洲象🐘哦，把这个图片处理成 VGG16 模型需要的样子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!pwd</span><br></pre></td></tr></table></figure>
-<pre><code>/Users/c/pylab/Deep Learning with Python/ch5
-</code></pre>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing <span class="keyword">import</span> image</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.applications.vgg16 <span class="keyword">import</span> preprocess_input, decode_predictions</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">img_path = <span class="string">'./creative_commons_elephant.jpg'</span></span><br><span class="line">img = image.load_img(img_path, target_size=(<span class="number">224</span>, <span class="number">224</span>))</span><br><span class="line"></span><br><span class="line">img = image.load_img(img_path, target_size=(<span class="number">224</span>, <span class="number">224</span>))</span><br><span class="line">x = image.img_to_array(img)</span><br><span class="line">x = np.expand_dims(x, axis=<span class="number">0</span>)</span><br><span class="line">x = preprocess_input(x)</span><br></pre></td></tr></table></figure>
 <p>预测一下图片里的是啥：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">preds = model.predict(x)</span><br><span class="line">print(<span class="string">'Predicted:'</span>, decode_predictions(preds, top=<span class="number">3</span>)[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
