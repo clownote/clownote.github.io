@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta name="keywords" content="CDFMLR, blogs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习之处理文本数据">
+<meta property="og:url" content="https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghek3mhp38j31320mg0v8.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gheskpva1tj31fq0u0aeq.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghetlonkiij30i40lmmyf.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gheu1p4zqdj316i046aau.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmvtdmhl3j30af07cmxf.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmvtbyf9tj30af07cglv.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmvtd56u4j30af07c3yq.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmvtcoi15j30af07cdg2.jpg">
+<meta property="og:updated_time" content="2020-08-11T07:16:26.106Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习之处理文本数据">
+<meta name="twitter:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghek3mhp38j31320mg0v8.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>深度学习之处理文本数据</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/07/29/DeepLearningWithPython/Deep-Learning with-Python-ch5/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&text=深度学习之处理文本数据"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&is_video=false&description=深度学习之处理文本数据"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=深度学习之处理文本数据&body=Check out this article: https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&name=深度学习之处理文本数据&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#61-working-with-text-data"><span class="toc-number">1.1.</span> <span class="toc-text"> 6.1  Working with text data</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#n-grams-和词袋bag-of-words"><span class="toc-number">1.1.1.</span> <span class="toc-text"> n-grams 和词袋(bag-of-words)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#one-hot-编码"><span class="toc-number">1.1.2.</span> <span class="toc-text"> one-hot 编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#词嵌入"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 词嵌入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#利用-embedding-层学习词嵌入"><span class="toc-number">1.1.3.1.</span> <span class="toc-text"> 利用 Embedding 层学习词嵌入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用预训练的词嵌入"><span class="toc-number">1.1.3.2.</span> <span class="toc-text"> 使用预训练的词嵌入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从原始文本到词嵌入"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 从原始文本到词嵌入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#下载-imdb-数据的原始文本"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 下载 IMDB 数据的原始文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对数据进行分词"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 对数据进行分词</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#下载-glove-词嵌入"><span class="toc-number">1.1.4.3.</span> <span class="toc-text"> 下载 GloVe 词嵌入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对嵌入进行预处理"><span class="toc-number">1.1.4.4.</span> <span class="toc-text"> 对嵌入进行预处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定义模型"><span class="toc-number">1.1.4.5.</span> <span class="toc-text"> 定义模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#把-glove-词嵌入加载进模型"><span class="toc-number">1.1.4.6.</span> <span class="toc-text"> 把 GloVe 词嵌入加载进模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#训练与评估模型"><span class="toc-number">1.1.4.7.</span> <span class="toc-text"> 训练与评估模型</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        深度学习之处理文本数据
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-08-11T15:00:52.000Z" itemprop="datePublished">2020-08-11</time>
+        
+        (Updated: <time datetime="2020-08-11T07:16:26.106Z" itemprop="dateModified">2020-08-11</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="deep-learning-with-python"><a class="markdownIt-Anchor" href="#deep-learning-with-python"></a> Deep Learning with Python</h1>
+<p>这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 <a href="https://github.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">GitHub</a> 或 <a href="https://gitee.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">Gitee</a> 找到原始的 <code>.ipynb</code> 笔记本。</p>
+<p>你可以去<a href="https://livebook.manning.com/book/deep-learning-with-python" target="_blank" rel="noopener">这个网站在线阅读这本书的正版原文</a>(英文)。这本书的作者也给出了配套的 <a href="https://github.com/fchollet/deep-learning-with-python-notebooks" target="_blank" rel="noopener">Jupyter notebooks</a>。</p>
+<p>本文为 <strong>第6章  深度学习用于文本和序列</strong> (Chapter 6. <em>Deep learning for text and sequences</em>) 的笔记。</p>
+<p>[TOC]</p>
+<h2 id="61-working-with-text-data"><a class="markdownIt-Anchor" href="#61-working-with-text-data"></a> 6.1  Working with text data</h2>
+<blockquote>
+<p>处理文本数据</p>
+</blockquote>
+<p>要用深度学习的神经网络处理文本数据，和图片类似，也要把数据向量化：文本 -&gt; 数值张量。</p>
+<p>要做这种事情可以把每个单词变成向量，也可以把字符变成向量，还可以把多个连续单词或字符(称为 <em>N-grams</em>)变成向量。</p>
+<p>反正不管如何划分，我们把文本拆分出来的单元叫做 <em>tokens</em>（标记），拆分文本的过程叫做 <em>tokenization</em>(分词)。</p>
+<blockquote>
+<p>注：token 的中文翻译是“标记”😂。这些翻译都怪怪的，虽然 token 确实有标记这个意思，但把这里的 token 翻译成标记就没内味儿了。我觉得 token 是那种以一个东西代表另一个东西来使用的意思，这种 token 是一种有实体的东西，比如代金券。“标记”这个词在字典上作名词是「起标示作用的记号」的意思，而我觉得记号不是个很实体的东西。代金券不是一种记号、也就能说是标记，同样的，这里的 token 也是一种实体的东西，我觉得不能把它说成是“标记”。我不赞同这种译法，所以下文所有涉及 token 的地方统一写成 “token”，不翻译成“标记”。</p>
+</blockquote>
+<p>文本的向量化就是先作分词，然后把生成出来的 token 逐个与数值向量对应起来，最后拿对应的数值向量合成一个表达了原文本的张量。其中，比较有意思的是如何建立 token 和 数值向量 的联系，下面介绍两种搞这个的方法：one-hot encoding(one-hot编码) 和 token embedding(标记嵌入)，其中 token embedding 一般都用于单词，叫作词嵌入「word embedding」。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghek3mhp38j31320mg0v8.jpg" alt="文本的向量化：从文本到token再到张量"></p>
+<h3 id="n-grams-和词袋bag-of-words"><a class="markdownIt-Anchor" href="#n-grams-和词袋bag-of-words"></a> n-grams 和词袋(bag-of-words)</h3>
+<p>n-gram 是能从一个句子中提取出的 ≤N 个连续单词的集合。例如：「The cat sat on the mat.」</p>
+<p>这个句子分解成 2-gram 是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;The&quot;, &quot;The cat&quot;, &quot;cat&quot;, &quot;cat sat&quot;, &quot;sat&quot;,</span><br><span class="line">  &quot;sat on&quot;, &quot;on&quot;, &quot;on the&quot;, &quot;the&quot;, &quot;the mat&quot;, &quot;mat&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>这个集合被叫做 bag-of-2-grams (二元语法袋)。</p>
+<p>分解成 3-gram 是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;The&quot;, &quot;The cat&quot;, &quot;cat&quot;, &quot;cat sat&quot;, &quot;The cat sat&quot;,</span><br><span class="line">  &quot;sat&quot;, &quot;sat on&quot;, &quot;on&quot;, &quot;cat sat on&quot;, &quot;on the&quot;, &quot;the&quot;,</span><br><span class="line">  &quot;sat on the&quot;, &quot;the mat&quot;, &quot;mat&quot;, &quot;on the mat&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>这个集合被叫做 bag-of-3-grams (三元语法袋)。</p>
+<p>把这东西叫做「袋」是因为它只是 tokens 组成的集合，没有原来文本的顺序和意义。把文本分成这种袋的分词方法叫做「词袋(bag-of-words)」。</p>
+<p>由于词袋是不保存顺序的（分出来是集合，不是序列），所以一般不在深度学习里面用。但在轻量级的浅层文本处理模型里面，n-gram 和词袋还是很重要的方法的。</p>
+<h3 id="one-hot-编码"><a class="markdownIt-Anchor" href="#one-hot-编码"></a> one-hot 编码</h3>
+<p>one-hot 是比较基本、常用的。其做法是将每个 token 与一个唯一整数索引关联， 然后将整数索引 i 转换为长度为 N 的二进制向量(N 是词表大小)，这个向量只有第 i 个元素为 1，其余元素都为 0。</p>
+<p>下面给出两个玩具版本的 one-hot 编码示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单词级的 one-hot 编码</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">samples = [<span class="string">'The cat sat on the mat.'</span>, <span class="string">'The dog ate my homework.'</span>]</span><br><span class="line"></span><br><span class="line">token_index = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> sample <span class="keyword">in</span> samples:</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> sample.split():</span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> token_index:</span><br><span class="line">            token_index[word] = len(token_index) + <span class="number">1</span></span><br><span class="line">            </span><br><span class="line"><span class="comment"># 对样本进行分词。只考虑每个样本前 max_length 个单词</span></span><br><span class="line">max_length = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">results = np.zeros(shape=(len(samples), </span><br><span class="line">                          max_length, </span><br><span class="line">                          max(token_index.values()) + <span class="number">1</span>))</span><br><span class="line"><span class="keyword">for</span> i, sample <span class="keyword">in</span> enumerate(samples):</span><br><span class="line">    <span class="keyword">for</span> j, word <span class="keyword">in</span> list(enumerate(sample.split()))[:max_length]:</span><br><span class="line">        index = token_index.get(word)</span><br><span class="line">        results[i, j, index] = <span class="number">1.</span></span><br><span class="line"></span><br><span class="line">print(results)</span><br></pre></td></tr></table></figure>
+<pre><code>[[[0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+
+ [[0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字符级的 one-hot 编码</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">samples = [<span class="string">'The cat sat on the mat.'</span>, <span class="string">'The dog ate my homework.'</span>]</span><br><span class="line"></span><br><span class="line">characters = string.printable    <span class="comment"># 所有可打印的 ASCII 字符</span></span><br><span class="line">token_index = dict(zip(range(<span class="number">1</span>, len(characters) + <span class="number">1</span>), characters))</span><br><span class="line"></span><br><span class="line">max_length = <span class="number">50</span></span><br><span class="line">results = np.zeros((len(samples), max_length, max(token_index.keys()) + <span class="number">1</span>))</span><br><span class="line"><span class="keyword">for</span> i, sample <span class="keyword">in</span> enumerate(samples):</span><br><span class="line">    <span class="keyword">for</span> j, character <span class="keyword">in</span> enumerate(sample):</span><br><span class="line">        index = token_index.get(character)</span><br><span class="line">        results[i, j, index] = <span class="number">1.</span></span><br><span class="line">        </span><br><span class="line">print(results)</span><br></pre></td></tr></table></figure>
+<pre><code>[[[1. 1. 1. ... 1. 1. 1.]
+  [1. 1. 1. ... 1. 1. 1.]
+  [1. 1. 1. ... 1. 1. 1.]
+  ...
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]]
+
+ [[1. 1. 1. ... 1. 1. 1.]
+  [1. 1. 1. ... 1. 1. 1.]
+  [1. 1. 1. ... 1. 1. 1.]
+  ...
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]]]
+</code></pre>
+<p>Keras 内置了比刚才写的这种玩具版本强大得多的 one-hot 编码工具，在现实使用中，你应该使用这种方法，而不是使用刚才的玩具版本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing.text <span class="keyword">import</span> Tokenizer</span><br><span class="line"></span><br><span class="line">samples = [<span class="string">'The cat sat on the mat.'</span>, <span class="string">'The dog ate my homework.'</span>]</span><br><span class="line"></span><br><span class="line">tokenizer = Tokenizer(num_words=<span class="number">1000</span>)    <span class="comment"># 只考虑前 1000 个最常见的单词</span></span><br><span class="line">tokenizer.fit_on_texts(samples)</span><br><span class="line"></span><br><span class="line">sequences = tokenizer.texts_to_sequences(samples)    <span class="comment"># 将字符串转换为整数索引组成的列表</span></span><br><span class="line">print(<span class="string">'sequences:'</span>, sequences)</span><br><span class="line"></span><br><span class="line">one_hot_results = tokenizer.texts_to_matrix(samples, mode=<span class="string">'binary'</span>)  <span class="comment"># 直接得到 one-hot 二进制表示</span></span><br><span class="line"></span><br><span class="line">word_index = tokenizer.word_index    <span class="comment"># 单词索引，就是词表字典啦，用这个就可以还原数据</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">f'one_hot_results: shape=<span class="subst">&#123;one_hot_results.shape&#125;</span>:\n'</span>, one_hot_results, )</span><br><span class="line">print(<span class="string">f'Found <span class="subst">&#123;len(word_index)&#125;</span> unique tokens.'</span>, <span class="string">'word_index:'</span>, word_index)</span><br></pre></td></tr></table></figure>
+<pre><code>sequences: [[1, 2, 3, 4, 1, 5], [1, 6, 7, 8, 9]]
+one_hot_results: shape=(2, 1000):
+ [[0. 1. 1. ... 0. 0. 0.]
+ [0. 1. 0. ... 0. 0. 0.]]
+Found 9 unique tokens. word_index: {'the': 1, 'cat': 2, 'sat': 3, 'on': 4, 'mat': 5, 'dog': 6, 'ate': 7, 'my': 8, 'homework': 9}
+</code></pre>
+<p>这种 one-hot 编码还有一种简单的变种叫做 <em>one-hot hashing trick</em>（one-hot 散列技巧），这个方法的思想是不对每个 token 关联唯一的整数索引，而是用哈希函数去作用，把文本直接映射成一个固定长度的向量。</p>
+<p>用这种方法可以节省维护单词索引的内存开销，还可以实现在线编码（来一个编码一个，不影响之、之后的）；但也有一些弊端：可能出现散列冲突，编码后的数据也不能够还原。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用散列技巧的单词级的 one-hot 编码，玩具版本</span></span><br><span class="line"></span><br><span class="line">samples = [<span class="string">'The cat sat on the mat.'</span>, <span class="string">'The dog ate my homework.'</span>]</span><br><span class="line"></span><br><span class="line">dimensionality = <span class="number">1000</span>  <span class="comment"># 将单词保存为长度为 1000 的向量，单词越多这个值就要越大，不然散列冲突可能会加大</span></span><br><span class="line">max_length = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">results = np.zeros((len(samples), max_length, dimensionality))</span><br><span class="line"><span class="keyword">for</span> i, sample <span class="keyword">in</span> enumerate(samples):</span><br><span class="line">    <span class="keyword">for</span> j, word <span class="keyword">in</span> list(enumerate(sample.split()))[:max_length]:</span><br><span class="line">        index = abs(hash(word)) % dimensionality  <span class="comment"># 将单词散列到 0~dimensionality 范围内的一个随机整数索引</span></span><br><span class="line">        results[i, j, index] = <span class="number">1.</span></span><br><span class="line"></span><br><span class="line">print(results.shape)</span><br><span class="line">print(results)</span><br></pre></td></tr></table></figure>
+<pre><code>(2, 10, 1000)
+[[[0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]
+  ...
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]]
+
+ [[0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]
+  ...
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]
+  [0. 0. 0. ... 0. 0. 0.]]]
+</code></pre>
+<h3 id="词嵌入"><a class="markdownIt-Anchor" href="#词嵌入"></a> 词嵌入</h3>
+<p>从前面的例子中也可以看到 one-hot 的这种硬编码得到的结果向量十分稀疏，并且维度比较高。</p>
+<p>词嵌入（word embedding）是另一种将单词与向量相关联的常用方法。这种方法可以得到比 one-hot 更加密集、低维的编码。词嵌入的结果是要从数据中学习得到的。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gheskpva1tj31fq0u0aeq.jpg" alt="one-hot编码与词嵌入的区别"></p>
+<p>运用词嵌入有两种方法：</p>
+<ol>
+<li>利用 Embedding 层学习词嵌入：在完成着手进行的主要任务(比如文档分类或情感预测)的同时学习词嵌入：一开始使用随机的词向量，然后对词向量用与学习神经网络的权重相同的方法进行学习。</li>
+<li>利用预训练词嵌入(pretrained word embedding)：在不同于待解决问题的机器学习任务上预训练好词嵌入，然后将其加载到模型中。</li>
+</ol>
+<h4 id="利用-embedding-层学习词嵌入"><a class="markdownIt-Anchor" href="#利用-embedding-层学习词嵌入"></a> 利用 Embedding 层学习词嵌入</h4>
+<p>一个理想的词嵌入空间应该是可以比较完美地映射人类语言的。它是有符合现实的结构的，相近的词在空间中就应该比较接近，并且词嵌入空间中的方向也是要有意义的。例如一个比较简单的例子：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghetlonkiij30i40lmmyf.jpg" alt="词嵌入空间的简单示例"></p>
+<p>在这个词嵌入空间中，宠物都在靠下的位置，野生动物都在靠上的位置，所以一个从下到上方向的向量就应该是表示从宠物到野生动物的，这个向量从 cat 到 tiger 或者 dog -&gt; wolf。类似的，一个从左到右的向量可以解释为从犬科到猫科，这个向量可以从 dog 到 cat，或者从 wolf 到 tiger。</p>
+<p>再复杂一点的，比如要表示词的性别关系，将 king 向量加上 female 向量，应该得到的是 queen 向量，还有复数关系：king + plural == kings…</p>
+<p>所以说，要有一个这样完美的词嵌入空间是很难的，现在还没有。但利用深度学习，我们还是可以得到对于特定问题来说比较好的词嵌入空间的。在 Keras 使中，我们只需要让模型学习一个 Embedding 层的权重就可以得到对当前任务的词嵌入空间：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Embedding</span><br><span class="line"></span><br><span class="line">embedding_layer = Embedding(<span class="number">1000</span>, <span class="number">64</span>)  <span class="comment"># Embedding(可能的token个数, 嵌入的维度)</span></span><br></pre></td></tr></table></figure>
+<p>Embedding 层其实就相当于是一个字典，它将一个表示特定单词的整数索引映射到一个词向量。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gheu1p4zqdj316i046aau.jpg" alt="Embedding 层"></p>
+<p>Embedding 层的输入是形状为 <code>(samples, sequence_length)</code> 的二维整数张量。这个输入张量中的一个元素是一个代表一个文本序列的整数序列，应该保持输入的所有序列长度相同，较短的序列应该用 0 填充，较长的序列应该被截断。</p>
+<p>Embedding 层的输出是形状为 <code>(samples, sequence_length, embedding_dimensionality)</code> 的三维浮点数张量。这个输出就可以用 RNN 或者 Conv1D 去处理做其他事情了。</p>
+<p>Embedding 层一开始也是被随机初始化的，在训练过程中，会利用反向传播来逐渐调节词向量、改变空间结构，一步步接近我们之前提到的那种理想的状态。</p>
+<p>实例：用 Embedding 层处理 IMDB 电影评论情感预测。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加载 IMDB 数据，准备用于 Embedding 层</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.datasets <span class="keyword">import</span> imdb</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> preprocessing</span><br><span class="line"></span><br><span class="line">max_features = <span class="number">10000</span>    <span class="comment"># 作为特征的单词个数</span></span><br><span class="line">maxlen = <span class="number">20</span>    <span class="comment"># 在 maxlen 个特征单词后截断文本</span></span><br><span class="line"></span><br><span class="line">(x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=max_features)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将整数列表转换成形状为 (samples, maxlen) 的二维整数张量</span></span><br><span class="line">x_train = preprocessing.sequence.pad_sequences(x_train, maxlen=maxlen)</span><br><span class="line">x_test = preprocessing.sequence.pad_sequences(x_test, maxlen=maxlen)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 IMDB 数据上使用 Embedding 层和分类器</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Embedding, Flatten, Dense</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(Embedding(<span class="number">10000</span>, <span class="number">8</span>, input_length=maxlen))  <span class="comment"># (samples, maxlen, 8)</span></span><br><span class="line">model.add(Flatten())  <span class="comment"># (samles, maxlen*8)</span></span><br><span class="line">model.add(Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>))  <span class="comment"># top classifier</span></span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>,</span><br><span class="line">              loss=<span class="string">'binary_crossentropy'</span>,</span><br><span class="line">              metrics=[<span class="string">'acc'</span>])</span><br><span class="line">model.summary()</span><br><span class="line"></span><br><span class="line">history = model.fit(x_train, y_train, </span><br><span class="line">                    epochs=<span class="number">10</span>, </span><br><span class="line">                    batch_size=<span class="number">32</span>, </span><br><span class="line">                    validation_split=<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Model: &quot;sequential_1&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_2 (Embedding)      (None, 20, 8)             80000     
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 160)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 1)                 161       
+=================================================================
+Total params: 80,161
+Trainable params: 80,161
+Non-trainable params: 0
+_________________________________________________________________
+Epoch 1/10
+625/625 [==============================] - 1s 1ms/step - loss: 0.6686 - acc: 0.6145 - val_loss: 0.6152 - val_acc: 0.6952
+Epoch 2/10
+625/625 [==============================] - 1s 929us/step - loss: 0.5370 - acc: 0.7525 - val_loss: 0.5214 - val_acc: 0.7318
+Epoch 3/10
+625/625 [==============================] - 1s 878us/step - loss: 0.4573 - acc: 0.7895 - val_loss: 0.4979 - val_acc: 0.7456
+Epoch 4/10
+625/625 [==============================] - 1s 889us/step - loss: 0.4182 - acc: 0.8116 - val_loss: 0.4937 - val_acc: 0.7512
+Epoch 5/10
+625/625 [==============================] - 1s 902us/step - loss: 0.3931 - acc: 0.8224 - val_loss: 0.4935 - val_acc: 0.7568
+Epoch 6/10
+625/625 [==============================] - 1s 931us/step - loss: 0.3721 - acc: 0.8360 - val_loss: 0.4969 - val_acc: 0.7582
+Epoch 7/10
+625/625 [==============================] - 1s 878us/step - loss: 0.3534 - acc: 0.8482 - val_loss: 0.5050 - val_acc: 0.7570
+Epoch 8/10
+625/625 [==============================] - 1s 873us/step - loss: 0.3356 - acc: 0.8579 - val_loss: 0.5103 - val_acc: 0.7556
+Epoch 9/10
+625/625 [==============================] - 1s 999us/step - loss: 0.3183 - acc: 0.8670 - val_loss: 0.5161 - val_acc: 0.7560
+Epoch 10/10
+625/625 [==============================] - 1s 886us/step - loss: 0.3017 - acc: 0.8766 - val_loss: 0.5260 - val_acc: 0.7508
+</code></pre>
+<p>这里我们只把词嵌入序列展开之后用一个 Dense 层去完成分类，会导致模型对输入序列中的每个词单独处理，而不去考虑单词之间的关系和句子结构。这会导致模型认为「this movie is a bomb(这电影超烂)」和「this movie is the bomb(这电影超赞)」都是负面评价。要学习句子整体的话就要用到 RNN 或者 Conv1D 了，这些之后再介绍。</p>
+<h4 id="使用预训练的词嵌入"><a class="markdownIt-Anchor" href="#使用预训练的词嵌入"></a> 使用预训练的词嵌入</h4>
+<p>和我们在做计算机视觉的时候使用预训练网络一样，在手头数据少的情况下，使用预训练的词嵌入，借用人家训练出来的可复用的模型里的通用特征。</p>
+<p>通用的词嵌入通常是利用词频统计计算得出的，现在也有很多可供我们选用的了，比如 word2vec、GloVe 等等，具体的原理都比较复杂，我们先会用就行了。</p>
+<p>我们会在下文的例子中尝试使用 GloVe。</p>
+<h3 id="从原始文本到词嵌入"><a class="markdownIt-Anchor" href="#从原始文本到词嵌入"></a> 从原始文本到词嵌入</h3>
+<p>我们尝试从原始的 IMDB 数据（就是一大堆文本啦）开始，处理数据，做词嵌入。</p>
+<h4 id="下载-imdb-数据的原始文本"><a class="markdownIt-Anchor" href="#下载-imdb-数据的原始文本"></a> 下载 IMDB 数据的原始文本</h4>
+<p>原始的 IMDB 数据集可以从 <a href="http://mng.bz/0tIo" target="_blank" rel="noopener">http://mng.bz/0tIo</a> 下载（最后是跳转到从s3下的 <a href="http://s3.amazonaws.com/text-datasets/aclImdb.zip" target="_blank" rel="noopener">http://s3.amazonaws.com/text-datasets/aclImdb.zip</a> ，不科学上网很慢哦）。</p>
+<p>下载的数据集解压后是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aclImdb</span><br><span class="line">├── test</span><br><span class="line">│   ├── neg</span><br><span class="line">│   └── pos</span><br><span class="line">└── train</span><br><span class="line">    ├── neg</span><br><span class="line">    └── pos</span><br></pre></td></tr></table></figure>
+<p>在每个 neg/pos 目录下面就是一大堆 <code>.txt</code> 文件了，每个里面是一条评论。</p>
+<p>下面，我们将 train 评论转换成字符串列表，一个字符串一条评论，并把对应的标签(neg/pos)写到 labels 列表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 处理 IMDB 原始数据的标签</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">imdb_dir = <span class="string">'/Volumes/WD/Files/dataset/aclImdb'</span></span><br><span class="line">train_dir = os.path.join(imdb_dir, <span class="string">'train'</span>)</span><br><span class="line"></span><br><span class="line">texts = []</span><br><span class="line">labels = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> label_type <span class="keyword">in</span> [<span class="string">'neg'</span>, <span class="string">'pos'</span>]:</span><br><span class="line">    dir_name = os.path.join(train_dir, label_type)</span><br><span class="line">    <span class="keyword">for</span> fname <span class="keyword">in</span> os.listdir(dir_name):</span><br><span class="line">        <span class="keyword">if</span> fname.endswith(<span class="string">'.txt'</span>):</span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(dir_name, fname)) <span class="keyword">as</span> f:</span><br><span class="line">                texts.append(f.read())</span><br><span class="line">            labels.append(<span class="number">0</span> <span class="keyword">if</span> label_type == <span class="string">'neg'</span> <span class="keyword">else</span> <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(labels[<span class="number">0</span>], texts[<span class="number">0</span>], sep=<span class="string">' --&gt; '</span>)</span><br><span class="line">print(labels[<span class="number">-1</span>], texts[<span class="number">-1</span>], sep=<span class="string">' --&gt; '</span>)</span><br><span class="line">print(len(texts), len(labels))</span><br></pre></td></tr></table></figure>
+<pre><code>0 --&gt; Working with one of the best Shakespeare sources, this film manages to be creditable to it's source, whilst still appealing to a wider audience.&lt;br /&gt;&lt;br /&gt;Branagh steals the film from under Fishburne's nose, and there's a talented cast on good form.
+1 --&gt; Enchanted April is a tone poem, an impressionist painting, a masterpiece of conveying a message with few words. It has been one of my 10 favorite films since it came out. I continue to wait, albeit less patiently, for the film to come out in DVD format. Apparently, I am not alone.&lt;br /&gt;&lt;br /&gt;If parent company Amazon's listings are correct, there are many people who want this title in DVD format. Many people want to go to Italy with this cast and this script. Many people want to keep a permanent copy of this film in their libraries. The cast is spectacular, the cinematography and direction impeccable. The film is a definite keeper. Many have already asked. Please add our names to the list.
+25000 25000
+</code></pre>
+<h4 id="对数据进行分词"><a class="markdownIt-Anchor" href="#对数据进行分词"></a> 对数据进行分词</h4>
+<p>现在来分词，顺便划分一下训练集和验证集。为了体验预训练词嵌入，我们再把训练集搞小一点，只留200条数据用来训练。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对 IMDB 原始数据的文本进行分词</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing.text <span class="keyword">import</span> Tokenizer</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing.sequence <span class="keyword">import</span> pad_sequences</span><br><span class="line"></span><br><span class="line">maxlen = <span class="number">100</span>  <span class="comment"># 只看每条评论的前100个词</span></span><br><span class="line">training_samples = <span class="number">200</span></span><br><span class="line">validation_samples = <span class="number">10000</span></span><br><span class="line">max_words = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line">tokenizer = Tokenizer(num_words=max_words)</span><br><span class="line">tokenizer.fit_on_texts(texts)</span><br><span class="line">sequences = tokenizer.texts_to_sequences(texts)</span><br><span class="line">word_index = tokenizer.word_index</span><br><span class="line">print(<span class="string">f'Found <span class="subst">&#123;len(word_index)&#125;</span> unique tokens.'</span>)</span><br><span class="line"></span><br><span class="line">data = pad_sequences(sequences, maxlen=maxlen)</span><br><span class="line"></span><br><span class="line">labels = np.asarray(labels)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Shape of data tensor:'</span>, data.shape)</span><br><span class="line">print(<span class="string">'Shape of label tensor:'</span>, labels.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打乱数据</span></span><br><span class="line">indices = np.arange(labels.shape[<span class="number">0</span>])</span><br><span class="line">np.random.shuffle(indices)</span><br><span class="line">data = data[indices]</span><br><span class="line">labels = labels[indices]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 划分训练、验证集</span></span><br><span class="line">x_train = data[:training_samples]</span><br><span class="line">y_train = labels[:training_samples]</span><br><span class="line">x_val = data[training_samples: training_samples + validation_samples]</span><br><span class="line">y_val = labels[training_samples: training_samples + validation_samples]</span><br></pre></td></tr></table></figure>
+<pre><code>Found 88582 unique tokens.
+Shape of data tensor: (25000, 100)
+Shape of label tensor: (25000,)
+</code></pre>
+<h4 id="下载-glove-词嵌入"><a class="markdownIt-Anchor" href="#下载-glove-词嵌入"></a> 下载 GloVe 词嵌入</h4>
+<p>下载预训练好的 GloVe 词嵌入： <a href="http://nlp.stanford.edu/data/glove.6B.zip" target="_blank" rel="noopener">http://nlp.stanford.edu/data/glove.6B.zip</a></p>
+<p>写下来把它解压，里面用纯文本保存了训练好的 400000 个 tokens 的 100 维词嵌入向量。</p>
+<h4 id="对嵌入进行预处理"><a class="markdownIt-Anchor" href="#对嵌入进行预处理"></a> 对嵌入进行预处理</h4>
+<p>解析解压后的文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">glove_dir = <span class="string">'/Volumes/WD/Files/glove.6B'</span></span><br><span class="line"></span><br><span class="line">embeddings_index = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(os.path.join(glove_dir, <span class="string">'glove.6B.100d.txt'</span>)) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">        values = line.split()</span><br><span class="line">        word = values[<span class="number">0</span>]</span><br><span class="line">        coefs = np.asarray(values[<span class="number">1</span>:], dtype=<span class="string">'float32'</span>)</span><br><span class="line">        embeddings_index[word] = coefs</span><br><span class="line"></span><br><span class="line">print(<span class="string">f'Found <span class="subst">&#123;len(embeddings_index)&#125;</span> word vectors.'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Found 400000 word vectors.
+</code></pre>
+<p>然后，我们要构建一个可以加载进 Embedding 层的嵌入矩阵，其形状为 <code>(max_words, embedding_dim)</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">embedding_dim = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">embedding_matrix = np.zeros((max_words, embedding_dim))</span><br><span class="line"><span class="keyword">for</span> word, i <span class="keyword">in</span> word_index.items():</span><br><span class="line">    <span class="keyword">if</span> i &lt; max_words:</span><br><span class="line">        embedding_vector = embeddings_index.get(word)  <span class="comment"># 有的就用 embeddings_index 里的词向量</span></span><br><span class="line">        <span class="keyword">if</span> embedding_vector <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:               <span class="comment"># 没有就用全零</span></span><br><span class="line">            embedding_matrix[i] = embedding_vector</span><br><span class="line">            </span><br><span class="line">print(embedding_matrix)</span><br></pre></td></tr></table></figure>
+<pre><code>[[ 0.          0.          0.         ...  0.          0.
+   0.        ]
+ [-0.038194   -0.24487001  0.72812003 ... -0.1459      0.82779998
+   0.27061999]
+ [-0.071953    0.23127     0.023731   ... -0.71894997  0.86894
+   0.19539   ]
+ ...
+ [-0.44036001  0.31821999  0.10778    ... -1.29849994  0.11824
+   0.64845002]
+ [ 0.          0.          0.         ...  0.          0.
+   0.        ]
+ [-0.54539001 -0.31817999 -0.016281   ... -0.44865     0.067047
+   0.17975999]]
+</code></pre>
+<h4 id="定义模型"><a class="markdownIt-Anchor" href="#定义模型"></a> 定义模型</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Embedding, Flatten, Dense</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(Embedding(max_words, embedding_dim, input_length=maxlen))</span><br><span class="line">model.add(Flatten())</span><br><span class="line">model.add(Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>))</span><br><span class="line"></span><br><span class="line">model.summary()</span><br></pre></td></tr></table></figure>
+<pre><code>Model: &quot;sequential_2&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_3 (Embedding)      (None, 100, 100)          1000000   
+_________________________________________________________________
+flatten_2 (Flatten)          (None, 10000)             0         
+_________________________________________________________________
+dense_2 (Dense)              (None, 32)                320032    
+_________________________________________________________________
+dense_3 (Dense)              (None, 1)                 33        
+=================================================================
+Total params: 1,320,065
+Trainable params: 1,320,065
+Non-trainable params: 0
+_________________________________________________________________
+</code></pre>
+<h4 id="把-glove-词嵌入加载进模型"><a class="markdownIt-Anchor" href="#把-glove-词嵌入加载进模型"></a> 把 GloVe 词嵌入加载进模型</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model.layers[<span class="number">0</span>].set_weights([embedding_matrix])</span><br><span class="line">model.layers[<span class="number">0</span>].trainable = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h4 id="训练与评估模型"><a class="markdownIt-Anchor" href="#训练与评估模型"></a> 训练与评估模型</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>,</span><br><span class="line">              loss=<span class="string">'binary_crossentropy'</span>, </span><br><span class="line">              metrics=[<span class="string">'acc'</span>])</span><br><span class="line">history = model.fit(x_train, y_train, </span><br><span class="line">                    epochs=<span class="number">10</span>, </span><br><span class="line">                    batch_size=<span class="number">32</span>, </span><br><span class="line">                    validation_data=(x_val, y_val))</span><br><span class="line">model.save_weights(<span class="string">'pre_trained_glove_model.h5'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 1/10
+7/7 [==============================] - 0s 64ms/step - loss: 1.3595 - acc: 0.5150 - val_loss: 0.6871 - val_acc: 0.5490
+Epoch 2/10
+7/7 [==============================] - 0s 42ms/step - loss: 0.6846 - acc: 0.7950 - val_loss: 0.7569 - val_acc: 0.5217
+Epoch 3/10
+7/7 [==============================] - 0s 42ms/step - loss: 0.3757 - acc: 0.8900 - val_loss: 0.8181 - val_acc: 0.5189
+Epoch 4/10
+7/7 [==============================] - 0s 41ms/step - loss: 0.3464 - acc: 0.8800 - val_loss: 0.8497 - val_acc: 0.4971
+Epoch 5/10
+7/7 [==============================] - 0s 41ms/step - loss: 0.2278 - acc: 0.9600 - val_loss: 0.8661 - val_acc: 0.5308
+Epoch 6/10
+7/7 [==============================] - 0s 42ms/step - loss: 0.1328 - acc: 0.9950 - val_loss: 0.6977 - val_acc: 0.5895
+Epoch 7/10
+7/7 [==============================] - 0s 42ms/step - loss: 0.1859 - acc: 0.9250 - val_loss: 0.6923 - val_acc: 0.5867
+Epoch 8/10
+7/7 [==============================] - 0s 42ms/step - loss: 0.0950 - acc: 0.9950 - val_loss: 0.7609 - val_acc: 0.5609
+Epoch 9/10
+7/7 [==============================] - 0s 50ms/step - loss: 0.0453 - acc: 1.0000 - val_loss: 0.7235 - val_acc: 0.5979
+Epoch 10/10
+7/7 [==============================] - 0s 49ms/step - loss: 0.0398 - acc: 1.0000 - val_loss: 1.1416 - val_acc: 0.5063
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制结果</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">acc = history.history[<span class="string">'acc'</span>]</span><br><span class="line">val_acc = history.history[<span class="string">'val_acc'</span>]</span><br><span class="line">loss = history.history[<span class="string">'loss'</span>]</span><br><span class="line">val_loss = history.history[<span class="string">'val_loss'</span>]</span><br><span class="line"></span><br><span class="line">epochs = range(len(acc))</span><br><span class="line"></span><br><span class="line">plt.plot(epochs, acc, <span class="string">'bo-'</span>, label=<span class="string">'Training acc'</span>)</span><br><span class="line">plt.plot(epochs, val_acc, <span class="string">'rs-'</span>, label=<span class="string">'Validation acc'</span>)</span><br><span class="line">plt.title(<span class="string">'Training and validation accuracy'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line"></span><br><span class="line">plt.plot(epochs, loss, <span class="string">'bo-'</span>, label=<span class="string">'Training loss'</span>)</span><br><span class="line">plt.plot(epochs, val_loss, <span class="string">'rs-'</span>, label=<span class="string">'Validation loss'</span>)</span><br><span class="line">plt.title(<span class="string">'Training and validation loss'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmvtdmhl3j30af07cmxf.jpg" alt="png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmvtbyf9tj30af07cglv.jpg" alt="png"></p>
+<p>只用 200 个训练样本还是太难了，但用预训练词嵌入还是得到了不错的成果的。作为对比，看看如果不使用预训练，会是什么样的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建模型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Embedding, Flatten, Dense</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(Embedding(max_words, embedding_dim, input_length=maxlen))</span><br><span class="line">model.add(Flatten())</span><br><span class="line">model.add(Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>))</span><br><span class="line"></span><br><span class="line">model.summary()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不使用 GloVe 词嵌入</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>, </span><br><span class="line">              loss=<span class="string">'binary_crossentropy'</span>, </span><br><span class="line">              metrics=[<span class="string">'acc'</span>])</span><br><span class="line">history = model.fit(x_train, y_train, </span><br><span class="line">                    epochs=<span class="number">10</span>, </span><br><span class="line">                    batch_size=<span class="number">32</span>, </span><br><span class="line">                    validation_data=(x_val, y_val))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制结果</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">acc = history.history[<span class="string">'acc'</span>]</span><br><span class="line">val_acc = history.history[<span class="string">'val_acc'</span>]</span><br><span class="line">loss = history.history[<span class="string">'loss'</span>]</span><br><span class="line">val_loss = history.history[<span class="string">'val_loss'</span>]</span><br><span class="line"></span><br><span class="line">epochs = range(len(acc))</span><br><span class="line"></span><br><span class="line">plt.plot(epochs, acc, <span class="string">'bo-'</span>, label=<span class="string">'Training acc'</span>)</span><br><span class="line">plt.plot(epochs, val_acc, <span class="string">'rs-'</span>, label=<span class="string">'Validation acc'</span>)</span><br><span class="line">plt.title(<span class="string">'Training and validation accuracy'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line"></span><br><span class="line">plt.plot(epochs, loss, <span class="string">'bo-'</span>, label=<span class="string">'Training loss'</span>)</span><br><span class="line">plt.plot(epochs, val_loss, <span class="string">'rs-'</span>, label=<span class="string">'Validation loss'</span>)</span><br><span class="line">plt.title(<span class="string">'Training and validation loss'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>Model: &quot;sequential_3&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding_4 (Embedding)      (None, 100, 100)          1000000   
+_________________________________________________________________
+flatten_3 (Flatten)          (None, 10000)             0         
+_________________________________________________________________
+dense_4 (Dense)              (None, 32)                320032    
+_________________________________________________________________
+dense_5 (Dense)              (None, 1)                 33        
+=================================================================
+Total params: 1,320,065
+Trainable params: 1,320,065
+Non-trainable params: 0
+_________________________________________________________________
+Epoch 1/10
+7/7 [==============================] - 1s 72ms/step - loss: 0.6972 - acc: 0.4600 - val_loss: 0.6921 - val_acc: 0.5150
+Epoch 2/10
+7/7 [==============================] - 0s 46ms/step - loss: 0.4991 - acc: 1.0000 - val_loss: 0.6901 - val_acc: 0.5347
+Epoch 3/10
+7/7 [==============================] - 0s 46ms/step - loss: 0.2795 - acc: 1.0000 - val_loss: 0.6914 - val_acc: 0.5401
+Epoch 4/10
+7/7 [==============================] - 0s 52ms/step - loss: 0.1171 - acc: 1.0000 - val_loss: 0.6977 - val_acc: 0.5389
+Epoch 5/10
+7/7 [==============================] - 0s 45ms/step - loss: 0.0535 - acc: 1.0000 - val_loss: 0.7115 - val_acc: 0.5343
+Epoch 6/10
+7/7 [==============================] - 0s 44ms/step - loss: 0.0271 - acc: 1.0000 - val_loss: 0.7133 - val_acc: 0.5348
+Epoch 7/10
+7/7 [==============================] - 0s 44ms/step - loss: 0.0149 - acc: 1.0000 - val_loss: 0.7146 - val_acc: 0.5382
+Epoch 8/10
+7/7 [==============================] - 0s 44ms/step - loss: 0.0087 - acc: 1.0000 - val_loss: 0.7192 - val_acc: 0.5410
+Epoch 9/10
+7/7 [==============================] - 0s 44ms/step - loss: 0.0052 - acc: 1.0000 - val_loss: 0.7266 - val_acc: 0.5398
+Epoch 10/10
+7/7 [==============================] - 0s 53ms/step - loss: 0.0032 - acc: 1.0000 - val_loss: 0.7378 - val_acc: 0.5380
+</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmvtd56u4j30af07c3yq.jpg" alt="png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmvtcoi15j30af07cdg2.jpg" alt="png"></p>
+<p>可以看到，在这个例子中，预训练词嵌入的性能要优于与任务一起学习的词嵌入。但如果有大量的可用数据，用一个 Embedding 层去与任务一起训练，通常比使用预训练词嵌入更加强大。</p>
+<p>最后，再来看一下测试集上的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对测试集数据进行分词</span></span><br><span class="line"></span><br><span class="line">test_dir = os.path.join(imdb_dir, <span class="string">'test'</span>)</span><br><span class="line"></span><br><span class="line">texts = []</span><br><span class="line">labels = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> label_type <span class="keyword">in</span> [<span class="string">'neg'</span>, <span class="string">'pos'</span>]:</span><br><span class="line">    dir_name = os.path.join(test_dir, label_type)</span><br><span class="line">    <span class="keyword">for</span> fname <span class="keyword">in</span> sorted(os.listdir(dir_name)):</span><br><span class="line">        <span class="keyword">if</span> fname.endswith(<span class="string">'.txt'</span>):</span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(dir_name, fname)) <span class="keyword">as</span> f:</span><br><span class="line">                texts.append(f.read())</span><br><span class="line">            labels.append(<span class="number">0</span> <span class="keyword">if</span> label_type == <span class="string">'neg'</span> <span class="keyword">else</span> <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">sequences = tokenizer.texts_to_sequences(texts)</span><br><span class="line">x_test = pad_sequences(sequences, maxlen=maxlen)</span><br><span class="line">y_test = np.asarray(labels)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在测试集上评估模型</span></span><br><span class="line"></span><br><span class="line">model.load_weights(<span class="string">'pre_trained_glove_model.h5'</span>)</span><br><span class="line">model.evaluate(x_test, y_test)</span><br></pre></td></tr></table></figure>
+<pre><code>782/782 [==============================] - 1s 983us/step - loss: 1.1397 - acc: 0.5127
+
+
+
+
+
+[1.1397335529327393, 0.512719988822937]
+</code></pre>
+<p>emmm，最后的进度是令人惊讶的 50%+ ！只用如此少的数据来训练还是难啊。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#61-working-with-text-data"><span class="toc-number">1.1.</span> <span class="toc-text"> 6.1  Working with text data</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#n-grams-和词袋bag-of-words"><span class="toc-number">1.1.1.</span> <span class="toc-text"> n-grams 和词袋(bag-of-words)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#one-hot-编码"><span class="toc-number">1.1.2.</span> <span class="toc-text"> one-hot 编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#词嵌入"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 词嵌入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#利用-embedding-层学习词嵌入"><span class="toc-number">1.1.3.1.</span> <span class="toc-text"> 利用 Embedding 层学习词嵌入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用预训练的词嵌入"><span class="toc-number">1.1.3.2.</span> <span class="toc-text"> 使用预训练的词嵌入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从原始文本到词嵌入"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 从原始文本到词嵌入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#下载-imdb-数据的原始文本"><span class="toc-number">1.1.4.1.</span> <span class="toc-text"> 下载 IMDB 数据的原始文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对数据进行分词"><span class="toc-number">1.1.4.2.</span> <span class="toc-text"> 对数据进行分词</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#下载-glove-词嵌入"><span class="toc-number">1.1.4.3.</span> <span class="toc-text"> 下载 GloVe 词嵌入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对嵌入进行预处理"><span class="toc-number">1.1.4.4.</span> <span class="toc-text"> 对嵌入进行预处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定义模型"><span class="toc-number">1.1.4.5.</span> <span class="toc-text"> 定义模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#把-glove-词嵌入加载进模型"><span class="toc-number">1.1.4.6.</span> <span class="toc-text"> 把 GloVe 词嵌入加载进模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#训练与评估模型"><span class="toc-number">1.1.4.7.</span> <span class="toc-text"> 训练与评估模型</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&text=深度学习之处理文本数据"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&is_video=false&description=深度学习之处理文本数据"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=深度学习之处理文本数据&body=Check out this article: https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&title=深度学习之处理文本数据"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/08/11/DeepLearningWithPython/Deep-Learning with-Python-ch6_1/&name=深度学习之处理文本数据&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
