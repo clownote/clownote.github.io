@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta name="keywords" content="Machine Learning,Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python深度学习之循环神经网络的高级用法">
+<meta property="og:url" content="https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fpz4dlj30ak070jru.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fpi8mwj30ak070aaa.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fw74h7j30af07cglx.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fqpvawj30al07cq38.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1frgpbwj30al07caae.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fv5uonj30al07cjrr.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1ftcyyej30al07cq38.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fo9r8jj30as07ct91.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fsgihij30af07c74j.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmsndu024j311s0jejtx.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fuitdmj30al07cjro.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fvl6rsj30af07ct90.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fp3nl0j30al07caae.jpg">
+<meta property="og:updated_time" content="2020-08-13T03:55:33.704Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python深度学习之循环神经网络的高级用法">
+<meta name="twitter:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fpz4dlj30ak070jru.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Python深度学习之循环神经网络的高级用法</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/08/12/DeepLearningWithPython/Deep-Learning with-Python-ch6_2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&text=Python深度学习之循环神经网络的高级用法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&is_video=false&description=Python深度学习之循环神经网络的高级用法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python深度学习之循环神经网络的高级用法&body=Check out this article: https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&name=Python深度学习之循环神经网络的高级用法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#63-advanced-usage-of-recurrent-neural-networks"><span class="toc-number">1.1.</span> <span class="toc-text"> 6.3 Advanced usage of recurrent neural networks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#温度预测问题"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 温度预测问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据准备"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> 数据准备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一种常识的-非机器学习的基准方法"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> 一种常识的、非机器学习的基准方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#机器学习基准方法"><span class="toc-number">1.1.1.3.</span> <span class="toc-text"> 机器学习基准方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#循环网络基准方法"><span class="toc-number">1.1.1.4.</span> <span class="toc-text"> 循环网络基准方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环-dropout"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 循环 dropout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环层的堆叠"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 循环层的堆叠</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双向-rnn"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 双向 RNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#going-even-further"><span class="toc-number">1.1.5.</span> <span class="toc-text"> Going even further</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Python深度学习之循环神经网络的高级用法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-08-13T11:52:12.000Z" itemprop="datePublished">2020-08-13</time>
+        
+        (Updated: <time datetime="2020-08-13T03:55:33.704Z" itemprop="dateModified">2020-08-13</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Machine-Learning/">Machine Learning</a> › <a class="category-link" href="/categories/Machine-Learning/Deep-Learning-with-Python/">Deep Learning with Python</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Deep-Learning/">Deep Learning</a>, <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="deep-learning-with-python"><a class="markdownIt-Anchor" href="#deep-learning-with-python"></a> Deep Learning with Python</h1>
+<p>这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 <a href="https://github.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">GitHub</a> 或 <a href="https://gitee.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">Gitee</a> 找到原始的 <code>.ipynb</code> 笔记本。</p>
+<p>你可以去<a href="https://livebook.manning.com/book/deep-learning-with-python" target="_blank" rel="noopener">这个网站在线阅读这本书的正版原文</a>(英文)。这本书的作者也给出了配套的 <a href="https://github.com/fchollet/deep-learning-with-python-notebooks" target="_blank" rel="noopener">Jupyter notebooks</a>。</p>
+<p>本文为 <strong>第6章  深度学习用于文本和序列</strong> (Chapter 6. <em>Deep learning for text and sequences</em>) 的笔记。</p>
+<p>[TOC]</p>
+<h2 id="63-advanced-usage-of-recurrent-neural-networks"><a class="markdownIt-Anchor" href="#63-advanced-usage-of-recurrent-neural-networks"></a> 6.3 Advanced usage of recurrent neural networks</h2>
+<blockquote>
+<p>循环神经网络的高级用法</p>
+</blockquote>
+<p>今回，我们通过一个实例，来了解循环神经网络的几个技巧：循环 dropout， 堆叠循环层，双向循环层。</p>
+<h3 id="温度预测问题"><a class="markdownIt-Anchor" href="#温度预测问题"></a> 温度预测问题</h3>
+<p>我们将使用某气象站记录的天气时间序列数据集（耶拿数据集），在这个数据集中，有每 10 分钟记录的 14 个量(比如气温、气压、湿度、风向等)，这个数据集里有好多年的记录，这里我们只选用 2009—2016 年的。用这个数据集来构建模型，最后目标是输入最近的一些数据(几天的数据点)，预测未来 24 小时的气温。</p>
+<p>首先，下载并解压这个数据集：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Somewhere</span><br><span class="line">mkdir jena_climate</span><br><span class="line"><span class="built_in">cd</span> jena_climate</span><br><span class="line">wget https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip</span><br><span class="line">unzip jena_climate_2009_2016.csv.zip</span><br></pre></td></tr></table></figure>
+<p>看一下数据:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">data_dir = <span class="string">"/Volumes/WD/Files/dataset/jena_climate"</span></span><br><span class="line">fname = os.path.join(data_dir, <span class="string">'jena_climate_2009_2016.csv'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(fname) <span class="keyword">as</span> f:</span><br><span class="line">    data = f.read()</span><br><span class="line"></span><br><span class="line">lines = data.split(<span class="string">'\n'</span>)</span><br><span class="line">header = lines[<span class="number">0</span>].split(<span class="string">','</span>)</span><br><span class="line">lines = lines[<span class="number">1</span>:]</span><br><span class="line"></span><br><span class="line">print(header)</span><br><span class="line">print(len(lines))</span><br><span class="line">print(lines[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>['&quot;Date Time&quot;', '&quot;p (mbar)&quot;', '&quot;T (degC)&quot;', '&quot;Tpot (K)&quot;', '&quot;Tdew (degC)&quot;', '&quot;rh (%)&quot;', '&quot;VPmax (mbar)&quot;', '&quot;VPact (mbar)&quot;', '&quot;VPdef (mbar)&quot;', '&quot;sh (g/kg)&quot;', '&quot;H2OC (mmol/mol)&quot;', '&quot;rho (g/m**3)&quot;', '&quot;wv (m/s)&quot;', '&quot;max. wv (m/s)&quot;', '&quot;wd (deg)&quot;']
+420551
+01.01.2009 00:10:00,996.52,-8.02,265.40,-8.90,93.30,3.33,3.11,0.22,1.94,3.12,1307.75,1.03,1.75,152.30
+</code></pre>
+<p>把数据放到 Numpy 数组中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">float_data = np.zeros((len(lines), len(header)<span class="number">-1</span>))</span><br><span class="line"><span class="keyword">for</span> i, line <span class="keyword">in</span> enumerate(lines):</span><br><span class="line">    values = [float(x) <span class="keyword">for</span> x <span class="keyword">in</span> line.split(<span class="string">','</span>)[<span class="number">1</span>:]]</span><br><span class="line">    float_data[i, :] = values</span><br><span class="line">    </span><br><span class="line">print(float_data.shape)</span><br></pre></td></tr></table></figure>
+<pre><code>(420551, 14)
+</code></pre>
+<p>我们把气温的变化画出来，周期性很明显：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">temp = float_data[:, <span class="number">1</span>]</span><br><span class="line">plt.plot(range(len(temp)), temp)</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fpz4dlj30ak070jru.jpg" alt="png"></p>
+<p>再看看前 10 天的数据（数据 10 分钟记一条，所以 1 天是 144 条）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(range(<span class="number">1440</span>), temp[: <span class="number">1440</span>])</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fpi8mwj30ak070aaa.jpg" alt="png"></p>
+<p>这个图可以看出是个冬天的，每天的气温变化也是有周期性的（后面几天比较明显）。</p>
+<p>接下来就要开始尝试做预测模型的工作了。首先明确一下我们的问题：给定过去 <code>lookback</code> 个时间步(10分钟一个)，我们没 <code>steps</code> 步采样一次，让你去预测未来 <code>delay</code> 时间步的气温：</p>
+<ul>
+<li><code>lookback = 720</code>: 过去5天的观察数据</li>
+<li><code>steps = 6</code>: 每小时采样一次观察数据</li>
+<li><code>delay = 144</code>: 目标是未来24小时</li>
+</ul>
+<h4 id="数据准备"><a class="markdownIt-Anchor" href="#数据准备"></a> 数据准备</h4>
+<ol>
+<li>数据标准化：让各种特征在数量上差距不大</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据标准化</span></span><br><span class="line"></span><br><span class="line">mean = float_data[:<span class="number">200000</span>].mean(axis=<span class="number">0</span>)</span><br><span class="line">float_data -= mean</span><br><span class="line">std = float_data[:<span class="number">200000</span>].std(axis=<span class="number">0</span>)</span><br><span class="line">float_data /= std</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>把数据放到一个生成器，yield 出 <code>(samples, targets)</code>，samples 是输入的数据批，targets 是对应的目标温度数组。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成时间序列样本及其目标的生成器</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span><span class="params">(data,     # 原始数据</span></span></span><br><span class="line"><span class="function"><span class="params">              lookback, # 输入数据包括过去多少个时间步</span></span></span><br><span class="line"><span class="function"><span class="params">              delay,    # 目标是未来的多少个时间步</span></span></span><br><span class="line"><span class="function"><span class="params">              min_index, max_index,  # 指定从 data 的那个部分抽取</span></span></span><br><span class="line"><span class="function"><span class="params">              shuffle=False,   # 打乱样本 or 按顺序抽取</span></span></span><br><span class="line"><span class="function"><span class="params">              batch_size=<span class="number">128</span>,  # 每批的样本数</span></span></span><br><span class="line"><span class="function"><span class="params">              step=<span class="number">6</span>)</span>:</span>         <span class="comment"># 数据采样的周期</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> max_index <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        max_index = len(data) - delay - <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    i = min_index + lookback</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> shuffle:</span><br><span class="line">            rows = np.random.randint(min_index + lookback, max_index, size=batch_size)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> i + batch_size &gt;= max_index:</span><br><span class="line">                i = min_index + lookback</span><br><span class="line">            rows = np.arange(i, min(i + batch_size, max_index))</span><br><span class="line">            i += len(rows)</span><br><span class="line">            </span><br><span class="line">        samples = np.zeros((len(rows), lookback // step, data.shape[<span class="number">-1</span>]))</span><br><span class="line">        targets = np.zeros((len(rows), ))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> j, row <span class="keyword">in</span> enumerate(rows):</span><br><span class="line">            indices = range(rows[j] - lookback, rows[j], step)</span><br><span class="line">            samples[j] = data[indices]</span><br><span class="line">            targets[j] = data[rows[j] + delay][<span class="number">1</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">yield</span> samples, targets</span><br></pre></td></tr></table></figure>
+<p>调用这个生成器，实例化训练集生成器、验证集生成器、测试集生成器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 准备训练生成器、验证生成器和测试生成器</span></span><br><span class="line"></span><br><span class="line">lookback = <span class="number">1440</span></span><br><span class="line">step = <span class="number">6</span></span><br><span class="line">delay = <span class="number">144</span></span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line"></span><br><span class="line">train_gen = generator(float_data, </span><br><span class="line">                      lookback=lookback, </span><br><span class="line">                      delay=delay, </span><br><span class="line">                      min_index=<span class="number">0</span>, </span><br><span class="line">                      max_index=<span class="number">200000</span>, </span><br><span class="line">                      shuffle=<span class="literal">True</span>, </span><br><span class="line">                      step=step, </span><br><span class="line">                      batch_size=batch_size)</span><br><span class="line"></span><br><span class="line">val_gen = generator(float_data, </span><br><span class="line">                    lookback=lookback, </span><br><span class="line">                    delay=delay, </span><br><span class="line">                    min_index=<span class="number">200001</span>, </span><br><span class="line">                    max_index=<span class="number">300000</span>, </span><br><span class="line">                    step=step, </span><br><span class="line">                    batch_size=batch_size)</span><br><span class="line"></span><br><span class="line">test_gen = generator(float_data, </span><br><span class="line">                     lookback=lookback, </span><br><span class="line">                     delay=delay, </span><br><span class="line">                     min_index=<span class="number">300001</span>, </span><br><span class="line">                     max_index=<span class="literal">None</span>, </span><br><span class="line">                     step=step, </span><br><span class="line">                     batch_size=batch_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证和测试需要抽取多少次：</span></span><br><span class="line">val_steps = (<span class="number">300000</span> - <span class="number">200001</span> - lookback)  // batch_size</span><br><span class="line">test_steps = (len(float_data) - <span class="number">300001</span> - lookback)  // batch_size</span><br></pre></td></tr></table></figure>
+<h4 id="一种常识的-非机器学习的基准方法"><a class="markdownIt-Anchor" href="#一种常识的-非机器学习的基准方法"></a> 一种常识的、非机器学习的基准方法</h4>
+<p>我们假设温度的时间序列是连续的，并且每天的温度是周期性变化的。这种情况下，可以大胆假设未来 24 小时的温度等于当前的温度。</p>
+<p>我们就以此基于常识的非机器学习方法作为基准，用平均绝对误差(MAE)为指标来评估衡量它：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mae = np.mean(np.abs(preds - targets))</span><br></pre></td></tr></table></figure>
+<p>我们之后做的机器学习模型应该超过这个基准，才能说明机器学习是有效的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算基于常识的基准方法的 MAE</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate_naive_method</span><span class="params">()</span>:</span></span><br><span class="line">    batch_maes = []</span><br><span class="line">    <span class="keyword">for</span> step <span class="keyword">in</span> range(val_steps):</span><br><span class="line">        samples, targets = next(val_gen)</span><br><span class="line">        preds = samples[:, <span class="number">-1</span>, <span class="number">1</span>]</span><br><span class="line">        mae = np.mean(np.abs(preds - targets))</span><br><span class="line">        batch_maes.append(mae)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> np.mean(batch_maes)</span><br><span class="line">    </span><br><span class="line">mae = evaluate_naive_method()</span><br><span class="line">celsius_mae = mae * std[<span class="number">1</span>]</span><br><span class="line">print(<span class="string">f'mae=<span class="subst">&#123;mae&#125;</span>, 温度的平均绝对误差=<span class="subst">&#123;celsius_mae&#125;</span>°C'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>mae=0.2897359729905486, 温度的平均绝对误差=2.564887434980494°C
+</code></pre>
+<p>这个误差还是比较大的，所以接下来的目标就是用深度学习的方法来超过这个基准。</p>
+<h4 id="机器学习基准方法"><a class="markdownIt-Anchor" href="#机器学习基准方法"></a> 机器学习基准方法</h4>
+<p>在用复杂的、计算代价高的网络(比如 RNN)之前，最好先尝试一下简单的模型能否解决问题。</p>
+<p>所以这里我们先用一个简单的全连接网络来尝试处理天气预测问题：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># plot_acc_and_loss: 绘制训练历史的实用函数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_acc_and_loss</span><span class="params">(history)</span>:</span></span><br><span class="line"></span><br><span class="line">    epochs = range(len(history.history[<span class="string">'loss'</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        acc = history.history[<span class="string">'acc'</span>]</span><br><span class="line">        val_acc = history.history[<span class="string">'val_acc'</span>]</span><br><span class="line">        </span><br><span class="line">        plt.plot(epochs, acc, <span class="string">'bo-'</span>, label=<span class="string">'Training acc'</span>)</span><br><span class="line">        plt.plot(epochs, val_acc, <span class="string">'rs-'</span>, label=<span class="string">'Validation acc'</span>)</span><br><span class="line">        plt.title(<span class="string">'Training and validation accuracy'</span>)</span><br><span class="line">        plt.legend()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">'No acc. Skip'</span>)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        plt.figure()</span><br><span class="line"></span><br><span class="line">    loss = history.history[<span class="string">'loss'</span>]</span><br><span class="line">    val_loss = history.history[<span class="string">'val_loss'</span>]</span><br><span class="line"></span><br><span class="line">    plt.plot(epochs, loss, <span class="string">'bo-'</span>, label=<span class="string">'Training loss'</span>)</span><br><span class="line">    plt.plot(epochs, val_loss, <span class="string">'rs-'</span>, label=<span class="string">'Validation loss'</span>)</span><br><span class="line">    plt.title(<span class="string">'Training and validation loss'</span>)</span><br><span class="line">    plt.legend()</span><br><span class="line"></span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.optimizers <span class="keyword">import</span> RMSprop</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(layers.Flatten(input_shape=(lookback // step, float_data.shape[<span class="number">-1</span>])))</span><br><span class="line">model.add(layers.Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=RMSprop(), loss=<span class="string">'mae'</span>)</span><br><span class="line">history = model.fit_generator(train_gen, </span><br><span class="line">                              steps_per_epoch=<span class="number">500</span>, </span><br><span class="line">                              epochs=<span class="number">20</span>, </span><br><span class="line">                              validation_data=val_gen, </span><br><span class="line">                              validation_steps=val_steps)</span><br><span class="line"></span><br><span class="line">plot_acc_and_loss(history)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 1/20
+500/500 [==============================] - 10s 20ms/step - loss: 1.7705 - val_loss: 1.0356
+Epoch 2/20
+500/500 [==============================] - 11s 21ms/step - loss: 0.5680 - val_loss: 0.3472
+...
+Epoch 19/20
+500/500 [==============================] - 10s 21ms/step - loss: 0.2027 - val_loss: 0.3235
+Epoch 20/20
+500/500 [==============================] - 11s 22ms/step - loss: 0.2001 - val_loss: 0.3275
+</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fw74h7j30af07cglx.jpg" alt="png"></p>
+<p>虽然这个结果里有一部分超过了不机器学习的基准方法，但不够可靠。事实上，要超越基于尝试的基准方法是不容易的，我们的尝试中包含了很多机器难以学到的有用的信息。一般来说，对这种用简单高效解的问题来说，除非我们硬编码让模型去使用这种简单方法，否则靠机器去学习参数是很难找到这个简单模型并进一步改进的。</p>
+<h4 id="循环网络基准方法"><a class="markdownIt-Anchor" href="#循环网络基准方法"></a> 循环网络基准方法</h4>
+<p>刚才的全连接网络一开始就用一个 Flatten 把时间序列展平了，所以那个模型实际上是没有考虑『时间』的概念的。要利用起时间的顺序，我们就可以考虑使用循环网络。这次，我们将使用 GRU 层而不是 LSTM：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 训练并评估一个基于 GRU 的模型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.optimizers <span class="keyword">import</span> RMSprop</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(layers.GRU(<span class="number">32</span>, input_shape=(<span class="literal">None</span>, float_data.shape[<span class="number">-1</span>])))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=RMSprop(), loss=<span class="string">'mae'</span>)</span><br><span class="line">history = model.fit_generator(train_gen, </span><br><span class="line">                              steps_per_epoch=<span class="number">500</span>, </span><br><span class="line">                              epochs=<span class="number">20</span>, </span><br><span class="line">                              validation_data=val_gen, </span><br><span class="line">                              validation_steps=val_steps)</span><br><span class="line"></span><br><span class="line">plot_acc_and_loss(history)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 1/20
+500/500 [==============================] - 58s 116ms/step - loss: 0.3069 - val_loss: 0.2687
+Epoch 2/20
+500/500 [==============================] - 56s 113ms/step - loss: 0.2850 - val_loss: 0.2692
+...
+Epoch 19/20
+500/500 [==============================] - 62s 124ms/step - loss: 0.2090 - val_loss: 0.2971
+Epoch 20/20
+500/500 [==============================] - 64s 128ms/step - loss: 0.2039 - val_loss: 0.2995
+</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fqpvawj30al07cq38.jpg" alt="png"></p>
+<p>在开始过拟合之前，最好的结果的温度误差是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">0.2624</span> * std[<span class="number">1</span>], <span class="string">'°C'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>2.3228957591704926 °C
+</code></pre>
+<p>比一开始的常识模型优秀了。但我们看到，后面过拟合了，在 RNN 里，我们可以用循环 dropout 来对抗过拟合。</p>
+<h3 id="循环-dropout"><a class="markdownIt-Anchor" href="#循环-dropout"></a> 循环 dropout</h3>
+<p>我们在前馈网络里面使用 dropout，就是将某一层的输入单元随机得设为0。但在 RNNs 里没有那么简单，在循环层之前使用 dropout 只会阻碍学习，而对结果没有帮助，所以要在循环层中使用 droput。</p>
+<p>在循环层中使用 dropout 必须对每个 timestep 使用相同的 mask（掩码，即舍弃单元），掩码不能随 timestep 的改变而有所不同。同时，对于 LSTM、GRU 等循环层，还要将一个不随时间改变的『循环 dropout 掩码』作用于层的内部循环激活。Keras 的 循环层中都内置了这两种 dropout 的实现，只需通过参数 <code>dropout</code> 和 <code>recurrent_dropout</code> 指定 dropout 的比例即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 训练并评估一个使用 dropout 正则化的基于 GRU 的模型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.optimizers <span class="keyword">import</span> RMSprop</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(layers.GRU(<span class="number">32</span>, </span><br><span class="line">                     dropout=<span class="number">0.4</span>, </span><br><span class="line">                     recurrent_dropout=<span class="number">0.4</span>, </span><br><span class="line">                     input_shape=(<span class="literal">None</span>, float_data.shape[<span class="number">-1</span>])))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=RMSprop(), loss=<span class="string">'mae'</span>)</span><br><span class="line">history = model.fit_generator(train_gen, </span><br><span class="line">                              steps_per_epoch=<span class="number">500</span>, </span><br><span class="line">                              epochs=<span class="number">40</span>,    <span class="comment"># 使用了 dropout 的网络需要更长的时间才能收敛</span></span><br><span class="line">                              validation_data=val_gen, </span><br><span class="line">                              validation_steps=val_steps)</span><br><span class="line"></span><br><span class="line">plot_acc_and_loss(history)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 1/40
+500/500 [==============================] - 101s 202ms/step - loss: 0.3491 - val_loss: 0.2865
+Epoch 2/40
+500/500 [==============================] - 90s 180ms/step - loss: 0.3200 - val_loss: 0.2826
+...
+Epoch 39/40
+500/500 [==============================] - 98s 196ms/step - loss: 0.2510 - val_loss: 0.3111
+Epoch 40/40
+500/500 [==============================] - 101s 202ms/step - loss: 0.2517 - val_loss: 0.3115
+</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1frgpbwj30al07caae.jpg" alt="png"></p>
+<p>这个做出来没有书上好，不知道为什么。</p>
+<h3 id="循环层的堆叠"><a class="markdownIt-Anchor" href="#循环层的堆叠"></a> 循环层的堆叠</h3>
+<p>解决了过拟合的问题，现在要进一步提高精度。刚才只用了一个循环层，可以考虑再加几个，堆叠起来，增加网络容量。实际上，循环层的堆叠不用堆的特别多，谷歌翻译也只用了7个超大的LSTM层堆叠在一起。</p>
+<p>在 Keras 中堆叠循环层，记得中间层应该返回完整的 3D 输出序列张量，不能只返回最后一个时间步的输出(这个行为是默认的)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.optimizers <span class="keyword">import</span> RMSprop</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(layers.GRU(<span class="number">32</span>,</span><br><span class="line">                     dropout=<span class="number">0.1</span>,</span><br><span class="line">                     recurrent_dropout=<span class="number">0.5</span>,</span><br><span class="line">                     return_sequences=<span class="literal">True</span>,  <span class="comment"># 输出完整输出序列</span></span><br><span class="line">                     input_shape=(<span class="literal">None</span>, float_data.shape[<span class="number">-1</span>])))</span><br><span class="line">model.add(layers.GRU(<span class="number">64</span>, activation=<span class="string">'relu'</span>,</span><br><span class="line">                     dropout=<span class="number">0.1</span>, </span><br><span class="line">                     recurrent_dropout=<span class="number">0.5</span>))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=RMSprop(), loss=<span class="string">'mae'</span>)</span><br><span class="line">history = model.fit_generator(train_gen,</span><br><span class="line">                              steps_per_epoch=<span class="number">500</span>,</span><br><span class="line">                              epochs=<span class="number">40</span>,</span><br><span class="line">                              validation_data=val_gen,</span><br><span class="line">                              validation_steps=val_steps)</span><br><span class="line"></span><br><span class="line">plot_acc_and_loss(history)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 1/40
+500/500 [==============================] - 225s 450ms/step - loss: 0.3214 - val_loss: 0.2784
+Epoch 2/40
+500/500 [==============================] - 229s 459ms/step - loss: 0.3029 - val_loss: 0.2721
+...
+Epoch 39/40
+500/500 [==============================] - 229s 458ms/step - loss: 0.1840 - val_loss: 0.3365
+Epoch 40/40
+500/500 [==============================] - 219s 438ms/step - loss: 0.1839 - val_loss: 0.3343
+</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fv5uonj30al07cjrr.jpg" alt="png"></p>
+<p>这个也和书上有所差距。但可以看出，堆叠循环层并没有带来太多的性能提升。</p>
+<h3 id="双向-rnn"><a class="markdownIt-Anchor" href="#双向-rnn"></a> 双向 RNN</h3>
+<p>Bidirectional RNNs (双向循环网络) 是 RNN 的变种，有时可以比 RNN 性能更好，尤其是在自然语言处理上，双向 RNN 被称为深度学习 NLP 的瑞士军队。</p>
+<p>RNN 是依赖于序列的时间或者其他顺序的，打乱或反转时间步，RNN 从序列中提取的表示就完全不同了。利用了 RNN 对顺序的这种敏感性，双向 RNN 包含两个普通 RNN，分别沿正序和逆序对输入序列进行处理，最后将它们学到的表示合在一起，这样就可能学习到被单向 RNN 忽略的模式。</p>
+<p>之前，我们默认按时间顺序去训练，现在我们可以试试逆序去处理。要逆序，只需在数据生成器最后方向输出就行了 <code>yield samples[:, ::-1, :], targets)</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reverse_order_generator</span><span class="params">(data, lookback, delay, min_index, max_index,</span></span></span><br><span class="line"><span class="function"><span class="params">                            shuffle=False, batch_size=<span class="number">128</span>, step=<span class="number">6</span>)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> max_index <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        max_index = len(data) - delay - <span class="number">1</span></span><br><span class="line">    i = min_index + lookback</span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> shuffle:</span><br><span class="line">            rows = np.random.randint(</span><br><span class="line">                min_index + lookback, max_index, size=batch_size)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> i + batch_size &gt;= max_index:</span><br><span class="line">                i = min_index + lookback</span><br><span class="line">            rows = np.arange(i, min(i + batch_size, max_index))</span><br><span class="line">            i += len(rows)</span><br><span class="line"></span><br><span class="line">        samples = np.zeros((len(rows),</span><br><span class="line">                           lookback // step,</span><br><span class="line">                           data.shape[<span class="number">-1</span>]))</span><br><span class="line">        targets = np.zeros((len(rows),))</span><br><span class="line">        <span class="keyword">for</span> j, row <span class="keyword">in</span> enumerate(rows):</span><br><span class="line">            indices = range(rows[j] - lookback, rows[j], step)</span><br><span class="line">            samples[j] = data[indices]</span><br><span class="line">            targets[j] = data[rows[j] + delay][<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">yield</span> samples[:, ::<span class="number">-1</span>, :], targets</span><br><span class="line">        </span><br><span class="line">train_gen_reverse = reverse_order_generator(</span><br><span class="line">    float_data,</span><br><span class="line">    lookback=lookback,</span><br><span class="line">    delay=delay,</span><br><span class="line">    min_index=<span class="number">0</span>,</span><br><span class="line">    max_index=<span class="number">200000</span>,</span><br><span class="line">    shuffle=<span class="literal">True</span>,</span><br><span class="line">    step=step, </span><br><span class="line">    batch_size=batch_size)</span><br><span class="line"></span><br><span class="line">val_gen_reverse = reverse_order_generator(</span><br><span class="line">    float_data,</span><br><span class="line">    lookback=lookback,</span><br><span class="line">    delay=delay,</span><br><span class="line">    min_index=<span class="number">200001</span>,</span><br><span class="line">    max_index=<span class="number">300000</span>,</span><br><span class="line">    step=step,</span><br><span class="line">    batch_size=batch_size)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">model = Sequential()</span><br><span class="line">model.add(layers.GRU(<span class="number">32</span>, input_shape=(<span class="literal">None</span>, float_data.shape[<span class="number">-1</span>])))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=RMSprop(), loss=<span class="string">'mae'</span>)</span><br><span class="line">history = model.fit_generator(train_gen_reverse,</span><br><span class="line">                              steps_per_epoch=<span class="number">500</span>,</span><br><span class="line">                              epochs=<span class="number">20</span>,</span><br><span class="line">                              validation_data=val_gen_reverse,</span><br><span class="line">                              validation_steps=val_steps)</span><br><span class="line">plot_acc_and_loss(history)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 1/20
+500/500 [==============================] - 61s 121ms/step - loss: 0.4796 - val_loss: 0.4788
+Epoch 2/20
+500/500 [==============================] - 58s 117ms/step - loss: 0.4488 - val_loss: 0.4791
+...
+Epoch 19/20
+500/500 [==============================] - 57s 114ms/step - loss: 0.2202 - val_loss: 0.3657
+Epoch 20/20
+500/500 [==============================] - 57s 114ms/step - loss: 0.2165 - val_loss: 0.3560
+</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1ftcyyej30al07cq38.jpg" alt="png"></p>
+<p>这个效果并不好。是这样的，对于气温预测，当然是近期的数据比较有用、而很长时间之前的信息意义不大，循环层随着 timesteps 的前进会丢失一些老的信息，所以这个问题用正序的结果比逆序的结果好。</p>
+<p>但对于文本信息的处理，一个单词对理解句子的重要性通常并不取决于它在句子中的位置。也就是说，虽然单词顺序对理解语言很重要，但使用哪种顺序并不重要。所以，在处理一些文本问题时，正序和逆序可能得到很类似的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.datasets <span class="keyword">import</span> imdb</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing <span class="keyword">import</span> sequence</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"></span><br><span class="line"><span class="comment"># Number of words to consider as features</span></span><br><span class="line">max_features = <span class="number">10000</span></span><br><span class="line"><span class="comment"># Cut texts after this number of words (among top max_features most common words)</span></span><br><span class="line">maxlen = <span class="number">500</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Load data</span></span><br><span class="line">(x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=max_features)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Reverse sequences</span></span><br><span class="line">x_train = [x[::<span class="number">-1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> x_train]</span><br><span class="line">x_test = [x[::<span class="number">-1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> x_test]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Pad sequences</span></span><br><span class="line">x_train = sequence.pad_sequences(x_train, maxlen=maxlen)</span><br><span class="line">x_test = sequence.pad_sequences(x_test, maxlen=maxlen)</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(layers.Embedding(max_features, <span class="number">128</span>))</span><br><span class="line">model.add(layers.LSTM(<span class="number">32</span>))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>))</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>,</span><br><span class="line">              loss=<span class="string">'binary_crossentropy'</span>,</span><br><span class="line">              metrics=[<span class="string">'acc'</span>])</span><br><span class="line">history = model.fit(x_train, y_train,</span><br><span class="line">                    epochs=<span class="number">10</span>,</span><br><span class="line">                    batch_size=<span class="number">128</span>,</span><br><span class="line">                    validation_split=<span class="number">0.2</span>)</span><br><span class="line">plot_acc_and_loss(history)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 1/10
+157/157 [==============================] - 53s 339ms/step - loss: 0.4945 - acc: 0.7638 - val_loss: 0.4783 - val_acc: 0.8256
+Epoch 2/10
+157/157 [==============================] - 54s 345ms/step - loss: 0.3198 - acc: 0.8755 - val_loss: 0.5395 - val_acc: 0.7596
+...
+Epoch 9/10
+157/157 [==============================] - 54s 344ms/step - loss: 0.1241 - acc: 0.9590 - val_loss: 0.4496 - val_acc: 0.8566
+Epoch 10/10
+157/157 [==============================] - 55s 352ms/step - loss: 0.1178 - acc: 0.9600 - val_loss: 0.4134 - val_acc: 0.8720
+</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fo9r8jj30as07ct91.jpg" alt="png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fsgihij30af07c74j.jpg" alt="png"></p>
+<p>这个逆序训练的 IMDB 结果和正序的区别不大。</p>
+<p>如果我们把正序和逆序结合起来，从不同的视角去查看数据，相互补充被彼此忽略的内容，就有可能提高模型的性能。这就是双向 RNN 要做的事。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmsndu024j311s0jejtx.jpg" alt="双向 RNN 层的工作原理"></p>
+<p>在 Keras 中，使用 Bidirectional 层来实现双向 RNN：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 IMDB 上训练并评估一个双向 LSTM</span></span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(layers.Embedding(max_features, <span class="number">32</span>))</span><br><span class="line">model.add(layers.Bidirectional(layers.LSTM(<span class="number">32</span>)))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>))</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>, loss=<span class="string">'binary_crossentropy'</span>, metrics=[<span class="string">'acc'</span>])</span><br><span class="line">history = model.fit(x_train, y_train, epochs=<span class="number">10</span>, batch_size=<span class="number">128</span>, validation_split=<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">plot_acc_and_loss(history)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 1/10
+157/157 [==============================] - 50s 317ms/step - loss: 0.5840 - acc: 0.6994 - val_loss: 0.4705 - val_acc: 0.7818
+Epoch 2/10
+157/157 [==============================] - 45s 285ms/step - loss: 0.3490 - acc: 0.8637 - val_loss: 0.4346 - val_acc: 0.7974
+...
+Epoch 9/10
+157/157 [==============================] - 45s 288ms/step - loss: 0.1411 - acc: 0.9537 - val_loss: 0.4225 - val_acc: 0.8778
+Epoch 10/10
+157/157 [==============================] - 45s 289ms/step - loss: 0.1249 - acc: 0.9589 - val_loss: 0.6158 - val_acc: 0.8424
+</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fuitdmj30al07cjro.jpg" alt="png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fvl6rsj30af07ct90.jpg" alt="png"></p>
+<p>接下来，我们尝试将双向 RNN 的方法应用于温度预测任务。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.optimizers <span class="keyword">import</span> RMSprop</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(layers.Bidirectional(</span><br><span class="line">    layers.GRU(<span class="number">32</span>), input_shape=(<span class="literal">None</span>, float_data.shape[<span class="number">-1</span>])))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=RMSprop(), loss=<span class="string">'mae'</span>)</span><br><span class="line">history = model.fit_generator(train_gen,</span><br><span class="line">                              steps_per_epoch=<span class="number">500</span>,</span><br><span class="line">                              epochs=<span class="number">40</span>,</span><br><span class="line">                              validation_data=val_gen,</span><br><span class="line">                              validation_steps=val_steps)</span><br><span class="line">plot_acc_and_loss(history)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 1/40
+500/500 [==============================] - 81s 163ms/step - loss: 0.3022 - val_loss: 0.2796
+Epoch 2/40
+500/500 [==============================] - 76s 151ms/step - loss: 0.2761 - val_loss: 0.2619
+...
+Epoch 39/40
+500/500 [==============================] - 76s 152ms/step - loss: 0.1338 - val_loss: 0.3413
+Epoch 40/40
+500/500 [==============================] - 76s 152ms/step - loss: 0.1322 - val_loss: 0.3445
+</code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp1fp3nl0j30al07caae.jpg" alt="png"></p>
+<h3 id="going-even-further"><a class="markdownIt-Anchor" href="#going-even-further"></a> Going even further</h3>
+<p>接下来还可以通过尝试，更进一步提高模型的能力：</p>
+<ul>
+<li>增加层的单元个数</li>
+<li>调节 RMSprop 的学习率</li>
+<li>尝试用 LSTM 层代替 GRU 层</li>
+<li>在循环层上面(后面)使用更大的密集连接回归器（更大的 Dense 层或 Dense 层的堆叠）</li>
+<li>在测试集上运行性能最佳的模型，防止模型对验证集过拟合</li>
+</ul>
+<p>最后，温馨提示：不要用这个搞气温预测的方法去预测证券价格哦。在市场上，过去的表现并不能很好地预测未来的收益：Looking in the rear-view mirror is a bad way to drive.</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#63-advanced-usage-of-recurrent-neural-networks"><span class="toc-number">1.1.</span> <span class="toc-text"> 6.3 Advanced usage of recurrent neural networks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#温度预测问题"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 温度预测问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据准备"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> 数据准备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一种常识的-非机器学习的基准方法"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> 一种常识的、非机器学习的基准方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#机器学习基准方法"><span class="toc-number">1.1.1.3.</span> <span class="toc-text"> 机器学习基准方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#循环网络基准方法"><span class="toc-number">1.1.1.4.</span> <span class="toc-text"> 循环网络基准方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环-dropout"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 循环 dropout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环层的堆叠"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 循环层的堆叠</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双向-rnn"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 双向 RNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#going-even-further"><span class="toc-number">1.1.5.</span> <span class="toc-text"> Going even further</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&text=Python深度学习之循环神经网络的高级用法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&is_video=false&description=Python深度学习之循环神经网络的高级用法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python深度学习之循环神经网络的高级用法&body=Check out this article: https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&title=Python深度学习之循环神经网络的高级用法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/08/13/DeepLearningWithPython/Deep-Learning with-Python-ch6_3/&name=Python深度学习之循环神经网络的高级用法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
