@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta name="keywords" content="Machine Learning,Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python深度学习之模型优化">
+<meta property="og:url" content="https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghpi4ytqqvj318a0koadm.jpg">
+<meta property="og:updated_time" content="2020-08-19T02:38:14.079Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python深度学习之模型优化">
+<meta name="twitter:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghpi4ytqqvj318a0koadm.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Python深度学习之模型优化</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/08/18/DeepLearningWithPython/Deep-Learning with-Python-ch7_2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&text=Python深度学习之模型优化"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&is_video=false&description=Python深度学习之模型优化"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python深度学习之模型优化&body=Check out this article: https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&name=Python深度学习之模型优化&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#73-getting-the-most-out-of-your-models"><span class="toc-number">1.1.</span> <span class="toc-text"> 7.3 Getting the most out of your models</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#高级架构模式"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 高级架构模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#残差连接"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> 残差连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准化"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> 标准化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#深度可分离卷积"><span class="toc-number">1.1.1.3.</span> <span class="toc-text"> 深度可分离卷积</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超参数优化"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 超参数优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模型集成"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 模型集成</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Python深度学习之模型优化
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-08-19T10:12:36.840Z" itemprop="datePublished">2020-08-19</time>
+        
+        (Updated: <time datetime="2020-08-19T02:38:14.079Z" itemprop="dateModified">2020-08-19</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Machine-Learning/">Machine Learning</a> › <a class="category-link" href="/categories/Machine-Learning/Deep-Learning-with-Python/">Deep Learning with Python</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Deep-Learning/">Deep Learning</a>, <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="deep-learning-with-python"><a class="markdownIt-Anchor" href="#deep-learning-with-python"></a> Deep Learning with Python</h1>
+<p>这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 <a href="https://github.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">GitHub</a> 或 <a href="https://gitee.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">Gitee</a> 找到原始的 <code>.ipynb</code> 笔记本。</p>
+<p>你可以去<a href="https://livebook.manning.com/book/deep-learning-with-python" target="_blank" rel="noopener">这个网站在线阅读这本书的正版原文</a>(英文)。这本书的作者也给出了配套的 <a href="https://github.com/fchollet/deep-learning-with-python-notebooks" target="_blank" rel="noopener">Jupyter notebooks</a>。</p>
+<p>本文为 <strong>第7章  高级的深度学习最佳实践</strong> (Chapter 7. <em>Advanced deep-learning best practices</em>) 的笔记之一。</p>
+<p>[TOC]</p>
+<h2 id="73-getting-the-most-out-of-your-models"><a class="markdownIt-Anchor" href="#73-getting-the-most-out-of-your-models"></a> 7.3 Getting the most out of your models</h2>
+<blockquote>
+<p>让模型性能发挥到极致</p>
+</blockquote>
+<p>如果你只是想搞出个还不错的模型，无脑随便尝试各种网络架构基本就可以了。但如果你要开发出性能卓越、做到极致的模型，你就需要考虑一下后文给出的技巧。</p>
+<h3 id="高级架构模式"><a class="markdownIt-Anchor" href="#高级架构模式"></a> 高级架构模式</h3>
+<p>想要构架卓越的模型，你应该认识「残差连接」、「标准化」和「深度可分离卷积」这几个常用的“设计模式”。</p>
+<h4 id="残差连接"><a class="markdownIt-Anchor" href="#残差连接"></a> 残差连接</h4>
+<blockquote>
+<p>注：这一段是在 7.1 里写的，这里只是复制过来让这一部分更加完整。</p>
+</blockquote>
+<p>残差连接(residual connection) 是一种现在很常用的组件，它解决了大规模深度学习模型梯度消失和表示瓶颈问题。通常，向任何多于 10 层的模型中添加残差连接，都可能会有所帮助。</p>
+<ul>
+<li>梯度消失：就是经过的层多了，之前学到的表示变得模糊，甚至完全丢失，导致网络无法训练。</li>
+<li>表示瓶颈：堆叠起来层，后一层只能访问到前一层学到的东西。如果某一层太小（激活中能够塞入的信息少）就把信息卡下来，出现瓶颈了。</li>
+</ul>
+<p>残差连接是让前面某层的输出作为后面某层的输入（在网络中创造捷径）。前面层的输出并没有与后面层的激活连接在一起，而是与后面层的激活相加（若形状不同，用线性变换将前面层的激活改变成目标形状）。</p>
+<blockquote>
+<p>注：线性变换可以用不带激活的 Dense 层，或着在 CNN 中用不带激活 1×1 卷积。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers</span><br><span class="line"></span><br><span class="line">x = ...</span><br><span class="line"></span><br><span class="line">y = layers.Conv2D(<span class="number">128</span>, <span class="number">3</span>, activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(x)</span><br><span class="line">y = layers.Conv2D(<span class="number">128</span>, <span class="number">3</span>, activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(y)</span><br><span class="line">y = layers.MaxPooling2D(<span class="number">2</span>, strides=<span class="number">2</span>)(y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 形状不同，要做线性变换：</span></span><br><span class="line">residual = layers.Conv2D(<span class="number">128</span>, <span class="number">1</span>, strides=<span class="number">2</span>, padding=<span class="string">'same'</span>)(x)  <span class="comment"># 使用 1×1 卷积，将 x 线性下采样为与 y 具有相同的形状</span></span><br><span class="line"></span><br><span class="line">y = layers.add([y, residual])</span><br></pre></td></tr></table></figure>
+<h4 id="标准化"><a class="markdownIt-Anchor" href="#标准化"></a> 标准化</h4>
+<p>标准化(normalization)，用于让模型看到的不同样本彼此之间更加相似，有助于模型的优化和泛化。</p>
+<p>最常见的数据标准化，就是使数据均值为 0、方差为 1：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">normalized_data = (data - np.mean(data, axis=...)) / np.std(data, axis=...)</span><br></pre></td></tr></table></figure>
+<p>我们都知道在将数据输入模型之前对数据做标准化。但在网络的每一次变换之后，我们也应该考虑数据标准化。每一层输出之后，可能之前的标准化就被破坏了，我们需要考虑这个问题。</p>
+<p><strong>批标准化</strong>(batch normalization)就是解决这个问题的一种方法：训练过程中，它会在内部保存已读取每批数据均值和方差的指数移动平均值。因此，训练过程中均值和方差随时间发生变化，批标准化也可以适应性地将数据标准化。这个方法有助于梯度传播，允许更深的网络（类似于残差连接）。</p>
+<p>Keras 中批标准化用 <code>BatchNormalization</code> 层实现，通常在卷积层或密集连接层之后使用:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Conv</span></span><br><span class="line">conv_model.add(layers.Conv2D(<span class="number">32</span>, <span class="number">3</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">conv_model.add(layers.BatchNormalization())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Dense</span></span><br><span class="line">dense_model.add(layers.Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">dense_model.add(layers.BatchNormalization())</span><br></pre></td></tr></table></figure>
+<p>BatchNormalization 层接收一个 axis 参数，它指定应该对哪个特征轴做标准化，默认值是 -1。对于 Keras 默认的 Dense、Conv1D、RNN 和 Conv2D 这个都是对的。但对于 <code>data_format</code> 设为 <code>&quot;channels_first&quot;</code> 的 Conv2D，特征轴是 1，所以需要设置 <code>axis=1</code>。</p>
+<h4 id="深度可分离卷积"><a class="markdownIt-Anchor" href="#深度可分离卷积"></a> 深度可分离卷积</h4>
+<p>深度可分离卷积层(depthwise separable convolution)，在 Keras 中叫写作 <code>SeparableConv2D</code>，作用和普通的 Conv2D 是一样的。但 SeparableConv2D 比 Conv2D 更轻量、训练更快、精度更高。</p>
+<p>SeparableConv2D 层对输入的每个通道分别执行空间卷积，然后通过逐点卷积(1×1 卷积)整合输出结果。这么做就将空间特征学习和通道特征学习分开了，往往能够使用更少的数据学到更好的表示。（这和以前提过的 Xception 模型很类似。事实上，深度可分离卷积是 Xception 架构的基础）</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghpi4ytqqvj318a0koadm.jpg" alt="深度可分离卷积: 深度卷积 + 逐点卷积"></p>
+<p>对于数据比较少的数据，从头开始训练的画，这个东西很有用，例如下面是个图像分类任务：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential, Model</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"></span><br><span class="line">height = <span class="number">64</span></span><br><span class="line">width = <span class="number">64</span></span><br><span class="line">channels = <span class="number">3</span></span><br><span class="line">num_classes = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(layers.SeparableConv2D(<span class="number">32</span>, <span class="number">3</span>, </span><br><span class="line">                                 activation=<span class="string">'relu'</span>, </span><br><span class="line">                                 input_shape=(height, width, channels,)))</span><br><span class="line">model.add(layers.SeparableConv2D(<span class="number">64</span>, <span class="number">3</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.MaxPooling2D(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">model.add(layers.SeparableConv2D(<span class="number">64</span>, <span class="number">3</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.SeparableConv2D(<span class="number">128</span>, <span class="number">3</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.MaxPooling2D(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">model.add(layers.SeparableConv2D(<span class="number">64</span>, <span class="number">3</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.SeparableConv2D(<span class="number">128</span>, <span class="number">3</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.GlobalAveragePooling2D())</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.Dense(num_classes, activation=<span class="string">'softmax'</span>))</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>, loss=<span class="string">'categorical_crossentropy'</span>)</span><br></pre></td></tr></table></figure>
+<p>对于更大型的任务时，上 Xception 就更好了。</p>
+<h3 id="超参数优化"><a class="markdownIt-Anchor" href="#超参数优化"></a> 超参数优化</h3>
+<p>除了使用高级架构模式，超参数优化也是个值得一提的工作。我们写模型的时候需要决定很多超参数：</p>
+<p>模型中堆叠多少层，每层包含多少个单元，用什么激活函数…</p>
+<p>调节这些超参数并没有固定的规则，主要是靠直觉和反复实验。这种反复实验，可能性太多，各种超参数的组合，太复杂了。一天到晚调超参数就不是人干的事，这种事情还是给机器自己去做比较好。所以我们要指定一个可以程序化的超参数调节流程：</p>
+<ol>
+<li>选择一组超参数</li>
+<li>构建相应的模型</li>
+<li>将模型在小批量数据上拟合、验证性能</li>
+<li>选择要尝试的下一组超参数</li>
+<li>重复上述过程（2～4）</li>
+<li>选出上面实验中的最佳超参数</li>
+</ol>
+<p>这个过程的关键在于，给定多组可选的超参数，利用「历史验证性能」来自动选择下一组需要评估的超参数。可以用「简单随机搜索」、「贝叶斯优化」、「遗传算法」等算法完成这个工作。</p>
+<p>更新超参数其实是很难的，每次尝试的计算代价太大，每次都要从头训练一次；而且超参数是不连续、不可微的，不能用梯度下降之类的算法。</p>
+<p>所以，其实自动的超参数优化现在还不成熟，可用的工具十分有限。不过还是有好些库可以用来自动调节 Keras 的超参数的:</p>
+<ul>
+<li><a href="https://github.com/maxpumperla/hyperas" target="_blank" rel="noopener">Hyperas</a>，这个库比较老牌，也是书上提到的，但截止 2020 年 8 月，已经好几个月没提交了；</li>
+<li><a href="https://github.com/keras-team/keras-tuner" target="_blank" rel="noopener">Keras Tuner</a> ，这个库比较新，是我前几天看到的，Star 数已经和 Hyperas 持平了。</li>
+<li>…</li>
+</ul>
+<p><strong>注意</strong>：自动超参数的调节，本质上是在验证数据上训练超参数。在做大规模超参数自动优化时，一定要注意，验证集过拟合的问题！</p>
+<h3 id="模型集成"><a class="markdownIt-Anchor" href="#模型集成"></a> 模型集成</h3>
+<p>模型集成(model ensembling)，也是一种很强大的技术。模型集成，是指将一系列不同模型的预测结果汇集到一起，从而得到更好的预测结果。</p>
+<p>对于同一个问题，不同的模型，虽然可能都能比较好的解决问题，但正如盲人摸象，可能每个模型都得到了数据真相的一部分，但不是全部真相。将各种观点汇集在一起，就可能得到对数据更加准确的描述。在这种想法下，可以说，将很多模型集成到一起，必然可以打败任何单个模型。</p>
+<p>对于模型集成，使用的模型的多样性十分重要。Diversity is strength. 用来集成的模型应该尽可能好，同时尽可能不同。相同的网络，使用不同的随机初始化多次独立训练，然后集成，这样意义就不大了。更好的做法应该是使用架构非常不同的模型去集成，这样各个模型的偏差在不同方向上，集成让偏差会彼此抵消，结果才会更加稳定、准确。</p>
+<p>以分类问题为例，首先，我们有了一些不同的模型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">preds_a = model_a.predict(x_val)</span><br><span class="line">preds_b = model_b.predict(x_val)</span><br><span class="line">preds_c = model_c.predict(x_val)</span><br><span class="line">preds_d = model_d.predict(x_val)</span><br></pre></td></tr></table></figure>
+<p>可以用多种不同的方法来集成它们，最简单的办法是，取平均：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final_preds = <span class="number">0.25</span> * (preds_a + preds_b + preds_c + preds_d)</span><br></pre></td></tr></table></figure>
+<p>由于每一个模型的性能会有差距，所以更好的办法是加权平均：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final_preds = <span class="number">0.5</span> * preds_a + <span class="number">0.25</span> * preds_b + <span class="number">0.1</span> * preds_c + <span class="number">0.15</span> * preds_d</span><br></pre></td></tr></table></figure>
+<p>其中的权重，可以使用基于经验给出、使用随机搜索或者其他优化算法得到。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#73-getting-the-most-out-of-your-models"><span class="toc-number">1.1.</span> <span class="toc-text"> 7.3 Getting the most out of your models</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#高级架构模式"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 高级架构模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#残差连接"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> 残差连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准化"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> 标准化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#深度可分离卷积"><span class="toc-number">1.1.1.3.</span> <span class="toc-text"> 深度可分离卷积</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超参数优化"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 超参数优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模型集成"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 模型集成</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&text=Python深度学习之模型优化"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&is_video=false&description=Python深度学习之模型优化"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python深度学习之模型优化&body=Check out this article: https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&title=Python深度学习之模型优化"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/08/19/DeepLearningWithPython/Deep-Learning with-Python-ch7_3/&name=Python深度学习之模型优化&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
