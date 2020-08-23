@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta name="keywords" content="Machine Learning,Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python深度学习之VAE">
+<meta property="og:url" content="https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghut6hcq7kj317g0qyti6.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghuynp3pb9j31880kux67.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghuz8fj78aj31ao0dwtbk.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghuzfuik3jj31bi0piah3.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi0w0g9euhj30gb0g2dib.jpg">
+<meta property="og:updated_time" content="2020-08-23T09:49:59.388Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python深度学习之VAE">
+<meta name="twitter:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghut6hcq7kj317g0qyti6.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Python深度学习之VAE</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/08/22/DeepLearningWithPython/Deep-Learning with-Python-ch8_3/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&text=Python深度学习之VAE"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&is_video=false&description=Python深度学习之VAE"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python深度学习之VAE&body=Check out this article: https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&name=Python深度学习之VAE&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#84-generating-images-with-variational-autoencoders"><span class="toc-number">1.1.</span> <span class="toc-text"> 8.4 Generating images with variational autoencoders</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从潜在空间采样"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 从潜在空间采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#概念向量"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 概念向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变分自编码器"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 变分自编码器</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Python深度学习之VAE
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-08-23T17:48:34.000Z" itemprop="datePublished">2020-08-23</time>
+        
+        (Updated: <time datetime="2020-08-23T09:49:59.388Z" itemprop="dateModified">2020-08-23</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Machine-Learning/">Machine Learning</a> › <a class="category-link" href="/categories/Machine-Learning/Deep-Learning-with-Python/">Deep Learning with Python</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Deep-Learning/">Deep Learning</a>, <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="deep-learning-with-python"><a class="markdownIt-Anchor" href="#deep-learning-with-python"></a> Deep Learning with Python</h1>
+<p>这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 <a href="https://github.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">GitHub</a> 或 <a href="https://gitee.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">Gitee</a> 找到原始的 <code>.ipynb</code> 笔记本。</p>
+<p>你可以去<a href="https://livebook.manning.com/book/deep-learning-with-python" target="_blank" rel="noopener">这个网站在线阅读这本书的正版原文</a>(英文)。这本书的作者也给出了配套的 <a href="https://github.com/fchollet/deep-learning-with-python-notebooks" target="_blank" rel="noopener">Jupyter notebooks</a>。</p>
+<p>本文为 <strong>第8章  生成式深度学习</strong> (Chapter 8. <em>Generative deep learning</em>) 的笔记之一。</p>
+<p>[TOC]</p>
+<h2 id="84-generating-images-with-variational-autoencoders"><a class="markdownIt-Anchor" href="#84-generating-images-with-variational-autoencoders"></a> 8.4 Generating images with variational autoencoders</h2>
+<blockquote>
+<p>用变分自编码器生成图像</p>
+</blockquote>
+<p>前两篇介绍的 DeepDream 和 Neural Style Transfer 都只是有限地“修改”现有作品。而下面我们要介绍地 GAN 和 VAE 则是更加富有创造性的，这两种技术都是从图像的潜在空间中采样，并创建全新图像或编辑现有图像。</p>
+<ul>
+<li>VAE：变分自编码器(Variational AutoEncoder)</li>
+<li>GAN：生成式对抗网络(Generative Adversarial Network)</li>
+</ul>
+<h3 id="从潜在空间采样"><a class="markdownIt-Anchor" href="#从潜在空间采样"></a> 从潜在空间采样</h3>
+<p>潜在空间(latent space)是一个向量空间，其中任意点都可以被映射为一张逼真的图像。而实现这种映射(潜在点-&gt;图像)的模块就是 GAN 的 generator，或者 VAE 的 decoder。</p>
+<p>GAN、VAE 生成图像的关键就在于找到一个低维的「表示潜在空间」(latent space of representations)。一旦找到这样的潜在空间，从中采样，映射到图像空间，就可以生成全新的图像。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghut6hcq7kj317g0qyti6.jpg" alt="学习图像的潜在向量空间，并利用这个空间来采样新图像"></p>
+<p>GAN 和 VAE 学习的潜在空间有很大的区别：</p>
+<ul>
+<li>VAE 善于学习具有良好结构的潜在空间，其中的特定方向可以编码(表示)数据中一个有意义的变化的轴。</li>
+<li>GAN 生成的图像可以非常逼真，但潜在空间缺乏良好的结构、没有足够的连续性。</li>
+</ul>
+<h3 id="概念向量"><a class="markdownIt-Anchor" href="#概念向量"></a> 概念向量</h3>
+<p>概念向量(concept vector)：给定一个表示的潜在空间或一个嵌入空间，空间中的特定方向可能表示原始数据中有意义的变化轴。例如对于图像，人脸图像的潜在空间中可能存在一个代表「微笑」这个概念的向量(称为微笑向量，smile vector)：对于代表某张人脸的潜在点 z，z+s 就是同一张人脸面带微笑的表示。</p>
+<p>找到了这样的一些概念向量之后，我们就可以用这种方法来编辑图像了：将图像投射到潜在空间，和概念向量做运算来移动其表示，然后再解码到图像空间，就可以改变图像中的某一概念了——比如微笑程度：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghuynp3pb9j31880kux67.jpg" alt="微笑向量"></p>
+<h3 id="变分自编码器"><a class="markdownIt-Anchor" href="#变分自编码器"></a> 变分自编码器</h3>
+<p>自编码器是一种网络类型，接收一张图像，通过 encoder 模块将其映射到「潜在空间」，然后再通过 decoder 模块将其解码成与原始图像尺寸相同的输出。这东西训练时的目标是使输出和输入相同，所以我们把输入、输出用同一张图片。所以自编码器学习的是对原始输入进行重新构建。</p>
+<p>通过对编码(编码器的输出)施加限制，可以让自编码器学到有用的数据潜在表示。比如限制编码要低维并且是稀疏的，这样编码器就可以将输入数据压缩为更少二进制位的信息：</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghuz8fj78aj31ao0dwtbk.jpg" alt="自编码器:将输入x映射为压缩表示，然后再将其解码为x’"></p>
+<p>变分自编码器 VAE，是一种现代化的自编码器。它是一种生成式模型，特别做利用概念向量进行图像编辑的任务。比起经典自编码器，VAE 可以学习更连续的、高度结构化的潜在空间。</p>
+<p>VAE 不是将输入图像压缩成潜在空间中的固定编码，而是将图像转换为统计分布的参数——平均值和方差。VAE 解码的时候利用平均值和方差，从分布中随机采样一个元素，并将这个元素解码到原始输入。所以 VAE 的编码/解码过程是有一定的随机性的。</p>
+<p>这个过程的随机性提高了 VAE 潜在空间的稳健性：VAE 需保证潜在空间采样的每个点都能解码为有效的输出，这迫使潜在空间的任何位置都对应有意义的表示。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghuzfuik3jj31bi0piah3.jpg" alt="VAE 将一张图像映射为两个向量 z_mean 和 z_log_var，二者定义了潜在 空间中的一个概率分布，用于采样一个潜在点并对其进行解码"></p>
+<p>上图展现了 VAE 的工作原理：</p>
+<ol>
+<li>Encoder 模块将输入样本 <code>input_img</code> 转换为表示潜在空间中的参数 <code>z_mean</code> 和 <code>z_log_variance</code>;</li>
+<li>从这个潜在正态分布中随机采样一个点 z: <code>z = z_mean + exp(z_log_variance) * epsilon</code>，其中 epsilon 是取值很小的随机张量;</li>
+<li>Decoder 模块将这个潜在点映射回原始输入图像。</li>
+</ol>
+<p>epsilon 是随机的，所以需要与 input_img 编码的潜在位置(z-mean)靠近的每个点都能被解码为与 input_img 类似的图像，这个性质迫使潜在空间能够连续地有意义：潜在空间中任意两个相邻的点都会被解码为高度相似的图像。连续性以及潜在空间的低维度，又迫使潜在空间中的每个方向都表示数据中一个有意义的变化轴，这样就可以通过概念向量来进行操作。</p>
+<p>用 Keras 实现 VAE 的伪代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">z_mean, z_log_variance = encoder(input_img)</span><br><span class="line">z = z_mean + exp(z_log_variance) * epsilon</span><br><span class="line">reconstructed_img = decoder(z)</span><br><span class="line">model = Model(input_img, reconstruced_img)</span><br></pre></td></tr></table></figure>
+<p>训练 VAE 需要两个损失函数：</p>
+<ul>
+<li>重构损失(reconstruction loss)：使解码后的样本匹配初始输入;</li>
+<li>正则化损失(regularization loss)：使潜在空间具有良好结构（连续性、概念向量可用性），同时也降低在训练数据上的过拟合;</li>
+</ul>
+<p>我们具体实现编码器(encoder)网络：通过一个卷积神经网络，将输入图像 x 映射为两个向量 z_mean 和 z_log_var。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不使用及时执行模式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">tf.compat.v1.disable_eager_execution()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># VAE 编码器网络</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> backend <span class="keyword">as</span> K</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">img_shape = (<span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>)</span><br><span class="line">batch_size = <span class="number">16</span></span><br><span class="line">latent_dim = <span class="number">2</span>    <span class="comment"># 潜在空间的维度：2D平面</span></span><br><span class="line"></span><br><span class="line">input_img = keras.Input(shape=img_shape)</span><br><span class="line">x = layers.Conv2D(<span class="number">32</span>, <span class="number">3</span>, padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>)(input_img)</span><br><span class="line">x = layers.Conv2D(<span class="number">64</span>, <span class="number">3</span>, padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>, strides=(<span class="number">2</span>, <span class="number">2</span>))(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">64</span>, <span class="number">3</span>, padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>)(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">64</span>, <span class="number">3</span>, padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>)(x)</span><br><span class="line"></span><br><span class="line">shape_before_flattening = K.int_shape(x)</span><br><span class="line"></span><br><span class="line">x = layers.Flatten()(x)</span><br><span class="line">x = layers.Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>)(x)</span><br><span class="line"></span><br><span class="line">z_mean = layers.Dense(latent_dim)(x)</span><br><span class="line">z_log_var = layers.Dense(latent_dim)(x)</span><br></pre></td></tr></table></figure>
+<p>接下来的代码将使用 z_mean 和 z_log_var 来生成（采样）一个潜在空间点 z。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 潜在空间采样的函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sampling</span><span class="params">(args)</span>:</span></span><br><span class="line">    z_mean, z_log_var = args</span><br><span class="line">    epsilon = K.random_normal(shape=(K.shape(z_mean)[<span class="number">0</span>], latent_dim),</span><br><span class="line">                              mean=<span class="number">0.</span>,</span><br><span class="line">                              stddev=<span class="number">1.</span>)</span><br><span class="line">    <span class="keyword">return</span> z_mean + K.exp(z_log_var) * epsilon</span><br><span class="line"></span><br><span class="line">z = layers.Lambda(sampling)([z_mean, z_log_var])    <span class="comment"># 封装为层</span></span><br></pre></td></tr></table></figure>
+<p>然后是解码器的实现：将向量 z 的尺寸调整为图像大小，然后使用几个卷积层来得到最终的图像输出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># VAE 解码器网络</span></span><br><span class="line"></span><br><span class="line">decoder_input = layers.Input(K.int_shape(z)[<span class="number">1</span>:])</span><br><span class="line">x = layers.Dense(np.prod(shape_before_flattening[<span class="number">1</span>:]),</span><br><span class="line">                 activation=<span class="string">'relu'</span>)(decoder_input)</span><br><span class="line">x = layers.Reshape(shape_before_flattening[<span class="number">1</span>:])(x)</span><br><span class="line">x = layers.Conv2DTranspose(<span class="number">32</span>, <span class="number">3</span>,</span><br><span class="line">                           padding=<span class="string">'same'</span>,</span><br><span class="line">                           activation=<span class="string">'relu'</span>,</span><br><span class="line">                           strides=(<span class="number">2</span>, <span class="number">2</span>))(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">1</span>, <span class="number">3</span>,</span><br><span class="line">                  padding=<span class="string">'same'</span>,</span><br><span class="line">                  activation=<span class="string">'sigmoid'</span>)(x)</span><br><span class="line"></span><br><span class="line">decoder = Model(decoder_input, x)</span><br><span class="line"></span><br><span class="line">z_decoded = decoder(z)</span><br></pre></td></tr></table></figure>
+<p>VAE 要用两个损失，所以不能直接写成 <code>loss(input, target)</code>，我们需要编写一个自定义层，在其中使用内置的 <code>add_loss</code> 方法来创建需要的损失。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用于计算 VAE 损失的自定义层</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomVariationalLayer</span><span class="params">(keras.layers.Layer)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">vae_loss</span><span class="params">(self, x, z_decoded)</span>:</span></span><br><span class="line">        x = K.flatten(x)</span><br><span class="line">        z_decoded = K.flatten(z_decoded)</span><br><span class="line">        </span><br><span class="line">        xent_loss = keras.metrics.binary_crossentropy(x, z_decoded)</span><br><span class="line">        kl_loss = <span class="number">-5e-4</span> * K.mean(</span><br><span class="line">            <span class="number">1</span> + z_log_var - K.square(z_mean) - K.exp(z_log_var),</span><br><span class="line">            axis=<span class="number">-1</span>)</span><br><span class="line">        <span class="keyword">return</span> K.mean(xent_loss + kl_loss)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self, inputs)</span>:</span></span><br><span class="line">        x = inputs[<span class="number">0</span>]</span><br><span class="line">        z_decoded = inputs[<span class="number">1</span>]</span><br><span class="line">        </span><br><span class="line">        loss = self.vae_loss(x, z_decoded)</span><br><span class="line">        self.add_loss(loss, inputs=inputs)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">    </span><br><span class="line">y = CustomVariationalLayer()([input_img, z_decoded])</span><br></pre></td></tr></table></figure>
+<p>最后，将模型实例化并开始训练。由于我们的损失以及包含在自定义层里面了，所以编译时无须指定外部损失(<code>loss=None</code>)，所以也就不需要外部指定的目标数据(<code>y=None</code>)。</p>
+<p>这里我们用 MNIST 去训练它，也就是生成手写数字的潜在空间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"></span><br><span class="line">vae = Model(input_img, y)</span><br><span class="line">vae.compile(optimizer=<span class="string">'rmsprop'</span>, loss=<span class="literal">None</span>)</span><br><span class="line">vae.summary()</span><br><span class="line"></span><br><span class="line">(x_train, _), (x_test, y_test) = mnist.load_data()</span><br><span class="line"></span><br><span class="line">x_train = x_train.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_train = x_train.reshape(x_train.shape + (<span class="number">1</span>,))</span><br><span class="line"></span><br><span class="line">x_test = x_test.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_test = x_test.reshape(x_test.shape + (<span class="number">1</span>,))</span><br><span class="line"></span><br><span class="line">vae.fit(x=x_train, y=<span class="literal">None</span>,</span><br><span class="line">        shuffle=<span class="literal">True</span>,</span><br><span class="line">        epochs=<span class="number">10</span>,</span><br><span class="line">        batch_size=batch_size,</span><br><span class="line">        validation_data=(x_test, <span class="literal">None</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>WARNING:tensorflow:Output custom_variational_layer_1 missing from loss dictionary. We assume this was done on purpose. The fit and evaluate APIs will not be expecting any data to be passed to custom_variational_layer_1.
+Model: &quot;functional_7&quot;
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input_1 (InputLayer)            [(None, 28, 28, 1)]  0                                            
+__________________________________________________________________________________________________
+conv2d_5 (Conv2D)               (None, 28, 28, 32)   320         input_1[0][0]                    
+__________________________________________________________________________________________________
+conv2d_6 (Conv2D)               (None, 14, 14, 64)   18496       conv2d_5[0][0]                   
+__________________________________________________________________________________________________
+conv2d_7 (Conv2D)               (None, 14, 14, 64)   36928       conv2d_6[0][0]                   
+__________________________________________________________________________________________________
+conv2d_8 (Conv2D)               (None, 14, 14, 64)   36928       conv2d_7[0][0]                   
+__________________________________________________________________________________________________
+flatten_1 (Flatten)             (None, 12544)        0           conv2d_8[0][0]                   
+__________________________________________________________________________________________________
+dense_4 (Dense)                 (None, 32)           401440      flatten_1[0][0]                  
+__________________________________________________________________________________________________
+dense_5 (Dense)                 (None, 2)            66          dense_4[0][0]                    
+__________________________________________________________________________________________________
+dense_6 (Dense)                 (None, 2)            66          dense_4[0][0]                    
+__________________________________________________________________________________________________
+lambda_1 (Lambda)               (None, 2)            0           dense_5[0][0]                    
+                                                                 dense_6[0][0]                    
+__________________________________________________________________________________________________
+functional_5 (Functional)       (None, 28, 28, 1)    56385       lambda_1[0][0]                   
+__________________________________________________________________________________________________
+custom_variational_layer_1 (Cus (None, 28, 28, 1)    0           input_1[0][0]                    
+                                                                 functional_5[0][0]               
+==================================================================================================
+Total params: 550,629
+Trainable params: 550,629
+Non-trainable params: 0
+__________________________________________________________________________________________________
+Train on 60000 samples, validate on 10000 samples
+Epoch 1/10
+60000/60000 [==============================] - 219s 4ms/sample - loss: 0.2173 - val_loss: 0.2016
+...
+Epoch 10/10
+60000/60000 [==============================] - 234s 4ms/sample - loss: 0.1840 - val_loss: 0.1826
+</code></pre>
+<p>训练好模型，我们就可以使用 decoder 将任意潜在空间中的向量转换为图像。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从潜在空间中采样一组点，解码为图像</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> norm</span><br><span class="line"></span><br><span class="line">n = <span class="number">15</span>    <span class="comment"># 显示 15x15个数</span></span><br><span class="line">digit_size = <span class="number">28</span></span><br><span class="line">figure = np.zeros((digit_size * n, digit_size * n))</span><br><span class="line"></span><br><span class="line">grid_x = norm.ppf(np.linspace(<span class="number">0.05</span>, <span class="number">0.95</span>, n))  <span class="comment"># ppf 函数对线性分隔的坐标进行变换，以生成潜在变量 z 的值</span></span><br><span class="line">grid_y = norm.ppf(np.linspace(<span class="number">0.05</span>, <span class="number">0.95</span>, n))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, yi <span class="keyword">in</span> enumerate(grid_x):</span><br><span class="line">    <span class="keyword">for</span> j, xi <span class="keyword">in</span> enumerate(grid_y):</span><br><span class="line">        z_simple = np.array([[xi, yi]])</span><br><span class="line">        z_simple = np.tile(z_simple, batch_size).reshape(batch_size, <span class="number">2</span>)</span><br><span class="line">        x_decoded = decoder.predict(z_simple, batch_size=batch_size)</span><br><span class="line">        digit = x_decoded[<span class="number">0</span>].reshape(digit_size, digit_size)</span><br><span class="line">        figure[i * digit_size: (i + <span class="number">1</span>) * digit_size,</span><br><span class="line">               j * digit_size: (j + <span class="number">1</span>) * digit_size] = digit</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>, <span class="number">10</span>))</span><br><span class="line">plt.imshow(figure, cmap=<span class="string">'Greys_r'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi0w0g9euhj30gb0g2dib.jpg" alt="png"></p>
+<p>书上到这里就结束了，并没有深入写之前提到的概念向量的应用😂，好遗憾啊。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#84-generating-images-with-variational-autoencoders"><span class="toc-number">1.1.</span> <span class="toc-text"> 8.4 Generating images with variational autoencoders</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从潜在空间采样"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 从潜在空间采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#概念向量"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 概念向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变分自编码器"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 变分自编码器</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&text=Python深度学习之VAE"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&is_video=false&description=Python深度学习之VAE"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python深度学习之VAE&body=Check out this article: https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&title=Python深度学习之VAE"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/08/23/DeepLearningWithPython/Deep-Learning with-Python-ch8_4/&name=Python深度学习之VAE&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
