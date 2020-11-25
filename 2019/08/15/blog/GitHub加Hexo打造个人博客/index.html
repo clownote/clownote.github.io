@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="GitHub + Hexo =&amp;gt; 个人博客  打造一个个人博客其实很简单，我们不需要拥有一台服务器、甚至可以对 Web 开发不甚了解。  这篇文章记录我如何在 Mac 上通过 GitHub、Hexo 打造一个个人博客 —— clownote  起因 我一直不喜欢 CSDN 和博客园等博客平台，但确实有写东西的习惯。写了东西就要发表，所以在之前，我把我学习计算机知识的笔记都放到了一个自己初学">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-24T04:45:20.340Z">
+<meta property="og:updated_time" content="2020-11-25T00:59:18.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GitHub加Hexo打造个人博客">
 <meta name="twitter:description" content="GitHub + Hexo =&amp;gt; 个人博客  打造一个个人博客其实很简单，我们不需要拥有一台服务器、甚至可以对 Web 开发不甚了解。  这篇文章记录我如何在 Mac 上通过 GitHub、Hexo 打造一个个人博客 —— clownote  起因 我一直不喜欢 CSDN 和博客园等博客平台，但确实有写东西的习惯。写了东西就要发表，所以在之前，我把我学习计算机知识的笔记都放到了一个自己初学">
@@ -135,7 +135,7 @@
       
         <time datetime="2019-08-15T14:54:34.000Z" itemprop="datePublished">2019-08-15</time>
         
-        (Updated: <time datetime="2020-11-24T04:45:20.340Z" itemprop="dateModified">2020-11-24</time>)
+        (Updated: <time datetime="2020-11-25T00:59:18.699Z" itemprop="dateModified">2020-11-25</time>)
         
       
     </div>
@@ -243,7 +243,7 @@
 </tbody>
 </table>
 <p>需要说明的是，<code>deploy</code> 项的配置就可以把Hexo与GitHub关联起来，即将我们的博客<strong>推送</strong>到 GitHub，打开站点的配置文件_config.yml，<code>deploy</code> 项配置为：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span> </span><br><span class="line">	<span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">	<span class="attr">repo:</span> <span class="attr">https://github.com/&lt;userName&gt;/&lt;userName&gt;.github.io</span></span><br><span class="line">	<span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span> </span><br><span class="line">	<span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">	<span class="attr">repo:</span> <span class="string">https://github.com/&lt;userName&gt;/&lt;userName&gt;.github.io</span></span><br><span class="line">	<span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
 <p>然后，我们需要让 Hexo 连接上我们的 GitHub：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br><span class="line"></span><br><span class="line">$ hexo clean</span><br><span class="line">$ hexo generate</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>每一条命令的作用都很直观。操作完之后你就会发现你的博客已经上线了，可以在网络上被访问了！</p>
@@ -399,7 +399,7 @@
 <p>在 Front-matter 里加上 <code>type: search</code>：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Search</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">search</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
 <p>在 <code>themes/cactus/_config.yml</code> 里配置：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line"><span class="attr">  search:</span> <span class="string">/search/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">/search/</span></span><br></pre></td></tr></table></figure>
 <h4 id="评论"><a class="markdownIt-Anchor" href="#评论"></a> 评论</h4>
 <p><code>Cactus</code> 主题为我们提供的评论工具是 <code>Disqus</code>，这是一个各方面都很好的评论系统，但有一点问题是，这个评论系统<strong>在国内无法使用</strong>，所以我们只是简单翻译一下官方的介绍：</p>
 <p>首先，在 Disqus 注册我们的站点: <a href="http://disqus.com/admin/create/" target="_blank" rel="noopener">https://disqus.com/admin/create/</a>.</p>
