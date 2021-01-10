@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="sed 利用被称为管道操作符的|，多个命令由管道符连成了管道线。 在UNIX或Linux系统中，流过管道线的信息（数据）就叫做流（stream）; 为了编辑或修改一条管道中的信息，就使用流编辑器（stream editor）; 这是sed这个命令的名字的由来。 sed编辑文件，将结果输出到1，不改变原文件。 123456sed [选项] &amp;apos;以引号括起来的命令表达式&amp;apos; [输入文">
+    <meta name="description" content="sed利用被称为管道操作符的|，多个命令由管道符连成了管道线。 在UNIX或Linux系统中，流过管道线的信息（数据）就叫做流（stream）; 为了编辑或修改一条管道中的信息，就使用流编辑器（stream editor）; 这是sed这个命令的名字的由来。 sed编辑文件，将结果输出到1，不改变原文件。 123456sed [选项] &amp;apos;以引号括起来的命令表达式&amp;apos; [输入文件]">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-9.1-sed">
 <meta property="og:url" content="https://clownote.github.io/2017/01/11/Linux/linux-9-1-Sed/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="sed 利用被称为管道操作符的|，多个命令由管道符连成了管道线。 在UNIX或Linux系统中，流过管道线的信息（数据）就叫做流（stream）; 为了编辑或修改一条管道中的信息，就使用流编辑器（stream editor）; 这是sed这个命令的名字的由来。 sed编辑文件，将结果输出到1，不改变原文件。 123456sed [选项] &amp;apos;以引号括起来的命令表达式&amp;apos; [输入文">
+<meta property="og:description" content="sed利用被称为管道操作符的|，多个命令由管道符连成了管道线。 在UNIX或Linux系统中，流过管道线的信息（数据）就叫做流（stream）; 为了编辑或修改一条管道中的信息，就使用流编辑器（stream editor）; 这是sed这个命令的名字的由来。 sed编辑文件，将结果输出到1，不改变原文件。 123456sed [选项] &amp;apos;以引号括起来的命令表达式&amp;apos; [输入文件]">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-9.1-sed">
-<meta name="twitter:description" content="sed 利用被称为管道操作符的|，多个命令由管道符连成了管道线。 在UNIX或Linux系统中，流过管道线的信息（数据）就叫做流（stream）; 为了编辑或修改一条管道中的信息，就使用流编辑器（stream editor）; 这是sed这个命令的名字的由来。 sed编辑文件，将结果输出到1，不改变原文件。 123456sed [选项] &amp;apos;以引号括起来的命令表达式&amp;apos; [输入文">
+<meta name="twitter:description" content="sed利用被称为管道操作符的|，多个命令由管道符连成了管道线。 在UNIX或Linux系统中，流过管道线的信息（数据）就叫做流（stream）; 为了编辑或修改一条管道中的信息，就使用流编辑器（stream editor）; 这是sed这个命令的名字的由来。 sed编辑文件，将结果输出到1，不改变原文件。 123456sed [选项] &amp;apos;以引号括起来的命令表达式&amp;apos; [输入文件]">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sed"><span class="toc-number">1.</span> <span class="toc-text"> sed</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sed"><span class="toc-number">1.</span> <span class="toc-text">sed</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2017-01-11T19:52:41.000Z" itemprop="datePublished">2017-01-11</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,19 +160,22 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="sed"><a class="markdownIt-Anchor" href="#sed"></a> sed</h1>
-<p>利用被称为管道操作符的|，多个命令由管道符连成了管道线。</p>
+    <h1 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h1><p>利用被称为管道操作符的|，多个命令由管道符连成了管道线。</p>
 <p>在UNIX或Linux系统中，流过管道线的信息（数据）就叫做流（stream）;</p>
 <p>为了编辑或修改一条管道中的信息，就使用流编辑器（stream editor）;</p>
 <p>这是sed这个命令的名字的由来。</p>
 <p>sed编辑文件，将结果输出到1，不改变原文件。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sed [选项] &apos;以引号括起来的命令表达式&apos; [输入文件]</span><br><span class="line">    -e &lt;expression&gt;：e是expression, 以选项中指定的script来处理输入的文本文件，后接表达式</span><br><span class="line">    -f &lt;file&gt;：以选项中指定的script文件来处理输入的文本文件。</span><br><span class="line">    -i：直接在文件中替换，不在终端输出</span><br><span class="line">            -i常和 备份原本文件的-l 配合使用。</span><br><span class="line">    在sed命令中使用多个命令表达式，这命令表达式中间要使用分号（;）分隔开</span><br></pre></td></tr></table></figure>
+
 <p><span style="color: rgb(51, 51, 51);">在一个文件中指定数据行的范围内抽取某一字符串并用新的模式替代它：</span></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sed -e &apos;s/旧模式/新模式/标志&apos; file</span><br><span class="line">        s是substitute，</span><br><span class="line">        两个最有用的标志分别是g和n。</span><br><span class="line">            g是globally，表示要替代每一行中所出现的全部模式。（无g只换每行的头一个）</span><br><span class="line">            n告诉sed只替代前n行中所出现的模式。</span><br></pre></td></tr></table></figure>
-<p>e.g.</p>
+
+<p>    e.g.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grep CLERK emp.fmt | sed -e &apos;s/ /;/g;s/CLERK/ASSISTANT MANAGER/g&apos;</span><br><span class="line">    1. grep将所有带CLERK的行找出；</span><br><span class="line">    2. sed 将所有的空格（分隔符）都转换成分号（;）；</span><br><span class="line">    3. sed 将所有的CLERK字符串都替换成ASSISTANT MANAGER；</span><br></pre></td></tr></table></figure>
+
 <p>删除某行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sed &apos;nd&apos; file</span><br><span class="line">    在显示结果中删除第n行</span><br><span class="line">$ sed &apos;m,nd&apos; file</span><br><span class="line">    在显示结果中删除第m到n行</span><br><span class="line">$ sed &apos;/str/d&apos; file</span><br><span class="line">    删除所有带str的行</span><br><span class="line">$ sed &apos;/^$/d&apos; file</span><br><span class="line">    删除所有空行        # re(&quot;^$&quot;) means a line without any word.(只有开始符^和结尾符$的行)</span><br><span class="line">$ sed &apos;1,/str/d&apos; file</span><br><span class="line">    删除从第1行开始直到包含有str的数据行（包括有str的那行）</span><br></pre></td></tr></table></figure>
+
 <p>e.g.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">（1）电子邮件和一些应用程序显示的每一行信息都是以&gt;开始的，使用下面的一条sed命令来做到这一点：</span><br><span class="line">$ sed &apos;/^$/d;s/^/&gt; /g&apos; source &gt;result</span><br><span class="line">    第1个命令表达式/^$/d表示要删除所有的空行，</span><br><span class="line">    第2个命令表达式s/^/&gt;/表示将开始符号替换成大于符号和空格符，</span><br><span class="line">    最后的&gt;result表示将sed命令的结果存入result文件。</span><br><span class="line">------------------------------------------------------------------------------------------</span><br><span class="line">（2）在删除所有空行的同时，删除所有包含了“cal“的行，并将所有的字符串“tie“变成“fox“,将结果保存：</span><br><span class="line">$ sed &apos;/^$/d;/cal/d;s/tie/fox/g&apos; source &gt;result</span><br></pre></td></tr></table></figure>
   </div>
@@ -211,7 +214,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sed"><span class="toc-number">1.</span> <span class="toc-text"> sed</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sed"><span class="toc-number">1.</span> <span class="toc-text">sed</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -243,7 +246,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

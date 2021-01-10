@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="文件及其操作  Linux文件类型：    表示 名称 解释     - regular file 普通文件，或称正规文件   d directory 目录   l symbolic link🏎 符号（软）连接   b block 块特殊文件：一般是指块设备，如硬盘。   c character 字符特殊文件：一般是指字符设备，如键盘。   p pipe 命名的管道文件：一般用于在进程之间传输">
+    <meta name="description" content="文件及其操作Linux文件类型：   表示 名称 解释    - regular file 普通文件，或称正规文件   d directory 目录   l symbolic link🏎 符号（软）连接   b block 块特殊文件：一般是指块设备，如硬盘。   c character 字符特殊文件：一般是指字符设备，如键盘。   p pipe 命名的管道文件：一般用于在进程之间传输数据。">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-3.0.1-文件及其操作">
 <meta property="og:url" content="https://clownote.github.io/2016/12/26/Linux/linux-3-0-1-Files/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="文件及其操作  Linux文件类型：    表示 名称 解释     - regular file 普通文件，或称正规文件   d directory 目录   l symbolic link🏎 符号（软）连接   b block 块特殊文件：一般是指块设备，如硬盘。   c character 字符特殊文件：一般是指字符设备，如键盘。   p pipe 命名的管道文件：一般用于在进程之间传输">
+<meta property="og:description" content="文件及其操作Linux文件类型：   表示 名称 解释    - regular file 普通文件，或称正规文件   d directory 目录   l symbolic link🏎 符号（软）连接   b block 块特殊文件：一般是指块设备，如硬盘。   c character 字符特殊文件：一般是指字符设备，如键盘。   p pipe 命名的管道文件：一般用于在进程之间传输数据。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-3.0.1-文件及其操作">
-<meta name="twitter:description" content="文件及其操作  Linux文件类型：    表示 名称 解释     - regular file 普通文件，或称正规文件   d directory 目录   l symbolic link🏎 符号（软）连接   b block 块特殊文件：一般是指块设备，如硬盘。   c character 字符特殊文件：一般是指字符设备，如键盘。   p pipe 命名的管道文件：一般用于在进程之间传输">
+<meta name="twitter:description" content="文件及其操作Linux文件类型：   表示 名称 解释    - regular file 普通文件，或称正规文件   d directory 目录   l symbolic link🏎 符号（软）连接   b block 块特殊文件：一般是指块设备，如硬盘。   c character 字符特殊文件：一般是指字符设备，如键盘。   p pipe 命名的管道文件：一般用于在进程之间传输数据。">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件及其操作"><span class="toc-number">1.</span> <span class="toc-text"> 文件及其操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux文件类型"><span class="toc-number">1.1.</span> <span class="toc-text"> Linux文件类型：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件操作"><span class="toc-number">1.2.</span> <span class="toc-text"> 文件操作</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件及其操作"><span class="toc-number">1.</span> <span class="toc-text">文件及其操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux文件类型："><span class="toc-number">1.1.</span> <span class="toc-text">Linux文件类型：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件操作"><span class="toc-number">1.2.</span> <span class="toc-text">文件操作</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2016-12-26T16:06:36.000Z" itemprop="datePublished">2016-12-26</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,9 +160,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="文件及其操作"><a class="markdownIt-Anchor" href="#文件及其操作"></a> 文件及其操作</h1>
-<h2 id="linux文件类型"><a class="markdownIt-Anchor" href="#linux文件类型"></a> Linux文件类型：</h2>
-<table>
+    <h1 id="文件及其操作"><a href="#文件及其操作" class="headerlink" title="文件及其操作"></a>文件及其操作</h1><h2 id="Linux文件类型："><a href="#Linux文件类型：" class="headerlink" title="Linux文件类型："></a>Linux文件类型：</h2><table>
 <thead>
 <tr>
 <th>表示</th>
@@ -170,8 +168,7 @@
 <th>解释</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>-</td>
 <td>regular file</td>
 <td>普通文件，或称正规文件</td>
@@ -206,8 +203,7 @@
 <td>socket🐶</td>
 <td>套接字：通信（过程中）的一个终点。</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>🏎. 详见本系列文章的“<u>连接(link)</u>”</p>
 <p>🐶.  socket 的比喻性解释：</p>
 <p><strong>socket与电话十分相似：</strong></p>
@@ -215,36 +211,41 @@
 <p><em>（1）自己的电话</em></p>
 <p><em>（2）对方的电话</em></p>
 <p><em>只要双方进行通话，就必须有两个通话所必需的终点（电话）和一条在它们之间的通信线路存在。</em></p>
-<p>socket就相当于一条通信线路的终点（电话），而在这些终点（sockets）之间存在着数据通信网络。</p>
+<p>        socket就相当于一条通信线路的终点（电话），而在这些终点（sockets）之间存在着数据通信网络。</p>
 <p><em>当打电话给他人时，需要拨打对方的电话号码。</em></p>
-<p>sockets使用网络地址取代了电话号码。通过访问远程（计算机）的socket地址，本机程序就可以用的本机socket与远程的终点（socket）之间建立起一条通信线路。</p>
-<h2 id="文件操作"><a class="markdownIt-Anchor" href="#文件操作"></a> 文件操作</h2>
-<ul>
+<p>        sockets使用网络地址取代了电话号码。通过访问远程（计算机）的socket地址，本机程序就可以用的本机socket与远程的终点（socket）之间建立起一条通信线路。</p>
+<h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><ul>
 <li>file：确定文件类型</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ file 文件名</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>touch：刷新、新建文件</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ touch file(s)</span><br><span class="line">        若file存在，更新时间戳</span><br><span class="line">        若file不存在，新建空文件</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>cp：复制</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cp [-option(s)]  source(s)  target</span><br><span class="line">    把source复制到target：</span><br><span class="line">        -i：交互式：防止覆盖，覆盖前提示</span><br><span class="line">        -f：强制式：有同名，强制覆盖，不提示</span><br><span class="line">        -r：递归式：复制目录时包括子目录</span><br><span class="line">        -p：维持式：保留属性（如时间戳）</span><br><span class="line">        source是目录名或文件名</span><br><span class="line">        target是目录名或 新文件名(复制并重命名)</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>mv：移动及修改文件、目录名</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mv file(s) target</span><br><span class="line">    把source移动到target：</span><br><span class="line">        source是目录名或文件名</span><br><span class="line">        target是目录名或 新文件名(移动并重命名)</span><br></pre></td></tr></table></figure>
-<p>重命名可用“<strong>mv  path/old_name  path/new_nam</strong>e”实现</p>
+
+<p>        重命名可用“<strong>mv  path/old_name  path/new_nam</strong>e”实现</p>
 <ul>
 <li>rm：删除</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ rm  [option(s)]  file(s)|directory(s)</span><br><span class="line">    删除文件或 目录(加-r)：</span><br><span class="line">        -i：交互式：删前提示</span><br><span class="line">        -r：递归式：包括子目录、文件</span><br><span class="line">        -f：强制性：不询问，直接删</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>find：搜索文件和目录</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$ find Pathname Expressions Actions</span><br><span class="line">    •Pathname：遍历起始路径</span><br><span class="line">    •Expressions：条件表达式：</span><br><span class="line">        -name“指定文件名”</span><br><span class="line">        -size[+|-]n</span><br><span class="line">                文件大小大于小于或等于(n*512B)</span><br><span class="line">        -atime[+|-]n</span><br><span class="line">                访问天数</span><br><span class="line">        -mtime[+|-]n：更改天数</span><br><span class="line">        -user LoginID：属于某用户的所有文件</span><br><span class="line">        -type：某一类型的文件：</span><br><span class="line">                f：文件</span><br><span class="line">                d：目录</span><br><span class="line">                e t c</span><br><span class="line">        -perm：查找具有某些特定访问许可位的文件</span><br><span class="line">    •Actions：对找出的文件进行的操作：</span><br><span class="line">        -exec命令&#123;&#125; \;</span><br><span class="line">                在每一个所定位的文件上运行指定的命令。</span><br><span class="line">                “&#123;&#125;“  表明文件名将传给前面的命令。</span><br><span class="line">                “ \;” 表示命令的结束。</span><br><span class="line">                （在大括号与反斜线之间必须有一个空格。）</span><br><span class="line">        -ok命令&#123;&#125; \;</span><br><span class="line">                -exec命令的交互方式</span><br><span class="line">                （在find命令对每个定位的文件执行命令之前需要确认）</span><br><span class="line">        -print</span><br><span class="line">                指示find命令将当前的路径名打印在终端屏幕上</span><br><span class="line">                （默认方式）</span><br><span class="line">        -ls</span><br><span class="line">                显示当前路径名和相关的统计信息</span><br><span class="line">                如i节点（inode）数、以K字节为单位的大小（尺寸）、保护模式、硬连接和用户</span><br></pre></td></tr></table></figure>
-<p>可用<code>find /etc -name passwd  2&gt;finderrs.txt</code>重定向，把权限不足的错误不在屏幕显示。</p>
+
+<p>    可用<code>find /etc -name passwd  2&gt;finderrs.txt</code>重定向，把权限不足的错误不在屏幕显示。</p>
 
   </div>
 </article>
@@ -282,7 +283,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件及其操作"><span class="toc-number">1.</span> <span class="toc-text"> 文件及其操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux文件类型"><span class="toc-number">1.1.</span> <span class="toc-text"> Linux文件类型：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件操作"><span class="toc-number">1.2.</span> <span class="toc-text"> 文件操作</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件及其操作"><span class="toc-number">1.</span> <span class="toc-text">文件及其操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux文件类型："><span class="toc-number">1.1.</span> <span class="toc-text">Linux文件类型：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件操作"><span class="toc-number">1.2.</span> <span class="toc-text">文件操作</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -314,7 +315,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

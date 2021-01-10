@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="计算与逃逸  用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾  \——逃逸符号  1234$ echo &amp;quot;$6">
+    <meta name="description" content="计算与逃逸 用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾   \——逃逸符号  1234$ echo &amp;quot;$68">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-6-计算与逃逸">
 <meta property="og:url" content="https://clownote.github.io/2017/01/05/Linux/linux-6-Computation/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="计算与逃逸  用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾  \——逃逸符号  1234$ echo &amp;quot;$6">
+<meta property="og:description" content="计算与逃逸 用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾   \——逃逸符号  1234$ echo &amp;quot;$68">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-6-计算与逃逸">
-<meta name="twitter:description" content="计算与逃逸  用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾  \——逃逸符号  1234$ echo &amp;quot;$6">
+<meta name="twitter:description" content="计算与逃逸 用Linux命令进行数字运算  12345$ $a1=1;a2=2;        # 定义变量，一行可多个$ echo $a1           # 输出a1的值$ echo $[$a1+$a2]    # 输出a1+a2的值# 可用运算有：     + - * / % **    # 同Python，对整数用／要去尾   \——逃逸符号  1234$ echo &amp;quot;$68">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#计算与逃逸"><span class="toc-number">1.</span> <span class="toc-text"> 计算与逃逸</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#计算与逃逸"><span class="toc-number">1.</span> <span class="toc-text">计算与逃逸</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2017-01-05T09:33:44.000Z" itemprop="datePublished">2017-01-05</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,27 +160,26 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="计算与逃逸"><a class="markdownIt-Anchor" href="#计算与逃逸"></a> 计算与逃逸</h1>
-<ol>
+    <h1 id="计算与逃逸"><a href="#计算与逃逸" class="headerlink" title="计算与逃逸"></a>计算与逃逸</h1><ol>
 <li>用Linux命令进行数字运算</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ $a1=1;a2=2;        # 定义变量，一行可多个</span><br><span class="line">$ echo $a1           # 输出a1的值</span><br><span class="line">$ echo $[$a1+$a2]    # 输出a1+a2的值</span><br><span class="line"># 可用运算有：</span><br><span class="line">     + - * / % **    # 同Python，对整数用／要去尾</span><br></pre></td></tr></table></figure>
+
 <ol start="2">
 <li><code>\</code>——逃逸符号</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ echo &quot;$6830&quot;        # 未定义的空变量$6</span><br><span class="line">830        # output</span><br><span class="line">$ echo &quot;\$6830&quot;       # 用“\”逃逸符号还原“$”</span><br><span class="line">$6830      # output</span><br></pre></td></tr></table></figure>
-<p>'\'还可以放在命令最后表续行（在下一行继续输入该命令）</p>
+
+<p>‘\‘还可以放在命令最后表续行（在下一行继续输入该命令）</p>
 <ol start="3">
-<li>
-<p><code>'str'</code>、<code>&quot;str&quot;</code>：文字 -&gt; 字符串</p>
+<li><p><code>&#39;str&#39;</code>、<code>&quot;str&quot;</code>：文字 -&gt; 字符串</p>
 <ul>
-<li><code>'abc'</code>   ：禁止所有命令行拓展功能</li>
+<li><code>&#39;abc&#39;</code>   ：禁止所有命令行拓展功能</li>
 <li><code>&quot;abc&quot;</code>  ：允许以下拓展：</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$</span><br><span class="line">`</span><br><span class="line">\</span><br><span class="line">!</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>利用拓展：</p>
+<li><p>利用拓展：</p>
 </li>
 </ol>
 <p>将一个命令的输出作为另一个的参数：</p>
@@ -221,7 +220,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#计算与逃逸"><span class="toc-number">1.</span> <span class="toc-text"> 计算与逃逸</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#计算与逃逸"><span class="toc-number">1.</span> <span class="toc-text">计算与逃逸</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -253,7 +252,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

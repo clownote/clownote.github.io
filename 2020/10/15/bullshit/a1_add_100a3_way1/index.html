@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="胡言乱语之gcc优化 本文为业余蒟蒻尝试分析一段简单的 C 代码在 gcc -O0、-O1、-O2 下的优化情况。 12345678______________&amp;lt; 大佬驱散！！ &amp;gt; --------------        \   ^__^         \  (oo)\_______            (__)\       )\/\                ||--">
+    <meta name="description" content="胡言乱语之gcc优化本文为业余蒟蒻尝试分析一段简单的 C 代码在 gcc -O0、-O1、-O2 下的优化情况。 12345678______________&amp;lt; 大佬驱散！！ &amp;gt; --------------        \   ^__^         \  (oo)\_______            (__)\       )\/\                ||----">
 <meta name="keywords" content="Bullshit">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gcc编译时优化">
 <meta property="og:url" content="https://clownote.github.io/2020/10/15/bullshit/a1_add_100a3_way1/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="胡言乱语之gcc优化 本文为业余蒟蒻尝试分析一段简单的 C 代码在 gcc -O0、-O1、-O2 下的优化情况。 12345678______________&amp;lt; 大佬驱散！！ &amp;gt; --------------        \   ^__^         \  (oo)\_______            (__)\       )\/\                ||--">
+<meta property="og:description" content="胡言乱语之gcc优化本文为业余蒟蒻尝试分析一段简单的 C 代码在 gcc -O0、-O1、-O2 下的优化情况。 12345678______________&amp;lt; 大佬驱散！！ &amp;gt; --------------        \   ^__^         \  (oo)\_______            (__)\       )\/\                ||----">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.307Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gcc编译时优化">
-<meta name="twitter:description" content="胡言乱语之gcc优化 本文为业余蒟蒻尝试分析一段简单的 C 代码在 gcc -O0、-O1、-O2 下的优化情况。 12345678______________&amp;lt; 大佬驱散！！ &amp;gt; --------------        \   ^__^         \  (oo)\_______            (__)\       )\/\                ||--">
+<meta name="twitter:description" content="胡言乱语之gcc优化本文为业余蒟蒻尝试分析一段简单的 C 代码在 gcc -O0、-O1、-O2 下的优化情况。 12345678______________&amp;lt; 大佬驱散！！ &amp;gt; --------------        \   ^__^         \  (oo)\_______            (__)\       )\/\                ||----">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#胡言乱语之gcc优化"><span class="toc-number">1.</span> <span class="toc-text"> 胡言乱语之gcc优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#免责声明"><span class="toc-number">2.</span> <span class="toc-text"> 免责声明</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#胡言乱语之gcc优化"><span class="toc-number">1.</span> <span class="toc-text">胡言乱语之gcc优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#免责声明"><span class="toc-number">2.</span> <span class="toc-text">免责声明</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2020-10-15T23:54:34.000Z" itemprop="datePublished">2020-10-15</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.307Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.204Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -155,35 +155,38 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="胡言乱语之gcc优化"><a class="markdownIt-Anchor" href="#胡言乱语之gcc优化"></a> 胡言乱语之gcc优化</h1>
-<p>本文为业余蒟蒻尝试分析一段简单的 C 代码在 gcc <code>-O0</code>、<code>-O1</code>、<code>-O2</code> 下的优化情况。</p>
+    <h1 id="胡言乱语之gcc优化"><a href="#胡言乱语之gcc优化" class="headerlink" title="胡言乱语之gcc优化"></a>胡言乱语之gcc优化</h1><p>本文为业余蒟蒻尝试分析一段简单的 C 代码在 gcc <code>-O0</code>、<code>-O1</code>、<code>-O2</code> 下的优化情况。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">______________</span><br><span class="line">&lt; 大佬驱散！！ &gt;</span><br><span class="line"> --------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br></pre></td></tr></table></figure>
+
 <p>做数值分析的实验，写了点 C 代码，浮点数性质的实验，很无聊。所以来尝试用不同优化等级，生成汇编代码玩玩。</p>
 <ul>
 <li><code>a1.c</code></li>
 </ul>
 <p>原始 C 代码，将 100个 a3 逐个加到 a1 上，返回 a1。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">a1_add_100a3_way1</span><span class="params">(<span class="keyword">float</span> a1, <span class="keyword">float</span> a3)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">        a1 += a3;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><code>gcc-9 -O0 -S a1.c</code></li>
 </ul>
 <p>用 0 级优化，编译成汇编，相当忠实地「直译」：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">_a1_add_100a3_way1:</span><br><span class="line">LFB2:</span><br><span class="line">	pushq	%rbp</span><br><span class="line">LCFI3:</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">LCFI4:</span><br><span class="line">	movss	%xmm0, -20(%rbp)</span><br><span class="line">	movss	%xmm1, -24(%rbp)</span><br><span class="line">	movl	$0, -4(%rbp)</span><br><span class="line">	jmp	L3</span><br><span class="line">L4:</span><br><span class="line">	movss	-20(%rbp), %xmm0</span><br><span class="line">	addss	-24(%rbp), %xmm0</span><br><span class="line">	movss	%xmm0, -20(%rbp) </span><br><span class="line">	addl	$1, -4(%rbp)</span><br><span class="line">L3:</span><br><span class="line">	cmpl	$99, -4(%rbp)</span><br><span class="line">	jle	L4</span><br><span class="line">	movss	-20(%rbp), %xmm0</span><br><span class="line">	popq	%rbp</span><br><span class="line">LCFI5:</span><br><span class="line">	ret</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><code>gcc-9 -O1 -S a1.c</code></li>
 </ul>
 <p>用 1 级优化：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">_a1_add_100a3_way1:</span><br><span class="line">LFB2:</span><br><span class="line">	movl	$100, %eax</span><br><span class="line">L4:</span><br><span class="line">	addss	%xmm1, %xmm0</span><br><span class="line">	subl	$1, %eax</span><br><span class="line">	jne	L4</span><br><span class="line">	ret</span><br></pre></td></tr></table></figure>
+
 <p>这个程序简单嘛，O1 已经优化的相当出色了，各种临时遍历能砍的全砍了。手写汇编也就这水平了。值得一提的是，它把 i 从 0 加到 <code>&lt; 100</code>（即 <code>== 99</code>）的判断改成了从 100 减到 0，直接使用减法设置的 ZF，避免了一次 cmpl，很刺激。</p>
 <ul>
 <li><code>gcc-9 -O2 -S a1.c</code></li>
 </ul>
 <p>用 2 级优化，编译成汇编：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">_a1_add_100a3_way1:</span><br><span class="line">LFB2:</span><br><span class="line">	movl	$100, %eax</span><br><span class="line">	.p2align 4,,10</span><br><span class="line">	.p2align 3</span><br><span class="line">L4:</span><br><span class="line">	subl	$1, %eax</span><br><span class="line">	addss	%xmm1, %xmm0</span><br><span class="line">	jne	L4</span><br><span class="line">	ret</span><br></pre></td></tr></table></figure>
+
 <p>和 1 级优化比，感觉几乎没有提升。但我有个不确定的<strong>猜想</strong>：</p>
 <p>O2 编译把 subl 提到 addss 前运算，这样到 jne「取指」时，subl 已经到了「执行」，用一个 bubble 就可以避免流水线冒险。 而 O1 的版本里，jne 紧随 subl，jne  达到「取指」时，subl 还在「译码」阶段，需要更多的 bubble 或者其他方式来处理这里的流水线冒险，代价稍微大了一点点🤏。（流水线学的并不好，我不保证这个分析正确、有意义）</p>
-<h1 id="免责声明"><a class="markdownIt-Anchor" href="#免责声明"></a> 免责声明</h1>
-<p>这是一篇在桌面上找到的意义不明的文章。我于过去的某天偶然写下了这些东西，看上去很厉害，所以分享一下（但不知道内容是否正确、有效）。</p>
+<h1 id="免责声明"><a href="#免责声明" class="headerlink" title="免责声明"></a>免责声明</h1><p>这是一篇在桌面上找到的意义不明的文章。我于过去的某天偶然写下了这些东西，看上去很厉害，所以分享一下（但不知道内容是否正确、有效）。</p>
 <blockquote>
 <p>「胡言乱语」(Bullshit) 系列文章（包括但不限于相关的汉字、拼音、拉丁字母、日语假名、阿拉伯字母、单词、句子图片、影像、录音，以及前述之各种随意组合等等）均为本人随意敲击键盘所出。用于检测本人电脑键盘录入、屏幕显示的机械、光电性能，并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。</p>
 </blockquote>
@@ -224,7 +227,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#胡言乱语之gcc优化"><span class="toc-number">1.</span> <span class="toc-text"> 胡言乱语之gcc优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#免责声明"><span class="toc-number">2.</span> <span class="toc-text"> 免责声明</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#胡言乱语之gcc优化"><span class="toc-number">1.</span> <span class="toc-text">胡言乱语之gcc优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#免责声明"><span class="toc-number">2.</span> <span class="toc-text">免责声明</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -256,7 +259,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Java 异常处理  没有程序能够始终正常运行，Java 语言的设计者也知道这一点。Java 平台提供了内置机制来处理代码未准确地按计划运行的情形。  异常 是在程序执行期间发生的破坏正常的程序指令流的事件。 异常处理 可以使用 try 和 catch 代码块（以及 finally）捕获错误。  异常类型 在 Java 中，异常的层次结构图如下：   Throwable  Error	: 运行时">
+    <meta name="description" content="Java 异常处理 没有程序能够始终正常运行，Java 语言的设计者也知道这一点。Java 平台提供了内置机制来处理代码未准确地按计划运行的情形。  异常 是在程序执行期间发生的破坏正常的程序指令流的事件。 异常处理 可以使用 try 和 catch 代码块（以及 finally）捕获错误。 异常类型在 Java 中，异常的层次结构图如下：   Throwable Error    : 运行时环境">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java-异常">
 <meta property="og:url" content="https://clownote.github.io/2019/04/23/Java_intro/Day12_Java_Exception/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Java 异常处理  没有程序能够始终正常运行，Java 语言的设计者也知道这一点。Java 平台提供了内置机制来处理代码未准确地按计划运行的情形。  异常 是在程序执行期间发生的破坏正常的程序指令流的事件。 异常处理 可以使用 try 和 catch 代码块（以及 finally）捕获错误。  异常类型 在 Java 中，异常的层次结构图如下：   Throwable  Error	: 运行时">
+<meta property="og:description" content="Java 异常处理 没有程序能够始终正常运行，Java 语言的设计者也知道这一点。Java 平台提供了内置机制来处理代码未准确地按计划运行的情形。  异常 是在程序执行期间发生的破坏正常的程序指令流的事件。 异常处理 可以使用 try 和 catch 代码块（以及 finally）捕获错误。 异常类型在 Java 中，异常的层次结构图如下：   Throwable Error    : 运行时环境">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8mN6gy1g673rbxe34j30i50b4dk9.jpg">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java-异常">
-<meta name="twitter:description" content="Java 异常处理  没有程序能够始终正常运行，Java 语言的设计者也知道这一点。Java 平台提供了内置机制来处理代码未准确地按计划运行的情形。  异常 是在程序执行期间发生的破坏正常的程序指令流的事件。 异常处理 可以使用 try 和 catch 代码块（以及 finally）捕获错误。  异常类型 在 Java 中，异常的层次结构图如下：   Throwable  Error	: 运行时">
+<meta name="twitter:description" content="Java 异常处理 没有程序能够始终正常运行，Java 语言的设计者也知道这一点。Java 平台提供了内置机制来处理代码未准确地按计划运行的情形。  异常 是在程序执行期间发生的破坏正常的程序指令流的事件。 异常处理 可以使用 try 和 catch 代码块（以及 finally）捕获错误。 异常类型在 Java 中，异常的层次结构图如下：   Throwable Error    : 运行时环境">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006y8mN6gy1g673rbxe34j30i50b4dk9.jpg">
     
     
@@ -111,7 +111,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-异常处理"><span class="toc-number">1.</span> <span class="toc-text"> Java 异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#异常类型"><span class="toc-number">1.1.</span> <span class="toc-text"> 异常类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#异常分层结构"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 异常分层结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-try-catch-和-finally"><span class="toc-number">1.2.</span> <span class="toc-text"> 使用 try、catch 和 finally</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多个-catch-代码块"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 多个 catch 代码块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用一个-catch-捕获多个类型的错误"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 用一个 catch 捕获多个类型的错误</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#throws-和-throw"><span class="toc-number">1.3.</span> <span class="toc-text"> throws 和 throw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#try-with-resources-代码块"><span class="toc-number">1.4.</span> <span class="toc-text"> try-with-resources 代码块</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-异常处理"><span class="toc-number">1.</span> <span class="toc-text">Java 异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#异常类型"><span class="toc-number">1.1.</span> <span class="toc-text">异常类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#异常分层结构"><span class="toc-number">1.1.1.</span> <span class="toc-text">异常分层结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-try、catch-和-finally"><span class="toc-number">1.2.</span> <span class="toc-text">使用 try、catch 和 finally</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多个-catch-代码块"><span class="toc-number">1.2.1.</span> <span class="toc-text">多个 catch 代码块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用一个-catch-捕获多个类型的错误"><span class="toc-number">1.2.2.</span> <span class="toc-text">用一个 catch 捕获多个类型的错误</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#throws-和-throw"><span class="toc-number">1.3.</span> <span class="toc-text">throws 和 throw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#try-with-resources-代码块"><span class="toc-number">1.4.</span> <span class="toc-text">try-with-resources 代码块</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -137,7 +137,7 @@
       
         <time datetime="2019-04-23T16:37:53.000Z" itemprop="datePublished">2019-04-23</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.196Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -162,38 +162,33 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="java-异常处理"><a class="markdownIt-Anchor" href="#java-异常处理"></a> Java 异常处理</h1>
-<blockquote>
+    <h1 id="Java-异常处理"><a href="#Java-异常处理" class="headerlink" title="Java 异常处理"></a>Java 异常处理</h1><blockquote>
 <p>没有程序能够始终正常运行，Java 语言的设计者也知道这一点。Java 平台提供了内置机制来处理代码未准确地按计划运行的情形。</p>
 </blockquote>
 <p><strong>异常</strong> 是在程序执行期间发生的破坏正常的程序指令流的事件。</p>
 <p><strong>异常处理</strong> 可以使用 <code>try</code> 和 <code>catch</code> 代码块（以及 <code>finally</code>）捕获错误。</p>
-<h2 id="异常类型"><a class="markdownIt-Anchor" href="#异常类型"></a> 异常类型</h2>
-<p>在 Java 中，异常的层次结构图如下：</p>
+<h2 id="异常类型"><a href="#异常类型" class="headerlink" title="异常类型"></a>异常类型</h2><p>在 Java 中，异常的层次结构图如下：</p>
 <p><img src="http://ww1.sinaimg.cn/large/006y8mN6gy1g673rbxe34j30i50b4dk9.jpg" alt="4970765-1437c4660dd95f3e"></p>
 <ul>
-<li><code>Throwable</code>
-<ul>
-<li><code>Error</code>	: 运行时环境发生的错误。例如，JVM 内存溢出。一般地，程序不会从错误中恢复。</li>
-<li><code>Exception</code>	: 程序本身可以处理的异常
-<ul>
+<li><code>Throwable</code><ul>
+<li><code>Error</code>    : 运行时环境发生的错误。例如，JVM 内存溢出。一般地，程序不会从错误中恢复。</li>
+<li><code>Exception</code>    : 程序本身可以处理的异常<ul>
 <li><code>IOException</code></li>
-<li><code>RuntimeException</code></li>
+<li><code>RuntimeException</code><h3 id="异常分层结构"><a href="#异常分层结构" class="headerlink" title="异常分层结构"></a>异常分层结构</h3></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="异常分层结构"><a class="markdownIt-Anchor" href="#异常分层结构"></a> 异常分层结构</h3>
 <p>Java 语言包含一个完整的异常分层结构，它由许多类型的异常组成，这些异常划分为两大主要类别：</p>
 <ul>
-<li><strong>已检查的异常(<em>checked exceptions</em>)</strong>：已由编译器检查（表示编译器确定它们已在您代码中的某处处理过）。一般而言，这些异常是 <code>java.lang.Exception</code> 的直接子类。</li>
+<li>**已检查的异常(<em>checked exceptions</em>)**：已由编译器检查（表示编译器确定它们已在您代码中的某处处理过）。一般而言，这些异常是 <code>java.lang.Exception</code> 的直接子类。</li>
 <li><strong>未检查的异常</strong>（也称为<em>运行时异常</em>，<em>unchecked / runtime exceptions</em>）：未由编译器检查。这些是 <code>java.lang.RuntimeException</code> 的子类。</li>
 </ul>
-<h2 id="使用-try-catch-和-finally"><a class="markdownIt-Anchor" href="#使用-try-catch-和-finally"></a> 使用 <code>try</code>、<code>catch</code> 和 <code>finally</code></h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// Try to execute</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (ExceptionType e) &#123;</span><br><span class="line">  	<span class="comment">// Catch exception</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// Always executes</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用-try、catch-和-finally"><a href="#使用-try、catch-和-finally" class="headerlink" title="使用 try、catch 和 finally"></a>使用 <code>try</code>、<code>catch</code> 和 <code>finally</code></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// Try to execute</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (ExceptionType e) &#123;</span><br><span class="line">  	<span class="comment">// Catch exception</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// Always executes</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>⚠️【注意】<code>ExceptionType</code> 要换成具体的错误类型：如 <code>RuntimeException</code>、<code>IOException</code> 。</p>
-<p><code>try</code>、<code>catch</code> 和 <code>finally</code> 代码块共同形成了一张捕获异常的网:</p>
+<p><code>try</code>、<code>catch</code> 和 <code>finally</code> 代码块共同形成了一张捕获异常的网: </p>
 <ul>
 <li>首先，<code>try</code> 语句限定可能抛出异常的代码;</li>
 <li>捕获的异常会放到 <code>catch</code> 代码块（或称 <em>异常处理函数</em>） 中。捕获到异常时，可以尝试优雅地进行恢复，也可以退出程序（或方法）;</li>
@@ -201,33 +196,37 @@
 </ul>
 <p>例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> mine.java.tour;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Exception</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Logger l = Logger.getLogger(<span class="string">"Try-Catch-Finally"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Integer foo = <span class="keyword">null</span>;</span><br><span class="line">			System.out.println(<span class="string">"foo: "</span> + foo.toString());</span><br><span class="line">		&#125; <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">			l.severe(<span class="string">"Caught exception: "</span> + e);</span><br><span class="line">			System.out.println(<span class="string">"catch"</span>);</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"finally"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>运行这个程序会得到如下结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">5月 02, 2019 11:57:04 上午 mine.java.tour.Exception main</span><br><span class="line">严重: Caught exception: java.lang.NullPointerException</span><br><span class="line">catch</span><br><span class="line">finally</span><br></pre></td></tr></table></figure>
-<h3 id="多个-catch-代码块"><a class="markdownIt-Anchor" href="#多个-catch-代码块"></a> 多个 <code>catch</code> 代码块</h3>
-<p>可以拥有多个 <code>catch</code>代码块，但必须采用某种特定方式来搭建它们。</p>
+
+<h3 id="多个-catch-代码块"><a href="#多个-catch-代码块" class="headerlink" title="多个 catch 代码块"></a>多个 <code>catch</code> 代码块</h3><p>可以拥有多个 <code>catch</code>代码块，但必须采用某种特定方式来搭建它们。</p>
 <p>如果所有异常都是其他异常的子类，那么子类会按照 <code>catch</code> 代码块的顺序放在父类前面。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (IndexOutOfBoundsException e) &#123;</span><br><span class="line">    System.err.println(<span class="string">"IndexOutOfBoundsException: "</span> + e.getMessage());</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    System.err.println(<span class="string">"Caught IOException: "</span> + e.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="用一个-catch-捕获多个类型的错误"><a class="markdownIt-Anchor" href="#用一个-catch-捕获多个类型的错误"></a> 用一个 <code>catch</code> 捕获多个类型的错误</h3>
-<p>在 Java SE 7 以后，一个 <code>catch</code> 语句可以处理不止一个类型的异常。这个特性可以让我们避免一直写重复的代码，也让我们没有理由去catch一个过度宽泛的错误类型（例如，我们本来应该逐一处理各种不同的问题，但为了避免麻烦，直接 <code>catch(RuntimeException e)</code>）。</p>
+
+<h3 id="用一个-catch-捕获多个类型的错误"><a href="#用一个-catch-捕获多个类型的错误" class="headerlink" title="用一个 catch 捕获多个类型的错误"></a>用一个 <code>catch</code> 捕获多个类型的错误</h3><p>在 Java SE 7 以后，一个 <code>catch</code> 语句可以处理不止一个类型的异常。这个特性可以让我们避免一直写重复的代码，也让我们没有理由去catch一个过度宽泛的错误类型（例如，我们本来应该逐一处理各种不同的问题，但为了避免麻烦，直接 <code>catch(RuntimeException e)</code>）。</p>
 <p>我们可以把 catch 的小括号里的单个 ExceptionType 替换为逐个列出需要这个语句块处理的错误类型，每个类型之间用 竖线（ <code>|</code> ）分隔。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">catch</span> (IOException|SQLException ex) &#123;</span><br><span class="line">    logger.log(ex);</span><br><span class="line">    <span class="keyword">throw</span> ex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>【注】在用一个 catch 捕获多个错误的时候，这个 catch 的参数会隐含地带上 <code>final</code> 属性。例如在上面的例子中，catch 的参数 ex 是一个 <code>final</code> 的变量，因此，不能在 catch 语句块里给它赋值！</p>
-<h2 id="throws-和-throw"><a class="markdownIt-Anchor" href="#throws-和-throw"></a> <code>throws</code> 和 <code>throw</code></h2>
-<ul>
+<h2 id="throws-和-throw"><a href="#throws-和-throw" class="headerlink" title="throws 和 throw"></a><code>throws</code> 和 <code>throw</code></h2><ul>
 <li><code>throws</code> : 方法可能抛出异常的声明(用在声明方法时，表示该方法可能要抛出异常)。</li>
 </ul>
 <p>Checked exception 通过在声明一个方法时使用 <code>throws</code> 关键字加上一个可能的异常列表 来向编译器声明：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(<span class="keyword">int</span> a)</span> <span class="keyword">throws</span> Exception1, Exception1, ... </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>throws Exception1, Exception1, ...</code>  只是告诉编译器这个方法可能会抛出这些异常，方法的调用者可能要处理这些异常，而这些可能异常是该函数体产生的。</p>
 <ul>
 <li><code>throw</code> 是具体向外抛异常的动作，它抛出一个异常实例。</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">className</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deposit</span><span class="params">(<span class="keyword">double</span> amount)</span> <span class="keyword">throws</span> RemoteException</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="comment">// Method implementation</span></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RemoteException();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//Remainder of class definition</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="try-with-resources-代码块"><a class="markdownIt-Anchor" href="#try-with-resources-代码块"></a> <code>try-with-resources</code> 代码块</h2>
-<p>当我们在 try 中使用一些资源时，不论出错与否我们都应该在最后关闭它，所以可以在finally 中完成这个关闭操作：</p>
+
+<h2 id="try-with-resources-代码块"><a href="#try-with-resources-代码块" class="headerlink" title="try-with-resources 代码块"></a><code>try-with-resources</code> 代码块</h2><p>当我们在 try 中使用一些资源时，不论出错与否我们都应该在最后关闭它，所以可以在finally 中完成这个关闭操作：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> String <span class="title">readFirstLineFromFileWithFinallyBlock</span><span class="params">(String path)</span></span></span><br><span class="line"><span class="function">                                                     <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(path));</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> br.readLine();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (br != <span class="keyword">null</span>) br.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>Java SE 7 开始，还有一种更简单办法来解决问题，Java 可以自动关闭资源：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> String <span class="title">readFirstLineFromFile</span><span class="params">(String path)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> (BufferedReader br =</span><br><span class="line">                   <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(path))) &#123;</span><br><span class="line">        <span class="keyword">return</span> br.readLine();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在 try 后面加小括号，里面声明需要的资源，在结束异常检测后（在 try 代码块超出范围时），Java 将自动处理这个资源的关闭问题。</p>
 <p>注意，这种自动关闭的资源必须实现 java.lang.AutoCloseable 接口；如果尝试在一个没有实现该接口的资源类上实现此语法，会出错。</p>
 <hr>
@@ -270,7 +269,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-异常处理"><span class="toc-number">1.</span> <span class="toc-text"> Java 异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#异常类型"><span class="toc-number">1.1.</span> <span class="toc-text"> 异常类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#异常分层结构"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 异常分层结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-try-catch-和-finally"><span class="toc-number">1.2.</span> <span class="toc-text"> 使用 try、catch 和 finally</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多个-catch-代码块"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 多个 catch 代码块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用一个-catch-捕获多个类型的错误"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 用一个 catch 捕获多个类型的错误</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#throws-和-throw"><span class="toc-number">1.3.</span> <span class="toc-text"> throws 和 throw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#try-with-resources-代码块"><span class="toc-number">1.4.</span> <span class="toc-text"> try-with-resources 代码块</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-异常处理"><span class="toc-number">1.</span> <span class="toc-text">Java 异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#异常类型"><span class="toc-number">1.1.</span> <span class="toc-text">异常类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#异常分层结构"><span class="toc-number">1.1.1.</span> <span class="toc-text">异常分层结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-try、catch-和-finally"><span class="toc-number">1.2.</span> <span class="toc-text">使用 try、catch 和 finally</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多个-catch-代码块"><span class="toc-number">1.2.1.</span> <span class="toc-text">多个 catch 代码块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用一个-catch-捕获多个类型的错误"><span class="toc-number">1.2.2.</span> <span class="toc-text">用一个 catch 捕获多个类型的错误</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#throws-和-throw"><span class="toc-number">1.3.</span> <span class="toc-text">throws 和 throw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#try-with-resources-代码块"><span class="toc-number">1.4.</span> <span class="toc-text">try-with-resources 代码块</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -302,7 +301,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

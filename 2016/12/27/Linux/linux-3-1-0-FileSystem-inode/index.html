@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Linux文件系统与inode  硬盘分区和文件系统 一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）分区，之后再把每一个分区格式化为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。 Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。 把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元， 并">
+    <meta name="description" content="Linux文件系统与inode硬盘分区和文件系统一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）分区，之后再把每一个分区格式化为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。 Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。 把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元， 并将这些小">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-3.1.0-文件系统与inode">
 <meta property="og:url" content="https://clownote.github.io/2016/12/27/Linux/linux-3-1-0-FileSystem-inode/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Linux文件系统与inode  硬盘分区和文件系统 一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）分区，之后再把每一个分区格式化为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。 Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。 把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元， 并">
+<meta property="og:description" content="Linux文件系统与inode硬盘分区和文件系统一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）分区，之后再把每一个分区格式化为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。 Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。 把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元， 并将这些小">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g60fl18enfj30go0730tl.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79gy1g60oehim96j30go00v0sr.jpg">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-3.1.0-文件系统与inode">
-<meta name="twitter:description" content="Linux文件系统与inode  硬盘分区和文件系统 一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）分区，之后再把每一个分区格式化为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。 Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。 把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元， 并">
+<meta name="twitter:description" content="Linux文件系统与inode硬盘分区和文件系统一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）分区，之后再把每一个分区格式化为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。 Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。 把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元， 并将这些小">
 <meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g60fl18enfj30go0730tl.jpg">
     
     
@@ -112,7 +112,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux文件系统与inode"><span class="toc-number">1.</span> <span class="toc-text"> Linux文件系统与inode</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#硬盘分区和文件系统"><span class="toc-number">1.1.</span> <span class="toc-text"> 硬盘分区和文件系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inode"><span class="toc-number">1.2.</span> <span class="toc-text"> inode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#inode-概念"><span class="toc-number">1.2.1.</span> <span class="toc-text"> inode 概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inode-解读"><span class="toc-number">1.2.2.</span> <span class="toc-text"> inode 解读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看文件的-inode-number"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 查看文件的 inode number：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#普通文件-与-目录"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 普通文件 与 目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cp-rm-mv-的-operateinode"><span class="toc-number">1.2.5.</span> <span class="toc-text"> cp、rm、mv 的 operate(inode)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.3.</span> <span class="toc-text"> 总结</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux文件系统与inode"><span class="toc-number">1.</span> <span class="toc-text">Linux文件系统与inode</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#硬盘分区和文件系统"><span class="toc-number">1.1.</span> <span class="toc-text">硬盘分区和文件系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inode"><span class="toc-number">1.2.</span> <span class="toc-text">inode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#inode-概念"><span class="toc-number">1.2.1.</span> <span class="toc-text">inode 概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inode-解读"><span class="toc-number">1.2.2.</span> <span class="toc-text">inode 解读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看文件的-inode-number："><span class="toc-number">1.2.3.</span> <span class="toc-text">查看文件的 inode number：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#普通文件-与-目录"><span class="toc-number">1.2.4.</span> <span class="toc-text">普通文件 与 目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cp、rm、mv-的-operate-inode"><span class="toc-number">1.2.5.</span> <span class="toc-text">cp、rm、mv 的 operate(inode)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -138,7 +138,7 @@
       
         <time datetime="2016-12-27T16:13:00.000Z" itemprop="datePublished">2016-12-27</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -163,9 +163,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="linux文件系统与inode"><a class="markdownIt-Anchor" href="#linux文件系统与inode"></a> Linux文件系统与inode</h1>
-<h2 id="硬盘分区和文件系统"><a class="markdownIt-Anchor" href="#硬盘分区和文件系统"></a> 硬盘分区和文件系统</h2>
-<p>一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）<span style="background-color: rgb(255, 250, 165);">分区</span>，之后再把每一个分区<span style="background-color: rgb(255, 250, 165);">格式化</span>为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。</p>
+    <h1 id="Linux文件系统与inode"><a href="#Linux文件系统与inode" class="headerlink" title="Linux文件系统与inode"></a>Linux文件系统与inode</h1><h2 id="硬盘分区和文件系统"><a href="#硬盘分区和文件系统" class="headerlink" title="硬盘分区和文件系统"></a>硬盘分区和文件系统</h2><p>一个新的硬盘，不能直接使用。首先必须把这个硬盘划分成数个（也可能是一个）<span style="background-color: rgb(255, 250, 165);">分区</span>，之后再把每一个分区<span style="background-color: rgb(255, 250, 165);">格式化</span>为文件系统，然后Linux系统才能在格式化后的硬盘分区上存储数据和进行相应的文件管理及维护。</p>
 <p>Linux或UNIX系统上的磁盘分区就相当于Windows系统上的逻辑盘。</p>
 <p>把一个分区格式化为文件系统就是将这个分区划分成许多大小相等的小单元，</p>
 <p>并将这些小单元顺序地编号。</p>
@@ -173,9 +171,7 @@
 <p>Block是存储数据的最小单位，</p>
 <p>每个block最多只能存储一个文件，</p>
 <p>如果一个文件的大小超过4KB，那么就会占用多个blocks。</p>
-<h2 id="inode"><a class="markdownIt-Anchor" href="#inode"></a> inode</h2>
-<h3 id="inode-概念"><a class="markdownIt-Anchor" href="#inode-概念"></a> inode 概念</h3>
-<p>i节点就是一个与某个特定的对象（如文件或目录）相关的信息列表。</p>
+<h2 id="inode"><a href="#inode" class="headerlink" title="inode"></a>inode</h2><h3 id="inode-概念"><a href="#inode-概念" class="headerlink" title="inode 概念"></a>inode 概念</h3><p>i节点就是一个与某个特定的对象（如文件或目录）相关的信息列表。</p>
 <p>i节点实际上是一个数据结构，它存放了有关一个普通文件、目录或其他文件系统对象的基本信息。</p>
 <p>当一个磁盘被格式化成文件系统（如ext2或ext3）时，系统将自动生成一个i节点（inode）表；</p>
 <p>在该表中包含了所有文件的元数据（metadata，描述数据的数据），每一个文件和目录都会对应于一个唯一的i节点，而这个i节点是使用一个i节点号（inode number简写成inode-no）来标识的；</p>
@@ -183,21 +179,19 @@
 <p>在多数类型的文件系统中，i节点的数目是固定的，并且是在创建文件系统时生成的。</p>
 <p>在一个典型的UNIX或Linux文件系统中，i节点所占用的空间大约是整个文件系统大小的1%。</p>
 <hr>
-<h3 id="inode-解读"><a class="markdownIt-Anchor" href="#inode-解读"></a> inode 解读</h3>
-<p>i节点中所有的属性都是用来描述文件的，而不是文件中的内容。</p>
+<h3 id="inode-解读"><a href="#inode-解读" class="headerlink" title="inode 解读"></a>inode 解读</h3><p>i节点中所有的属性都是用来描述文件的，而不是文件中的内容。</p>
 <p>i节点类似图书馆中的图书目录，在每一本书的图书目录中印有该书的内容简介、作者信息、出版日期、页数等<strong>摘要信息</strong>。</p>
 <p>通常每个i节点由两部分组成，第1部分是有关文件的基本信息，第2部分是指向存储文件信息的数据块的指针：</p>
 <p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g60fl18enfj30go0730tl.jpg" alt="IMG_1066"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">（1）inode-no ：i节点号。</span><br><span class="line">		在一个文件系统中，每一个i节点都有一个唯一的编号。</span><br><span class="line">（2）File type ：文件的类型。</span><br><span class="line">		&apos;-&apos;为  普通文件，</span><br><span class="line">		&apos;d&apos;为 目录。</span><br><span class="line">（3）permission ：权限。</span><br><span class="line">		在i节点中使用数字表示法来表示文件的权限。</span><br><span class="line">（4）Link count ：硬连接（hard link）数。</span><br><span class="line">（5）UID ：文件所有者的UID。</span><br><span class="line">（6）GID ：owner所属群组的GID。</span><br><span class="line">（7）size ：文件的大小。</span><br><span class="line">（8）Time stamp：时间戳。</span><br><span class="line">		时间戳包含了3个时间：</span><br><span class="line">				①Access time（A time） ：最后一次存取的时间。</span><br><span class="line">				②Modify time（M time） ：最后一次编辑的时间。</span><br><span class="line">				③Change time（C time）：该文件inode中任一元数据发生变化的时间。</span><br><span class="line">		如果M time被更新时，通常A time和C time也会跟着一起被更新：</span><br><span class="line">				在更新一个文件之前必须先打开这个文件，所以要先更新A time；</span><br><span class="line">				编辑完之后一般文件的大小要发生变化，所以C time也会被更新。</span><br><span class="line">（9）Other information</span><br><span class="line">（10）pointer：指向保存文件的blocks的指针。</span><br></pre></td></tr></table></figure>
-<h3 id="查看文件的-inode-number"><a class="markdownIt-Anchor" href="#查看文件的-inode-number"></a> 查看文件的 inode number：</h3>
-<p>可以使用带有-i选项的ls命令，在每一行记录的开始显示这个文件的i节点号码。</p>
-<h3 id="普通文件-与-目录"><a class="markdownIt-Anchor" href="#普通文件-与-目录"></a> <em>普通文件</em> 与 <em>目录</em></h3>
-<p>1.普通文件（Regular File）：只存放数据，</p>
+
+<h3 id="查看文件的-inode-number："><a href="#查看文件的-inode-number：" class="headerlink" title="查看文件的 inode number："></a>查看文件的 inode number：</h3><p>可以使用带有-i选项的ls命令，在每一行记录的开始显示这个文件的i节点号码。</p>
+<h3 id="普通文件-与-目录"><a href="#普通文件-与-目录" class="headerlink" title="普通文件 与 目录"></a><em>普通文件</em> 与 <em>目录</em></h3><p>1.普通文件（Regular File）：只存放数据，</p>
 <p>可以存放多种不同类型的数据。</p>
 <p>2.目录：“特殊”的文件，目录中存储的是文件名和与文件名相关的i节点号码的信息。目录中只能存放一类数据。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct file_list&#123;</span><br><span class="line">    char name[MAX];</span><br><span class="line">    unsign inode;</span><br><span class="line">    struct file_list next;</span><br><span class="line">&#125; * pBarFiles;</span><br><span class="line">char * make_the_list(struct file_list *);</span><br><span class="line">fooDirectoty.content = make_the_list(pBarFiles);</span><br></pre></td></tr></table></figure>
-<h3 id="cp-rm-mv-的-operateinode"><a class="markdownIt-Anchor" href="#cp-rm-mv-的-operateinode"></a> cp、rm、mv 的 operate(inode)</h3>
-<ol>
+
+<h3 id="cp、rm、mv-的-operate-inode"><a href="#cp、rm、mv-的-operate-inode" class="headerlink" title="cp、rm、mv 的 operate(inode)"></a>cp、rm、mv 的 operate(inode)</h3><ol>
 <li><code>cp</code>：</li>
 </ol>
 <p>（1）找到一个空闲的i节点记录（inode number），把新文件的meta data写入到这个空闲的i节点中并将这个新记录放入inode表中。</p>
@@ -211,35 +205,31 @@
 <p>之后这个文件的link count如果小于1，</p>
 <p>就释放这个i节点以便重用。</p>
 <p>（2）释放存储这个文件内容的数据块；</p>
-<pre><code>            （即将这些数据块标记为可以使用）
-</code></pre>
+<pre><code>            （即将这些数据块标记为可以使用）</code></pre>
 <p>（3）删除记录这个文件名和i节点号的目录记录。</p>
 <ol start="3">
 <li><code>mv</code>：</li>
 </ol>
-<p>若 <em>原位置</em> 与 <em>目标位置</em>  位于 <strong>同一文件系统</strong>：</p>
+<p>若 <em>原位置</em> 与 <em>目标位置</em>  位于 <strong>同一文件系统</strong>：  </p>
 <pre><code>（1）首先产生一个新的目录记录，把新的文件名对应到源文件的i节点。  
 
 （2）删除带有旧文件名的原有的目录记录。
 
-/* 这是&lt;u&gt;逻辑移动&lt;/u&gt;：除了更新时间戳外，移动文件行为对原本在inode表中的数据不会有任何影响，也**不会将数据移动**到其他的文件中去，即**没有发生真正的数据移动**。\*/
-</code></pre>
+/* 这是&lt;u&gt;逻辑移动&lt;/u&gt;：除了更新时间戳外，移动文件行为对原本在inode表中的数据不会有任何影响，也**不会将数据移动**到其他的文件中去，即**没有发生真正的数据移动**。\*/</code></pre>
 <p>若 <em>源位置</em> 与 <em>目的位置</em> 是在 <strong>不同文件系统</strong>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp(source, destination)；</span><br><span class="line">rm(source)；</span><br></pre></td></tr></table></figure>
+
 <p>必要情况下：为确保数据确实发生移动，应使用cp，rm而非mv</p>
-<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
-<ul>
-<li>
-<p>关于文件的几个术语：</p>
-<p>（1）文件名是访问和维护文件时最常使用的。</p>
-<p>（2）i节点（inodes）是系统用来记录有关文件信息的对象。</p>
-<p>（3）数据块是用来存储数据的磁盘空间的单位。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>关于文件的几个术语：</p>
+<p>  （1）文件名是访问和维护文件时最常使用的。</p>
+<p>  （2）i节点（inodes）是系统用来记录有关文件信息的对象。</p>
+<p>  （3）数据块是用来存储数据的磁盘空间的单位。</p>
 </li>
-<li>
-<p>其中关联：</p>
-<p>每个文件必须具有一个名字并且与一个i节点相关。</p>
-<p>通常系统通过文件名就可以确定i节点，</p>
-<p>之后通过i节点中的指针就可以定位存储数据的数据块</p>
+<li><p>其中关联：</p>
+<p>  每个文件必须具有一个名字并且与一个i节点相关。</p>
+<p>  通常系统通过文件名就可以确定i节点，</p>
+<p>  之后通过i节点中的指针就可以定位存储数据的数据块</p>
 </li>
 </ul>
 <p><img src="http://ww2.sinaimg.cn/large/006tNc79gy1g60oehim96j30go00v0sr.jpg" alt="IMG_1067"></p>
@@ -280,7 +270,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux文件系统与inode"><span class="toc-number">1.</span> <span class="toc-text"> Linux文件系统与inode</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#硬盘分区和文件系统"><span class="toc-number">1.1.</span> <span class="toc-text"> 硬盘分区和文件系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inode"><span class="toc-number">1.2.</span> <span class="toc-text"> inode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#inode-概念"><span class="toc-number">1.2.1.</span> <span class="toc-text"> inode 概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inode-解读"><span class="toc-number">1.2.2.</span> <span class="toc-text"> inode 解读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看文件的-inode-number"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 查看文件的 inode number：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#普通文件-与-目录"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 普通文件 与 目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cp-rm-mv-的-operateinode"><span class="toc-number">1.2.5.</span> <span class="toc-text"> cp、rm、mv 的 operate(inode)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.3.</span> <span class="toc-text"> 总结</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux文件系统与inode"><span class="toc-number">1.</span> <span class="toc-text">Linux文件系统与inode</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#硬盘分区和文件系统"><span class="toc-number">1.1.</span> <span class="toc-text">硬盘分区和文件系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inode"><span class="toc-number">1.2.</span> <span class="toc-text">inode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#inode-概念"><span class="toc-number">1.2.1.</span> <span class="toc-text">inode 概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inode-解读"><span class="toc-number">1.2.2.</span> <span class="toc-text">inode 解读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看文件的-inode-number："><span class="toc-number">1.2.3.</span> <span class="toc-text">查看文件的 inode number：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#普通文件-与-目录"><span class="toc-number">1.2.4.</span> <span class="toc-text">普通文件 与 目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cp、rm、mv-的-operate-inode"><span class="toc-number">1.2.5.</span> <span class="toc-text">cp、rm、mv 的 operate(inode)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -312,7 +302,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

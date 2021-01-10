@@ -6,22 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="管道(|)操作  |：管道： “$ cmd1 | cmd2” ：将cmd1的输出  重定向 为cmd2的输入。  使用管道符号将两个命令组合起来就相当于使用水管接头将水龙头与高压水枪接在一起，还可以先将水龙头来的水送到热水炉加温后再送到高压水枪，使用水管接头将3个现有的正常工作器系统组合成一个新的功能更强的系统。  123456$ who | wc -l        显示工作用户数$ cat">
+    <meta name="description" content="管道(|)操作|：管道：“$ cmd1 | cmd2” ：将cmd1的输出  重定向 为cmd2的输入。  使用管道符号将两个命令组合起来就相当于使用水管接头将水龙头与高压水枪接在一起，还可以先将水龙头来的水送到热水炉加温后再送到高压水枪，使用水管接头将3个现有的正常工作器系统组合成一个新的功能更强的系统。  123456$ who | wc -l        显示工作用户数$ cat /etc">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-7.1-管道(|)操作">
 <meta property="og:url" content="https://clownote.github.io/2017/01/07/Linux/linux-7-1-Pipes/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="管道(|)操作  |：管道： “$ cmd1 | cmd2” ：将cmd1的输出  重定向 为cmd2的输入。  使用管道符号将两个命令组合起来就相当于使用水管接头将水龙头与高压水枪接在一起，还可以先将水龙头来的水送到热水炉加温后再送到高压水枪，使用水管接头将3个现有的正常工作器系统组合成一个新的功能更强的系统。  123456$ who | wc -l        显示工作用户数$ cat">
+<meta property="og:description" content="管道(|)操作|：管道：“$ cmd1 | cmd2” ：将cmd1的输出  重定向 为cmd2的输入。  使用管道符号将两个命令组合起来就相当于使用水管接头将水龙头与高压水枪接在一起，还可以先将水龙头来的水送到热水炉加温后再送到高压水枪，使用水管接头将3个现有的正常工作器系统组合成一个新的功能更强的系统。  123456$ who | wc -l        显示工作用户数$ cat /etc">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b05sda96j31kw0km75u.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b05sl6pxj30go01i0so.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b10dk5pcj31kw0km40s.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b10nyojhj30bu043weo.jpg">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-7.1-管道(|)操作">
-<meta name="twitter:description" content="管道(|)操作  |：管道： “$ cmd1 | cmd2” ：将cmd1的输出  重定向 为cmd2的输入。  使用管道符号将两个命令组合起来就相当于使用水管接头将水龙头与高压水枪接在一起，还可以先将水龙头来的水送到热水炉加温后再送到高压水枪，使用水管接头将3个现有的正常工作器系统组合成一个新的功能更强的系统。  123456$ who | wc -l        显示工作用户数$ cat">
+<meta name="twitter:description" content="管道(|)操作|：管道：“$ cmd1 | cmd2” ：将cmd1的输出  重定向 为cmd2的输入。  使用管道符号将两个命令组合起来就相当于使用水管接头将水龙头与高压水枪接在一起，还可以先将水龙头来的水送到热水炉加温后再送到高压水枪，使用水管接头将3个现有的正常工作器系统组合成一个新的功能更强的系统。  123456$ who | wc -l        显示工作用户数$ cat /etc">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b05sda96j31kw0km75u.jpg">
     
     
@@ -114,7 +114,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#管道操作"><span class="toc-number">1.</span> <span class="toc-text"> 管道(|)操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#管道"><span class="toc-number">1.1.</span> <span class="toc-text"> |：管道：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xargs将管道导入的数据转换成后面命令的输入参数"><span class="toc-number">1.2.</span> <span class="toc-text"> | xargs”：将管道导入的数据转换成后面命令的输入参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tee命令分流输出t型管道"><span class="toc-number">1.3.</span> <span class="toc-text"> |tee：命令分流输出：（T型管道）</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#管道-操作"><span class="toc-number">1.</span> <span class="toc-text">管道(|)操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#：管道："><span class="toc-number">1.1.</span> <span class="toc-text">|：管道：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xargs”：将管道导入的数据转换成后面命令的输入参数"><span class="toc-number">1.2.</span> <span class="toc-text">| xargs”：将管道导入的数据转换成后面命令的输入参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tee：命令分流输出：（T型管道）"><span class="toc-number">1.3.</span> <span class="toc-text">|tee：命令分流输出：（T型管道）</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -140,7 +140,7 @@
       
         <time datetime="2017-01-07T19:38:35.000Z" itemprop="datePublished">2017-01-07</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -165,22 +165,20 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="管道操作"><a class="markdownIt-Anchor" href="#管道操作"></a> 管道(|)操作</h1>
-<h2 id="管道"><a class="markdownIt-Anchor" href="#管道"></a> <code>|</code>：管道：</h2>
-<p>“<span style="color: rgb(9, 175, 255);">$ </span><span style="color: rgb(9, 175, 255);">cmd1 | cmd2</span>” ：将cmd1的<strong>输出</strong>  <u>重定向</u> 为cmd2的<strong>输入。</strong></p>
+    <h1 id="管道-操作"><a href="#管道-操作" class="headerlink" title="管道(|)操作"></a>管道(|)操作</h1><h2 id="：管道："><a href="#：管道：" class="headerlink" title="|：管道："></a><code>|</code>：管道：</h2><p>“<span style="color: rgb(9, 175, 255);">$ </span><span style="color: rgb(9, 175, 255);">cmd1 | cmd2</span>” ：将cmd1的<strong>输出</strong>  <u>重定向</u> 为cmd2的<strong>输入。</strong></p>
 <p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b05sda96j31kw0km75u.jpg" alt="ink-image"></p>
 <p>使用管道符号将两个命令组合起来就相当于使用水管接头将水龙头与高压水枪接在一起，还可以先将水龙头来的水送到热水炉加温后再送到高压水枪，使用水管接头将3个现有的正常工作器系统组合成一个新的功能更强的系统。</p>
 <p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b05sl6pxj30go01i0so.jpg" alt="IMG_1047"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ who | wc -l</span><br><span class="line">        显示工作用户数</span><br><span class="line">$ cat /etc/passwd | wc -l</span><br><span class="line">        显示注册用户数</span><br><span class="line">$ ls -lF /bin | more</span><br><span class="line">        用more显示ls的大量信息（可翻页）</span><br></pre></td></tr></table></figure>
-<h2 id="xargs将管道导入的数据转换成后面命令的输入参数"><a class="markdownIt-Anchor" href="#xargs将管道导入的数据转换成后面命令的输入参数"></a> <code>| xargs</code>”：将管道导入的数据转换成后面命令的输入参数</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat bd.txt</span><br><span class="line">a.txt</span><br><span class="line">b.txt</span><br><span class="line">c.txt</span><br><span class="line">$ cat bd.txt | xargs rm -f        # 删除a.txt，b.txt，c.txt</span><br></pre></td></tr></table></figure>
-<h2 id="tee命令分流输出t型管道"><a class="markdownIt-Anchor" href="#tee命令分流输出t型管道"></a> <code>|tee</code>：命令分流输出：（T型管道）</h2>
-<p>将前一个命令的输出结果直接输入给后一个命令，同时还要将前面命令的结果存入一个文件。</p>
+
+<h2 id="xargs”：将管道导入的数据转换成后面命令的输入参数"><a href="#xargs”：将管道导入的数据转换成后面命令的输入参数" class="headerlink" title="| xargs”：将管道导入的数据转换成后面命令的输入参数"></a><code>| xargs</code>”：将管道导入的数据转换成后面命令的输入参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat bd.txt</span><br><span class="line">a.txt</span><br><span class="line">b.txt</span><br><span class="line">c.txt</span><br><span class="line">$ cat bd.txt | xargs rm -f        # 删除a.txt，b.txt，c.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="tee：命令分流输出：（T型管道）"><a href="#tee：命令分流输出：（T型管道）" class="headerlink" title="|tee：命令分流输出：（T型管道）"></a><code>|tee</code>：命令分流输出：（T型管道）</h2><p>将前一个命令的输出结果直接输入给后一个命令，同时还要将前面命令的结果存入一个文件。</p>
 <blockquote>
 <p>tee命令的功能就是将标准输入复制给每一个指定的文件和标准输出。</p>
 </blockquote>
 <p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b10dk5pcj31kw0km40s.jpg" alt="ink-image"></p>
-<p>T型管道的概念来自生活中的自来水管的T型接头。在一个公厕的水管阀门上接了一个T型接头将“免费”的水进行了分流，同时接入了洗车的高压水枪和抽水马桶。</p>
+<p> T型管道的概念来自生活中的自来水管的T型接头。在一个公厕的水管阀门上接了一个T型接头将“免费”的水进行了分流，同时接入了洗车的高压水枪和抽水马桶。</p>
 <p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6b10nyojhj30bu043weo.jpg" alt="IMG_1048"></p>
 <p>e.g.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cut -f1 -d: /etc/passwd | tee passwd.cut | sort -r | tee passwd.sort | more</span><br><span class="line">        从/etc/passwd中剪出注册用户名列表，通过在sort -r命令之前和之后加入管道符和tee命令的方式将排序之前和之后的数据分别存入passwd.cut和passwd.sort文件。</span><br><span class="line">        tee passwd.cut命令将由管道送过来的数据存入passwd.cut文件，同时还通过管道将这些数据送给下一个命令进行处理（sort -r命令进行反向排序）。tee passwd.sort命令将由管道送过来的数据（反向排序后的用户名）存入passwd.sort文件，同时还通过管道将这些数据送给下一个命令进行处理（more命令进行分页显示）。</span><br></pre></td></tr></table></figure>
@@ -220,7 +218,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#管道操作"><span class="toc-number">1.</span> <span class="toc-text"> 管道(|)操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#管道"><span class="toc-number">1.1.</span> <span class="toc-text"> |：管道：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xargs将管道导入的数据转换成后面命令的输入参数"><span class="toc-number">1.2.</span> <span class="toc-text"> | xargs”：将管道导入的数据转换成后面命令的输入参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tee命令分流输出t型管道"><span class="toc-number">1.3.</span> <span class="toc-text"> |tee：命令分流输出：（T型管道）</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#管道-操作"><span class="toc-number">1.</span> <span class="toc-text">管道(|)操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#：管道："><span class="toc-number">1.1.</span> <span class="toc-text">|：管道：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xargs”：将管道导入的数据转换成后面命令的输入参数"><span class="toc-number">1.2.</span> <span class="toc-text">| xargs”：将管道导入的数据转换成后面命令的输入参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tee：命令分流输出：（T型管道）"><span class="toc-number">1.3.</span> <span class="toc-text">|tee：命令分流输出：（T型管道）</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -252,7 +250,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

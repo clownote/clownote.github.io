@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Python爬虫储存库的使用之Redis  本文主要介绍 Python 下 Redis 的使用（RedisPy库）。   Redis 简介  Redis 是一个基于内存的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。  RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。 推荐使用的是 StrictRedis，它实现了绝大部">
+    <meta name="description" content="Python爬虫储存库的使用之Redis 本文主要介绍 Python 下 Redis 的使用（RedisPy库）。  Redis 简介 Redis 是一个基于内存的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。  RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。推荐使用的是 StrictRedis，它实现了绝大部分Redi">
 <meta name="keywords" content="Crawler">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python之Redis">
 <meta property="og:url" content="https://clownote.github.io/2019/02/21/PythonAndCrawler/crawler-12-redis/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Python爬虫储存库的使用之Redis  本文主要介绍 Python 下 Redis 的使用（RedisPy库）。   Redis 简介  Redis 是一个基于内存的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。  RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。 推荐使用的是 StrictRedis，它实现了绝大部">
+<meta property="og:description" content="Python爬虫储存库的使用之Redis 本文主要介绍 Python 下 Redis 的使用（RedisPy库）。  Redis 简介 Redis 是一个基于内存的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。  RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。推荐使用的是 StrictRedis，它实现了绝大部分Redi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python之Redis">
-<meta name="twitter:description" content="Python爬虫储存库的使用之Redis  本文主要介绍 Python 下 Redis 的使用（RedisPy库）。   Redis 简介  Redis 是一个基于内存的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。  RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。 推荐使用的是 StrictRedis，它实现了绝大部">
+<meta name="twitter:description" content="Python爬虫储存库的使用之Redis 本文主要介绍 Python 下 Redis 的使用（RedisPy库）。  Redis 简介 Redis 是一个基于内存的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。  RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。推荐使用的是 StrictRedis，它实现了绝大部分Redi">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#python爬虫储存库的使用之redis"><span class="toc-number">1.</span> <span class="toc-text"> Python爬虫储存库的使用之Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#redis-简介"><span class="toc-number">1.1.</span> <span class="toc-text"> Redis 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接-redis"><span class="toc-number">1.2.</span> <span class="toc-text"> 连接 Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-strictredis-连接"><span class="toc-number">1.2.0.1.</span> <span class="toc-text"> 使用 StrictRedis 连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-connectionpool-连接"><span class="toc-number">1.2.0.2.</span> <span class="toc-text"> 使用 ConnectionPool 连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#key-操作"><span class="toc-number">1.3.</span> <span class="toc-text"> Key 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#string-操作"><span class="toc-number">1.4.</span> <span class="toc-text"> String 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list-操作"><span class="toc-number">1.5.</span> <span class="toc-text"> List 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set-sorted-set操作"><span class="toc-number">1.6.</span> <span class="toc-text"> Set 、Sorted Set操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hash-操作"><span class="toc-number">1.7.</span> <span class="toc-text"> Hash 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redisdump"><span class="toc-number">1.8.</span> <span class="toc-text"> RedisDump</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python爬虫储存库的使用之Redis"><span class="toc-number">1.</span> <span class="toc-text">Python爬虫储存库的使用之Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-简介"><span class="toc-number">1.1.</span> <span class="toc-text">Redis 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接-Redis"><span class="toc-number">1.2.</span> <span class="toc-text">连接 Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-StrictRedis-连接"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">使用 StrictRedis 连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-ConnectionPool-连接"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">使用 ConnectionPool 连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Key-操作"><span class="toc-number">1.3.</span> <span class="toc-text">Key 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#String-操作"><span class="toc-number">1.4.</span> <span class="toc-text">String 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List-操作"><span class="toc-number">1.5.</span> <span class="toc-text">List 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-、Sorted-Set操作"><span class="toc-number">1.6.</span> <span class="toc-text">Set 、Sorted Set操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-操作"><span class="toc-number">1.7.</span> <span class="toc-text">Hash 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RedisDump"><span class="toc-number">1.8.</span> <span class="toc-text">RedisDump</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2019-02-21T22:49:55.000Z" itemprop="datePublished">2019-02-21</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,23 +160,18 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="python爬虫储存库的使用之redis"><a class="markdownIt-Anchor" href="#python爬虫储存库的使用之redis"></a> Python爬虫储存库的使用之Redis</h1>
-<blockquote>
+    <h1 id="Python爬虫储存库的使用之Redis"><a href="#Python爬虫储存库的使用之Redis" class="headerlink" title="Python爬虫储存库的使用之Redis"></a>Python爬虫储存库的使用之Redis</h1><blockquote>
 <p>本文主要介绍 Python 下 Redis 的使用（RedisPy库）。</p>
 </blockquote>
-<h2 id="redis-简介"><a class="markdownIt-Anchor" href="#redis-简介"></a> Redis 简介</h2>
-<blockquote>
+<h2 id="Redis-简介"><a href="#Redis-简介" class="headerlink" title="Redis 简介"></a>Redis 简介</h2><blockquote>
 <p>Redis 是一个<strong>基于内存</strong>的高效的键值型非关系型数据库，存取效率极高，而且支持多种存储数据结构。</p>
 </blockquote>
-<p>RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。<br>
-推荐使用的是 StrictRedis，它实现了绝大部分Redis的命令，参数也一一对应。<br>
-Redis 主要用来兼容旧版本。</p>
-<h2 id="连接-redis"><a class="markdownIt-Anchor" href="#连接-redis"></a> 连接 Redis</h2>
-<p>首先需要确定正确在本地安装了Redis，并开启了服务。</p>
-<h4 id="使用-strictredis-连接"><a class="markdownIt-Anchor" href="#使用-strictredis-连接"></a> 使用 StrictRedis 连接</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> StrictRedis</span><br><span class="line"></span><br><span class="line">redis = StrictRedis(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>, password=<span class="literal">None</span>)</span><br><span class="line"><span class="comment"># 这里使用的这几个参数和默认值是等效的，即可以直接使用 `StrictRedis()` 来代替。</span></span><br><span class="line"></span><br><span class="line">redis.set(<span class="string">'name'</span>, <span class="string">'Foo'</span>)    <span class="comment"># 设置了一个键值对</span></span><br><span class="line">print(redis.get(<span class="string">'name'</span>))    <span class="comment"># 获取一个数据</span></span><br></pre></td></tr></table></figure>
-<h4 id="使用-connectionpool-连接"><a class="markdownIt-Anchor" href="#使用-connectionpool-连接"></a> 使用 ConnectionPool 连接</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> StrictRedis, ConnectionPool</span><br><span class="line"></span><br><span class="line">pool = ConnectionPool(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>, password=<span class="literal">None</span>)</span><br><span class="line">redis = StrictRedis(connection_pool=pool)</span><br><span class="line"></span><br><span class="line">redis.set(<span class="string">'age'</span>, <span class="number">100</span>)</span><br><span class="line">print(redis.get(<span class="string">'age'</span>))</span><br></pre></td></tr></table></figure>
+<p>RedisPy 库提供两个类 Redis 和 StrictRedis 用于实现Redis 的命令操作。<br>推荐使用的是 StrictRedis，它实现了绝大部分Redis的命令，参数也一一对应。<br>Redis 主要用来兼容旧版本。</p>
+<h2 id="连接-Redis"><a href="#连接-Redis" class="headerlink" title="连接 Redis"></a>连接 Redis</h2><p>首先需要确定正确在本地安装了Redis，并开启了服务。</p>
+<h4 id="使用-StrictRedis-连接"><a href="#使用-StrictRedis-连接" class="headerlink" title="使用 StrictRedis 连接"></a>使用 StrictRedis 连接</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> StrictRedis</span><br><span class="line"></span><br><span class="line">redis = StrictRedis(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>, password=<span class="literal">None</span>)</span><br><span class="line"><span class="comment"># 这里使用的这几个参数和默认值是等效的，即可以直接使用 `StrictRedis()` 来代替。</span></span><br><span class="line"></span><br><span class="line">redis.set(<span class="string">'name'</span>, <span class="string">'Foo'</span>)    <span class="comment"># 设置了一个键值对</span></span><br><span class="line">print(redis.get(<span class="string">'name'</span>))    <span class="comment"># 获取一个数据</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-ConnectionPool-连接"><a href="#使用-ConnectionPool-连接" class="headerlink" title="使用 ConnectionPool 连接"></a>使用 ConnectionPool 连接</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> StrictRedis, ConnectionPool</span><br><span class="line"></span><br><span class="line">pool = ConnectionPool(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>, password=<span class="literal">None</span>)</span><br><span class="line">redis = StrictRedis(connection_pool=pool)</span><br><span class="line"></span><br><span class="line">redis.set(<span class="string">'age'</span>, <span class="number">100</span>)</span><br><span class="line">print(redis.get(<span class="string">'age'</span>))</span><br></pre></td></tr></table></figure>
+
 <p>使用 ConnectionPool 还可以用 URL 来构建：</p>
 <p>有三种可用的 URL 格式：</p>
 <ul>
@@ -186,8 +181,8 @@ Redis 主要用来兼容旧版本。</p>
 </ul>
 <p>使用的姿势如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> StrictRedis, ConnectionPool</span><br><span class="line"><span class="comment"># 注意多导入了一个ConnectionPool。</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">'redis://@localhost:6379/0'</span></span><br><span class="line">pool = ConnectionPool.from_url(url)</span><br><span class="line">redis = StrictRedis(connection_pool=pool)</span><br><span class="line"></span><br><span class="line">redis.set(<span class="string">"test"</span>, <span class="string">'test'</span>)</span><br><span class="line">r = redis.get(<span class="string">'test'</span>)</span><br><span class="line">print(type(r), r, sep=<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="key-操作"><a class="markdownIt-Anchor" href="#key-操作"></a> Key 操作</h2>
-<p>这是一些常用的对 key 的操作，通过使用如 <code>redis.exists('neme')</code> 这样的语句来使用他们：</p>
+
+<h2 id="Key-操作"><a href="#Key-操作" class="headerlink" title="Key 操作"></a>Key 操作</h2><p>这是一些常用的对 key 的操作，通过使用如 <code>redis.exists(&#39;neme&#39;)</code> 这样的语句来使用他们：</p>
 <table>
 <thead>
 <tr>
@@ -199,8 +194,7 @@ Redis 主要用来兼容旧版本。</p>
 <th>示例结果</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>exists(name)</td>
 <td>判断一个key是否存在</td>
 <td>name: key名</td>
@@ -296,10 +290,8 @@ Redis 主要用来兼容旧版本。</p>
 <td>删除所有数据库中的所有key</td>
 <td>True</td>
 </tr>
-</tbody>
-</table>
-<h2 id="string-操作"><a class="markdownIt-Anchor" href="#string-操作"></a> String 操作</h2>
-<p>String 是 Redis 中最基本的Value储存方式，他的操作如下，</p>
+</tbody></table>
+<h2 id="String-操作"><a href="#String-操作" class="headerlink" title="String 操作"></a>String 操作</h2><p>String 是 Redis 中最基本的Value储存方式，他的操作如下，</p>
 <table>
 <thead>
 <tr>
@@ -311,8 +303,7 @@ Redis 主要用来兼容旧版本。</p>
 <th>示例结果</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>set(name, value)</td>
 <td>给数据库中key为name的string赋予值value</td>
 <td>name: key名 value: 值</td>
@@ -424,10 +415,8 @@ Redis 主要用来兼容旧版本。</p>
 <td>返回key为name的值的字符串，截取索引为1-4的字符</td>
 <td>b’ello’</td>
 </tr>
-</tbody>
-</table>
-<h2 id="list-操作"><a class="markdownIt-Anchor" href="#list-操作"></a> List 操作</h2>
-<p>List 是 Redis 中 value 为列表的一种数据。</p>
+</tbody></table>
+<h2 id="List-操作"><a href="#List-操作" class="headerlink" title="List 操作"></a>List 操作</h2><p>List 是 Redis 中 value 为列表的一种数据。</p>
 <table>
 <thead>
 <tr>
@@ -439,8 +428,7 @@ Redis 主要用来兼容旧版本。</p>
 <th>示例结果</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>rpush(name, *values)</td>
 <td>在key为name的list尾添加值为value的元素，可以传多个</td>
 <td>name: key名 values: 值</td>
@@ -544,12 +532,9 @@ Redis 主要用来兼容旧版本。</p>
 <td>将key为list的list尾元素删除并返回并将其添加到key为list2的list头部</td>
 <td>b’2’</td>
 </tr>
-</tbody>
-</table>
-<h2 id="set-sorted-set操作"><a class="markdownIt-Anchor" href="#set-sorted-set操作"></a> Set 、Sorted Set操作</h2>
-<p>详见 <a href="https://germey.gitbooks.io/python3webspider/content/5.3.2-Redis%E5%AD%98%E5%82%A8.html" target="_blank" rel="noopener">Redis教程</a>。</p>
-<h2 id="hash-操作"><a class="markdownIt-Anchor" href="#hash-操作"></a> Hash 操作</h2>
-<p>Redis 中可以用name指定一个哈希表的名称，然后表内存储了各个键值对。</p>
+</tbody></table>
+<h2 id="Set-、Sorted-Set操作"><a href="#Set-、Sorted-Set操作" class="headerlink" title="Set 、Sorted Set操作"></a>Set 、Sorted Set操作</h2><p>详见 <a href="https://germey.gitbooks.io/python3webspider/content/5.3.2-Redis%E5%AD%98%E5%82%A8.html" target="_blank" rel="noopener">Redis教程</a>。</p>
+<h2 id="Hash-操作"><a href="#Hash-操作" class="headerlink" title="Hash 操作"></a>Hash 操作</h2><p>Redis 中可以用name指定一个哈希表的名称，然后表内存储了各个键值对。</p>
 <table>
 <thead>
 <tr>
@@ -561,8 +546,7 @@ Redis 主要用来兼容旧版本。</p>
 <th>示例结果</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>hset(name, key, value)</td>
 <td>向key为name的hash中添加映射</td>
 <td>name: key名 key: 映射键名 value: 映射键值</td>
@@ -658,19 +642,15 @@ Redis 主要用来兼容旧版本。</p>
 <td>从key为price的hash中获取所有映射键值对</td>
 <td>{b’cake’: b’5’, b’book’: b’6’, b’orange’: b’7’, b’pear’: b’6’}</td>
 </tr>
-</tbody>
-</table>
-<h2 id="redisdump"><a class="markdownIt-Anchor" href="#redisdump"></a> RedisDump</h2>
-<p>RedisDump 提供了 Redis 数据的导入和导出功能。</p>
+</tbody></table>
+<h2 id="RedisDump"><a href="#RedisDump" class="headerlink" title="RedisDump"></a>RedisDump</h2><p>RedisDump 提供了 Redis 数据的导入和导出功能。</p>
 <p>RedisDump 提供两个可执行命令：</p>
 <ul>
-<li><code>redis-dump</code> 用于 导出 数据；详见 <code>redis-dump -h</code>
-<ul>
+<li><code>redis-dump</code> 用于 导出 数据；详见 <code>redis-dump -h</code><ul>
 <li>e.g. <code>$ redis-dump -u :foobared@localhost:6379 &gt; ./redis_data.jl</code></li>
 </ul>
 </li>
-<li><code>redis-load</code> 用于 导入 数据；详见 <code>redis-load -h</code>
-<ul>
+<li><code>redis-load</code> 用于 导入 数据；详见 <code>redis-load -h</code><ul>
 <li>e.g. <code>$ redis-load -u :foobared@localhost:6379 &lt; redis_data.json</code></li>
 <li>等价于<code>$ cat redis_data.json | redis-load -u :foobared@localhost:6379</code></li>
 </ul>
@@ -713,7 +693,7 @@ Redis 主要用来兼容旧版本。</p>
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#python爬虫储存库的使用之redis"><span class="toc-number">1.</span> <span class="toc-text"> Python爬虫储存库的使用之Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#redis-简介"><span class="toc-number">1.1.</span> <span class="toc-text"> Redis 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接-redis"><span class="toc-number">1.2.</span> <span class="toc-text"> 连接 Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-strictredis-连接"><span class="toc-number">1.2.0.1.</span> <span class="toc-text"> 使用 StrictRedis 连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-connectionpool-连接"><span class="toc-number">1.2.0.2.</span> <span class="toc-text"> 使用 ConnectionPool 连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#key-操作"><span class="toc-number">1.3.</span> <span class="toc-text"> Key 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#string-操作"><span class="toc-number">1.4.</span> <span class="toc-text"> String 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list-操作"><span class="toc-number">1.5.</span> <span class="toc-text"> List 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set-sorted-set操作"><span class="toc-number">1.6.</span> <span class="toc-text"> Set 、Sorted Set操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hash-操作"><span class="toc-number">1.7.</span> <span class="toc-text"> Hash 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redisdump"><span class="toc-number">1.8.</span> <span class="toc-text"> RedisDump</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python爬虫储存库的使用之Redis"><span class="toc-number">1.</span> <span class="toc-text">Python爬虫储存库的使用之Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-简介"><span class="toc-number">1.1.</span> <span class="toc-text">Redis 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接-Redis"><span class="toc-number">1.2.</span> <span class="toc-text">连接 Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-StrictRedis-连接"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">使用 StrictRedis 连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-ConnectionPool-连接"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">使用 ConnectionPool 连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Key-操作"><span class="toc-number">1.3.</span> <span class="toc-text">Key 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#String-操作"><span class="toc-number">1.4.</span> <span class="toc-text">String 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List-操作"><span class="toc-number">1.5.</span> <span class="toc-text">List 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-、Sorted-Set操作"><span class="toc-number">1.6.</span> <span class="toc-text">Set 、Sorted Set操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-操作"><span class="toc-number">1.7.</span> <span class="toc-text">Hash 操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RedisDump"><span class="toc-number">1.8.</span> <span class="toc-text">RedisDump</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -745,7 +725,7 @@ Redis 主要用来兼容旧版本。</p>
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

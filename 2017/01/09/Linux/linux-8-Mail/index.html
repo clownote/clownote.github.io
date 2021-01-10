@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="邮件系统  使用 mail 命令发送邮件： 123456789$ mail -s &amp;quot;主题&amp;quot; 目标 [&amp;lt; 内容]        目标：可以是本机上的用户名；            也可以是一般的邮件地址；        若使用重定向输入内容，Enter后直接发送，不回显；        若不重定向，键入命令后从stdin读邮件正文（类似于“cat &amp;gt; file”）。">
+    <meta name="description" content="邮件系统使用 mail 命令发送邮件：123456789$ mail -s &amp;quot;主题&amp;quot; 目标 [&amp;lt; 内容]        目标：可以是本机上的用户名；            也可以是一般的邮件地址；        若使用重定向输入内容，Enter后直接发送，不回显；        若不重定向，键入命令后从stdin读邮件正文（类似于“cat &amp;gt; file”）。">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-8-邮件系统">
 <meta property="og:url" content="https://clownote.github.io/2017/01/09/Linux/linux-8-Mail/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="邮件系统  使用 mail 命令发送邮件： 123456789$ mail -s &amp;quot;主题&amp;quot; 目标 [&amp;lt; 内容]        目标：可以是本机上的用户名；            也可以是一般的邮件地址；        若使用重定向输入内容，Enter后直接发送，不回显；        若不重定向，键入命令后从stdin读邮件正文（类似于“cat &amp;gt; file”）。">
+<meta property="og:description" content="邮件系统使用 mail 命令发送邮件：123456789$ mail -s &amp;quot;主题&amp;quot; 目标 [&amp;lt; 内容]        目标：可以是本机上的用户名；            也可以是一般的邮件地址；        若使用重定向输入内容，Enter后直接发送，不回显；        若不重定向，键入命令后从stdin读邮件正文（类似于“cat &amp;gt; file”）。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-8-邮件系统">
-<meta name="twitter:description" content="邮件系统  使用 mail 命令发送邮件： 123456789$ mail -s &amp;quot;主题&amp;quot; 目标 [&amp;lt; 内容]        目标：可以是本机上的用户名；            也可以是一般的邮件地址；        若使用重定向输入内容，Enter后直接发送，不回显；        若不重定向，键入命令后从stdin读邮件正文（类似于“cat &amp;gt; file”）。">
+<meta name="twitter:description" content="邮件系统使用 mail 命令发送邮件：123456789$ mail -s &amp;quot;主题&amp;quot; 目标 [&amp;lt; 内容]        目标：可以是本机上的用户名；            也可以是一般的邮件地址；        若使用重定向输入内容，Enter后直接发送，不回显；        若不重定向，键入命令后从stdin读邮件正文（类似于“cat &amp;gt; file”）。">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#邮件系统"><span class="toc-number">1.</span> <span class="toc-text"> 邮件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-mail-命令发送邮件"><span class="toc-number">1.1.</span> <span class="toc-text"> 使用 mail 命令发送邮件：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阅读电子邮件"><span class="toc-number">1.2.</span> <span class="toc-text"> 阅读电子邮件</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#邮件系统"><span class="toc-number">1.</span> <span class="toc-text">邮件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-mail-命令发送邮件："><span class="toc-number">1.1.</span> <span class="toc-text">使用 mail 命令发送邮件：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阅读电子邮件"><span class="toc-number">1.2.</span> <span class="toc-text">阅读电子邮件</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2017-01-09T19:43:44.000Z" itemprop="datePublished">2017-01-09</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,16 +160,16 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="邮件系统"><a class="markdownIt-Anchor" href="#邮件系统"></a> 邮件系统</h1>
-<h2 id="使用-mail-命令发送邮件"><a class="markdownIt-Anchor" href="#使用-mail-命令发送邮件"></a> 使用 <code>mail</code> 命令发送邮件：</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ mail -s &quot;主题&quot; 目标 [&lt; 内容]</span><br><span class="line">        目标：可以是本机上的用户名；</span><br><span class="line">            也可以是一般的邮件地址；</span><br><span class="line">        若使用重定向输入内容，Enter后直接发送，不回显；</span><br><span class="line">        若不重定向，键入命令后从stdin读邮件正文（类似于“cat &gt; file”）。</span><br><span class="line">    </span><br><span class="line">        要结束邮件内容，在一个空白行输入一个点(&apos;.&apos;)，然后Enter；</span><br><span class="line">        之后会出现“Cc: ”（Carbon copy，副本）填写抄送目标，Enter；</span><br><span class="line">        之后，mail发送邮件并退出。</span><br></pre></td></tr></table></figure>
+    <h1 id="邮件系统"><a href="#邮件系统" class="headerlink" title="邮件系统"></a>邮件系统</h1><h2 id="使用-mail-命令发送邮件："><a href="#使用-mail-命令发送邮件：" class="headerlink" title="使用 mail 命令发送邮件："></a>使用 <code>mail</code> 命令发送邮件：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ mail -s &quot;主题&quot; 目标 [&lt; 内容]</span><br><span class="line">        目标：可以是本机上的用户名；</span><br><span class="line">            也可以是一般的邮件地址；</span><br><span class="line">        若使用重定向输入内容，Enter后直接发送，不回显；</span><br><span class="line">        若不重定向，键入命令后从stdin读邮件正文（类似于“cat &gt; file”）。</span><br><span class="line">    </span><br><span class="line">        要结束邮件内容，在一个空白行输入一个点(&apos;.&apos;)，然后Enter；</span><br><span class="line">        之后会出现“Cc: ”（Carbon copy，副本）填写抄送目标，Enter；</span><br><span class="line">        之后，mail发送邮件并退出。</span><br></pre></td></tr></table></figure>
+
 <p>e.g.    <strong>foo</strong> 用户发送邮件给 <strong>bar</strong> 用户：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[foo@Example ~]$ mail -s &quot;A Testing Mail&quot; bar        # To bar</span><br><span class="line">Hi Bar,</span><br><span class="line">Its a testing mail.        # 正文</span><br><span class="line">From foo</span><br><span class="line">.                          # 结束</span><br><span class="line">Cc:                        # Enter，发送，退出</span><br><span class="line">[foo@Example ~]</span><br></pre></td></tr></table></figure>
-<h2 id="阅读电子邮件"><a class="markdownIt-Anchor" href="#阅读电子邮件"></a> 阅读电子邮件</h2>
-<ul>
+
+<h2 id="阅读电子邮件"><a href="#阅读电子邮件" class="headerlink" title="阅读电子邮件"></a>阅读电子邮件</h2><ul>
 <li>收件箱：</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ls -l /var/spool/mail</span><br><span class="line">        Linux为每个用户准备了一个邮箱（file）</span><br><span class="line">        以存放用户的邮件（including all mails）</span><br><span class="line">$ cat /var/spool/mail/USER_NAME</span><br><span class="line">        查看某用户的所有邮件（收件箱）</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>显示收件箱中的邮件列表：</li>
 </ul>
@@ -210,7 +210,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#邮件系统"><span class="toc-number">1.</span> <span class="toc-text"> 邮件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-mail-命令发送邮件"><span class="toc-number">1.1.</span> <span class="toc-text"> 使用 mail 命令发送邮件：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阅读电子邮件"><span class="toc-number">1.2.</span> <span class="toc-text"> 阅读电子邮件</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#邮件系统"><span class="toc-number">1.</span> <span class="toc-text">邮件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-mail-命令发送邮件："><span class="toc-number">1.1.</span> <span class="toc-text">使用 mail 命令发送邮件：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阅读电子邮件"><span class="toc-number">1.2.</span> <span class="toc-text">阅读电子邮件</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -242,7 +242,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

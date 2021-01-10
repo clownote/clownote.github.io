@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Python爬虫解析库的使用之LXML  本文主要介绍 XPath 和解析库 LXML 的使用。   XPath &amp;amp; LXML XPath (XML Path Language) 是设计来在XML文档中查找信息的语言，它同样适用于HTML。 我们在爬虫时，可以使用 XPath 来做相应的信息抽取。 ⚠️【注意】需要安装好 LXML。  XPath常用规则    表达式 描述     no">
+    <meta name="description" content="Python爬虫解析库的使用之LXML 本文主要介绍 XPath 和解析库 LXML 的使用。  XPath &amp;amp; LXMLXPath (XML Path Language) 是设计来在XML文档中查找信息的语言，它同样适用于HTML。 我们在爬虫时，可以使用 XPath 来做相应的信息抽取。 ⚠️【注意】需要安装好 LXML。 XPath常用规则   表达式 描述    nodename">
 <meta name="keywords" content="Crawler">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python之LXML">
 <meta property="og:url" content="https://clownote.github.io/2019/02/15/PythonAndCrawler/crawler-6-lxml/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Python爬虫解析库的使用之LXML  本文主要介绍 XPath 和解析库 LXML 的使用。   XPath &amp;amp; LXML XPath (XML Path Language) 是设计来在XML文档中查找信息的语言，它同样适用于HTML。 我们在爬虫时，可以使用 XPath 来做相应的信息抽取。 ⚠️【注意】需要安装好 LXML。  XPath常用规则    表达式 描述     no">
+<meta property="og:description" content="Python爬虫解析库的使用之LXML 本文主要介绍 XPath 和解析库 LXML 的使用。  XPath &amp;amp; LXMLXPath (XML Path Language) 是设计来在XML文档中查找信息的语言，它同样适用于HTML。 我们在爬虫时，可以使用 XPath 来做相应的信息抽取。 ⚠️【注意】需要安装好 LXML。 XPath常用规则   表达式 描述    nodename">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.303Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python之LXML">
-<meta name="twitter:description" content="Python爬虫解析库的使用之LXML  本文主要介绍 XPath 和解析库 LXML 的使用。   XPath &amp;amp; LXML XPath (XML Path Language) 是设计来在XML文档中查找信息的语言，它同样适用于HTML。 我们在爬虫时，可以使用 XPath 来做相应的信息抽取。 ⚠️【注意】需要安装好 LXML。  XPath常用规则    表达式 描述     no">
+<meta name="twitter:description" content="Python爬虫解析库的使用之LXML 本文主要介绍 XPath 和解析库 LXML 的使用。  XPath &amp;amp; LXMLXPath (XML Path Language) 是设计来在XML文档中查找信息的语言，它同样适用于HTML。 我们在爬虫时，可以使用 XPath 来做相应的信息抽取。 ⚠️【注意】需要安装好 LXML。 XPath常用规则   表达式 描述    nodename">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#python爬虫解析库的使用之lxml"><span class="toc-number">1.</span> <span class="toc-text"> Python爬虫解析库的使用之LXML</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#xpath-lxml"><span class="toc-number">1.1.</span> <span class="toc-text"> XPath &amp; LXML</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#xpath常用规则"><span class="toc-number">1.1.0.1.</span> <span class="toc-text"> XPath常用规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入-html"><span class="toc-number">1.1.0.2.</span> <span class="toc-text"> 导入 HTML</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#从字符串导入-html"><span class="toc-number">1.1.0.2.1.</span> <span class="toc-text"> 从字符串导入 HTML</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#从文件导入-html"><span class="toc-number">1.1.0.2.2.</span> <span class="toc-text"> 从文件导入 HTML</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取节点"><span class="toc-number">1.1.0.3.</span> <span class="toc-text"> 获取节点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#获取所有节点"><span class="toc-number">1.1.0.3.1.</span> <span class="toc-text"> 获取所有节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取所有指定标签"><span class="toc-number">1.1.0.3.2.</span> <span class="toc-text"> 获取所有指定标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取子节点"><span class="toc-number">1.1.0.3.3.</span> <span class="toc-text"> 获取子节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取特定属性的节点"><span class="toc-number">1.1.0.3.4.</span> <span class="toc-text"> 获取特定属性的节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取父节点"><span class="toc-number">1.1.0.3.5.</span> <span class="toc-text"> 获取父节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取节点中的的文本"><span class="toc-number">1.1.0.3.6.</span> <span class="toc-text"> 获取节点中的的文本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取属性"><span class="toc-number">1.1.0.3.7.</span> <span class="toc-text"> 获取属性</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充"><span class="toc-number">1.1.0.4.</span> <span class="toc-text"> 补充</span></a></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python爬虫解析库的使用之LXML"><span class="toc-number">1.</span> <span class="toc-text">Python爬虫解析库的使用之LXML</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#XPath-amp-LXML"><span class="toc-number">1.1.</span> <span class="toc-text">XPath &amp; LXML</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#XPath常用规则"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">XPath常用规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入-HTML"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">导入 HTML</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#从字符串导入-HTML"><span class="toc-number">1.1.0.2.1.</span> <span class="toc-text">从字符串导入 HTML</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#从文件导入-HTML"><span class="toc-number">1.1.0.2.2.</span> <span class="toc-text">从文件导入 HTML</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取节点"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">获取节点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#获取所有节点"><span class="toc-number">1.1.0.3.1.</span> <span class="toc-text">获取所有节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取所有指定标签"><span class="toc-number">1.1.0.3.2.</span> <span class="toc-text">获取所有指定标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取子节点"><span class="toc-number">1.1.0.3.3.</span> <span class="toc-text">获取子节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取特定属性的节点"><span class="toc-number">1.1.0.3.4.</span> <span class="toc-text">获取特定属性的节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取父节点"><span class="toc-number">1.1.0.3.5.</span> <span class="toc-text">获取父节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取节点中的的文本"><span class="toc-number">1.1.0.3.6.</span> <span class="toc-text">获取节点中的的文本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取属性"><span class="toc-number">1.1.0.3.7.</span> <span class="toc-text">获取属性</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">补充</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2019-02-15T22:49:55.000Z" itemprop="datePublished">2019-02-15</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.303Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,24 +160,20 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="python爬虫解析库的使用之lxml"><a class="markdownIt-Anchor" href="#python爬虫解析库的使用之lxml"></a> Python爬虫解析库的使用之LXML</h1>
-<blockquote>
+    <h1 id="Python爬虫解析库的使用之LXML"><a href="#Python爬虫解析库的使用之LXML" class="headerlink" title="Python爬虫解析库的使用之LXML"></a>Python爬虫解析库的使用之LXML</h1><blockquote>
 <p>本文主要介绍 XPath 和解析库 LXML 的使用。</p>
 </blockquote>
-<h2 id="xpath-lxml"><a class="markdownIt-Anchor" href="#xpath-lxml"></a> XPath &amp; LXML</h2>
-<p>XPath (XML Path Language) 是设计来在XML文档中查找信息的语言，它同样适用于HTML。</p>
+<h2 id="XPath-amp-LXML"><a href="#XPath-amp-LXML" class="headerlink" title="XPath &amp; LXML"></a>XPath &amp; LXML</h2><p>XPath (XML Path Language) 是设计来在XML文档中查找信息的语言，它同样适用于HTML。</p>
 <p>我们在爬虫时，可以使用 XPath 来做相应的信息抽取。</p>
 <p>⚠️【注意】需要安装好 LXML。</p>
-<h4 id="xpath常用规则"><a class="markdownIt-Anchor" href="#xpath常用规则"></a> XPath常用规则</h4>
-<table>
+<h4 id="XPath常用规则"><a href="#XPath常用规则" class="headerlink" title="XPath常用规则"></a>XPath常用规则</h4><table>
 <thead>
 <tr>
 <th>表达式</th>
 <th>描述</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td><code>nodename</code></td>
 <td>选取此节点的所有子节点</td>
 </tr>
@@ -201,54 +197,50 @@
 <td><code>@</code></td>
 <td>选取属性</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>我们常用 <code>//</code> 开头的 XPath 规则来选取所有符合要求的节点。</p>
 <p>另外，常用运算符见 <a href="http://www.w3school.com.cn/xpath/xpath_operators.asp" target="_blank" rel="noopener">XPath 运算符</a>。</p>
-<h4 id="导入-html"><a class="markdownIt-Anchor" href="#导入-html"></a> 导入 HTML</h4>
-<h5 id="从字符串导入-html"><a class="markdownIt-Anchor" href="#从字符串导入-html"></a> 从字符串导入 HTML</h5>
-<p>导入了 LXML 库的 etree 模块，然后声明了一段 HTML 文本，调用 HTML 类进行初始化，这样我们就成功构造了一个 XPath 解析对象。</p>
+<h4 id="导入-HTML"><a href="#导入-HTML" class="headerlink" title="导入 HTML"></a>导入 HTML</h4><h5 id="从字符串导入-HTML"><a href="#从字符串导入-HTML" class="headerlink" title="从字符串导入 HTML"></a>从字符串导入 HTML</h5><p>导入了 LXML 库的 etree 模块，然后声明了一段 HTML 文本，调用 HTML 类进行初始化，这样我们就成功构造了一个 XPath 解析对象。</p>
 <p>⚠️【注意】etree 模块可以对 HTML 文本进行修正。</p>
 <p>调用 tostring() 方法即可输出修正后的 HTML 代码，结果是 bytes 类型（可以利用 decode() 方法转成 str 类型）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">text = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;ul&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-0"&gt;&lt;a href="link1.html"&gt;first item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-1"&gt;&lt;a href="link2.html"&gt;second item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-inactive"&gt;&lt;a href="link3.html"&gt;third item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-1"&gt;&lt;a href="link4.html"&gt;fourth item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-0"&gt;&lt;a href="link5.html"&gt;fifth item&lt;/a&gt;</span></span><br><span class="line"><span class="string">     &lt;/ul&gt;</span></span><br><span class="line"><span class="string"> &lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">html = etree.HTML(text)</span><br><span class="line">result = etree.tostring(html)</span><br><span class="line">print(result.decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
-<h5 id="从文件导入-html"><a class="markdownIt-Anchor" href="#从文件导入-html"></a> 从文件导入 HTML</h5>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = etree.tostring(html)</span><br><span class="line">print(result.decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
-<h4 id="获取节点"><a class="markdownIt-Anchor" href="#获取节点"></a> 获取节点</h4>
-<h5 id="获取所有节点"><a class="markdownIt-Anchor" href="#获取所有节点"></a> 获取所有节点</h5>
-<p>获取一个 HTML 中的所有节点，使用规则 <code>//*</code>：</p>
+
+<h5 id="从文件导入-HTML"><a href="#从文件导入-HTML" class="headerlink" title="从文件导入 HTML"></a>从文件导入 HTML</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = etree.tostring(html)</span><br><span class="line">print(result.decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取节点"><a href="#获取节点" class="headerlink" title="获取节点"></a>获取节点</h4><h5 id="获取所有节点"><a href="#获取所有节点" class="headerlink" title="获取所有节点"></a>获取所有节点</h5><p>获取一个 HTML 中的所有节点，使用规则 <code>//*</code>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line"></span><br><span class="line">result = html.xpath(<span class="string">'//*'</span>)</span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
 <p>我们得到了一个 由 Element 类型组成的列表。</p>
-<h5 id="获取所有指定标签"><a class="markdownIt-Anchor" href="#获取所有指定标签"></a> 获取所有指定标签</h5>
-<p>如果我们想获取所有 li 标签，我们可以把上例中的html.xpath() 中的规则改为 <code>'//li'</code>：</p>
+<h5 id="获取所有指定标签"><a href="#获取所有指定标签" class="headerlink" title="获取所有指定标签"></a>获取所有指定标签</h5><p>如果我们想获取所有 li 标签，我们可以把上例中的html.xpath() 中的规则改为 <code>&#39;//li&#39;</code>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
 <p>如果无法获取任何匹配结果，html.xpath 将会返回 <code>[]</code></p>
-<h5 id="获取子节点"><a class="markdownIt-Anchor" href="#获取子节点"></a> 获取子节点</h5>
-<p>选择 li 节点所有直接 a 子节点，使用规则 <code>'//li/a'</code>：</p>
+<h5 id="获取子节点"><a href="#获取子节点" class="headerlink" title="获取子节点"></a>获取子节点</h5><p>选择 li 节点所有直接 a 子节点，使用规则 <code>&#39;//li/a&#39;</code>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li/a'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
 <p>要获取其下所有子孙a节点可以这样：<code>//li//a</code></p>
-<h5 id="获取特定属性的节点"><a class="markdownIt-Anchor" href="#获取特定属性的节点"></a> 获取特定属性的节点</h5>
-<p>用 @ 符号进行属性过滤。<br>
-smt[…] 是有 … 限制的smt。</p>
-<p>选中 href 是 link4.html 的 a 节点，规则是 <code>'//a[@href=&quot;link4.html&quot;]</code>:</p>
+<h5 id="获取特定属性的节点"><a href="#获取特定属性的节点" class="headerlink" title="获取特定属性的节点"></a>获取特定属性的节点</h5><p>用 @ 符号进行属性过滤。<br>smt[…] 是有 … 限制的smt。</p>
+<p>选中 href 是 link4.html 的 a 节点，规则是 <code>&#39;//a[@href=&quot;link4.html&quot;]</code>:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//a[@href="link4.html"]'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-<h5 id="获取父节点"><a class="markdownIt-Anchor" href="#获取父节点"></a> 获取父节点</h5>
-<p>如果我们想获取上例的父节点, 然后再获取其 class 属性：</p>
+
+<h5 id="获取父节点"><a href="#获取父节点" class="headerlink" title="获取父节点"></a>获取父节点</h5><p>如果我们想获取上例的父节点, 然后再获取其 class 属性：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//a[@href="link4.html"]/../@class'</span>)</span><br><span class="line"><span class="comment"># 也可以用“节点轴” '//a[@href="link4.html"]/parent::*/@class'</span></span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
 <p>关于节点轴的使用，详见 <a href="http://www.w3school.com.cn/xpath/xpath_axes.asp" target="_blank" rel="noopener">XPath Axes</a></p>
-<h5 id="获取节点中的的文本"><a class="markdownIt-Anchor" href="#获取节点中的的文本"></a> 获取节点中的的文本</h5>
-<p>XPath 中的 text() 方法可以获取节点中的直接文本（不包括其子节点中的文本）。</p>
+<h5 id="获取节点中的的文本"><a href="#获取节点中的的文本" class="headerlink" title="获取节点中的的文本"></a>获取节点中的的文本</h5><p>XPath 中的 text() 方法可以获取节点中的直接文本（不包括其子节点中的文本）。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li[@class="item-0"]/text()'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-<h5 id="获取属性"><a class="markdownIt-Anchor" href="#获取属性"></a> 获取属性</h5>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li/a/@href'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-<p>用上面这种方法只能获取只有一个值的属性，<br>
-对于下面这种：</p>
+
+<h5 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li/a/@href'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p>用上面这种方法只能获取只有一个值的属性，<br>对于下面这种：</p>
 <p><code>&lt;li class=&quot;li li-first&quot;&gt;&lt;a href=&quot;link.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;</code></p>
-<p>li 节点的 class 属性有两个值，上面这个方法会失效，我们可以使用 contains() 函数：</p>
+<p> li 节点的 class 属性有两个值，上面这个方法会失效，我们可以使用 contains() 函数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">text = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;li class="li li-first"&gt;&lt;a href="link.html"&gt;first item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">html = e<span class="comment">#tree.HTML(text)</span></span><br><span class="line">result = html.xpath(<span class="string">'//li[contains(@class, "li")]/a/text()'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
 <p>这里还可以使用运算符 and 来连接：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">text = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;li class="li li-first" name="item"&gt;&lt;a href="link.html"&gt;first item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">html = etree.HTML(text)</span><br><span class="line">result = html.xpath(<span class="string">'//li[contains(@class, "li") and @name="item"]/a/text()'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-<h4 id="补充"><a class="markdownIt-Anchor" href="#补充"></a> 补充</h4>
-<p>点击链接查看详细的 <a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="noopener">XPath 教程</a> 、 <a href="https://lxml.de" target="_blank" rel="noopener">lxml 库</a>。</p>
+
+<h4 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h4><p>点击链接查看详细的 <a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="noopener">XPath 教程</a> 、 <a href="https://lxml.de/" target="_blank" rel="noopener">lxml 库</a>。</p>
 
   </div>
 </article>
@@ -286,7 +278,7 @@ smt[…] 是有 … 限制的smt。</p>
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#python爬虫解析库的使用之lxml"><span class="toc-number">1.</span> <span class="toc-text"> Python爬虫解析库的使用之LXML</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#xpath-lxml"><span class="toc-number">1.1.</span> <span class="toc-text"> XPath &amp; LXML</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#xpath常用规则"><span class="toc-number">1.1.0.1.</span> <span class="toc-text"> XPath常用规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入-html"><span class="toc-number">1.1.0.2.</span> <span class="toc-text"> 导入 HTML</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#从字符串导入-html"><span class="toc-number">1.1.0.2.1.</span> <span class="toc-text"> 从字符串导入 HTML</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#从文件导入-html"><span class="toc-number">1.1.0.2.2.</span> <span class="toc-text"> 从文件导入 HTML</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取节点"><span class="toc-number">1.1.0.3.</span> <span class="toc-text"> 获取节点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#获取所有节点"><span class="toc-number">1.1.0.3.1.</span> <span class="toc-text"> 获取所有节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取所有指定标签"><span class="toc-number">1.1.0.3.2.</span> <span class="toc-text"> 获取所有指定标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取子节点"><span class="toc-number">1.1.0.3.3.</span> <span class="toc-text"> 获取子节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取特定属性的节点"><span class="toc-number">1.1.0.3.4.</span> <span class="toc-text"> 获取特定属性的节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取父节点"><span class="toc-number">1.1.0.3.5.</span> <span class="toc-text"> 获取父节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取节点中的的文本"><span class="toc-number">1.1.0.3.6.</span> <span class="toc-text"> 获取节点中的的文本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取属性"><span class="toc-number">1.1.0.3.7.</span> <span class="toc-text"> 获取属性</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充"><span class="toc-number">1.1.0.4.</span> <span class="toc-text"> 补充</span></a></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python爬虫解析库的使用之LXML"><span class="toc-number">1.</span> <span class="toc-text">Python爬虫解析库的使用之LXML</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#XPath-amp-LXML"><span class="toc-number">1.1.</span> <span class="toc-text">XPath &amp; LXML</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#XPath常用规则"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">XPath常用规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入-HTML"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">导入 HTML</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#从字符串导入-HTML"><span class="toc-number">1.1.0.2.1.</span> <span class="toc-text">从字符串导入 HTML</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#从文件导入-HTML"><span class="toc-number">1.1.0.2.2.</span> <span class="toc-text">从文件导入 HTML</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取节点"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">获取节点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#获取所有节点"><span class="toc-number">1.1.0.3.1.</span> <span class="toc-text">获取所有节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取所有指定标签"><span class="toc-number">1.1.0.3.2.</span> <span class="toc-text">获取所有指定标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取子节点"><span class="toc-number">1.1.0.3.3.</span> <span class="toc-text">获取子节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取特定属性的节点"><span class="toc-number">1.1.0.3.4.</span> <span class="toc-text">获取特定属性的节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取父节点"><span class="toc-number">1.1.0.3.5.</span> <span class="toc-text">获取父节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取节点中的的文本"><span class="toc-number">1.1.0.3.6.</span> <span class="toc-text">获取节点中的的文本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取属性"><span class="toc-number">1.1.0.3.7.</span> <span class="toc-text">获取属性</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">补充</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -318,7 +310,7 @@ smt[…] 是有 … 限制的smt。</p>
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

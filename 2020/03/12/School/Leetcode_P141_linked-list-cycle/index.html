@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Leetcode P141 环形链表  题目 给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 示例 1： 123输入：head = [3,2,0,-4], pos = 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。 示例 2： 123输入：head">
+    <meta name="description" content="Leetcode P141 环形链表题目给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。  示例 1： 123输入：head = [3,2,0,-4], pos = 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。  示例 2： 123输入：head =">
 <meta name="keywords" content="School">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode P141 环形链表">
 <meta property="og:url" content="https://clownote.github.io/2020/03/12/School/Leetcode_P141_linked-list-cycle/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode P141 环形链表  题目 给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 示例 1： 123输入：head = [3,2,0,-4], pos = 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。 示例 2： 123输入：head">
+<meta property="og:description" content="Leetcode P141 环形链表题目给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。  示例 1： 123输入：head = [3,2,0,-4], pos = 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。  示例 2： 123输入：head =">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcr749hdvdj31d60u01kx.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcr730im9jj31d60u01kx.jpg">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.303Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode P141 环形链表">
-<meta name="twitter:description" content="Leetcode P141 环形链表  题目 给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 示例 1： 123输入：head = [3,2,0,-4], pos = 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。 示例 2： 123输入：head">
+<meta name="twitter:description" content="Leetcode P141 环形链表题目给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。  示例 1： 123输入：head = [3,2,0,-4], pos = 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。  示例 2： 123输入：head =">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcr749hdvdj31d60u01kx.jpg">
     
     
@@ -112,7 +112,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-p141-环形链表"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode P141 环形链表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表法"><span class="toc-number">1.2.</span> <span class="toc-text"> 哈希表法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快慢指针法"><span class="toc-number">1.3.</span> <span class="toc-text"> 快慢指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题外话"><span class="toc-number">1.4.</span> <span class="toc-text"> 题外话</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-P141-环形链表"><span class="toc-number">1.</span> <span class="toc-text">Leetcode P141 环形链表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表法"><span class="toc-number">1.2.</span> <span class="toc-text">哈希表法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快慢指针法"><span class="toc-number">1.3.</span> <span class="toc-text">快慢指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题外话"><span class="toc-number">1.4.</span> <span class="toc-text">题外话</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -138,7 +138,7 @@
       
         <time datetime="2020-03-12T15:54:46.000Z" itemprop="datePublished">2020-03-12</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.303Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -158,42 +158,40 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="leetcode-p141-环形链表"><a class="markdownIt-Anchor" href="#leetcode-p141-环形链表"></a> Leetcode P141 环形链表</h1>
-<h2 id="题目"><a class="markdownIt-Anchor" href="#题目"></a> 题目</h2>
-<p>给定一个链表，判断链表中是否有环。</p>
-<p>为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。</p>
+    <h1 id="Leetcode-P141-环形链表"><a href="#Leetcode-P141-环形链表" class="headerlink" title="Leetcode P141 环形链表"></a>Leetcode P141 环形链表</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个链表，判断链表中是否有环。</p>
+<p>为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。 </p>
 <p>示例 1：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [3,2,0,-4], pos = 1</span><br><span class="line">输出：true</span><br><span class="line">解释：链表中有一个环，其尾部连接到第二个节点。</span><br></pre></td></tr></table></figure>
+
 <p>示例 2：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [1,2], pos = 0</span><br><span class="line">输出：true</span><br><span class="line">解释：链表中有一个环，其尾部连接到第一个节点。</span><br></pre></td></tr></table></figure>
+
 <p>示例 3：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [1], pos = -1</span><br><span class="line">输出：false</span><br><span class="line">解释：链表中没有环。</span><br></pre></td></tr></table></figure>
+
 <p>进阶：</p>
 <p>你能用 O(1)（即，常量）内存解决此问题吗？</p>
-<p>来源：力扣（LeetCode）<br>
-链接：<a href="https://leetcode-cn.com/problems/linked-list-cycle" target="_blank" rel="noopener">https://leetcode-cn.com/problems/linked-list-cycle</a><br>
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<h2 id="哈希表法"><a class="markdownIt-Anchor" href="#哈希表法"></a> 哈希表法</h2>
-<p>首先，最简单直接的想法，用哈希表，遍历一个存一个，每次都检查当前节点是否已经存过，存过就说明有环：</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/linked-list-cycle" target="_blank" rel="noopener">https://leetcode-cn.com/problems/linked-list-cycle</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="哈希表法"><a href="#哈希表法" class="headerlink" title="哈希表法"></a>哈希表法</h2><p>首先，最简单直接的想法，用哈希表，遍历一个存一个，每次都检查当前节点是否已经存过，存过就说明有环：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hasCycle</span><span class="params">(head *ListNode)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> nodes := <span class="keyword">map</span>[*ListNode]<span class="keyword">bool</span>&#123;&#125;; head != <span class="literal">nil</span>; head = head.Next &#123;</span><br><span class="line">        <span class="keyword">if</span> (nodes[head] == <span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            nodes[head] = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcr749hdvdj31d60u01kx.jpg" alt="屏幕快照 2020-03-12 15.33.08"></p>
-<h2 id="快慢指针法"><a class="markdownIt-Anchor" href="#快慢指针法"></a> 快慢指针法</h2>
-<p>还可以用快慢指针法。</p>
+<h2 id="快慢指针法"><a href="#快慢指针法" class="headerlink" title="快慢指针法"></a>快慢指针法</h2><p>还可以用快慢指针法。</p>
 <p>想象这样的情景：两人比赛跑步，甲快，乙慢。如果赛道无环，相当于就一条直线，肯定是甲先到终点；如果赛道有环，在环上跑，速度不一样的甲乙必然在某一时刻相遇。</p>
-<p>利用这个思路，赛道是链表，甲乙化身快慢指针，就得到了空间消耗 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 的解法：</p>
+<p>利用这个思路，赛道是链表，甲乙化身快慢指针，就得到了空间消耗 $O(1)$ 的解法：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hasCycle</span><span class="params">(head *ListNode)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">nil</span>) || (head.Next == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    slow, fast := head, head.Next</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> slow != fast &#123;</span><br><span class="line">        <span class="keyword">if</span> fast == <span class="literal">nil</span> || fast.Next == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        fast, slow = fast.Next.Next, slow.Next</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcr730im9jj31d60u01kx.jpg" alt="image-20200312155153189"></p>
 <hr>
-<h2 id="题外话"><a class="markdownIt-Anchor" href="#题外话"></a> 题外话</h2>
-<p>总有人问我每天写代码快乐吗？图个啥呀？</p>
+<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>总有人问我每天写代码快乐吗？图个啥呀？</p>
 <p>今天看书的时候，看到一段很有感触的话，算是对这个问题的回答吧，收藏了：</p>
 <blockquote>
 <p>There is much joy in programming. There is joy in analyzing a problem, breaking it down into pieces, formulating a solution, mapping out a strategy, approaching it from different directions, and crafting the code. There is very much joy in seeing the program run for the first time, and then more joy in eagerly diving back into the code to make it better and faster.</p>
 <p>There is also often joy in hunting down bugs, in ensuring that the program runs smoothly and predictably. Few occasions are quite as joyful as finally identifying a particularly recalcitrant bug and defin- itively stamping it out.</p>
 <p>There is even joy in realizing that the original approach you took is not quite the best. Many developers discover that they’ve learned a lot while writing a program, including that there’s a better way to structure the code. Sometimes, a partial or even a total rewrite can result in a much better application, or simply one that is structurally more coherent and easier to maintain. The process is like standing on one’s own shoulders, and there is much joy in attaining that perspective and knowledge.</p>
 <hr>
-<p>​	From <em>Creating Mobile Apps with Xamarin</em></p>
-<p>​			Chapter 1 <em>How does Xamarin.Forms fit in?</em></p>
+<p>​    From <em>Creating Mobile Apps with Xamarin</em></p>
+<p>​            Chapter 1 <em>How does Xamarin.Forms fit in?</em></p>
 </blockquote>
 <p>哈哈，伟人站在巨人肩膀上随和微笑，蒟蒻站在自己肩膀上看着代码傻笑。</p>
 
@@ -233,7 +231,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-p141-环形链表"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode P141 环形链表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表法"><span class="toc-number">1.2.</span> <span class="toc-text"> 哈希表法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快慢指针法"><span class="toc-number">1.3.</span> <span class="toc-text"> 快慢指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题外话"><span class="toc-number">1.4.</span> <span class="toc-text"> 题外话</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-P141-环形链表"><span class="toc-number">1.</span> <span class="toc-text">Leetcode P141 环形链表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表法"><span class="toc-number">1.2.</span> <span class="toc-text">哈希表法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快慢指针法"><span class="toc-number">1.3.</span> <span class="toc-text">快慢指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题外话"><span class="toc-number">1.4.</span> <span class="toc-text">题外话</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -265,7 +263,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

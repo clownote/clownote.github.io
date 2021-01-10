@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="正文浏览  正文，即字符串 / 纯文本文件的内容。   cat：浏览正文文件内容 12345678$ cat [options] [files]    -A：显示内容，包括不可见的特殊字符    -s：将两个及以上的空行省略为一个空行    -b：加入行号$ cat &amp;gt; filename    创建新文本文件，写入内容    空行&amp;#123;Ctr+d&amp;#125;，保存退出">
+    <meta name="description" content="正文浏览 正文，即字符串 / 纯文本文件的内容。  cat：浏览正文文件内容12345678$ cat [options] [files]    -A：显示内容，包括不可见的特殊字符    -s：将两个及以上的空行省略为一个空行    -b：加入行号$ cat &amp;gt; filename    创建新文本文件，写入内容    空行&amp;#123;Ctr+d&amp;#125;，保存退出        # &amp;#">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-4.0-正文浏览">
 <meta property="og:url" content="https://clownote.github.io/2017/01/01/Linux/linux-4-0-TextRead/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="正文浏览  正文，即字符串 / 纯文本文件的内容。   cat：浏览正文文件内容 12345678$ cat [options] [files]    -A：显示内容，包括不可见的特殊字符    -s：将两个及以上的空行省略为一个空行    -b：加入行号$ cat &amp;gt; filename    创建新文本文件，写入内容    空行&amp;#123;Ctr+d&amp;#125;，保存退出">
+<meta property="og:description" content="正文浏览 正文，即字符串 / 纯文本文件的内容。  cat：浏览正文文件内容12345678$ cat [options] [files]    -A：显示内容，包括不可见的特殊字符    -s：将两个及以上的空行省略为一个空行    -b：加入行号$ cat &amp;gt; filename    创建新文本文件，写入内容    空行&amp;#123;Ctr+d&amp;#125;，保存退出        # &amp;#">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-4.0-正文浏览">
-<meta name="twitter:description" content="正文浏览  正文，即字符串 / 纯文本文件的内容。   cat：浏览正文文件内容 12345678$ cat [options] [files]    -A：显示内容，包括不可见的特殊字符    -s：将两个及以上的空行省略为一个空行    -b：加入行号$ cat &amp;gt; filename    创建新文本文件，写入内容    空行&amp;#123;Ctr+d&amp;#125;，保存退出">
+<meta name="twitter:description" content="正文浏览 正文，即字符串 / 纯文本文件的内容。  cat：浏览正文文件内容12345678$ cat [options] [files]    -A：显示内容，包括不可见的特殊字符    -s：将两个及以上的空行省略为一个空行    -b：加入行号$ cat &amp;gt; filename    创建新文本文件，写入内容    空行&amp;#123;Ctr+d&amp;#125;，保存退出        # &amp;#">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文浏览"><span class="toc-number">1.</span> <span class="toc-text"> 正文浏览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cat浏览正文文件内容"><span class="toc-number">1.0.1.</span> <span class="toc-text"> cat：浏览正文文件内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#head浏览文件头几行"><span class="toc-number">1.0.2.</span> <span class="toc-text"> head：浏览文件头几行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tail浏览文件后几行"><span class="toc-number">1.0.3.</span> <span class="toc-text"> tail：浏览文件后几行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wcword-count字数统计"><span class="toc-number">1.0.4.</span> <span class="toc-text"> wc：(word count)字数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more-file可翻页地浏览文件"><span class="toc-number">1.0.5.</span> <span class="toc-text"> more [file]：可翻页地浏览文件</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文浏览"><span class="toc-number">1.</span> <span class="toc-text">正文浏览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cat：浏览正文文件内容"><span class="toc-number">1.0.1.</span> <span class="toc-text">cat：浏览正文文件内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#head：浏览文件头几行"><span class="toc-number">1.0.2.</span> <span class="toc-text">head：浏览文件头几行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tail：浏览文件后几行"><span class="toc-number">1.0.3.</span> <span class="toc-text">tail：浏览文件后几行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wc：-word-count-字数统计"><span class="toc-number">1.0.4.</span> <span class="toc-text">wc：(word count)字数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more-file-：可翻页地浏览文件"><span class="toc-number">1.0.5.</span> <span class="toc-text">more [file]：可翻页地浏览文件</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2017-01-01T12:46:55.000Z" itemprop="datePublished">2017-01-01</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,46 +160,35 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="正文浏览"><a class="markdownIt-Anchor" href="#正文浏览"></a> 正文浏览</h1>
-<blockquote>
+    <h1 id="正文浏览"><a href="#正文浏览" class="headerlink" title="正文浏览"></a>正文浏览</h1><blockquote>
 <p>正文，即字符串 / 纯文本文件的内容。</p>
 </blockquote>
-<h3 id="cat浏览正文文件内容"><a class="markdownIt-Anchor" href="#cat浏览正文文件内容"></a> <code>cat</code>：浏览正文文件内容</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cat [options] [files]</span><br><span class="line">    -A：显示内容，包括不可见的特殊字符</span><br><span class="line">    -s：将两个及以上的空行省略为一个空行</span><br><span class="line">    -b：加入行号</span><br><span class="line">$ cat &gt; filename</span><br><span class="line">    创建新文本文件，写入内容</span><br><span class="line">    空行&#123;Ctr+d&#125;，保存退出        # &#123;Ctr+c&#125;:强行终止</span><br><span class="line">            [注意]：用cat打开二进制文件会造成终端停止工作，可开启一个新的终端以解决。</span><br></pre></td></tr></table></figure>
-<pre><code>       ⚠️ \[注意\]：用 cat 打开二进制文件可能会造成终端停止工作，可开启一个新的终端以解决。
-</code></pre>
-<h3 id="head浏览文件头几行"><a class="markdownIt-Anchor" href="#head浏览文件头几行"></a> <code>head</code>：浏览文件头几行</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ head [-n x] file</span><br><span class="line">    浏览文件头x行</span><br><span class="line">    若省去[-n x]则显示头10行</span><br></pre></td></tr></table></figure>
-<h3 id="tail浏览文件后几行"><a class="markdownIt-Anchor" href="#tail浏览文件后几行"></a> <code>tail</code>：浏览文件后几行</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ tail file</span><br><span class="line">    浏览文件后10行</span><br><span class="line">$ tail -[n]x  file</span><br><span class="line">    显示从末尾算起的x行</span><br><span class="line">    有无n都一样</span><br><span class="line">$ tail +[n]x  file</span><br><span class="line">    显示从文件第x行之后的内容</span><br><span class="line">    有无n都一样</span><br><span class="line">$tail -f file</span><br><span class="line">    “-f“ == ”--follow“</span><br><span class="line">    当一个正文文件内容发生变化时，把变化显示出来</span><br><span class="line">    &#123;ctrl+c&#125;退出</span><br><span class="line"># tail -f /var/log/messages</span><br><span class="line">    监视日志</span><br></pre></td></tr></table></figure>
-<h3 id="wcword-count字数统计"><a class="markdownIt-Anchor" href="#wcword-count字数统计"></a> <code>wc</code>：(word count)字数统计</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ wc [-options] file</span><br><span class="line">    显示文件 行、单词、字符 数</span><br><span class="line">        无选项依次显示l，w，c</span><br><span class="line">        -l：行数</span><br><span class="line">        -w：单词数</span><br><span class="line">        -c：字符数</span><br></pre></td></tr></table></figure>
-<h3 id="more-file可翻页地浏览文件"><a class="markdownIt-Anchor" href="#more-file可翻页地浏览文件"></a> <code>more [file]</code>：可翻页地浏览文件</h3>
-<p>在more中键入：</p>
+<h3 id="cat：浏览正文文件内容"><a href="#cat：浏览正文文件内容" class="headerlink" title="cat：浏览正文文件内容"></a><code>cat</code>：浏览正文文件内容</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cat [options] [files]</span><br><span class="line">    -A：显示内容，包括不可见的特殊字符</span><br><span class="line">    -s：将两个及以上的空行省略为一个空行</span><br><span class="line">    -b：加入行号</span><br><span class="line">$ cat &gt; filename</span><br><span class="line">    创建新文本文件，写入内容</span><br><span class="line">    空行&#123;Ctr+d&#125;，保存退出        # &#123;Ctr+c&#125;:强行终止</span><br><span class="line">            [注意]：用cat打开二进制文件会造成终端停止工作，可开启一个新的终端以解决。</span><br></pre></td></tr></table></figure>
+
+<pre><code>       ⚠️ \[注意\]：用 cat 打开二进制文件可能会造成终端停止工作，可开启一个新的终端以解决。</code></pre>
+<h3 id="head：浏览文件头几行"><a href="#head：浏览文件头几行" class="headerlink" title="head：浏览文件头几行"></a><code>head</code>：浏览文件头几行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ head [-n x] file</span><br><span class="line">    浏览文件头x行</span><br><span class="line">    若省去[-n x]则显示头10行</span><br></pre></td></tr></table></figure>
+
+<h3 id="tail：浏览文件后几行"><a href="#tail：浏览文件后几行" class="headerlink" title="tail：浏览文件后几行"></a><code>tail</code>：浏览文件后几行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ tail file</span><br><span class="line">    浏览文件后10行</span><br><span class="line">$ tail -[n]x  file</span><br><span class="line">    显示从末尾算起的x行</span><br><span class="line">    有无n都一样</span><br><span class="line">$ tail +[n]x  file</span><br><span class="line">    显示从文件第x行之后的内容</span><br><span class="line">    有无n都一样</span><br><span class="line">$tail -f file</span><br><span class="line">    “-f“ == ”--follow“</span><br><span class="line">    当一个正文文件内容发生变化时，把变化显示出来</span><br><span class="line">    &#123;ctrl+c&#125;退出</span><br><span class="line"># tail -f /var/log/messages</span><br><span class="line">    监视日志</span><br></pre></td></tr></table></figure>
+
+<h3 id="wc：-word-count-字数统计"><a href="#wc：-word-count-字数统计" class="headerlink" title="wc：(word count)字数统计"></a><code>wc</code>：(word count)字数统计</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ wc [-options] file</span><br><span class="line">    显示文件 行、单词、字符 数</span><br><span class="line">        无选项依次显示l，w，c</span><br><span class="line">        -l：行数</span><br><span class="line">        -w：单词数</span><br><span class="line">        -c：字符数</span><br></pre></td></tr></table></figure>
+
+<h3 id="more-file-：可翻页地浏览文件"><a href="#more-file-：可翻页地浏览文件" class="headerlink" title="more [file]：可翻页地浏览文件"></a><code>more [file]</code>：可翻页地浏览文件</h3><p>在more中键入：</p>
 <ul>
-<li>
-<p><code>{空格}</code>：下一页</p>
+<li><p><code>{空格}</code>：下一页</p>
 </li>
-<li>
-<p><code>{Enter}</code>：移动一行</p>
+<li><p><code>{Enter}</code>：移动一行</p>
 </li>
-<li>
-<p><code>{b}</code>：上一页</p>
+<li><p><code>{b}</code>：上一页</p>
 </li>
-<li>
-<p><code>{h}</code>：帮助</p>
+<li><p><code>{h}</code>：帮助</p>
 </li>
-<li>
-<p><code>{/str}</code>：向前搜索str</p>
+<li><p><code>{/str}</code>：向前搜索str</p>
 </li>
-<li>
-<p><code>{n}</code>：发现这个字符串的下一次出现</p>
+<li><p><code>{n}</code>：发现这个字符串的下一次出现</p>
 </li>
-<li>
-<p><code>{q}</code>：退出 more</p>
+<li><p><code>{q}</code>：退出 more</p>
 </li>
-<li>
-<p><code>{v}</code>：在当前行启动 vi</p>
+<li><p><code>{v}</code>：在当前行启动 vi</p>
 </li>
 </ul>
 
@@ -239,7 +228,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文浏览"><span class="toc-number">1.</span> <span class="toc-text"> 正文浏览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cat浏览正文文件内容"><span class="toc-number">1.0.1.</span> <span class="toc-text"> cat：浏览正文文件内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#head浏览文件头几行"><span class="toc-number">1.0.2.</span> <span class="toc-text"> head：浏览文件头几行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tail浏览文件后几行"><span class="toc-number">1.0.3.</span> <span class="toc-text"> tail：浏览文件后几行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wcword-count字数统计"><span class="toc-number">1.0.4.</span> <span class="toc-text"> wc：(word count)字数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more-file可翻页地浏览文件"><span class="toc-number">1.0.5.</span> <span class="toc-text"> more [file]：可翻页地浏览文件</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文浏览"><span class="toc-number">1.</span> <span class="toc-text">正文浏览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cat：浏览正文文件内容"><span class="toc-number">1.0.1.</span> <span class="toc-text">cat：浏览正文文件内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#head：浏览文件头几行"><span class="toc-number">1.0.2.</span> <span class="toc-text">head：浏览文件头几行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tail：浏览文件后几行"><span class="toc-number">1.0.3.</span> <span class="toc-text">tail：浏览文件后几行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wc：-word-count-字数统计"><span class="toc-number">1.0.4.</span> <span class="toc-text">wc：(word count)字数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more-file-：可翻页地浏览文件"><span class="toc-number">1.0.5.</span> <span class="toc-text">more [file]：可翻页地浏览文件</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -271,7 +260,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="磁盘，可移除式媒体  检查磁盘空间  监督文件系统的使用情况，可使用如下两个命令：  df：显示文件系统中磁盘使用和空闲区的数量  1234567$ df [选项] [dir|file|设备]    无[dir|file]：以KB为单位列出每个(Every)文件系统中 所有的空间，已用空间，空闲空间    加上 dir|file：显示该文件所在的文件系统的情况    加上 设备(如 /dev/s">
+    <meta name="description" content="磁盘，可移除式媒体 检查磁盘空间  监督文件系统的使用情况，可使用如下两个命令：  df：显示文件系统中磁盘使用和空闲区的数量  1234567$ df [选项] [dir|file|设备]    无[dir|file]：以KB为单位列出每个(Every)文件系统中 所有的空间，已用空间，空闲空间    加上 dir|file：显示该文件所在的文件系统的情况    加上 设备(如 /dev/sda">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-3.1.2-磁盘，可移除式媒体">
 <meta property="og:url" content="https://clownote.github.io/2016/12/29/Linux/linux-3-1-2-Disk-RemovableMedia/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="磁盘，可移除式媒体  检查磁盘空间  监督文件系统的使用情况，可使用如下两个命令：  df：显示文件系统中磁盘使用和空闲区的数量  1234567$ df [选项] [dir|file|设备]    无[dir|file]：以KB为单位列出每个(Every)文件系统中 所有的空间，已用空间，空闲空间    加上 dir|file：显示该文件所在的文件系统的情况    加上 设备(如 /dev/s">
+<meta property="og:description" content="磁盘，可移除式媒体 检查磁盘空间  监督文件系统的使用情况，可使用如下两个命令：  df：显示文件系统中磁盘使用和空闲区的数量  1234567$ df [选项] [dir|file|设备]    无[dir|file]：以KB为单位列出每个(Every)文件系统中 所有的空间，已用空间，空闲空间    加上 dir|file：显示该文件所在的文件系统的情况    加上 设备(如 /dev/sda">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-3.1.2-磁盘，可移除式媒体">
-<meta name="twitter:description" content="磁盘，可移除式媒体  检查磁盘空间  监督文件系统的使用情况，可使用如下两个命令：  df：显示文件系统中磁盘使用和空闲区的数量  1234567$ df [选项] [dir|file|设备]    无[dir|file]：以KB为单位列出每个(Every)文件系统中 所有的空间，已用空间，空闲空间    加上 dir|file：显示该文件所在的文件系统的情况    加上 设备(如 /dev/s">
+<meta name="twitter:description" content="磁盘，可移除式媒体 检查磁盘空间  监督文件系统的使用情况，可使用如下两个命令：  df：显示文件系统中磁盘使用和空闲区的数量  1234567$ df [选项] [dir|file|设备]    无[dir|file]：以KB为单位列出每个(Every)文件系统中 所有的空间，已用空间，空闲空间    加上 dir|file：显示该文件所在的文件系统的情况    加上 设备(如 /dev/sda">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#磁盘可移除式媒体"><span class="toc-number">1.</span> <span class="toc-text"> 磁盘，可移除式媒体</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#磁盘，可移除式媒体"><span class="toc-number">1.</span> <span class="toc-text">磁盘，可移除式媒体</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2016-12-29T22:38:11.000Z" itemprop="datePublished">2016-12-29</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,8 +160,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="磁盘可移除式媒体"><a class="markdownIt-Anchor" href="#磁盘可移除式媒体"></a> 磁盘，可移除式媒体</h1>
-<ul>
+    <h1 id="磁盘，可移除式媒体"><a href="#磁盘，可移除式媒体" class="headerlink" title="磁盘，可移除式媒体"></a>磁盘，可移除式媒体</h1><ul>
 <li><strong>检查磁盘空间</strong></li>
 </ul>
 <p>监督文件系统的使用情况，可使用如下两个命令：</p>
@@ -169,6 +168,7 @@
 <li>df：显示文件系统中磁盘使用和空闲区的数量</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ df [选项] [dir|file|设备]</span><br><span class="line">    无[dir|file]：以KB为单位列出每个(Every)文件系统中 所有的空间，已用空间，空闲空间</span><br><span class="line">    加上 dir|file：显示该文件所在的文件系统的情况</span><br><span class="line">    加上 设备(如 /dev/sda1)：显示该设备的文件系统的情况</span><br><span class="line">    选项：</span><br><span class="line">        -h或-H ：以人类容易理解的方式表示</span><br><span class="line">        -i：列出inode的使用情况</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>du：显示磁盘使用的总量（xx目录，有多大）</li>
 </ul>
@@ -182,38 +182,37 @@
 <p><strong><em>Removable Media</em></strong>（一种翻译为  可移除式媒体）：指USB闪存、软盘、CD、DVD等介质。</p>
 <p><em>Removable Media</em> 的<strong>特点</strong>：</p>
 <ul>
-<li>
-<p>在访问之前，必须将这个Removable Media挂载（mount）到系统上。</p>
+<li><p>在访问之前，必须将这个Removable Media挂载（mount）到系统上。</p>
 </li>
-<li>
-<p>在移除之前，必须将这个Removable Media从系统上卸载掉。</p>
+<li><p>在移除之前，必须将这个Removable Media从系统上卸载掉。</p>
 </li>
-<li>
-<p>在默认的情况下，一般非root的普通用户只能挂载某些特定的设备（如USB闪存、软盘、CD、DVD等）。</p>
+<li><p>在默认的情况下，一般非root的普通用户只能挂载某些特定的设备（如USB闪存、软盘、CD、DVD等）。</p>
 </li>
-<li>
-<p>默认的挂载点一般是根目录下的media，即/media。</p>
+<li><p>默认的挂载点一般是根目录下的media，即/media。</p>
 </li>
 </ul>
 <p><strong>MOUNT</strong> Removable Media：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mount</span><br><span class="line">    列出当前系统中挂载的所有文件系统</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>Mount <strong>CD/DVD:</strong></li>
+<li>Mount <strong>CD/DVD:</strong>  </li>
 </ul>
 <p>在gnome或KDE的中，只要在光驱中放入CD或DVD，就会被自动地挂载到系统中来。</p>
 <p>如果没有被自动地挂载到系统中来，就必须手动地挂载CD/DVD。</p>
-<p>如果是CD/DVD Reader，将使用 <code>mount ... /media/cdrom</code> 命令将CD/DVD挂载到 <code>/media/cdrom</code> 之下。</p>
+<p>如果是CD/DVD Reader，将使用 <code>mount  ...  /media/cdrom</code> 命令将CD/DVD挂载到 <code>/media/cdrom</code> 之下。</p>
 <p>如果是CD/DVD Writer，将使用 <code>mount ... /media/cdrecorder</code> 命令将CD/DVD挂载到 <code>/media/cdrecorder</code> 之下。</p>
 <p>可以使用eject命令退出（umount）CD/DVD。</p>
 <p>[⚠️]<span style="color: #fcb100;">当安装有<strong>多个光盘</strong>软件时，千万<strong>不要将工作目录设为CD所在的目录</strong>，这样将无法更换光盘，因为执行eject或umount命令时系统要求CD目录中没有任何操作。</span></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">挂载CD／DVD：</span><br><span class="line"># mount  /dev/hdc  /media/cdrom        # Only root can do that</span><br><span class="line">Read it：</span><br><span class="line">$ ls -l /media/cdrom</span><br><span class="line">Umount it：</span><br><span class="line"># eject /media/cdrom</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>Mount <strong>USB闪存：</strong></li>
+<li>Mount <strong>USB闪存：</strong>  </li>
 </ul>
 <p>将USB闪存插入计算机，Linux内核会自动探测到这一设备，并将其自动安装为SCSI设备。</p>
 <p>通常它会被挂载在<code>/media/&lt;Device ID&gt;</code>。</p>
 <p>手动挂载：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># mount /media/KINGSTON</span><br><span class="line">或</span><br><span class="line"># mount  /dev/sdb1  /media/KINGSTON</span><br></pre></td></tr></table></figure>
+
 <p>只有root可以 umount USB 闪存。</p>
 
   </div>
@@ -252,7 +251,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#磁盘可移除式媒体"><span class="toc-number">1.</span> <span class="toc-text"> 磁盘，可移除式媒体</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#磁盘，可移除式媒体"><span class="toc-number">1.</span> <span class="toc-text">磁盘，可移除式媒体</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -284,7 +283,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

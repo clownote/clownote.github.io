@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="grep/egrep/fgrep grep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。 （UNIX中的patterns被称为 Regular Expressions）  grep=“Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”  grep、egrep能在一个或">
+    <meta name="description" content="grep/egrep/fgrepgrep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。 （UNIX中的patterns被称为 _Regular Expressions_）  grep=”Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”  grep、egrep能在一个或">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-9.0-grep">
 <meta property="og:url" content="https://clownote.github.io/2017/01/10/Linux/linux-9-0-Grep/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="grep/egrep/fgrep grep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。 （UNIX中的patterns被称为 Regular Expressions）  grep=“Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”  grep、egrep能在一个或">
+<meta property="og:description" content="grep/egrep/fgrepgrep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。 （UNIX中的patterns被称为 _Regular Expressions_）  grep=”Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”  grep、egrep能在一个或">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-9.0-grep">
-<meta name="twitter:description" content="grep/egrep/fgrep grep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。 （UNIX中的patterns被称为 Regular Expressions）  grep=“Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”  grep、egrep能在一个或">
+<meta name="twitter:description" content="grep/egrep/fgrepgrep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。 （UNIX中的patterns被称为 _Regular Expressions_）  grep=”Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”  grep、egrep能在一个或">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#grepegrepfgrep"><span class="toc-number">1.</span> <span class="toc-text"> grep/egrep/fgrep</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-number">1.0.1.</span> <span class="toc-text"> grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#egrep"><span class="toc-number">1.0.2.</span> <span class="toc-text"> egrep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fgrep"><span class="toc-number">1.0.3.</span> <span class="toc-text"> fgrep</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#grep-egrep-fgrep"><span class="toc-number">1.</span> <span class="toc-text">grep/egrep/fgrep</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-number">1.0.1.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#egrep"><span class="toc-number">1.0.2.</span> <span class="toc-text">egrep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fgrep"><span class="toc-number">1.0.3.</span> <span class="toc-text">fgrep</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2017-01-10T19:51:00.000Z" itemprop="datePublished">2017-01-10</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,15 +160,13 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="grepegrepfgrep"><a class="markdownIt-Anchor" href="#grepegrepfgrep"></a> grep/egrep/fgrep</h1>
-<p>grep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。</p>
-<p>（UNIX中的patterns被称为 <em>Regular Expressions</em>）</p>
+    <h1 id="grep-egrep-fgrep"><a href="#grep-egrep-fgrep" class="headerlink" title="grep/egrep/fgrep"></a>grep/egrep/fgrep</h1><p>grep、egrep、fgrep：搜索文件中满足特定模式(pattern)或字符串的内容，将结果输出到1，不改变原文件。</p>
+<p>（UNIX中的patterns被称为 _Regular Expressions_）</p>
 <blockquote>
-<p>grep=“Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”</p>
+<p>grep=”Global，Regular Expressions，Print”，即“在文件全局中用正则表达式搜索结果打印输出”</p>
 </blockquote>
 <p>grep、egrep能在一个或多个文件等内容中搜索某一特定的Character Pattern（R.E.）。</p>
-<h3 id="grep"><a class="markdownIt-Anchor" href="#grep"></a> grep</h3>
-<p>grep命令支持以下几种正则表达式的元字符（regular expression metacharacters），即通配符：</p>
+<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>grep命令支持以下几种正则表达式的元字符（regular expression metacharacters），即通配符：</p>
 <ul>
 <li><code>c*</code> ：将匹配0个（即空白）或多个字符c（c为任一字符）。</li>
 <li><code>.</code> ：将匹配任何一个字符而且只能是一个字符。</li>
@@ -178,18 +176,20 @@
 <li><code>$</code> ：锁定行的结尾。</li>
 </ul>
 <p>在基本正则表达式中：</p>
-<p>如元字符<code>*</code>、<code>+</code>、<code>{</code>、<code>|</code>、<code>(</code> 和 <code>)</code> 已经失去了它们原来的含义，</p>
-<p>如果要恢复它们原本的含义要在之前冠以反斜线’\’，如 <code>\*</code>、<code>\+</code>、<code>\{</code>、<code>\|</code>、<code>\(</code> 和 <code>\)</code>。</p>
+<p>        如元字符<code>*</code>、<code>+</code>、<code>{</code>、<code>|</code>、<code>(</code> 和 <code>)</code> 已经失去了它们原来的含义，</p>
+<p>        如果要恢复它们原本的含义要在之前冠以反斜线’\‘，如 <code>\*</code>、<code>\+</code>、<code>\{</code>、<code>\|</code>、<code>\(</code> 和 <code>\)</code>。</p>
 <p>grep命令是用来在每一个文件中或标准输出上搜索特定的模式。</p>
 <p>当使用grep命令时，包含一个指定字符模式的每一行都会被打印在屏幕上，</p>
 <p>使用grep命令并不改变文件中的内容。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">grep 选项 模式 文件名</span><br><span class="line">        选项可以改变grep命令的搜寻方式：</span><br><span class="line">            -c：仅列出包含模式的行的数量。</span><br><span class="line">            -i：忽略模式中的字母大小写。</span><br><span class="line">            -l：列出带有匹配行的文件名。</span><br><span class="line">            -n：在每行的最前面列出行号。</span><br><span class="line">            -v：列出没有匹配模式的行。</span><br><span class="line">            -w：把表达式作为一个完整的单字来搜寻，忽略那些部分匹配的行。</span><br><span class="line">[⚠️]除了-w选项之外，其他的每个选项都可以在egrep和fgrep命令中使用。</span><br><span class="line">[⚠️]如果是搜索多个文件，grep命令的结果只显示在文件中发现匹配模式的文件名，而搜索的是单一的文件，grep命令的结果将显示每一个包含匹配模式的行。</span><br></pre></td></tr></table></figure>
+
 <p><em>e.g.</em></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ grep CLERK emp.data        #显示包含了CLERK的行</span><br><span class="line">7369    SMITH   CLERK   800     17-DEC-80</span><br><span class="line">7876    ADAMS  CLERK   1100    23-MAY-87</span><br><span class="line">$ grep -c CLERK emp.data        # 只显示用几个满足行</span><br><span class="line">2</span><br><span class="line">$ grep ^78 emp.data      # 列出在emp.data文件中所有以78开始的数据行</span><br><span class="line">$ grep &apos;1..0&apos; emp.data    #&apos;1..0&apos;表示以1开始随后是两个任意字符最后是0的字符串。</span><br><span class="line">$ grep &apos;[12]..0&apos;        # &apos;[12]..0&apos;表示以1或2开始随后是两个任意字符最后是0的字符串。</span><br><span class="line">$ grep -l root group passwd hosts    # 在当前目录中的group、passwd和hosts 3个文件中搜索模式root并列出包含这一模式的文件名。</span><br><span class="line">$ grep &apos;/bash$&apos; passwd    # 列出在passwd文件中所有以/bash结尾的行（Get所有默认使用bash的用户）。</span><br><span class="line">$ ps -e | grep ftp    # 获取目前系统使用的ftp服务的进程名</span><br><span class="line">$ ps -e | grep ora    # To know is Oracle Database runing</span><br></pre></td></tr></table></figure>
-<h3 id="egrep"><a class="markdownIt-Anchor" href="#egrep"></a> egrep</h3>
-<p align="left"><span style="color: rgb(253, 4, 4);">/* egrep 在RHEL等Linux上其实是「grep -E」的别名 \*/</span></p>
+
+<h3 id="egrep"><a href="#egrep" class="headerlink" title="egrep"></a>egrep</h3><p align="left"><span style="color: rgb(253, 4, 4);">/* egrep 在RHEL等Linux上其实是「grep -E」的别名 \*/</span></p>
 <p align="left">egrep的语法格式与grep命令相同，</p>
 但egrep是用来在一个或多个文件的内容中利用**扩展的正则表达式**的元字符搜索特定的模式。
+
 <p>egrep所增加的元字符：</p>
 <ul>
 <li>+：匹配一个或多个前导字符。</li>
@@ -198,8 +198,8 @@
 </ul>
 <p>e.g.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ egrep &apos;[1-5]+000&apos; emp.data        # 匹配1000，2000，3000，4000，5000</span><br><span class="line">$ egrep &apos;S[A-Z]+MAN&apos; emp.fmt        # 匹配“Sxx...xxMAN”</span><br><span class="line">$ egrep &apos;E(S|R) &apos; emp.fmt           # 在每一行数据中搜寻字母E后面紧跟着S或R</span><br></pre></td></tr></table></figure>
-<h3 id="fgrep"><a class="markdownIt-Anchor" href="#fgrep"></a> fgrep</h3>
-<p><span style="color: rgb(253, 4, 4);">/* fgrep 在RHEL等Linux上其实是「grep -F」的别名 */</span></p>
+
+<h3 id="fgrep"><a href="#fgrep" class="headerlink" title="fgrep"></a>fgrep</h3><p><span style="color: rgb(253, 4, 4);">/* fgrep 在RHEL等Linux上其实是「grep -F」的别名 */</span></p>
 <p>fgrep也用来在一个或多个文件中搜索与指定字符串匹配的行。</p>
 <p>搜索文件fgrep的速度要比grep快，</p>
 <p>fgrep可以一次迅速地搜索多个模式。</p>
@@ -246,7 +246,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#grepegrepfgrep"><span class="toc-number">1.</span> <span class="toc-text"> grep/egrep/fgrep</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-number">1.0.1.</span> <span class="toc-text"> grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#egrep"><span class="toc-number">1.0.2.</span> <span class="toc-text"> egrep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fgrep"><span class="toc-number">1.0.3.</span> <span class="toc-text"> fgrep</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#grep-egrep-fgrep"><span class="toc-number">1.</span> <span class="toc-text">grep/egrep/fgrep</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-number">1.0.1.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#egrep"><span class="toc-number">1.0.2.</span> <span class="toc-text">egrep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fgrep"><span class="toc-number">1.0.3.</span> <span class="toc-text">fgrep</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -278,7 +278,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

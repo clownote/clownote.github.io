@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Leetcode 136. 只出现一次的数字  题目 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1 示例 2: 12输入: [4,1,2,1,2]输出: 4 来源：力扣（LeetCode） 链接：https://le">
+    <meta name="description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4  来源：力扣（LeetCode）链接：https://leetc">
 <meta name="keywords" content="School">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 136. 只出现一次的数字">
 <meta property="og:url" content="https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode 136. 只出现一次的数字  题目 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1 示例 2: 12输入: [4,1,2,1,2]输出: 4 来源：力扣（LeetCode） 链接：https://le">
+<meta property="og:description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4  来源：力扣（LeetCode）链接：https://leetc">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdmdhgx8xwj317x0u04qd.jpg">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.303Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode 136. 只出现一次的数字">
-<meta name="twitter:description" content="Leetcode 136. 只出现一次的数字  题目 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1 示例 2: 12输入: [4,1,2,1,2]输出: 4 来源：力扣（LeetCode） 链接：https://le">
+<meta name="twitter:description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4  来源：力扣（LeetCode）链接：https://leetc">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdmdhgx8xwj317x0u04qd.jpg">
     
     
@@ -111,7 +111,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-136-只出现一次的数字"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode 136. 只出现一次的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表"><span class="toc-number">1.2.</span> <span class="toc-text"> 哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异或"><span class="toc-number">1.3.</span> <span class="toc-text"> 异或</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-136-只出现一次的数字"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 136. 只出现一次的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表"><span class="toc-number">1.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异或"><span class="toc-number">1.3.</span> <span class="toc-text">异或</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -137,7 +137,7 @@
       
         <time datetime="2020-04-08T14:57:55.000Z" itemprop="datePublished">2020-04-08</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.303Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -157,34 +157,34 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="leetcode-136-只出现一次的数字"><a class="markdownIt-Anchor" href="#leetcode-136-只出现一次的数字"></a> Leetcode <a href="https://leetcode-cn.com/problems/single-number/" target="_blank" rel="noopener">136. 只出现一次的数字</a></h1>
-<h2 id="题目"><a class="markdownIt-Anchor" href="#题目"></a> 题目</h2>
-<p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。</p>
+    <h1 id="Leetcode-136-只出现一次的数字"><a href="#Leetcode-136-只出现一次的数字" class="headerlink" title="Leetcode 136. 只出现一次的数字"></a>Leetcode <a href="https://leetcode-cn.com/problems/single-number/" target="_blank" rel="noopener">136. 只出现一次的数字</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。</p>
 <p>说明：</p>
 <p>你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？</p>
 <p>示例 1:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [2,2,1]</span><br><span class="line">输出: 1</span><br></pre></td></tr></table></figure>
+
 <p>示例 2:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [4,1,2,1,2]</span><br><span class="line">输出: 4</span><br></pre></td></tr></table></figure>
-<p>来源：力扣（LeetCode）<br>
-链接：<a href="https://leetcode-cn.com/problems/single-number" target="_blank" rel="noopener">https://leetcode-cn.com/problems/single-number</a><br>
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<h2 id="哈希表"><a class="markdownIt-Anchor" href="#哈希表"></a> 哈希表</h2>
-<p>这道题最简单的方法，哈希表暴力存一下出现次数就好了。由于题目保证最多有出现两次，所以用个bool去存出现次数就行了，Golang 实现：</p>
+
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/single-number" target="_blank" rel="noopener">https://leetcode-cn.com/problems/single-number</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p>这道题最简单的方法，哈希表暴力存一下出现次数就好了。由于题目保证最多有出现两次，所以用个bool去存出现次数就行了，Golang 实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">singleNumber</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    memo := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">bool</span>)</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        memo[v] = !memo[v]</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">for</span> k, v := <span class="keyword">range</span> memo &#123;</span><br><span class="line">        <span class="keyword">if</span> v &#123;</span><br><span class="line">            <span class="keyword">return</span> k</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="异或"><a class="markdownIt-Anchor" href="#异或"></a> 异或</h2>
-<p>按位异或（C风格写做 <code>^</code>）有很多有趣的性质，这道题可以用其中的一两个：</p>
+
+<h2 id="异或"><a href="#异或" class="headerlink" title="异或"></a>异或</h2><p>按位异或（C风格写做 <code>^</code>）有很多有趣的性质，这道题可以用其中的一两个：</p>
 <ol>
 <li><code>x ^ x = 0</code></li>
 <li><code>0 ^ x = x</code></li>
 </ol>
 <p>其实这两个性质还是很显然的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  100110</span><br><span class="line">^ 100110</span><br><span class="line">--------</span><br><span class="line">  000000</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  000000</span><br><span class="line">^ 100110</span><br><span class="line">--------</span><br><span class="line">  100110</span><br></pre></td></tr></table></figure>
+
 <p>这两个性质合在一起就有：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a ^ a ^ b ^ b ^ ... ^ z = z</span><br><span class="line">// 省略的那里也是一对一对的，只有z是单独一个</span><br></pre></td></tr></table></figure>
+
 <p>这道题就解决了。</p>
 <p>Golang 实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">singleNumber</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    x := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        x ^= v</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gdmdhgx8xwj317x0u04qd.jpg" alt="image-20200408150554908"></p>
 
   </div>
@@ -223,7 +223,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-136-只出现一次的数字"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode 136. 只出现一次的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表"><span class="toc-number">1.2.</span> <span class="toc-text"> 哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异或"><span class="toc-number">1.3.</span> <span class="toc-text"> 异或</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-136-只出现一次的数字"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 136. 只出现一次的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表"><span class="toc-number">1.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异或"><span class="toc-number">1.3.</span> <span class="toc-text">异或</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -255,7 +255,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

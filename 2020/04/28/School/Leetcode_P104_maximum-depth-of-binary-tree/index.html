@@ -6,22 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Leetcode 104. 二叉树的最大深度  题目 给定一个二叉树，找出其最大深度。 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。 说明: 叶子节点是指没有子节点的节点。 示例： 给定二叉树 [3,9,20,null,null,15,7]， 12345  3 / \9  20  /  \ 15   7 返回它的最大深度 3 。 来源：力扣（LeetCode） 链接：https://">
+    <meta name="description" content="Leetcode 104. 二叉树的最大深度题目给定一个二叉树，找出其最大深度。 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。 说明: 叶子节点是指没有子节点的节点。 示例：给定二叉树 [3,9,20,null,null,15,7]， 12345  3 / \9  20  /  \ 15   7  返回它的最大深度 3 。 来源：力扣（LeetCode）链接：https://leetc">
 <meta name="keywords" content="School">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 104. 二叉树的最大深度">
 <meta property="og:url" content="https://clownote.github.io/2020/04/28/School/Leetcode_P104_maximum-depth-of-binary-tree/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode 104. 二叉树的最大深度  题目 给定一个二叉树，找出其最大深度。 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。 说明: 叶子节点是指没有子节点的节点。 示例： 给定二叉树 [3,9,20,null,null,15,7]， 12345  3 / \9  20  /  \ 15   7 返回它的最大深度 3 。 来源：力扣（LeetCode） 链接：https://">
+<meta property="og:description" content="Leetcode 104. 二叉树的最大深度题目给定一个二叉树，找出其最大深度。 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。 说明: 叶子节点是指没有子节点的节点。 示例：给定二叉树 [3,9,20,null,null,15,7]， 12345  3 / \9  20  /  \ 15   7  返回它的最大深度 3 。 来源：力扣（LeetCode）链接：https://leetc">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge96uvbw9fj31co0u01kx.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge96tea5w1j31ih0u0qss.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge972t6548j31co0u01kx.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge984g3z1qj31co0u01kx.jpg">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.303Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode 104. 二叉树的最大深度">
-<meta name="twitter:description" content="Leetcode 104. 二叉树的最大深度  题目 给定一个二叉树，找出其最大深度。 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。 说明: 叶子节点是指没有子节点的节点。 示例： 给定二叉树 [3,9,20,null,null,15,7]， 12345  3 / \9  20  /  \ 15   7 返回它的最大深度 3 。 来源：力扣（LeetCode） 链接：https://">
+<meta name="twitter:description" content="Leetcode 104. 二叉树的最大深度题目给定一个二叉树，找出其最大深度。 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。 说明: 叶子节点是指没有子节点的节点。 示例：给定二叉树 [3,9,20,null,null,15,7]， 12345  3 / \9  20  /  \ 15   7  返回它的最大深度 3 。 来源：力扣（LeetCode）链接：https://leetc">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge96uvbw9fj31co0u01kx.jpg">
     
     
@@ -114,7 +114,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-104-二叉树的最大深度"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode 104. 二叉树的最大深度</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#递归"><span class="toc-number">1.2.</span> <span class="toc-text"> 递归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#迭代"><span class="toc-number">1.3.</span> <span class="toc-text"> 迭代</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-104-二叉树的最大深度"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 104. 二叉树的最大深度</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#递归"><span class="toc-number">1.2.</span> <span class="toc-text">递归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#迭代"><span class="toc-number">1.3.</span> <span class="toc-text">迭代</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -140,7 +140,7 @@
       
         <time datetime="2020-04-28T09:35:35.000Z" itemprop="datePublished">2020-04-28</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.303Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,31 +160,29 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="leetcode-104-二叉树的最大深度"><a class="markdownIt-Anchor" href="#leetcode-104-二叉树的最大深度"></a> Leetcode <a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/" target="_blank" rel="noopener">104. 二叉树的最大深度</a></h1>
-<h2 id="题目"><a class="markdownIt-Anchor" href="#题目"></a> 题目</h2>
-<p>给定一个二叉树，找出其最大深度。</p>
+    <h1 id="Leetcode-104-二叉树的最大深度"><a href="#Leetcode-104-二叉树的最大深度" class="headerlink" title="Leetcode 104. 二叉树的最大深度"></a>Leetcode <a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/" target="_blank" rel="noopener">104. 二叉树的最大深度</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个二叉树，找出其最大深度。</p>
 <p>二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。</p>
 <p>说明: 叶子节点是指没有子节点的节点。</p>
-<p>示例：<br>
-给定二叉树 <code>[3,9,20,null,null,15,7]</code>，</p>
+<p>示例：<br>给定二叉树 <code>[3,9,20,null,null,15,7]</code>，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  3</span><br><span class="line"> / \</span><br><span class="line">9  20</span><br><span class="line">  /  \</span><br><span class="line"> 15   7</span><br></pre></td></tr></table></figure>
+
 <p>返回它的最大深度 3 。</p>
-<p>来源：力扣（LeetCode）<br>
-链接：<a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/maximum-depth-of-binary-tree</a><br>
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<h2 id="递归"><a class="markdownIt-Anchor" href="#递归"></a> 递归</h2>
-<p>求深度，深度优先去跑一遍就出来了。Golang 实现:</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/maximum-depth-of-binary-tree</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>求深度，深度优先去跑一遍就出来了。Golang 实现:</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * type TreeNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Left *TreeNode</span></span><br><span class="line"><span class="comment"> *     Right *TreeNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maxDepth</span><span class="params">(root *TreeNode)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    leftDepth := maxDepth(root.Left) + <span class="number">1</span></span><br><span class="line">    rightDepth := maxDepth(root.Right) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> leftDepth &gt; rightDepth &#123;</span><br><span class="line">        <span class="keyword">return</span> leftDepth</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> rightDepth</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge96uvbw9fj31co0u01kx.jpg" alt="image-20200428084432376"></p>
 <p>Swift:</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     public var val: Int</span></span><br><span class="line"><span class="comment"> *     public var left: TreeNode?</span></span><br><span class="line"><span class="comment"> *     public var right: TreeNode?</span></span><br><span class="line"><span class="comment"> *     public init(_ val: Int) &#123;</span></span><br><span class="line"><span class="comment"> *         self.val = val</span></span><br><span class="line"><span class="comment"> *         self.left = nil</span></span><br><span class="line"><span class="comment"> *         self.right = nil</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">maxDepth</span><span class="params">(<span class="number">_</span> root: TreeNode?)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">max</span>(maxDepth(root?.<span class="keyword">left</span>), maxDepth(root?.<span class="keyword">right</span>)) + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge96tea5w1j31ih0u0qss.jpg" alt="image-20200428084300289"></p>
-<h2 id="迭代"><a class="markdownIt-Anchor" href="#迭代"></a> 迭代</h2>
-<p>把递归改成栈，DFS也能出来，基本是一样的。Golang 实现:</p>
+<h2 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h2><p>把递归改成栈，DFS也能出来，基本是一样的。Golang 实现:</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maxDepth</span><span class="params">(root *TreeNode)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    depth := <span class="number">1</span></span><br><span class="line">    root.Val = <span class="number">1</span></span><br><span class="line">    stack := []*TreeNode&#123;root&#125;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(stack) &gt; <span class="number">0</span> &#123;</span><br><span class="line">        node := stack[<span class="built_in">len</span>(stack) - <span class="number">1</span>]</span><br><span class="line">        stack = stack[: <span class="built_in">len</span>(stack) - <span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> node.Val &gt; depth &#123;</span><br><span class="line">            depth = node.Val</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> node.Left != <span class="literal">nil</span> &#123;</span><br><span class="line">            node.Left.Val = node.Val + <span class="number">1</span></span><br><span class="line">            stack = <span class="built_in">append</span>(stack, node.Left)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> node.Right != <span class="literal">nil</span> &#123;</span><br><span class="line">            node.Right.Val = node.Val + <span class="number">1</span></span><br><span class="line">            stack = <span class="built_in">append</span>(stack, node.Right)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> depth</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge972t6548j31co0u01kx.jpg" alt="屏幕快照 2020-04-28 08.51.08"></p>
 <p>虽然不地道，但代码基本不变，改几个符号就可以放到 Swift 里跑了:</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">maxDepth</span><span class="params">(<span class="number">_</span> root: TreeNode?)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> depth = <span class="number">1</span></span><br><span class="line">        root?.val = <span class="number">1</span></span><br><span class="line">        <span class="keyword">var</span> stack: [<span class="type">TreeNode</span>] = [root!, ]</span><br><span class="line">        <span class="keyword">while</span> !stack.isEmpty &#123;</span><br><span class="line">            <span class="keyword">let</span> node = stack.popLast()!</span><br><span class="line">            <span class="keyword">if</span> node.val &gt; depth &#123;</span><br><span class="line">                depth = node.val</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> node.<span class="keyword">left</span> != <span class="literal">nil</span> &#123;</span><br><span class="line">                node.<span class="keyword">left</span>?.val = node.val + <span class="number">1</span></span><br><span class="line">                stack.append(node.<span class="keyword">left</span>!)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> node.<span class="keyword">right</span> != <span class="literal">nil</span> &#123;</span><br><span class="line">                node.<span class="keyword">right</span>?.val = node.val + <span class="number">1</span></span><br><span class="line">                stack.append(node.<span class="keyword">right</span>!)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> depth</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge984g3z1qj31co0u01kx.jpg" alt="image-20200428092824475"></p>
 
   </div>
@@ -223,7 +221,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-104-二叉树的最大深度"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode 104. 二叉树的最大深度</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#递归"><span class="toc-number">1.2.</span> <span class="toc-text"> 递归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#迭代"><span class="toc-number">1.3.</span> <span class="toc-text"> 迭代</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-104-二叉树的最大深度"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 104. 二叉树的最大深度</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#递归"><span class="toc-number">1.2.</span> <span class="toc-text">递归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#迭代"><span class="toc-number">1.3.</span> <span class="toc-text">迭代</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -255,7 +253,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

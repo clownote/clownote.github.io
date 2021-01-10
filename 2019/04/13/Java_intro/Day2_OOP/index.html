@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="面向对象思想  概述 随着计算机技术的发展，我们想用计算机来解决越来越复杂的问题。问题越复杂，解决问题需要的抽象层往往越高。 编程语言的的发展，也顺应着这样的趋势。一开始的汇编语言只是对计算机硬件的简单抽象，C语言又对其进行了进一步的抽象，使其更加贴近问题而不是硬件；到了 Java，面向对象编程(OOP)的思想已近很成熟了，这是一种更加抽象的语言，对计算机硬件的表达更少，而对问题的描述更多。">
+    <meta name="description" content="面向对象思想概述随着计算机技术的发展，我们想用计算机来解决越来越复杂的问题。问题越复杂，解决问题需要的抽象层往往越高。 编程语言的的发展，也顺应着这样的趋势。一开始的汇编语言只是对计算机硬件的简单抽象，C语言又对其进行了进一步的抽象，使其更加贴近问题而不是硬件；到了 Java，面向对象编程(OOP)的思想已近很成熟了，这是一种更加抽象的语言，对计算机硬件的表达更少，而对问题的描述更多。 认识面向对">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java-面向对象">
 <meta property="og:url" content="https://clownote.github.io/2019/04/13/Java_intro/Day2_OOP/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="面向对象思想  概述 随着计算机技术的发展，我们想用计算机来解决越来越复杂的问题。问题越复杂，解决问题需要的抽象层往往越高。 编程语言的的发展，也顺应着这样的趋势。一开始的汇编语言只是对计算机硬件的简单抽象，C语言又对其进行了进一步的抽象，使其更加贴近问题而不是硬件；到了 Java，面向对象编程(OOP)的思想已近很成熟了，这是一种更加抽象的语言，对计算机硬件的表达更少，而对问题的描述更多。">
+<meta property="og:description" content="面向对象思想概述随着计算机技术的发展，我们想用计算机来解决越来越复杂的问题。问题越复杂，解决问题需要的抽象层往往越高。 编程语言的的发展，也顺应着这样的趋势。一开始的汇编语言只是对计算机硬件的简单抽象，C语言又对其进行了进一步的抽象，使其更加贴近问题而不是硬件；到了 Java，面向对象编程(OOP)的思想已近很成熟了，这是一种更加抽象的语言，对计算机硬件的表达更少，而对问题的描述更多。 认识面向对">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://java.quanke.name/1-2.gif">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java-面向对象">
-<meta name="twitter:description" content="面向对象思想  概述 随着计算机技术的发展，我们想用计算机来解决越来越复杂的问题。问题越复杂，解决问题需要的抽象层往往越高。 编程语言的的发展，也顺应着这样的趋势。一开始的汇编语言只是对计算机硬件的简单抽象，C语言又对其进行了进一步的抽象，使其更加贴近问题而不是硬件；到了 Java，面向对象编程(OOP)的思想已近很成熟了，这是一种更加抽象的语言，对计算机硬件的表达更少，而对问题的描述更多。">
+<meta name="twitter:description" content="面向对象思想概述随着计算机技术的发展，我们想用计算机来解决越来越复杂的问题。问题越复杂，解决问题需要的抽象层往往越高。 编程语言的的发展，也顺应着这样的趋势。一开始的汇编语言只是对计算机硬件的简单抽象，C语言又对其进行了进一步的抽象，使其更加贴近问题而不是硬件；到了 Java，面向对象编程(OOP)的思想已近很成熟了，这是一种更加抽象的语言，对计算机硬件的表达更少，而对问题的描述更多。 认识面向对">
 <meta name="twitter:image" content="https://java.quanke.name/1-2.gif">
     
     
@@ -111,7 +111,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#面向对象思想"><span class="toc-number">1.</span> <span class="toc-text"> 面向对象思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text"> 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#认识面向对象"><span class="toc-number">1.2.</span> <span class="toc-text"> 认识面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的接口"><span class="toc-number">1.3.</span> <span class="toc-text"> 对象的接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方案的隐藏"><span class="toc-number">1.4.</span> <span class="toc-text"> 实现方案的隐藏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方案的重复使用"><span class="toc-number">1.5.</span> <span class="toc-text"> 方案的重复使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承重新使用接口"><span class="toc-number">1.6.</span> <span class="toc-text"> 继承：重新使用接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多形对象的互换使用"><span class="toc-number">1.7.</span> <span class="toc-text"> 多形对象的互换使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#动态绑定"><span class="toc-number">1.7.0.1.</span> <span class="toc-text"> 动态绑定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抽象的基础类和接口"><span class="toc-number">1.7.0.2.</span> <span class="toc-text"> 抽象的基础类和接口</span></a></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#面向对象思想"><span class="toc-number">1.</span> <span class="toc-text">面向对象思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#认识面向对象"><span class="toc-number">1.2.</span> <span class="toc-text">认识面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的接口"><span class="toc-number">1.3.</span> <span class="toc-text">对象的接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方案的隐藏"><span class="toc-number">1.4.</span> <span class="toc-text">实现方案的隐藏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方案的重复使用"><span class="toc-number">1.5.</span> <span class="toc-text">方案的重复使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承：重新使用接口"><span class="toc-number">1.6.</span> <span class="toc-text">继承：重新使用接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多形对象的互换使用"><span class="toc-number">1.7.</span> <span class="toc-text">多形对象的互换使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#动态绑定"><span class="toc-number">1.7.0.1.</span> <span class="toc-text">动态绑定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抽象的基础类和接口"><span class="toc-number">1.7.0.2.</span> <span class="toc-text">抽象的基础类和接口</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -137,7 +137,7 @@
       
         <time datetime="2019-04-13T16:37:53.000Z" itemprop="datePublished">2019-04-13</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.196Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -162,12 +162,9 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="面向对象思想"><a class="markdownIt-Anchor" href="#面向对象思想"></a> 面向对象思想</h1>
-<h2 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h2>
-<p>随着计算机技术的发展，我们想用计算机来解决越来越复杂的问题。问题越复杂，解决问题需要的抽象层往往越高。</p>
+    <h1 id="面向对象思想"><a href="#面向对象思想" class="headerlink" title="面向对象思想"></a>面向对象思想</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>随着计算机技术的发展，我们想用计算机来解决越来越复杂的问题。问题越复杂，解决问题需要的抽象层往往越高。</p>
 <p>编程语言的的发展，也顺应着这样的趋势。一开始的汇编语言只是对计算机硬件的简单抽象，C语言又对其进行了进一步的抽象，使其更加贴近问题而不是硬件；到了 Java，面向对象编程(OOP)的思想已近很成熟了，这是一种更加抽象的语言，对计算机硬件的表达更少，而对问题的描述更多。</p>
-<h2 id="认识面向对象"><a class="markdownIt-Anchor" href="#认识面向对象"></a> 认识面向对象</h2>
-<ul>
+<h2 id="认识面向对象"><a href="#认识面向对象" class="headerlink" title="认识面向对象"></a>认识面向对象</h2><ul>
 <li>什么是<em>对象</em>？</li>
 </ul>
 <p>对象就是一个存在的东西！</p>
@@ -178,8 +175,7 @@
 </ul>
 <p>面向对象编程，就是把一切问题的部分抽象成对象，用那些通用的特征和行为来描述他们，然后再处理这些对象之间的沟通，得到完整的问题描述，并通过给这些对象一些，信息让他们最终给出一个解。</p>
 <ul>
-<li>
-<p>“纯粹”的面向对象程序设计方法是什么样的？</p>
+<li><p>“纯粹”的面向对象程序设计方法是什么样的？</p>
 <ol>
 <li>所有东西都是对象。可将对象想象成一种新型变量；</li>
 <li>程序是一大堆对象的组合；通过消息传递，各对象知道自己该做些什么。</li>
@@ -189,15 +185,12 @@
 </ol>
 </li>
 </ul>
-<h2 id="对象的接口"><a class="markdownIt-Anchor" href="#对象的接口"></a> 对象的接口</h2>
-<p>所有对象，尽管各有特色，都属于某一系列对象的一部分，这些对象具有通用的特征和行为。</p>
+<h2 id="对象的接口"><a href="#对象的接口" class="headerlink" title="对象的接口"></a>对象的接口</h2><p>所有对象，尽管各有特色，都属于某一系列对象的一部分，这些对象具有通用的特征和行为。</p>
 <p>“接口”（Interface）就是把一种类型的对象的共同特征抽象出来，并将其表示。（大多数语言中我们使用关键字 <code>class</code> 来描述）</p>
 <p>“类型”决定了接口，而“类”是那个接口的一种特殊实现方式。</p>
 <p>接口建立的同时，也规定了可对一个特定的对象发出哪些请求。所以建好一个类后，可根据情况生成许多对象。随后，可将那些对象作为要解决问题中存在的元素进行处理。</p>
-<h2 id="实现方案的隐藏"><a class="markdownIt-Anchor" href="#实现方案的隐藏"></a> 实现方案的隐藏</h2>
-<p>在面向对象的程序设计的过程中，我们时常需要<em>控制对成员的访问</em>。</p>
-<p>一方面，防止调用类的程序员接触到内部数据类型的设计思想。<br>
-另一方面，允许库设计人员修改内部结构，不用担心它会对客户程序员造成什么影响。</p>
+<h2 id="实现方案的隐藏"><a href="#实现方案的隐藏" class="headerlink" title="实现方案的隐藏"></a>实现方案的隐藏</h2><p>在面向对象的程序设计的过程中，我们时常需要<em>控制对成员的访问</em>。</p>
+<p>一方面，防止调用类的程序员接触到内部数据类型的设计思想。<br>另一方面，允许库设计人员修改内部结构，不用担心它会对客户程序员造成什么影响。</p>
 <p>在我们的接口中，要实现这样的访问控制，把一部分设计细节隐藏起来，便需要一种机制来实现对访问的控制，在 Java 中这种控制用关键字 <code>public</code>，<code>private</code>，<code>protected</code> 以及暗示性的 <code>friendly</code>来实现：</p>
 <ul>
 <li>“public”（公共）意味着后续的定义任何人均可使用。</li>
@@ -205,12 +198,9 @@
 <li>“protected”（受保护的）与“private”相似，只是一个继承的类可访问受保护的成员，但不能访问私有成员。继承的问题不久就要谈到。</li>
 <li>“friendly”（友好的）涉及“包装”或“封装”（Package）的概念——即Java用来构建库的方法。若某样东西是“友好的”，意味着它只能在这个包装的范围内使用（所以这一访问级别有时也叫作“包装访问”）。</li>
 </ul>
-<h2 id="方案的重复使用"><a class="markdownIt-Anchor" href="#方案的重复使用"></a> 方案的重复使用</h2>
-<p>创建并测试好一个类后，它应（从理想的角度）代表一类事物，是可以重复在很多地方使用的。</p>
+<h2 id="方案的重复使用"><a href="#方案的重复使用" class="headerlink" title="方案的重复使用"></a>方案的重复使用</h2><p>创建并测试好一个类后，它应（从理想的角度）代表一类事物，是可以重复在很多地方使用的。</p>
 <p>为重复使用一个类，最简单的办法是仅直接使用那个类的对象。同时也能将那个类的一个对象置入一个新类，这种类中置入类的方法成为“组织”或“包含”，比如“一辆车包含了一个变速箱”。</p>
-<h2 id="继承重新使用接口"><a class="markdownIt-Anchor" href="#继承重新使用接口"></a> 继承：重新使用接口</h2>
-<p>我们费尽心思做出一种数据类型后，假如不得不又新建一种类型，令其实现大致相同的功能，那会是一件非常令人灰心的事情。<br>
-但若能利用现成的数据类型，对其进行“克隆”，再根据情况进行添加和修改，情况就显得理想多了。“继承”正是针对这个目标而设计的。</p>
+<h2 id="继承：重新使用接口"><a href="#继承：重新使用接口" class="headerlink" title="继承：重新使用接口"></a>继承：重新使用接口</h2><p>我们费尽心思做出一种数据类型后，假如不得不又新建一种类型，令其实现大致相同的功能，那会是一件非常令人灰心的事情。<br>但若能利用现成的数据类型，对其进行“克隆”，再根据情况进行添加和修改，情况就显得理想多了。“继承”正是针对这个目标而设计的。</p>
 <blockquote>
 <p>在 Java 语言中，继承是通过 <code>extends</code> 关键字实现的。</p>
 </blockquote>
@@ -223,28 +213,24 @@
 </ul>
 <p>如果需要子类拥有父类没有的功能，只需要给子类增加新的方法（函数）就行了。</p>
 <ul>
-<li>改变（“改善”）基础类一个现有函数的行为（重载）</li>
+<li>改变（”改善”）基础类一个现有函数的行为（重载）</li>
 </ul>
 <p>为改善一个函数，只需为衍生类的函数建立一个新定义即可。我们的目标是：“尽管使用的函数接口未变，但它的新版本具有不同的表现”。</p>
-<h2 id="多形对象的互换使用"><a class="markdownIt-Anchor" href="#多形对象的互换使用"></a> 多形对象的互换使用</h2>
-<p><img src="https://java.quanke.name/1-2.gif" alt="1-2.gif"></p>
-<p>举个例子，我们构建一个 <code>Shape</code> 类，<code>Shape</code> 类拥有 <code>draw()</code>, <code>erase()</code>, <code>move()</code> 等方法；<br>
-然后我们在构建几个 <code>Shape</code> 的子类（继承自 <code>Shape</code>）的类：<code>Circle</code>, <code>Line</code>, <code>Triangle</code>；<br>
-对每个子类，我们都会根据实际情况重载对应的方法。</p>
+<h2 id="多形对象的互换使用"><a href="#多形对象的互换使用" class="headerlink" title="多形对象的互换使用"></a>多形对象的互换使用</h2><p><img src="https://java.quanke.name/1-2.gif" alt="1-2.gif"></p>
+<p>举个例子，我们构建一个 <code>Shape</code> 类，<code>Shape</code> 类拥有 <code>draw()</code>, <code>erase()</code>, <code>move()</code> 等方法；<br>然后我们在构建几个 <code>Shape</code> 的子类（继承自 <code>Shape</code>）的类：<code>Circle</code>, <code>Line</code>, <code>Triangle</code>；<br>对每个子类，我们都会根据实际情况重载对应的方法。</p>
 <p>这时，如果我们构建一个 doStuff 函数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void doStuff(Shape s) &#123;</span><br><span class="line">    s.erase();</span><br><span class="line">    // ...</span><br><span class="line">    s.draw();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>它可以接收任何 Shape 包括其子类进行操作：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Circle c = new Circle();</span><br><span class="line">Triangle t = new Triangle();</span><br><span class="line">Line  l = new Line();</span><br><span class="line">doStuff(c);</span><br><span class="line">doStuff(t);</span><br><span class="line">doStuff(l);</span><br></pre></td></tr></table></figure>
+
 <p>在这里，我们把 Shape 的子类，当作 Shape 使用，这称为“<strong>上溯造型</strong>”，这样做常常可以避免检查一个对象到底是何种具体类型。</p>
 <p>值得注意的是，即使 Circle、Line、Triangle 用不同的 erase、draw 的具体实现方式，doStuff 还是可以很好得完成工作。我们可以理解为 doStuff 只是在告诉 Shape ：“你是一种几何形状，我知道你能将自己删掉，即erase()；请自己采取那个行动，并自己去控制所有的细节吧”，而不是对 Circle 做某种操作，对 Triangle 做某种操作…</p>
-<h4 id="动态绑定"><a class="markdownIt-Anchor" href="#动态绑定"></a> 动态绑定</h4>
-<p>我们在使用上述代码时，不论我们传给 doStuff 的是那种具体类型，它总能调用我们想要的函数。</p>
+<h4 id="动态绑定"><a href="#动态绑定" class="headerlink" title="动态绑定"></a>动态绑定</h4><p>我们在使用上述代码时，不论我们传给 doStuff 的是那种具体类型，它总能调用我们想要的函数。</p>
 <p>像这样将一条消息发给对象时，如果不知道对方对具体类型是什么，但采取的行动同样是正确的，这种情况称作“<strong>多形性</strong>”，实现“多形性”的办法叫做“<strong>动态绑定</strong>”。</p>
 <p>对于动态绑定，编译器会自己处理细节，我们只需要知道会发生什么。</p>
 <p>在 Java 中，我们无需使用关键字来实现 动态绑定，它将是自动的。</p>
-<h4 id="抽象的基础类和接口"><a class="markdownIt-Anchor" href="#抽象的基础类和接口"></a> 抽象的基础类和接口</h4>
-<p><strong>基础类</strong> 只是为自己的衍生类提供一个接口的类（上溯造型成它），我们不希望实际创建这种类的实例对象。<br>
-这时，我们就可以把这个类声明成“抽象的”。</p>
+<h4 id="抽象的基础类和接口"><a href="#抽象的基础类和接口" class="headerlink" title="抽象的基础类和接口"></a>抽象的基础类和接口</h4><p><strong>基础类</strong> 只是为自己的衍生类提供一个接口的类（上溯造型成它），我们不希望实际创建这种类的实例对象。<br>这时，我们就可以把这个类声明成“抽象的”。</p>
 <blockquote>
 <p>在 Java 中，我们使用 关键字 <code>abstract</code> 来说明一个类是抽象的。编译器将阻止创建<strong>抽象类</strong>的实例。</p>
 </blockquote>
@@ -290,7 +276,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#面向对象思想"><span class="toc-number">1.</span> <span class="toc-text"> 面向对象思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text"> 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#认识面向对象"><span class="toc-number">1.2.</span> <span class="toc-text"> 认识面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的接口"><span class="toc-number">1.3.</span> <span class="toc-text"> 对象的接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方案的隐藏"><span class="toc-number">1.4.</span> <span class="toc-text"> 实现方案的隐藏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方案的重复使用"><span class="toc-number">1.5.</span> <span class="toc-text"> 方案的重复使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承重新使用接口"><span class="toc-number">1.6.</span> <span class="toc-text"> 继承：重新使用接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多形对象的互换使用"><span class="toc-number">1.7.</span> <span class="toc-text"> 多形对象的互换使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#动态绑定"><span class="toc-number">1.7.0.1.</span> <span class="toc-text"> 动态绑定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抽象的基础类和接口"><span class="toc-number">1.7.0.2.</span> <span class="toc-text"> 抽象的基础类和接口</span></a></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#面向对象思想"><span class="toc-number">1.</span> <span class="toc-text">面向对象思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#认识面向对象"><span class="toc-number">1.2.</span> <span class="toc-text">认识面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的接口"><span class="toc-number">1.3.</span> <span class="toc-text">对象的接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方案的隐藏"><span class="toc-number">1.4.</span> <span class="toc-text">实现方案的隐藏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方案的重复使用"><span class="toc-number">1.5.</span> <span class="toc-text">方案的重复使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承：重新使用接口"><span class="toc-number">1.6.</span> <span class="toc-text">继承：重新使用接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多形对象的互换使用"><span class="toc-number">1.7.</span> <span class="toc-text">多形对象的互换使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#动态绑定"><span class="toc-number">1.7.0.1.</span> <span class="toc-text">动态绑定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抽象的基础类和接口"><span class="toc-number">1.7.0.2.</span> <span class="toc-text">抽象的基础类和接口</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -322,7 +308,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

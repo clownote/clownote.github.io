@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Leetcode P83 删除排序链表中的重复元素  题目 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。 示例 1: 12输入: 1-&amp;gt;1-&amp;gt;2输出: 1-&amp;gt;2 示例 2: 12输入: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3输出: 1-&amp;gt;2-&amp;gt;3 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/pr">
+    <meta name="description" content="Leetcode P83 删除排序链表中的重复元素题目给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。 示例 1: 12输入: 1-&amp;gt;1-&amp;gt;2输出: 1-&amp;gt;2  示例 2: 12输入: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3输出: 1-&amp;gt;2-&amp;gt;3  来源：力扣（LeetCode）链接：https://leetcode-cn.com/probl">
 <meta name="keywords" content="School">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode P83 删除排序链表中的重复元素">
 <meta property="og:url" content="https://clownote.github.io/2020/03/11/School/Leetcode_P83_remove-duplicates-from-sorted-list/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode P83 删除排序链表中的重复元素  题目 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。 示例 1: 12输入: 1-&amp;gt;1-&amp;gt;2输出: 1-&amp;gt;2 示例 2: 12输入: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3输出: 1-&amp;gt;2-&amp;gt;3 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/pr">
+<meta property="og:description" content="Leetcode P83 删除排序链表中的重复元素题目给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。 示例 1: 12输入: 1-&amp;gt;1-&amp;gt;2输出: 1-&amp;gt;2  示例 2: 12输入: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3输出: 1-&amp;gt;2-&amp;gt;3  来源：力扣（LeetCode）链接：https://leetcode-cn.com/probl">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcq2u4ysbpj31d60u0e7f.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcq3j6dznqj31d60u04qp.jpg">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.303Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode P83 删除排序链表中的重复元素">
-<meta name="twitter:description" content="Leetcode P83 删除排序链表中的重复元素  题目 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。 示例 1: 12输入: 1-&amp;gt;1-&amp;gt;2输出: 1-&amp;gt;2 示例 2: 12输入: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3输出: 1-&amp;gt;2-&amp;gt;3 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/pr">
+<meta name="twitter:description" content="Leetcode P83 删除排序链表中的重复元素题目给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。 示例 1: 12输入: 1-&amp;gt;1-&amp;gt;2输出: 1-&amp;gt;2  示例 2: 12输入: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3输出: 1-&amp;gt;2-&amp;gt;3  来源：力扣（LeetCode）链接：https://leetcode-cn.com/probl">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcq2u4ysbpj31d60u0e7f.jpg">
     
     
@@ -112,7 +112,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-p83-删除排序链表中的重复元素"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode P83 删除排序链表中的重复元素</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双指针法"><span class="toc-number">1.2.</span> <span class="toc-text"> 双指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化单指针"><span class="toc-number">1.3.</span> <span class="toc-text"> 优化：单指针</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-P83-删除排序链表中的重复元素"><span class="toc-number">1.</span> <span class="toc-text">Leetcode P83 删除排序链表中的重复元素</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双指针法"><span class="toc-number">1.2.</span> <span class="toc-text">双指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化：单指针"><span class="toc-number">1.3.</span> <span class="toc-text">优化：单指针</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -138,7 +138,7 @@
       
         <time datetime="2020-03-11T17:09:05.000Z" itemprop="datePublished">2020-03-11</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.303Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -158,25 +158,23 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="leetcode-p83-删除排序链表中的重复元素"><a class="markdownIt-Anchor" href="#leetcode-p83-删除排序链表中的重复元素"></a> Leetcode P83 删除排序链表中的重复元素</h1>
-<h2 id="题目"><a class="markdownIt-Anchor" href="#题目"></a> 题目</h2>
-<p>给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。</p>
+    <h1 id="Leetcode-P83-删除排序链表中的重复元素"><a href="#Leetcode-P83-删除排序链表中的重复元素" class="headerlink" title="Leetcode P83 删除排序链表中的重复元素"></a>Leetcode P83 删除排序链表中的重复元素</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。</p>
 <p>示例 1:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: 1-&gt;1-&gt;2</span><br><span class="line">输出: 1-&gt;2</span><br></pre></td></tr></table></figure>
+
 <p>示例 2:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: 1-&gt;1-&gt;2-&gt;3-&gt;3</span><br><span class="line">输出: 1-&gt;2-&gt;3</span><br></pre></td></tr></table></figure>
-<p>来源：力扣（LeetCode）<br>
-链接：<a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list" target="_blank" rel="noopener">https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list</a><br>
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<h2 id="双指针法"><a class="markdownIt-Anchor" href="#双指针法"></a> 双指针法</h2>
-<p>这道题还是很容易的，双指针法，和 <a href="https://blog.csdn.net/u012419550/article/details/104402182" target="_blank" rel="noopener">Leetcode P26 删除排序数组中的重复项</a> 一样的算法，只是把数组改成链表（甚至我还觉得更简单了？）</p>
+
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list" target="_blank" rel="noopener">https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="双指针法"><a href="#双指针法" class="headerlink" title="双指针法"></a>双指针法</h2><p>这道题还是很容易的，双指针法，和 <a href="https://blog.csdn.net/u012419550/article/details/104402182" target="_blank" rel="noopener">Leetcode P26 删除排序数组中的重复项</a> 一样的算法，只是把数组改成链表（甚至我还觉得更简单了？）</p>
 <p>就搞两个指针 <code>current</code> 和 <code>toDel</code>，<code>current</code> 遍历链表，维护 <code>toDel</code> 前的节点值不重复。直接上代码吧，Golang：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">deleteDuplicates</span><span class="params">(head *ListNode)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line">    current := head</span><br><span class="line">    toDel := head</span><br><span class="line">    <span class="keyword">for</span> current != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> current.Val != toDel.Val &#123;</span><br><span class="line">            toDel.Next = current</span><br><span class="line">            toDel = current</span><br><span class="line">        &#125;</span><br><span class="line">        current = current.Next</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> toDel != <span class="literal">nil</span> &amp;&amp; toDel.Next != <span class="literal">nil</span> &amp;&amp; toDel.Next.Val == toDel.Val &#123;</span><br><span class="line">        toDel.Next = <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcq2u4ysbpj31d60u0e7f.jpg" alt="屏幕快照 2020-03-11 16.36.36"></p>
-<h2 id="优化单指针"><a class="markdownIt-Anchor" href="#优化单指针"></a> 优化：单指针</h2>
-<p>这个题还可以只用一个指针完成，因为链表是用指针指下一个的嘛，我们可以方便地把任意节点的下一节点改成其后的某一节点，来达到“删除”中间的一些节点的目的。比如<code>current.Next = current.Next.Next</code>，就相当于把 <code>current.Next</code> 删除了。</p>
+<h2 id="优化：单指针"><a href="#优化：单指针" class="headerlink" title="优化：单指针"></a>优化：单指针</h2><p>这个题还可以只用一个指针完成，因为链表是用指针指下一个的嘛，我们可以方便地把任意节点的下一节点改成其后的某一节点，来达到“删除”中间的一些节点的目的。比如<code>current.Next = current.Next.Next</code>，就相当于把 <code>current.Next</code> 删除了。</p>
 <p>用这个思路就可以用一个指针把链表中的重复元素删除：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">deleteDuplicates</span><span class="params">(head *ListNode)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line">    current := head</span><br><span class="line">    <span class="keyword">for</span> (current != <span class="literal">nil</span>) &amp;&amp; (current.Next != <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> current.Next.Val == current.Val &#123;</span><br><span class="line">            current.Next = current.Next.Next</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            current = current.Next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcq3j6dznqj31d60u04qp.jpg" alt="image-20200311170330484"></p>
 <p>哈哈，一开始我没写 else 分句，<code>current = current.Next</code> 写在外面，这么做是错的，如果输入是 <code>[1,1,1,1]</code>，就会输出 <code>[1,1]</code>，少了尾部最后的处理。然后我改这个的时候顺手把 for 条件里的 <code>current != nil</code> 也删了，但他有 <code>[]</code> 的输入，又错了一次🤦‍♂️</p>
 
@@ -216,7 +214,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-p83-删除排序链表中的重复元素"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode P83 删除排序链表中的重复元素</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双指针法"><span class="toc-number">1.2.</span> <span class="toc-text"> 双指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化单指针"><span class="toc-number">1.3.</span> <span class="toc-text"> 优化：单指针</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-P83-删除排序链表中的重复元素"><span class="toc-number">1.</span> <span class="toc-text">Leetcode P83 删除排序链表中的重复元素</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双指针法"><span class="toc-number">1.2.</span> <span class="toc-text">双指针法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化：单指针"><span class="toc-number">1.3.</span> <span class="toc-text">优化：单指针</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -248,7 +246,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

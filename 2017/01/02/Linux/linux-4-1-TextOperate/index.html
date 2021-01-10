@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="正文文本操作  tr：字符转换 12$ tr &amp;apos;A-Z&amp;apos; &amp;apos;a-z&amp;apos; &amp;lt; w.txt &amp;gt; u.txt        # 将w中的大写-&amp;gt;小写，放入u中$ tr -d &amp;quot;\r&amp;quot; &amp;lt; dept.data &amp;gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符">
+    <meta name="description" content="正文文本操作tr：字符转换12$ tr &amp;apos;A-Z&amp;apos; &amp;apos;a-z&amp;apos; &amp;lt; w.txt &amp;gt; u.txt        # 将w中的大写-&amp;gt;小写，放入u中$ tr -d &amp;quot;\r&amp;quot; &amp;lt; dept.data &amp;gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符结束一行">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-4.1-正文文本操作">
 <meta property="og:url" content="https://clownote.github.io/2017/01/02/Linux/linux-4-1-TextOperate/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="正文文本操作  tr：字符转换 12$ tr &amp;apos;A-Z&amp;apos; &amp;apos;a-z&amp;apos; &amp;lt; w.txt &amp;gt; u.txt        # 将w中的大写-&amp;gt;小写，放入u中$ tr -d &amp;quot;\r&amp;quot; &amp;lt; dept.data &amp;gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符">
+<meta property="og:description" content="正文文本操作tr：字符转换12$ tr &amp;apos;A-Z&amp;apos; &amp;apos;a-z&amp;apos; &amp;lt; w.txt &amp;gt; u.txt        # 将w中的大写-&amp;gt;小写，放入u中$ tr -d &amp;quot;\r&amp;quot; &amp;lt; dept.data &amp;gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符结束一行">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-4.1-正文文本操作">
-<meta name="twitter:description" content="正文文本操作  tr：字符转换 12$ tr &amp;apos;A-Z&amp;apos; &amp;apos;a-z&amp;apos; &amp;lt; w.txt &amp;gt; u.txt        # 将w中的大写-&amp;gt;小写，放入u中$ tr -d &amp;quot;\r&amp;quot; &amp;lt; dept.data &amp;gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符">
+<meta name="twitter:description" content="正文文本操作tr：字符转换12$ tr &amp;apos;A-Z&amp;apos; &amp;apos;a-z&amp;apos; &amp;lt; w.txt &amp;gt; u.txt        # 将w中的大写-&amp;gt;小写，放入u中$ tr -d &amp;quot;\r&amp;quot; &amp;lt; dept.data &amp;gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符结束一行">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文文本操作"><span class="toc-number">1.</span> <span class="toc-text"> 正文文本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tr字符转换"><span class="toc-number">1.0.1.</span> <span class="toc-text"> tr：字符转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cut从文件中剪出一个字段列至1stdout"><span class="toc-number">1.0.2.</span> <span class="toc-text"> cut：从文件中剪出一个字段(列)至1(stdout)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#paste粘贴"><span class="toc-number">1.0.3.</span> <span class="toc-text"> paste：粘贴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uniq去掉文件中相邻的重复行"><span class="toc-number">1.0.4.</span> <span class="toc-text"> uniq：去掉文件中相邻的重复行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sort排序"><span class="toc-number">1.0.5.</span> <span class="toc-text"> sort：排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#col-tab转空格"><span class="toc-number">1.0.6.</span> <span class="toc-text"> col: Tab转空格：</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文文本操作"><span class="toc-number">1.</span> <span class="toc-text">正文文本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tr：字符转换"><span class="toc-number">1.0.1.</span> <span class="toc-text">tr：字符转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cut：从文件中剪出一个字段-列-至1-stdout"><span class="toc-number">1.0.2.</span> <span class="toc-text">cut：从文件中剪出一个字段(列)至1(stdout)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#paste：粘贴"><span class="toc-number">1.0.3.</span> <span class="toc-text">paste：粘贴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uniq：去掉文件中相邻的重复行"><span class="toc-number">1.0.4.</span> <span class="toc-text">uniq：去掉文件中相邻的重复行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sort：排序"><span class="toc-number">1.0.5.</span> <span class="toc-text">sort：排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#col-Tab转空格："><span class="toc-number">1.0.6.</span> <span class="toc-text">col: Tab转空格：</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2017-01-02T12:51:52.000Z" itemprop="datePublished">2017-01-02</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,19 +160,18 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="正文文本操作"><a class="markdownIt-Anchor" href="#正文文本操作"></a> 正文文本操作</h1>
-<h3 id="tr字符转换"><a class="markdownIt-Anchor" href="#tr字符转换"></a> <code>tr</code>：字符转换</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tr &apos;A-Z&apos; &apos;a-z&apos; &lt; w.txt &gt; u.txt        # 将w中的大写-&gt;小写，放入u中</span><br><span class="line">$ tr -d &quot;\r&quot; &lt; dept.data &gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符结束一行）转换成Linux格式的文件（只用换行符“\n”来结束一行）</span><br></pre></td></tr></table></figure>
-<h3 id="cut从文件中剪出一个字段列至1stdout"><a class="markdownIt-Anchor" href="#cut从文件中剪出一个字段列至1stdout"></a> <code>cut</code>：从文件中剪出一个字段(列)至1(stdout)</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cut [options] [file]</span><br><span class="line">        -f：说明(定义)字段(列)</span><br><span class="line">        -c：要剪切的字符：</span><br><span class="line">                「-c4-7」：剪下每行4～7的字符</span><br><span class="line">        -d：说明(定义)字段的分隔符(默认为Tab)</span><br><span class="line">                「-d,」：以“,”为分隔符</span><br><span class="line">$ cut -f2 emp.data</span><br><span class="line">        显示emp.data中的第二列至stdout</span><br></pre></td></tr></table></figure>
-<h3 id="paste粘贴"><a class="markdownIt-Anchor" href="#paste粘贴"></a> <code>paste</code>：粘贴</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ paste  -d,  name.txt  score.txt  &gt;  student.txt</span><br><span class="line">        -d：说明(定义)字段的分隔符(默认为Tab)</span><br><span class="line">                「-d,」：以“,”为分隔符</span><br><span class="line">        &gt; ：横向合并文件：</span><br><span class="line">            |Mike|         |99|          |Mike,99|</span><br><span class="line">            |Jake|    +    |98|    -&gt;    |Jake,98|</span><br><span class="line">            |Anny|         |97|          |Anny,97|</span><br></pre></td></tr></table></figure>
-<h3 id="uniq去掉文件中相邻的重复行"><a class="markdownIt-Anchor" href="#uniq去掉文件中相邻的重复行"></a> <code>uniq</code>：去掉文件中相邻的重复行</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ uniq [opts] [file]</span><br><span class="line">        -c：在显示的行前冠以该行出现的次数</span><br><span class="line">        -d：只显示重复行</span><br><span class="line">        -i：忽略字符的大小写</span><br><span class="line">        -u：只显示唯一的行</span><br></pre></td></tr></table></figure>
-<h3 id="sort排序"><a class="markdownIt-Anchor" href="#sort排序"></a> <code>sort</code>：排序</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sort [opt] [file]</span><br><span class="line">         -r：反向排序</span><br><span class="line">         -f：忽略大小写</span><br><span class="line">         -n：按数字顺序排序</span><br><span class="line">          -u：去掉重复行</span><br><span class="line">          -t c：以字符c为分割符</span><br><span class="line">          -k N1,[N2]：按N1-&gt;N2字段排序</span><br></pre></td></tr></table></figure>
-<h3 id="col-tab转空格"><a class="markdownIt-Anchor" href="#col-tab转空格"></a> <code>col</code>: Tab转空格：</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ col -x &lt; e.tabs &gt;e.spaces</span><br><span class="line">        将e.tabs中的Tab字符(^I)化为空格存在e.spaces中</span><br></pre></td></tr></table></figure>
+    <h1 id="正文文本操作"><a href="#正文文本操作" class="headerlink" title="正文文本操作"></a>正文文本操作</h1><h3 id="tr：字符转换"><a href="#tr：字符转换" class="headerlink" title="tr：字符转换"></a><code>tr</code>：字符转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tr &apos;A-Z&apos; &apos;a-z&apos; &lt; w.txt &gt; u.txt        # 将w中的大写-&gt;小写，放入u中</span><br><span class="line">$ tr -d &quot;\r&quot; &lt; dept.data &gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符结束一行）转换成Linux格式的文件（只用换行符“\n”来结束一行）</span><br></pre></td></tr></table></figure>
+
+<h3 id="cut：从文件中剪出一个字段-列-至1-stdout"><a href="#cut：从文件中剪出一个字段-列-至1-stdout" class="headerlink" title="cut：从文件中剪出一个字段(列)至1(stdout)"></a><code>cut</code>：从文件中剪出一个字段(列)至1(stdout)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cut [options] [file]</span><br><span class="line">        -f：说明(定义)字段(列)</span><br><span class="line">        -c：要剪切的字符：</span><br><span class="line">                「-c4-7」：剪下每行4～7的字符</span><br><span class="line">        -d：说明(定义)字段的分隔符(默认为Tab)</span><br><span class="line">                「-d,」：以“,”为分隔符</span><br><span class="line">$ cut -f2 emp.data</span><br><span class="line">        显示emp.data中的第二列至stdout</span><br></pre></td></tr></table></figure>
+
+<h3 id="paste：粘贴"><a href="#paste：粘贴" class="headerlink" title="paste：粘贴"></a><code>paste</code>：粘贴</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ paste  -d,  name.txt  score.txt  &gt;  student.txt</span><br><span class="line">        -d：说明(定义)字段的分隔符(默认为Tab)</span><br><span class="line">                「-d,」：以“,”为分隔符</span><br><span class="line">        &gt; ：横向合并文件：</span><br><span class="line">            |Mike|         |99|          |Mike,99|</span><br><span class="line">            |Jake|    +    |98|    -&gt;    |Jake,98|</span><br><span class="line">            |Anny|         |97|          |Anny,97|</span><br></pre></td></tr></table></figure>
+
+<h3 id="uniq：去掉文件中相邻的重复行"><a href="#uniq：去掉文件中相邻的重复行" class="headerlink" title="uniq：去掉文件中相邻的重复行"></a><code>uniq</code>：去掉文件中相邻的重复行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ uniq [opts] [file]</span><br><span class="line">        -c：在显示的行前冠以该行出现的次数</span><br><span class="line">        -d：只显示重复行</span><br><span class="line">        -i：忽略字符的大小写</span><br><span class="line">        -u：只显示唯一的行</span><br></pre></td></tr></table></figure>
+
+<h3 id="sort：排序"><a href="#sort：排序" class="headerlink" title="sort：排序"></a><code>sort</code>：排序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sort [opt] [file]</span><br><span class="line">         -r：反向排序</span><br><span class="line">         -f：忽略大小写</span><br><span class="line">         -n：按数字顺序排序</span><br><span class="line">          -u：去掉重复行</span><br><span class="line">          -t c：以字符c为分割符</span><br><span class="line">          -k N1,[N2]：按N1-&gt;N2字段排序</span><br></pre></td></tr></table></figure>
+
+<h3 id="col-Tab转空格："><a href="#col-Tab转空格：" class="headerlink" title="col: Tab转空格："></a><code>col</code>: Tab转空格：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ col -x &lt; e.tabs &gt;e.spaces</span><br><span class="line">        将e.tabs中的Tab字符(^I)化为空格存在e.spaces中</span><br></pre></td></tr></table></figure>
+
 
   </div>
 </article>
@@ -210,7 +209,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文文本操作"><span class="toc-number">1.</span> <span class="toc-text"> 正文文本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tr字符转换"><span class="toc-number">1.0.1.</span> <span class="toc-text"> tr：字符转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cut从文件中剪出一个字段列至1stdout"><span class="toc-number">1.0.2.</span> <span class="toc-text"> cut：从文件中剪出一个字段(列)至1(stdout)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#paste粘贴"><span class="toc-number">1.0.3.</span> <span class="toc-text"> paste：粘贴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uniq去掉文件中相邻的重复行"><span class="toc-number">1.0.4.</span> <span class="toc-text"> uniq：去掉文件中相邻的重复行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sort排序"><span class="toc-number">1.0.5.</span> <span class="toc-text"> sort：排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#col-tab转空格"><span class="toc-number">1.0.6.</span> <span class="toc-text"> col: Tab转空格：</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正文文本操作"><span class="toc-number">1.</span> <span class="toc-text">正文文本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tr：字符转换"><span class="toc-number">1.0.1.</span> <span class="toc-text">tr：字符转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cut：从文件中剪出一个字段-列-至1-stdout"><span class="toc-number">1.0.2.</span> <span class="toc-text">cut：从文件中剪出一个字段(列)至1(stdout)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#paste：粘贴"><span class="toc-number">1.0.3.</span> <span class="toc-text">paste：粘贴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uniq：去掉文件中相邻的重复行"><span class="toc-number">1.0.4.</span> <span class="toc-text">uniq：去掉文件中相邻的重复行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sort：排序"><span class="toc-number">1.0.5.</span> <span class="toc-text">sort：排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#col-Tab转空格："><span class="toc-number">1.0.6.</span> <span class="toc-text">col: Tab转空格：</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -242,7 +241,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

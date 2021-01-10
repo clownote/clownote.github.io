@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Java 接口 根据设计，抽象方法指定一个契约（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。 当在应用程序中需要一组可分组到一起的常见行为（例如 java.util.List），但它们存在两个或多个实现时，可以考虑使用接口 定义该行为。 接口 像是仅包含抽象方法的抽象类；它们仅定义契约，而不定义">
+    <meta name="description" content="Java 接口根据设计，抽象方法指定一个契约（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。 当在应用程序中需要一组可分组到一起的常见行为（例如 java.util.List），但它们存在两个或多个实现时，可以考虑使用接口 定义该行为。 接口 像是仅包含抽象方法的抽象类；它们仅定义契约，而不定义实现">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java-接口">
 <meta property="og:url" content="https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Java 接口 根据设计，抽象方法指定一个契约（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。 当在应用程序中需要一组可分组到一起的常见行为（例如 java.util.List），但它们存在两个或多个实现时，可以考虑使用接口 定义该行为。 接口 像是仅包含抽象方法的抽象类；它们仅定义契约，而不定义">
+<meta property="og:description" content="Java 接口根据设计，抽象方法指定一个契约（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。 当在应用程序中需要一组可分组到一起的常见行为（例如 java.util.List），但它们存在两个或多个实现时，可以考虑使用接口 定义该行为。 接口 像是仅包含抽象方法的抽象类；它们仅定义契约，而不定义实现">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java-接口">
-<meta name="twitter:description" content="Java 接口 根据设计，抽象方法指定一个契约（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。 当在应用程序中需要一组可分组到一起的常见行为（例如 java.util.List），但它们存在两个或多个实现时，可以考虑使用接口 定义该行为。 接口 像是仅包含抽象方法的抽象类；它们仅定义契约，而不定义">
+<meta name="twitter:description" content="Java 接口根据设计，抽象方法指定一个契约（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。 当在应用程序中需要一组可分组到一起的常见行为（例如 java.util.List），但它们存在两个或多个实现时，可以考虑使用接口 定义该行为。 接口 像是仅包含抽象方法的抽象类；它们仅定义契约，而不定义实现">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-接口"><span class="toc-number">1.</span> <span class="toc-text"> Java 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义接口"><span class="toc-number">1.1.</span> <span class="toc-text"> 定义接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text"> 实现接口</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-接口"><span class="toc-number">1.</span> <span class="toc-text">Java 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义接口"><span class="toc-number">1.1.</span> <span class="toc-text">定义接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2019-04-24T16:37:53.000Z" itemprop="datePublished">2019-04-24</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.196Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,21 +160,21 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="java-接口"><a class="markdownIt-Anchor" href="#java-接口"></a> Java 接口</h1>
-<p>根据设计，抽象方法指定一个<em>契约</em>（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。</p>
+    <h1 id="Java-接口"><a href="#Java-接口" class="headerlink" title="Java 接口"></a>Java 接口</h1><p>根据设计，抽象方法指定一个<em>契约</em>（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。</p>
 <p>当在应用程序中需要一组可分组到一起的常见行为（例如 <code>java.util.List</code>），但它们存在两个或多个实现时，可以考虑使用<em>接口</em> 定义该行为。</p>
 <p><strong>接口</strong> 像是<strong>仅</strong>包含抽象方法的抽象类；它们<strong>仅</strong>定义契约，而不定义实现。</p>
-<h2 id="定义接口"><a class="markdownIt-Anchor" href="#定义接口"></a> 定义接口</h2>
-<p>接口声明看起来像类声明，但使用了 <code>interface</code> 关键字：</p>
+<h2 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h2><p>接口声明看起来像类声明，但使用了 <code>interface</code> 关键字：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InterfaceName</span> </span>&#123;</span><br><span class="line">    <span class="function">returnType <span class="title">methodName</span><span class="params">(argumentList)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>接口中定义的方法没有方法主体。接口的实现者负责提供方法主体（与抽象方法一样）。</p>
-<h2 id="实现接口"><a class="markdownIt-Anchor" href="#实现接口"></a> 实现接口</h2>
-<p>要在类上定义一个接口，则需要<em>实现</em> 该接口，这意味着提供一个方法主体来进一步提供履行接口契约的行为。</p>
+<h2 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h2><p>要在类上定义一个接口，则需要<em>实现</em> 该接口，这意味着提供一个方法主体来进一步提供履行接口契约的行为。</p>
 <p>可以使用 <code>implements</code> 关键字实现接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Manager</span> <span class="keyword">extends</span> <span class="title">Employee</span> <span class="keyword">implements</span> <span class="title">BonusEligible</span>, <span class="title">StockOptionRecipient</span> </span>&#123;</span><br><span class="line">  <span class="comment">// And so on</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>implements</code> 操作类似 继承用的 extends，接口是使用 <code>implements</code> 关键字，二者不同的是，接口可以有好多个，但继承只能有一个。</p>
 <p>然后，我们要在 implements 了接口的类里实现该接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Manager</span> <span class="keyword">extends</span> <span class="title">Employee</span> <span class="keyword">implements</span> <span class="title">StockOptionRecipient</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Manager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">processStockOptions</span> <span class="params">(<span class="keyword">int</span> numberOfOptions, BigDecimal price)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"I can't believe I got "</span> + number + <span class="string">" options at $"</span> +</span><br><span class="line">    price.toPlainString() + <span class="string">"!"</span>); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>实现该接口时，需要提供该接口上的一个或多个方法的行为。注意实现的方法必须与接口中的匹配（名称、参数、返回值），还需要添加 <code>public</code> 访问修饰符。</p>
 
   </div>
@@ -213,7 +213,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-接口"><span class="toc-number">1.</span> <span class="toc-text"> Java 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义接口"><span class="toc-number">1.1.</span> <span class="toc-text"> 定义接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text"> 实现接口</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-接口"><span class="toc-number">1.</span> <span class="toc-text">Java 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义接口"><span class="toc-number">1.1.</span> <span class="toc-text">定义接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -245,7 +245,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

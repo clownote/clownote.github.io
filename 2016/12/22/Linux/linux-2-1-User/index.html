@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="用户（User）   用户（Users）   系统中的每一个用户都有一个唯一的用户标识符（号码），即uid（user identifier）   （uid 0 为 root 用户的标识符。）   所有的用户名和_用户标识符_都被存放在 /etc/passwd 文件中。   在 passwd 文件中还存放了每个用户的家目录，以及该用户登录后第一个执行的程序   （通常是 shell，在 Linux">
+    <meta name="description" content="用户（User） 用户（Users）  系统中的每一个用户都有一个唯一的用户标识符（号码），即uid（user identifier）   （uid 0 为 root 用户的标识符。）  所有的用户名和_用户标识符_都被存放在 /etc/passwd 文件中。  在 passwd 文件中还存放了每个用户的家目录，以及该用户登录后第一个执行的程序   （通常是 shell，在 Linux 系统中默认">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-2.1-用户">
 <meta property="og:url" content="https://clownote.github.io/2016/12/22/Linux/linux-2-1-User/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="用户（User）   用户（Users）   系统中的每一个用户都有一个唯一的用户标识符（号码），即uid（user identifier）   （uid 0 为 root 用户的标识符。）   所有的用户名和_用户标识符_都被存放在 /etc/passwd 文件中。   在 passwd 文件中还存放了每个用户的家目录，以及该用户登录后第一个执行的程序   （通常是 shell，在 Linux">
+<meta property="og:description" content="用户（User） 用户（Users）  系统中的每一个用户都有一个唯一的用户标识符（号码），即uid（user identifier）   （uid 0 为 root 用户的标识符。）  所有的用户名和_用户标识符_都被存放在 /etc/passwd 文件中。  在 passwd 文件中还存放了每个用户的家目录，以及该用户登录后第一个执行的程序   （通常是 shell，在 Linux 系统中默认">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-2.1-用户">
-<meta name="twitter:description" content="用户（User）   用户（Users）   系统中的每一个用户都有一个唯一的用户标识符（号码），即uid（user identifier）   （uid 0 为 root 用户的标识符。）   所有的用户名和_用户标识符_都被存放在 /etc/passwd 文件中。   在 passwd 文件中还存放了每个用户的家目录，以及该用户登录后第一个执行的程序   （通常是 shell，在 Linux">
+<meta name="twitter:description" content="用户（User） 用户（Users）  系统中的每一个用户都有一个唯一的用户标识符（号码），即uid（user identifier）   （uid 0 为 root 用户的标识符。）  所有的用户名和_用户标识符_都被存放在 /etc/passwd 文件中。  在 passwd 文件中还存放了每个用户的家目录，以及该用户登录后第一个执行的程序   （通常是 shell，在 Linux 系统中默认">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户user"><span class="toc-number">1.</span> <span class="toc-text"> 用户（User）</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户（User）"><span class="toc-number">1.</span> <span class="toc-text">用户（User）</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2016-12-22T15:25:29.000Z" itemprop="datePublished">2016-12-22</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,51 +160,42 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="用户user"><a class="markdownIt-Anchor" href="#用户user"></a> 用户（User）</h1>
-<ul>
-<li>
-<p>用户（Users）</p>
+    <h1 id="用户（User）"><a href="#用户（User）" class="headerlink" title="用户（User）"></a>用户（User）</h1><ul>
+<li><p>用户（Users）</p>
 </li>
-<li>
-<p>系统中的每一个<strong>用户</strong>都有一个唯一的<strong>用户标识符</strong>（号码），即<strong>uid</strong>（user identifier）</p>
+<li><p>系统中的每一个<strong>用户</strong>都有一个唯一的<strong>用户标识符</strong>（号码），即<strong>uid</strong>（user identifier）</p>
 </li>
 </ul>
 <p>（<em>uid 0</em> 为 <code>root</code> 用户的标识符。）</p>
 <ul>
-<li>
-<p>所有的用户名和_用户标识符_都被存放在 <code>/etc/passwd</code> 文件中。</p>
+<li><p>所有的用户名和_用户标识符_都被存放在 <code>/etc/passwd</code> 文件中。</p>
 </li>
-<li>
-<p>在 <em>passwd</em> 文件中还存放了每个用户的家目录，以及该用户登录后第一个执行的程序</p>
+<li><p>在 <em>passwd</em> 文件中还存放了每个用户的家目录，以及该用户登录后第一个执行的程序</p>
 </li>
 </ul>
 <p>（通常是 shell，在 Linux 系统中默认是 bash。）</p>
 <ul>
-<li>
-<p>如果没有相应的权限就不能<strong>读、写或执行</strong>其他用户的文件。</p>
+<li><p>如果没有相应的权限就不能<strong>读、写或执行</strong>其他用户的文件。</p>
 </li>
-<li>
-<p>passwd 文件：用户信息数据库</p>
+<li><p>passwd 文件：用户信息数据库</p>
 </li>
 </ul>
 <p><em><u>/etc/passwd</u></em> 储存用户信息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd 的内容：</span><br><span class="line">e.g|  exp :  x  :     500    :       500     :Example_User:	/home/exp :   /bin/bash</span><br><span class="line">说明| 用户名:密码否:uid（用户ID）:gid（所属群组ID）:   注释信息  :   家目录  :	启动后第一个执行程序</span><br></pre></td></tr></table></figure>
+
 <p>关于第二个字段：如果是<strong>x</strong>，表示这个用户登录Linux系统时必须使用密码，如果为<strong>空</strong>则该用户在登录系统时无须提供密码。</p>
 <ul>
 <li>shadow文件：用户密码数据库</li>
 </ul>
-<p>[⚠️]普通用户无权访问_<u>/etc/shadow</u>_</p>
+<p>[⚠️]普通用户无权访问<em><u>/etc/shadow</u></em></p>
 <p><em><u>/etc/shadow</u></em> 储存用户密码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/shadow 的内容：</span><br><span class="line">e.g|  exp :$1$wg...w4:14561:0:99999:7:::</span><br><span class="line">说明| 用户名:   密码   :      :      :  :::</span><br></pre></td></tr></table></figure>
+
 <p>关于第二个字段：第2列是密码，这个密码是经过MD5加密算法加密过的密码。</p>
 <ul>
-<li>
-<p>如果该列以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>开头，则表示这个用户已经设定了密码。<br>
-（包括手动把passwd中的x去掉，不用密码即可登录的“空秘密”）</p>
+<li><p>如果该列以$1$开头，则表示这个用户已经设定了密码。<br>  （包括手动把passwd中的x去掉，不用密码即可登录的“空秘密”）</p>
 </li>
-<li>
-<p>如果该列以!!开头，则表示这个用户还没有设定密码。<br>
-（新建后<strong>passwd -S</strong>显示_Password locked_的状态，这种用户不可登录）</p>
+<li><p>如果该列以!!开头，则表示这个用户还没有设定密码。<br>  （新建后<strong>passwd -S</strong>显示_Password locked_的状态，这种用户不可登录）</p>
 </li>
 </ul>
 
@@ -244,7 +235,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户user"><span class="toc-number">1.</span> <span class="toc-text"> 用户（User）</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户（User）"><span class="toc-number">1.</span> <span class="toc-text">用户（User）</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -276,7 +267,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

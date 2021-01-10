@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Golang SQL 查询使用 LIKE 分句的坑 我想在 golang 里执行一个涉及到模糊查询的 SQL Query。 使用 LIKE 分句的 SQL 语句如下： 1SELECT name,time FROM course WHERE time LIKE &apos;4%&apos;; 然后我写了如下 Golang 代码，专门搞了一下 &apos;&apos;： 123// BUGtimeLike := fmt.Sprintf(&quot;">
+    <meta name="description" content="Golang SQL 查询使用 LIKE 分句的坑我想在 golang 里执行一个涉及到模糊查询的 SQL Query。 使用 LIKE 分句的 SQL 语句如下： 1SELECT name,time FROM course WHERE time LIKE &apos;4%&apos;;  然后我写了如下 Golang 代码，专门搞了一下 &amp;#39;&amp;#39;： 123// BUGtimeLike := fmt.Sp">
 <meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Golang SQL 查询使用 LIKE 分句的坑">
 <meta property="og:url" content="https://clownote.github.io/2020/02/27/blog/Golang-SQL-LIKE-Query/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Golang SQL 查询使用 LIKE 分句的坑 我想在 golang 里执行一个涉及到模糊查询的 SQL Query。 使用 LIKE 分句的 SQL 语句如下： 1SELECT name,time FROM course WHERE time LIKE &apos;4%&apos;; 然后我写了如下 Golang 代码，专门搞了一下 &apos;&apos;： 123// BUGtimeLike := fmt.Sprintf(&quot;">
+<meta property="og:description" content="Golang SQL 查询使用 LIKE 分句的坑我想在 golang 里执行一个涉及到模糊查询的 SQL Query。 使用 LIKE 分句的 SQL 语句如下： 1SELECT name,time FROM course WHERE time LIKE &apos;4%&apos;;  然后我写了如下 Golang 代码，专门搞了一下 &amp;#39;&amp;#39;： 123// BUGtimeLike := fmt.Sp">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.303Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Golang SQL 查询使用 LIKE 分句的坑">
-<meta name="twitter:description" content="Golang SQL 查询使用 LIKE 分句的坑 我想在 golang 里执行一个涉及到模糊查询的 SQL Query。 使用 LIKE 分句的 SQL 语句如下： 1SELECT name,time FROM course WHERE time LIKE &apos;4%&apos;; 然后我写了如下 Golang 代码，专门搞了一下 &apos;&apos;： 123// BUGtimeLike := fmt.Sprintf(&quot;">
+<meta name="twitter:description" content="Golang SQL 查询使用 LIKE 分句的坑我想在 golang 里执行一个涉及到模糊查询的 SQL Query。 使用 LIKE 分句的 SQL 语句如下： 1SELECT name,time FROM course WHERE time LIKE &apos;4%&apos;;  然后我写了如下 Golang 代码，专门搞了一下 &amp;#39;&amp;#39;： 123// BUGtimeLike := fmt.Sp">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#golang-sql-查询使用-like-分句的坑"><span class="toc-number">1.</span> <span class="toc-text"> Golang SQL 查询使用 LIKE 分句的坑</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Golang-SQL-查询使用-LIKE-分句的坑"><span class="toc-number">1.</span> <span class="toc-text">Golang SQL 查询使用 LIKE 分句的坑</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2020-02-27T19:13:09.000Z" itemprop="datePublished">2020-02-27</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.303Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.204Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -155,15 +155,17 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="golang-sql-查询使用-like-分句的坑"><a class="markdownIt-Anchor" href="#golang-sql-查询使用-like-分句的坑"></a> Golang SQL 查询使用 LIKE 分句的坑</h1>
-<p>我想在 golang 里执行一个涉及到模糊查询的 SQL Query。</p>
+    <h1 id="Golang-SQL-查询使用-LIKE-分句的坑"><a href="#Golang-SQL-查询使用-LIKE-分句的坑" class="headerlink" title="Golang SQL 查询使用 LIKE 分句的坑"></a>Golang SQL 查询使用 LIKE 分句的坑</h1><p>我想在 golang 里执行一个涉及到模糊查询的 SQL Query。</p>
 <p>使用 LIKE 分句的 SQL 语句如下：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>,<span class="built_in">time</span> <span class="keyword">FROM</span> course <span class="keyword">WHERE</span> <span class="built_in">time</span> <span class="keyword">LIKE</span> <span class="string">'4%'</span>;</span><br></pre></td></tr></table></figure>
-<p>然后我写了如下 Golang 代码，专门搞了一下 <code>''</code>：</p>
+
+<p>然后我写了如下 Golang 代码，专门搞了一下 <code>&#39;&#39;</code>：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BUG</span></span><br><span class="line">timeLike := fmt.Sprintf(<span class="string">"'%d%%'"</span>, day)</span><br><span class="line">rows, err := db.Query(<span class="string">"SELECT name,time FROM course WHERE time LIKE ?"</span>, timeLike)</span><br></pre></td></tr></table></figure>
+
 <p>查询出来的是空。</p>
-<p>之后，参考 <a href="https://www.cnblogs.com/huangliang-hb/p/10048666.html%EF%BC%8C%E6%88%91%E5%8F%91%E7%8E%B0%E4%B8%8D%E8%83%BD%E5%86%99" target="_blank" rel="noopener">https://www.cnblogs.com/huangliang-hb/p/10048666.html，我发现不能写</a> <code>''</code>，把这东西去掉就行了：</p>
+<p>之后，参考 <a href="https://www.cnblogs.com/huangliang-hb/p/10048666.html%EF%BC%8C%E6%88%91%E5%8F%91%E7%8E%B0%E4%B8%8D%E8%83%BD%E5%86%99" target="_blank" rel="noopener">https://www.cnblogs.com/huangliang-hb/p/10048666.html，我发现不能写</a> <code>&#39;&#39;</code>，把这东西去掉就行了：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// CORRECT</span></span><br><span class="line">timeLike := fmt.Sprintf(<span class="string">"%d%%"</span>, day)</span><br><span class="line">rows, err := db.Query(<span class="string">"SELECT name,time FROM course time LIKE ?"</span>, timeLike)</span><br></pre></td></tr></table></figure>
+
 
   </div>
 </article>
@@ -201,7 +203,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#golang-sql-查询使用-like-分句的坑"><span class="toc-number">1.</span> <span class="toc-text"> Golang SQL 查询使用 LIKE 分句的坑</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Golang-SQL-查询使用-LIKE-分句的坑"><span class="toc-number">1.</span> <span class="toc-text">Golang SQL 查询使用 LIKE 分句的坑</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -233,7 +235,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

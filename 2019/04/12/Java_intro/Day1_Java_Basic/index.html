@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Java 基础语法 Java  是一门面向对象的解释型编程语言。 面向对象 意味着我们应该把一个 Java 程序看作一系列对象的集合，我们的工作就是构建这些对象，并通过调用彼此的方法来让各种对象协同工作，解决实际的问题。 解释型 意味着： Java编译程序生成字节码（byte-code），而不是通常的机器码。 相同的代码设计成可有效地传送程序到多个平台。  基本语法  Java 大小写敏感 Ja">
+    <meta name="description" content="Java 基础语法Java  是一门面向对象的解释型编程语言。 面向对象 意味着我们应该把一个 Java 程序看作一系列对象的集合，我们的工作就是构建这些对象，并通过调用彼此的方法来让各种对象协同工作，解决实际的问题。 解释型 意味着： Java编译程序生成字节码（byte-code），而不是通常的机器码。相同的代码设计成可有效地传送程序到多个平台。 基本语法 Java 大小写敏感 Java 源文">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java-基础语法">
 <meta property="og:url" content="https://clownote.github.io/2019/04/12/Java_intro/Day1_Java_Basic/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Java 基础语法 Java  是一门面向对象的解释型编程语言。 面向对象 意味着我们应该把一个 Java 程序看作一系列对象的集合，我们的工作就是构建这些对象，并通过调用彼此的方法来让各种对象协同工作，解决实际的问题。 解释型 意味着： Java编译程序生成字节码（byte-code），而不是通常的机器码。 相同的代码设计成可有效地传送程序到多个平台。  基本语法  Java 大小写敏感 Ja">
+<meta property="og:description" content="Java 基础语法Java  是一门面向对象的解释型编程语言。 面向对象 意味着我们应该把一个 Java 程序看作一系列对象的集合，我们的工作就是构建这些对象，并通过调用彼此的方法来让各种对象协同工作，解决实际的问题。 解释型 意味着： Java编译程序生成字节码（byte-code），而不是通常的机器码。相同的代码设计成可有效地传送程序到多个平台。 基本语法 Java 大小写敏感 Java 源文">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java-基础语法">
-<meta name="twitter:description" content="Java 基础语法 Java  是一门面向对象的解释型编程语言。 面向对象 意味着我们应该把一个 Java 程序看作一系列对象的集合，我们的工作就是构建这些对象，并通过调用彼此的方法来让各种对象协同工作，解决实际的问题。 解释型 意味着： Java编译程序生成字节码（byte-code），而不是通常的机器码。 相同的代码设计成可有效地传送程序到多个平台。  基本语法  Java 大小写敏感 Ja">
+<meta name="twitter:description" content="Java 基础语法Java  是一门面向对象的解释型编程语言。 面向对象 意味着我们应该把一个 Java 程序看作一系列对象的集合，我们的工作就是构建这些对象，并通过调用彼此的方法来让各种对象协同工作，解决实际的问题。 解释型 意味着： Java编译程序生成字节码（byte-code），而不是通常的机器码。相同的代码设计成可有效地传送程序到多个平台。 基本语法 Java 大小写敏感 Java 源文">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-基础语法"><span class="toc-number">1.</span> <span class="toc-text"> Java 基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本语法"><span class="toc-number">1.1.</span> <span class="toc-text"> 基本语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标识符合法的变量名"><span class="toc-number">1.2.</span> <span class="toc-text"> 标识符（合法的变量名）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键字保留字"><span class="toc-number">1.3.</span> <span class="toc-text"> 关键字（保留字）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">1.4.</span> <span class="toc-text"> 注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-包"><span class="toc-number">1.5.</span> <span class="toc-text"> Java 包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#package-语句"><span class="toc-number">1.5.1.</span> <span class="toc-text"> package 语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#import-语句"><span class="toc-number">1.5.2.</span> <span class="toc-text"> import 语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源文件声明规则"><span class="toc-number">1.6.</span> <span class="toc-text"> 源文件声明规则</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-基础语法"><span class="toc-number">1.</span> <span class="toc-text">Java 基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本语法"><span class="toc-number">1.1.</span> <span class="toc-text">基本语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标识符（合法的变量名）"><span class="toc-number">1.2.</span> <span class="toc-text">标识符（合法的变量名）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键字（保留字）"><span class="toc-number">1.3.</span> <span class="toc-text">关键字（保留字）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">1.4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-包"><span class="toc-number">1.5.</span> <span class="toc-text">Java 包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#package-语句"><span class="toc-number">1.5.1.</span> <span class="toc-text">package 语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#import-语句"><span class="toc-number">1.5.2.</span> <span class="toc-text">import 语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源文件声明规则"><span class="toc-number">1.6.</span> <span class="toc-text">源文件声明规则</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2019-04-12T16:37:53.000Z" itemprop="datePublished">2019-04-12</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.196Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,22 +160,17 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="java-基础语法"><a class="markdownIt-Anchor" href="#java-基础语法"></a> Java 基础语法</h1>
-<p><code>Java</code>  是一门<strong>面向对象</strong>的<strong>解释型</strong>编程语言。</p>
+    <h1 id="Java-基础语法"><a href="#Java-基础语法" class="headerlink" title="Java 基础语法"></a>Java 基础语法</h1><p><code>Java</code>  是一门<strong>面向对象</strong>的<strong>解释型</strong>编程语言。</p>
 <p><strong>面向对象</strong> 意味着我们应该把一个 Java 程序看作一系列对象的集合，我们的工作就是构建这些对象，并通过调用彼此的方法来让各种对象协同工作，解决实际的问题。</p>
 <p><strong>解释型</strong> 意味着：</p>
-<p>Java编译程序生成字节码（<em>byte-code</em>），而不是通常的机器码。<br>
-相同的代码设计成可有效地传送程序到多个平台。</p>
-<h2 id="基本语法"><a class="markdownIt-Anchor" href="#基本语法"></a> 基本语法</h2>
-<ul>
+<p>Java编译程序生成字节码（<em>byte-code</em>），而不是通常的机器码。<br>相同的代码设计成可有效地传送程序到多个平台。</p>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ul>
 <li>Java 大小写敏感</li>
 <li>Java 源文件名必须和类名相同（如果文件名和类名不相同则会导致编译错误）</li>
-<li>Java 程序由 <code>public static void main(String []args)</code>方法开始执行。</li>
+<li>Java 程序由 <code>public static void main(String []args) </code>方法开始执行。</li>
 </ul>
-<h2 id="标识符合法的变量名"><a class="markdownIt-Anchor" href="#标识符合法的变量名"></a> 标识符（合法的变量名）</h2>
-<ul>
-<li>Java 标识符可以包含以下字符：
-<ul>
+<h2 id="标识符（合法的变量名）"><a href="#标识符（合法的变量名）" class="headerlink" title="标识符（合法的变量名）"></a>标识符（合法的变量名）</h2><ul>
+<li>Java 标识符可以包含以下字符：<ul>
 <li><em>字母</em>：<code>A</code>-<code>Z</code>、<code>a</code>-<code>z</code></li>
 <li><em>数字</em>：<code>0</code>-<code>9</code></li>
 <li><em>符号</em>：<code>$</code>、<code>_</code></li>
@@ -185,16 +180,14 @@
 <li>Java 标识符大小写敏感</li>
 <li>关键字不能用作标识符</li>
 </ul>
-<h2 id="关键字保留字"><a class="markdownIt-Anchor" href="#关键字保留字"></a> 关键字（保留字）</h2>
-<table>
+<h2 id="关键字（保留字）"><a href="#关键字（保留字）" class="headerlink" title="关键字（保留字）"></a>关键字（保留字）</h2><table>
 <thead>
 <tr>
 <th>关键字</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>abstract</td>
 <td>表明类或者成员方法具有抽象属性</td>
 </tr>
@@ -394,25 +387,20 @@
 <td>while</td>
 <td>用在循环结构中</td>
 </tr>
-</tbody>
-</table>
-<h2 id="注释"><a class="markdownIt-Anchor" href="#注释"></a> 注释</h2>
-<p>Java 中的注释和 C 语言相同，有<code>/* ... */</code> 和 <code>// ...</code> 两种。</p>
+</tbody></table>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>Java 中的注释和 C 语言相同，有<code>/* ... */</code> 和 <code>// ...</code> 两种。</p>
 <p>示例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">多行</span></span><br><span class="line"><span class="comment">注释</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 行中注释 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 行尾注释</span></span><br></pre></td></tr></table></figure>
-<h2 id="java-包"><a class="markdownIt-Anchor" href="#java-包"></a> Java 包</h2>
-<p>包主要用来对类和接口进行分类。当开发Java程序时，可能编写成百上千的类，因此很有必要对类和接口进行分类。</p>
-<h3 id="package-语句"><a class="markdownIt-Anchor" href="#package-语句"></a> <code>package</code> 语句</h3>
-<p><code>package</code> 指定的信息直接将生成的 <code>class</code> 文件生成到对应目录下。如 <code>package aaa.bbb.ccc</code> 编译器就将该 <code>.java</code> 文件下的各个类生成到 <code>./aaa/bbb/ccc/</code> 这个目录。</p>
-<h3 id="import-语句"><a class="markdownIt-Anchor" href="#import-语句"></a> <code>import</code> 语句</h3>
-<p><code>import</code> 是为了简化使用 <code>package</code> 之后的实例化的代码。假设 <code>./aaa/bbb/ccc/</code> 下的 <code>A</code> 类:</p>
+
+<h2 id="Java-包"><a href="#Java-包" class="headerlink" title="Java 包"></a>Java 包</h2><p>包主要用来对类和接口进行分类。当开发Java程序时，可能编写成百上千的类，因此很有必要对类和接口进行分类。</p>
+<h3 id="package-语句"><a href="#package-语句" class="headerlink" title="package 语句"></a><code>package</code> 语句</h3><p><code>package</code> 指定的信息直接将生成的 <code>class</code> 文件生成到对应目录下。如 <code>package aaa.bbb.ccc</code> 编译器就将该 <code>.java</code> 文件下的各个类生成到 <code>./aaa/bbb/ccc/</code> 这个目录。</p>
+<h3 id="import-语句"><a href="#import-语句" class="headerlink" title="import 语句"></a><code>import</code> 语句</h3><p><code>import</code> 是为了简化使用 <code>package</code> 之后的实例化的代码。假设 <code>./aaa/bbb/ccc/</code> 下的 <code>A</code> 类:</p>
 <p>假如没有 <code>import</code>，实例化A类为：<code>new aaa.bbb.ccc.A()</code>;</p>
-<p>使用 <code>import aaa.bbb.ccc.A</code> 后，就可以直接使用 <code>new A()</code> 了;<br>
-也就是编译器匹配并扩展了 <code>aaa.bbb.ccc.</code> 这串字符串。</p>
+<p>使用 <code>import aaa.bbb.ccc.A</code> 后，就可以直接使用 <code>new A()</code> 了;<br>也就是编译器匹配并扩展了 <code>aaa.bbb.ccc.</code> 这串字符串。</p>
 <p>例如，下面的命令行将会命令编译器载入 <code>java_installation/java/io</code> 路径下的所有类:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br></pre></td></tr></table></figure>
-<h2 id="源文件声明规则"><a class="markdownIt-Anchor" href="#源文件声明规则"></a> 源文件声明规则</h2>
-<ul>
+
+<h2 id="源文件声明规则"><a href="#源文件声明规则" class="headerlink" title="源文件声明规则"></a>源文件声明规则</h2><ul>
 <li>一个源文件中只能有一个 <code>public</code> 类（非 <code>public</code> 的不限）</li>
 <li>源文件的名称应该和 <code>public</code> 类的类名保持一致。（源文件中 public 类的类名是 Employee，那么源文件应该命名为Employee.java）</li>
 <li>如果一个类定义在某个包中，那么 <code>package</code> 语句应该在源文件的首行。</li>
@@ -456,7 +444,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java-基础语法"><span class="toc-number">1.</span> <span class="toc-text"> Java 基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本语法"><span class="toc-number">1.1.</span> <span class="toc-text"> 基本语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标识符合法的变量名"><span class="toc-number">1.2.</span> <span class="toc-text"> 标识符（合法的变量名）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键字保留字"><span class="toc-number">1.3.</span> <span class="toc-text"> 关键字（保留字）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">1.4.</span> <span class="toc-text"> 注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-包"><span class="toc-number">1.5.</span> <span class="toc-text"> Java 包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#package-语句"><span class="toc-number">1.5.1.</span> <span class="toc-text"> package 语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#import-语句"><span class="toc-number">1.5.2.</span> <span class="toc-text"> import 语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源文件声明规则"><span class="toc-number">1.6.</span> <span class="toc-text"> 源文件声明规则</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-基础语法"><span class="toc-number">1.</span> <span class="toc-text">Java 基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本语法"><span class="toc-number">1.1.</span> <span class="toc-text">基本语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标识符（合法的变量名）"><span class="toc-number">1.2.</span> <span class="toc-text">标识符（合法的变量名）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键字（保留字）"><span class="toc-number">1.3.</span> <span class="toc-text">关键字（保留字）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">1.4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-包"><span class="toc-number">1.5.</span> <span class="toc-text">Java 包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#package-语句"><span class="toc-number">1.5.1.</span> <span class="toc-text">package 语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#import-语句"><span class="toc-number">1.5.2.</span> <span class="toc-text">import 语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源文件声明规则"><span class="toc-number">1.6.</span> <span class="toc-text">源文件声明规则</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -488,7 +476,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

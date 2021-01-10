@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="系统信息   uname 命令:  获取系统信息 (其中’u’代表UNIX)   $ uname       显示当前操作系统 -n    显示主机名 -i    硬件平台名 -r    系统发布版本信息 -s    系统名 -m    机器硬件名 -p    显示CPU信息 -a    以上全部 用 -n -r == -i -n == -ni == -in； (详见 $ man uname。)">
+    <meta name="description" content="系统信息 uname 命令:  获取系统信息(其中’u’代表UNIX)  $ uname       显示当前操作系统   `-n`    显示主机名   `-i`    硬件平台名   `-r`    系统发布版本信息   `-s`    系统名   `-m`    机器硬件名   `-p`    显示CPU信息   `-a`    以上全部 用 -n -r == -i -n == -ni ==">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-1.1-系统信息">
 <meta property="og:url" content="https://clownote.github.io/2016/12/19/Linux/linux-1-1-SystemInformation/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="系统信息   uname 命令:  获取系统信息 (其中’u’代表UNIX)   $ uname       显示当前操作系统 -n    显示主机名 -i    硬件平台名 -r    系统发布版本信息 -s    系统名 -m    机器硬件名 -p    显示CPU信息 -a    以上全部 用 -n -r == -i -n == -ni == -in； (详见 $ man uname。)">
+<meta property="og:description" content="系统信息 uname 命令:  获取系统信息(其中’u’代表UNIX)  $ uname       显示当前操作系统   `-n`    显示主机名   `-i`    硬件平台名   `-r`    系统发布版本信息   `-s`    系统名   `-m`    机器硬件名   `-p`    显示CPU信息   `-a`    以上全部 用 -n -r == -i -n == -ni ==">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-1.1-系统信息">
-<meta name="twitter:description" content="系统信息   uname 命令:  获取系统信息 (其中’u’代表UNIX)   $ uname       显示当前操作系统 -n    显示主机名 -i    硬件平台名 -r    系统发布版本信息 -s    系统名 -m    机器硬件名 -p    显示CPU信息 -a    以上全部 用 -n -r == -i -n == -ni == -in； (详见 $ man uname。)">
+<meta name="twitter:description" content="系统信息 uname 命令:  获取系统信息(其中’u’代表UNIX)  $ uname       显示当前操作系统   `-n`    显示主机名   `-i`    硬件平台名   `-r`    系统发布版本信息   `-s`    系统名   `-m`    机器硬件名   `-p`    显示CPU信息   `-a`    以上全部 用 -n -r == -i -n == -ni ==">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系统信息"><span class="toc-number">1.</span> <span class="toc-text"> 系统信息</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系统信息"><span class="toc-number">1.</span> <span class="toc-text">系统信息</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2016-12-19T14:14:14.000Z" itemprop="datePublished">2016-12-19</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.196Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,35 +160,31 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="系统信息"><a class="markdownIt-Anchor" href="#系统信息"></a> 系统信息</h1>
+    <h1 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h1><ul>
+<li><p><code>uname</code> 命令:  获取系统信息<br>(其中’u’代表UNIX)</p>
+</li>
+<li><p><code>$ uname</code>       显示当前操作系统</p>
+<pre><code>  `-n`    显示主机名
+  `-i`    硬件平台名
+  `-r`    系统发布版本信息
+  `-s`    系统名
+  `-m`    机器硬件名
+  `-p`    显示CPU信息
+  `-a`    以上全部</code></pre>
+<p>用 <code>-n -r</code> == <code>-i -n</code> == <code>-ni</code> == <code>-in</code>；<br>(详见 <code>$ man uname</code>。)</p>
+</li>
+<li><p><code>$ date</code>       显示当前系统日期、时间</p>
+</li>
+<li><p><code>$ cal</code>         显示日历：</p>
 <ul>
-<li>
-<p><code>uname</code> 命令:  获取系统信息<br>
-(其中’u’代表UNIX)</p>
+<li><p><code>$ cal</code>         无参显示本月日历</p>
 </li>
-<li>
-<p><code>$ uname</code>       显示当前操作系统<br>
-<code>-n</code>    显示主机名<br>
-<code>-i</code>    硬件平台名<br>
-<code>-r</code>    系统发布版本信息<br>
-<code>-s</code>    系统名<br>
-<code>-m</code>    机器硬件名<br>
-<code>-p</code>    显示CPU信息<br>
-<code>-a</code>    以上全部<br>
-用 <code>-n -r</code> == <code>-i -n</code> == <code>-ni</code> == <code>-in</code>；<br>
-(详见 <code>$ man uname</code>。)</p>
+<li><p><code>$ cal m y</code>    m y是月份 年份，显示y年m月的</p>
 </li>
-<li>
-<p><code>$ date</code>       显示当前系统日期、时间</p>
-</li>
-<li>
-<p><code>$ cal</code>		 显示日历：</p>
-<ul>
-<li><code>$ cal</code>         无参显示本月日历</li>
-<li><code>$ cal m y</code>    m y是月份 年份，显示y年m月的</li>
-<li><code>$ cal y</code>      y 是年份，     显示y全年</li>
-</ul>
+<li><p><code>$ cal y</code>      y 是年份，     显示y全年</p>
 <p>(详见 <code>$ man cal</code>。)</p>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -228,7 +224,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系统信息"><span class="toc-number">1.</span> <span class="toc-text"> 系统信息</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系统信息"><span class="toc-number">1.</span> <span class="toc-text">系统信息</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -260,7 +256,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

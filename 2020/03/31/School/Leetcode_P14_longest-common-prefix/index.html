@@ -6,21 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Leetcode 14. 最长公共前缀  题目 编写一个函数来查找字符串数组中的最长公共前缀。 如果不存在公共前缀，返回空字符串 “”。 示例 1: 12输入: [&amp;quot;flower&amp;quot;,&amp;quot;flow&amp;quot;,&amp;quot;flight&amp;quot;]输出: &amp;quot;fl&amp;quot; 示例 2: 123输入: [&amp;quot;dog&amp;quot;,&amp;quot;racecar">
+    <meta name="description" content="Leetcode 14. 最长公共前缀题目编写一个函数来查找字符串数组中的最长公共前缀。 如果不存在公共前缀，返回空字符串 “”。 示例 1: 12输入: [&amp;quot;flower&amp;quot;,&amp;quot;flow&amp;quot;,&amp;quot;flight&amp;quot;]输出: &amp;quot;fl&amp;quot;  示例 2: 123输入: [&amp;quot;dog&amp;quot;,&amp;quot;racecar&amp;qu">
 <meta name="keywords" content="School">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 14. 最长公共前缀">
 <meta property="og:url" content="https://clownote.github.io/2020/03/31/School/Leetcode_P14_longest-common-prefix/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode 14. 最长公共前缀  题目 编写一个函数来查找字符串数组中的最长公共前缀。 如果不存在公共前缀，返回空字符串 “”。 示例 1: 12输入: [&amp;quot;flower&amp;quot;,&amp;quot;flow&amp;quot;,&amp;quot;flight&amp;quot;]输出: &amp;quot;fl&amp;quot; 示例 2: 123输入: [&amp;quot;dog&amp;quot;,&amp;quot;racecar">
+<meta property="og:description" content="Leetcode 14. 最长公共前缀题目编写一个函数来查找字符串数组中的最长公共前缀。 如果不存在公共前缀，返回空字符串 “”。 示例 1: 12输入: [&amp;quot;flower&amp;quot;,&amp;quot;flow&amp;quot;,&amp;quot;flight&amp;quot;]输出: &amp;quot;fl&amp;quot;  示例 2: 123输入: [&amp;quot;dog&amp;quot;,&amp;quot;racecar&amp;qu">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdct2u0iynj31930u04pt.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdcuvnmzffj31sz0u0gqr.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdcuauj2g2j31930u01kx.jpg">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.303Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode 14. 最长公共前缀">
-<meta name="twitter:description" content="Leetcode 14. 最长公共前缀  题目 编写一个函数来查找字符串数组中的最长公共前缀。 如果不存在公共前缀，返回空字符串 “”。 示例 1: 12输入: [&amp;quot;flower&amp;quot;,&amp;quot;flow&amp;quot;,&amp;quot;flight&amp;quot;]输出: &amp;quot;fl&amp;quot; 示例 2: 123输入: [&amp;quot;dog&amp;quot;,&amp;quot;racecar">
+<meta name="twitter:description" content="Leetcode 14. 最长公共前缀题目编写一个函数来查找字符串数组中的最长公共前缀。 如果不存在公共前缀，返回空字符串 “”。 示例 1: 12输入: [&amp;quot;flower&amp;quot;,&amp;quot;flow&amp;quot;,&amp;quot;flight&amp;quot;]输出: &amp;quot;fl&amp;quot;  示例 2: 123输入: [&amp;quot;dog&amp;quot;,&amp;quot;racecar&amp;qu">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdct2u0iynj31930u04pt.jpg">
     
     
@@ -113,7 +113,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-14-最长公共前缀"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode 14. 最长公共前缀</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#暴力遍历法"><span class="toc-number">1.2.</span> <span class="toc-text"> 暴力遍历法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分治法"><span class="toc-number">1.3.</span> <span class="toc-text"> 分治法</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-14-最长公共前缀"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 14. 最长公共前缀</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#暴力遍历法"><span class="toc-number">1.2.</span> <span class="toc-text">暴力遍历法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分治法"><span class="toc-number">1.3.</span> <span class="toc-text">分治法</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -139,7 +139,7 @@
       
         <time datetime="2020-03-31T09:37:05.000Z" itemprop="datePublished">2020-03-31</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.303Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.200Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -159,49 +159,47 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="leetcode-14-最长公共前缀"><a class="markdownIt-Anchor" href="#leetcode-14-最长公共前缀"></a> Leetcode <a href="https://leetcode-cn.com/problems/longest-common-prefix/" target="_blank" rel="noopener">14. 最长公共前缀</a></h1>
-<h2 id="题目"><a class="markdownIt-Anchor" href="#题目"></a> 题目</h2>
-<p>编写一个函数来查找字符串数组中的最长公共前缀。</p>
+    <h1 id="Leetcode-14-最长公共前缀"><a href="#Leetcode-14-最长公共前缀" class="headerlink" title="Leetcode 14. 最长公共前缀"></a>Leetcode <a href="https://leetcode-cn.com/problems/longest-common-prefix/" target="_blank" rel="noopener">14. 最长公共前缀</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>编写一个函数来查找字符串数组中的最长公共前缀。</p>
 <p>如果不存在公共前缀，返回空字符串 “”。</p>
 <p>示例 1:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]</span><br><span class="line">输出: &quot;fl&quot;</span><br></pre></td></tr></table></figure>
+
 <p>示例 2:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;]</span><br><span class="line">输出: &quot;&quot;</span><br><span class="line">解释: 输入不存在公共前缀。</span><br></pre></td></tr></table></figure>
+
 <p>说明:</p>
 <p>所有输入只包含小写字母 a-z 。</p>
-<p>来源：力扣（LeetCode）<br>
-链接：<a href="https://leetcode-cn.com/problems/longest-common-prefix" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-common-prefix</a><br>
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<h2 id="暴力遍历法"><a class="markdownIt-Anchor" href="#暴力遍历法"></a> 暴力遍历法</h2>
-<p>这个方法的思路是这样：</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/longest-common-prefix" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-common-prefix</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="暴力遍历法"><a href="#暴力遍历法" class="headerlink" title="暴力遍历法"></a>暴力遍历法</h2><p>这个方法的思路是这样：</p>
 <p>例如，处理题例 <code>strs = [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]</code>:</p>
 <p>第一轮：</p>
 <ol>
-<li>从 <code>strs[0]</code> 即<s>第0个</s>第一个元素 <code>&quot;flower&quot;</code> 取出第一个字符 <code>&quot;f&quot;</code></li>
+<li>从 <code>strs[0]</code> 即<del>第0个</del>第一个元素 <code>&quot;flower&quot;</code> 取出第一个字符 <code>&quot;f&quot;</code></li>
 <li>遍历 <code>strs</code>，若有元素没有前缀 <code>&quot;f&quot;</code>，则最长公共前缀为 <code>&quot;&quot;</code></li>
 </ol>
 <p>第二轮：</p>
 <ol>
-<li>从 <code>strs[0]</code> 即<s>第0个</s>第一个元素 <code>&quot;flower&quot;</code> 取出前两个字符 <code>&quot;fl&quot;</code></li>
+<li>从 <code>strs[0]</code> 即<del>第0个</del>第一个元素 <code>&quot;flower&quot;</code> 取出前两个字符 <code>&quot;fl&quot;</code></li>
 <li>遍历 <code>strs</code>，若有元素没有前缀 <code>&quot;fl&quot;</code>，则最长公共前缀为 <code>&quot;f&quot;</code></li>
 </ol>
 <p>第三轮：</p>
 <ol>
-<li>从 <code>strs[0]</code> 即<s>第0个</s>第一个元素 <code>&quot;flower&quot;</code> 再取出前三个字符，得到 <code>&quot;flo&quot;</code></li>
+<li>从 <code>strs[0]</code> 即<del>第0个</del>第一个元素 <code>&quot;flower&quot;</code> 再取出前三个字符，得到 <code>&quot;flo&quot;</code></li>
 <li>遍历 <code>strs</code>，若有元素没有前缀 <code>&quot;flo&quot;</code>，则最长公共前缀为 <code>&quot;fl&quot;</code></li>
 </ol>
-<p>…</p>
+<p>……</p>
 <p>Golang 实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">longestCommonPrefix</span><span class="params">(strs []<span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(strs) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">    &#125;</span><br><span class="line">    i := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> ; i &lt; <span class="built_in">len</span>(strs[<span class="number">0</span>]); i++ &#123;</span><br><span class="line">        <span class="keyword">for</span> j := <span class="number">1</span>; j &lt; <span class="built_in">len</span>(strs); j++ &#123;</span><br><span class="line">            <span class="keyword">if</span> !strings.HasPrefix(strs[j], strs[<span class="number">0</span>][:i+<span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">return</span> strs[<span class="number">0</span>][:i]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> strs[<span class="number">0</span>][:i]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gdct2u0iynj31930u04pt.jpg" alt="屏幕快照 2020-03-31 08.28.51"></p>
-<p>感觉还有好多种暴力遍历的方法，随便怎么都出得来，但好像效率都差不多？大概是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>l</mi><mi>e</mi><mi>n</mi><mo stretchy="false">(</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>s</mi><mo stretchy="false">)</mo></mrow></msubsup><mi>l</mi><mi>e</mi><mi>n</mi><mo stretchy="false">(</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>s</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\sum_{i=0}^{len(strs)}len(strs[i]))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.32761em;vertical-align:-0.29971000000000003em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0278999999999998em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">s</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span>？</p>
-<h2 id="分治法"><a class="markdownIt-Anchor" href="#分治法"></a> 分治法</h2>
-<p>我想用分治来写这个，感觉会比较有意思。</p>
+<p>感觉还有好多种暴力遍历的方法，随便怎么都出得来，但好像效率都差不多？大概是 $O(\sum_{i=0}^{len(strs)}len(strs[i]))$？</p>
+<h2 id="分治法"><a href="#分治法" class="headerlink" title="分治法"></a>分治法</h2><p>我想用分治来写这个，感觉会比较有意思。</p>
 <p>其实就是一个递归，用二分法“分”问题，分到最后基础情况就是只剩一个元素直接返回；然后“合”就是求二分左右递归各自返回来的两个串的最长公共前缀：</p>
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gdcuvnmzffj31sz0u0gqr.jpg" alt="image-20200331093206511"></p>
 <p>（我疯了，居然用 XMind 画这个。。。）</p>
 <p>代码实现，Golang：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">longestCommonPrefix</span><span class="params">(strs []<span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(strs) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> partLongestCommonPrefix(strs)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">partLongestCommonPrefix</span><span class="params">(strs []<span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(strs) &lt;= <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> strs[<span class="number">0</span>]</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        m := <span class="built_in">len</span>(strs) / <span class="number">2</span></span><br><span class="line">        l := partLongestCommonPrefix(strs[: m])</span><br><span class="line">        r := partLongestCommonPrefix(strs[m :])</span><br><span class="line">        <span class="keyword">return</span> fuzzbuzz(l, r)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * fuzzbuzz 是一个函数，用来返回两个字符串的最长公共前缀</span></span><br><span class="line"><span class="comment"> * 用这个函数来举反例，以此呼吁大家认真命名、取有意义的名字！</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fuzzbuzz</span><span class="params">(foo, bar <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    fuzz := <span class="built_in">len</span>(foo)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(bar) &lt; fuzz &#123;</span><br><span class="line">        fuzz = <span class="built_in">len</span>(bar)</span><br><span class="line">    &#125;</span><br><span class="line">    buzz := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> ; buzz &lt; fuzz; buzz++ &#123;</span><br><span class="line">        <span class="keyword">if</span> foo[buzz] != bar[buzz] &#123;</span><br><span class="line">            <span class="keyword">return</span> foo[: buzz]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> foo[: buzz]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>其实这个时间复杂度和刚才那个暴力法差不多，而空间占用还更多了：</p>
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gdcuauj2g2j31930u01kx.jpg" alt="image-20200331091205895"></p>
 
@@ -241,7 +239,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-14-最长公共前缀"><span class="toc-number">1.</span> <span class="toc-text"> Leetcode 14. 最长公共前缀</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text"> 题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#暴力遍历法"><span class="toc-number">1.2.</span> <span class="toc-text"> 暴力遍历法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分治法"><span class="toc-number">1.3.</span> <span class="toc-text"> 分治法</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-14-最长公共前缀"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 14. 最长公共前缀</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#暴力遍历法"><span class="toc-number">1.2.</span> <span class="toc-text">暴力遍历法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分治法"><span class="toc-number">1.3.</span> <span class="toc-text">分治法</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -273,7 +271,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

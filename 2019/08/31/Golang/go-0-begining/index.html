@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Go 语言基础  Go 语言简介（无用的废话 =_=）  Go 是一个开源的编程语言，它能让构造简单、可靠且高效的软件变得容易。  我使用 Go 的几个原因：  快速 简洁 严格规范 方便的网络编程 方便的多线程 完备的文档 开源 大多数朋友都不会呀  使用 Go 已经有一段时间了，它给我的几个感觉就是：  要求严格（不能声明不使用的变量，变量类型必须显示转化等） 超方便的多线程！ 高效（时间、">
+    <meta name="description" content="Go 语言基础Go 语言简介（无用的废话 =_=） Go 是一个开源的编程语言，它能让构造简单、可靠且高效的软件变得容易。  我使用 Go 的几个原因：  快速 简洁 严格规范 方便的网络编程 方便的多线程 完备的文档 开源 大多数朋友都不会呀  使用 Go 已经有一段时间了，它给我的几个感觉就是：  要求严格（不能声明不使用的变量，变量类型必须显示转化等） 超方便的多线程！ 高效（时间、空间消耗">
 <meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="golang-Go语言基础">
 <meta property="og:url" content="https://clownote.github.io/2019/08/31/Golang/go-0-begining/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Go 语言基础  Go 语言简介（无用的废话 =_=）  Go 是一个开源的编程语言，它能让构造简单、可靠且高效的软件变得容易。  我使用 Go 的几个原因：  快速 简洁 严格规范 方便的网络编程 方便的多线程 完备的文档 开源 大多数朋友都不会呀  使用 Go 已经有一段时间了，它给我的几个感觉就是：  要求严格（不能声明不使用的变量，变量类型必须显示转化等） 超方便的多线程！ 高效（时间、">
+<meta property="og:description" content="Go 语言基础Go 语言简介（无用的废话 =_=） Go 是一个开源的编程语言，它能让构造简单、可靠且高效的软件变得容易。  我使用 Go 的几个原因：  快速 简洁 严格规范 方便的网络编程 方便的多线程 完备的文档 开源 大多数朋友都不会呀  使用 Go 已经有一段时间了，它给我的几个感觉就是：  要求严格（不能声明不使用的变量，变量类型必须显示转化等） 超方便的多线程！ 高效（时间、空间消耗">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.299Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="golang-Go语言基础">
-<meta name="twitter:description" content="Go 语言基础  Go 语言简介（无用的废话 =_=）  Go 是一个开源的编程语言，它能让构造简单、可靠且高效的软件变得容易。  我使用 Go 的几个原因：  快速 简洁 严格规范 方便的网络编程 方便的多线程 完备的文档 开源 大多数朋友都不会呀  使用 Go 已经有一段时间了，它给我的几个感觉就是：  要求严格（不能声明不使用的变量，变量类型必须显示转化等） 超方便的多线程！ 高效（时间、">
+<meta name="twitter:description" content="Go 语言基础Go 语言简介（无用的废话 =_=） Go 是一个开源的编程语言，它能让构造简单、可靠且高效的软件变得容易。  我使用 Go 的几个原因：  快速 简洁 严格规范 方便的网络编程 方便的多线程 完备的文档 开源 大多数朋友都不会呀  使用 Go 已经有一段时间了，它给我的几个感觉就是：  要求严格（不能声明不使用的变量，变量类型必须显示转化等） 超方便的多线程！ 高效（时间、空间消耗">
     
     
         
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#go-语言基础"><span class="toc-number">1.</span> <span class="toc-text"> Go 语言基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#go-语言简介无用的废话-_"><span class="toc-number">1.1.</span> <span class="toc-text"> Go 语言简介（无用的废话 =_=）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译-运行go程序"><span class="toc-number">1.2.</span> <span class="toc-text"> 编译、运行Go程序</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Go-语言基础"><span class="toc-number">1.</span> <span class="toc-text">Go 语言基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Go-语言简介（无用的废话-）"><span class="toc-number">1.1.</span> <span class="toc-text">Go 语言简介（无用的废话 =_=）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译、运行Go程序"><span class="toc-number">1.2.</span> <span class="toc-text">编译、运行Go程序</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +135,7 @@
       
         <time datetime="2019-08-31T10:13:06.000Z" itemprop="datePublished">2019-08-31</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.299Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.196Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,9 +160,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="go-语言基础"><a class="markdownIt-Anchor" href="#go-语言基础"></a> Go 语言基础</h1>
-<h2 id="go-语言简介无用的废话-_"><a class="markdownIt-Anchor" href="#go-语言简介无用的废话-_"></a> Go 语言简介（无用的废话 =_=）</h2>
-<blockquote>
+    <h1 id="Go-语言基础"><a href="#Go-语言基础" class="headerlink" title="Go 语言基础"></a>Go 语言基础</h1><h2 id="Go-语言简介（无用的废话-）"><a href="#Go-语言简介（无用的废话-）" class="headerlink" title="Go 语言简介（无用的废话 =_=）"></a>Go 语言简介（无用的废话 =_=）</h2><blockquote>
 <p>Go 是一个开源的编程语言，它能让构造简单、可靠且高效的软件变得容易。</p>
 </blockquote>
 <p>我使用 Go 的几个原因：</p>
@@ -174,7 +172,7 @@
 <li>方便的多线程</li>
 <li>完备的文档</li>
 <li>开源</li>
-<li><s>大多数朋友都不会呀</s></li>
+<li><del>大多数朋友都不会呀</del></li>
 </ul>
 <p>使用 Go 已经有一段时间了，它给我的几个感觉就是：</p>
 <ul>
@@ -183,24 +181,19 @@
 <li>高效（时间、空间消耗都不大哦）</li>
 </ul>
 <p>借用一句前辈的话，Golang 就是互联网时代的 C！由于本人幼年时期对 C 十分热爱（后来生活所迫更多是在用OO的语言），所以对 Go 的印象也很好。</p>
-<h2 id="编译-运行go程序"><a class="markdownIt-Anchor" href="#编译-运行go程序"></a> 编译、运行Go程序</h2>
-<ol>
-<li><strong>创建目录</strong>：<br>
-新建一个目录，这个目录的名称应与需要建立的Go项目名称相同（最后生成的可执行文件将以这个“项目根目录”为文件名）；</li>
-<li><strong>创建源文件</strong>：<br>
-进入该目录，创建名为 <code>*.go</code> 的Go源文件，并写入代码；</li>
-<li><strong>格式化代码</strong>：<br>
-工作目录不变，执行命令 <code>go fmt</code>，可以自动格式化代码；</li>
-<li><strong>编译运行</strong>：<br>
-<code>go run &lt;src.go&gt;</code>命令会将编译参数中的命令源码文件，并把编译后的可执行文件存放到临时工作目录中，然后运行该临时可执行文件；</li>
-<li><strong>编译</strong>：<br>
-工作目录不变，执行命令：<code>go bulid</code>，若编译通过，目录中将出现一个与目录同名的可执行文件；</li>
-<li><strong>运行</strong>：<br>
-执行生成的可执行文件即可。</li>
+<h2 id="编译、运行Go程序"><a href="#编译、运行Go程序" class="headerlink" title="编译、运行Go程序"></a>编译、运行Go程序</h2><ol>
+<li><strong>创建目录</strong>：<br>新建一个目录，这个目录的名称应与需要建立的Go项目名称相同（最后生成的可执行文件将以这个“项目根目录”为文件名）； </li>
+<li><strong>创建源文件</strong>：<br>进入该目录，创建名为 <code>*.go</code> 的Go源文件，并写入代码；</li>
+<li><strong>格式化代码</strong>：<br>工作目录不变，执行命令 <code>go fmt</code>，可以自动格式化代码；</li>
+<li><strong>编译运行</strong>：<br><code>go run &lt;src.go&gt;</code>命令会将编译参数中的命令源码文件，并把编译后的可执行文件存放到临时工作目录中，然后运行该临时可执行文件；</li>
+<li><strong>编译</strong>：<br>工作目录不变，执行命令：<code>go bulid</code>，若编译通过，目录中将出现一个与目录同名的可执行文件；</li>
+<li><strong>运行</strong>：<br>执行生成的可执行文件即可。</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir test_go</span><br><span class="line">$ cd test_go/</span><br><span class="line">$ vim test.go</span><br><span class="line">$ go run test.go</span><br><span class="line">Hello, world!</span><br><span class="line">$ go build</span><br><span class="line">$ ls</span><br><span class="line">test.go test_go</span><br><span class="line">$ ./test_go </span><br><span class="line">Hello, world!</span><br></pre></td></tr></table></figure>
+
 <p>这里的 test.go 中我们写了一个经典的 <code>Hello World</code> 程序，它的代码如下：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Printf(<span class="string">"Hello, world!\n"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
   </div>
 </article>
@@ -238,7 +231,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#go-语言基础"><span class="toc-number">1.</span> <span class="toc-text"> Go 语言基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#go-语言简介无用的废话-_"><span class="toc-number">1.1.</span> <span class="toc-text"> Go 语言简介（无用的废话 =_=）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译-运行go程序"><span class="toc-number">1.2.</span> <span class="toc-text"> 编译、运行Go程序</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Go-语言基础"><span class="toc-number">1.</span> <span class="toc-text">Go 语言基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Go-语言简介（无用的废话-）"><span class="toc-number">1.1.</span> <span class="toc-text">Go 语言简介（无用的废话 =_=）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译、运行Go程序"><span class="toc-number">1.2.</span> <span class="toc-text">编译、运行Go程序</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -270,7 +263,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

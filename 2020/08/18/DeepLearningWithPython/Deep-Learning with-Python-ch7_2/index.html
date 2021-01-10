@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+    <meta name="description" content="Deep Learning with Python这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)。这">
 <meta name="keywords" content="Machine Learning,Deep Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python深度学习之Keras回调函数与TensorBoard">
 <meta property="og:url" content="https://clownote.github.io/2020/08/18/DeepLearningWithPython/Deep-Learning with-Python-ch7_2/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta property="og:description" content="Deep Learning with Python这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)。这">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp9tjfuzcj312g0d6acp.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghurzd5lj0j30fd0jzq4p.jpg">
-<meta property="og:updated_time" content="2020-12-31T09:10:44.295Z">
+<meta property="og:updated_time" content="2021-01-10T03:08:22.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python深度学习之Keras回调函数与TensorBoard">
-<meta name="twitter:description" content="Deep Learning with Python 这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)">
+<meta name="twitter:description" content="Deep Learning with Python这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 GitHub 或 Gitee 找到原始的 .ipynb 笔记本。 你可以去这个网站在线阅读这本书的正版原文(英文)。这">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp9tjfuzcj312g0d6acp.jpg">
     
     
@@ -112,7 +112,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#72-inspecting-and-monitoring-deep-learning-models-using-keras-callbacks-and-tensorboard"><span class="toc-number">1.1.</span> <span class="toc-text"> 7.2 Inspecting and monitoring deep-learning models using Keras callbacks and TensorBoard</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#训练中将回调函数作用于模型"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 训练中将回调函数作用于模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-callback"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> 使用 callback</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写自己的回调函数"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> 编写自己的回调函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tensorboard-简介-tensorflow-的可视化框架"><span class="toc-number">1.1.2.</span> <span class="toc-text"> TensorBoard 简介: TensorFlow 的可视化框架</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Deep-Learning-with-Python"><span class="toc-number">1.</span> <span class="toc-text">Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-Inspecting-and-monitoring-deep-learning-models-using-Keras-callbacks-and-TensorBoard"><span class="toc-number">1.1.</span> <span class="toc-text">7.2 Inspecting and monitoring deep-learning models using Keras callbacks and TensorBoard</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#训练中将回调函数作用于模型"><span class="toc-number">1.1.1.</span> <span class="toc-text">训练中将回调函数作用于模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-callback"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">使用 callback</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写自己的回调函数"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">编写自己的回调函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TensorBoard-简介-TensorFlow-的可视化框架"><span class="toc-number">1.1.2.</span> <span class="toc-text">TensorBoard 简介: TensorFlow 的可视化框架</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -138,7 +138,7 @@
       
         <time datetime="2020-08-18T10:55:24.000Z" itemprop="datePublished">2020-08-18</time>
         
-        (Updated: <time datetime="2020-12-31T09:10:44.295Z" itemprop="dateModified">2020-12-31</time>)
+        (Updated: <time datetime="2021-01-10T03:08:22.196Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -163,18 +163,15 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="deep-learning-with-python"><a class="markdownIt-Anchor" href="#deep-learning-with-python"></a> Deep Learning with Python</h1>
-<p>这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 <a href="https://github.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">GitHub</a> 或 <a href="https://gitee.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">Gitee</a> 找到原始的 <code>.ipynb</code> 笔记本。</p>
+    <h1 id="Deep-Learning-with-Python"><a href="#Deep-Learning-with-Python" class="headerlink" title="Deep Learning with Python"></a>Deep Learning with Python</h1><p>这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，你可以去 <a href="https://github.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">GitHub</a> 或 <a href="https://gitee.com/cdfmlr/Deep-Learning-with-Python-Notebooks" target="_blank" rel="noopener">Gitee</a> 找到原始的 <code>.ipynb</code> 笔记本。</p>
 <p>你可以去<a href="https://livebook.manning.com/book/deep-learning-with-python" target="_blank" rel="noopener">这个网站在线阅读这本书的正版原文</a>(英文)。这本书的作者也给出了配套的 <a href="https://github.com/fchollet/deep-learning-with-python-notebooks" target="_blank" rel="noopener">Jupyter notebooks</a>。</p>
 <p>本文为 <strong>第7章  高级的深度学习最佳实践</strong> (Chapter 7. <em>Advanced deep-learning best practices</em>) 的笔记之一。</p>
 <p>[TOC]</p>
-<h2 id="72-inspecting-and-monitoring-deep-learning-models-using-keras-callbacks-and-tensorboard"><a class="markdownIt-Anchor" href="#72-inspecting-and-monitoring-deep-learning-models-using-keras-callbacks-and-tensorboard"></a> 7.2 Inspecting and monitoring deep-learning models using Keras callbacks and TensorBoard</h2>
-<blockquote>
+<h2 id="7-2-Inspecting-and-monitoring-deep-learning-models-using-Keras-callbacks-and-TensorBoard"><a href="#7-2-Inspecting-and-monitoring-deep-learning-models-using-Keras-callbacks-and-TensorBoard" class="headerlink" title="7.2 Inspecting and monitoring deep-learning models using Keras callbacks and TensorBoard"></a>7.2 Inspecting and monitoring deep-learning models using Keras callbacks and TensorBoard</h2><blockquote>
 <p>使用 Keras 回调函数和 TensorBoard 来检查并监控深度学习模型</p>
 </blockquote>
 <p>用 model.fit() 开启一个复杂的训练任务后，我们就只能干等着，在结束前都不知道它有没有正确工作，也无法控制它，好似抛出了一架纸飞机，任它随风去往不确定的远方。比起这样不受控制的纸飞机，或许我们更希望要一台智能的无人机，可以感知环境，将数据发回给我们，并基于当前状态自主航行。 Keras 的回调函数与 TensorBoard 这样的工具就可以帮我们把“纸飞机”改造成“智能的无人机”。</p>
-<h3 id="训练中将回调函数作用于模型"><a class="markdownIt-Anchor" href="#训练中将回调函数作用于模型"></a> 训练中将回调函数作用于模型</h3>
-<p>我们在训练模型的时候，一开始是不知道要跑多少轮的，我们只能让它跑足够多的轮次，然后手动找出一个最佳的轮次数，重新用这个最佳轮次数去训练模型，这样相当耗时。所以，我们更希望当模型观测到验证损失不再改善时就自动停止训练。</p>
+<h3 id="训练中将回调函数作用于模型"><a href="#训练中将回调函数作用于模型" class="headerlink" title="训练中将回调函数作用于模型"></a>训练中将回调函数作用于模型</h3><p>我们在训练模型的时候，一开始是不知道要跑多少轮的，我们只能让它跑足够多的轮次，然后手动找出一个最佳的轮次数，重新用这个最佳轮次数去训练模型，这样相当耗时。所以，我们更希望当模型观测到验证损失不再改善时就自动停止训练。</p>
 <p>这种操作就可以用 Keras 回调函数（callback）完成：Keras 提供了很多有用的 callback，放在 <code>keras.callbacks</code> 里，自动停止训练只是其中一种用法。</p>
 <p>Callback 会在训练过程中的不同时间点被模型调用，它可以访问模型的状态，并可以采取一些行动，例如：</p>
 <ul>
@@ -184,8 +181,7 @@
 <li>记录训练指标和验证指标：用这些指标就可以将模型学到的表示可视化</li>
 <li>…</li>
 </ul>
-<h4 id="使用-callback"><a class="markdownIt-Anchor" href="#使用-callback"></a> 使用 callback</h4>
-<p>Keras 内置了许多有用的 callback，例如：</p>
+<h4 id="使用-callback"><a href="#使用-callback" class="headerlink" title="使用 callback"></a>使用 callback</h4><p>Keras 内置了许多有用的 callback，例如：</p>
 <ul>
 <li><code>ModelCheckpoint</code>：在训练过程中保存训练到某些状态的模型。可以用来持续不断地保存模型，也可以选择性地保存目前的最佳模型；</li>
 <li><code>EarlyStopping</code>：监控的目标指标，如果在设定的轮数内不再改善，则中断训练；</li>
@@ -193,8 +189,8 @@
 </ul>
 <p>这些 callback 的使用也很简单：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"></span><br><span class="line">callbacks_list = [</span><br><span class="line">    <span class="comment"># 在每轮完成后保存权重</span></span><br><span class="line">    keras.callbacks.ModelCheckpoint(</span><br><span class="line">        filepath=<span class="string">'my_model.h5'</span>,  <span class="comment"># 保存文件的路径</span></span><br><span class="line">        monitor=<span class="string">'val_loss'</span>,      <span class="comment"># monitor：要验证的指标</span></span><br><span class="line">        save_best_only=<span class="literal">True</span>,     <span class="comment"># 只保存让 monitor 指标最好的模型（如果 monitor 没有改善，就不保存）</span></span><br><span class="line">    ),</span><br><span class="line">    <span class="comment"># 不再改善时中断训练</span></span><br><span class="line">    keras.callbacks.EarlyStopping(</span><br><span class="line">        monitor=<span class="string">'acc'</span>,           <span class="comment"># 要验证的指标</span></span><br><span class="line">        patience=<span class="number">10</span>,             <span class="comment"># 如果 monitor 在多于 patience 轮内（比如这里就是10+1=11轮）没有改善，则中断训练</span></span><br><span class="line">    ),</span><br><span class="line">    <span class="comment"># 不再改善时降低学习率</span></span><br><span class="line">    keras.callbacks.ReduceLROnPlateau(</span><br><span class="line">        monitor=<span class="string">'val_loss'</span>,    <span class="comment"># 要验证的指标</span></span><br><span class="line">        factor=<span class="number">0.1</span>,            <span class="comment"># 触发时：学习率 *= factor</span></span><br><span class="line">        patience=<span class="number">5</span>,            <span class="comment"># monitor 在 patience 轮内没有改善，则触发降低学习率</span></span><br><span class="line">    ),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>, </span><br><span class="line">              loss=<span class="string">'binary_crossentropy'</span>, </span><br><span class="line">              metrics=[<span class="string">'acc'</span>])    <span class="comment"># 在 callback 里用到了 acc 做指标，所以这里的 metrics 里要有 acc</span></span><br><span class="line"></span><br><span class="line">model.fit(x, y, </span><br><span class="line">          epochs=<span class="number">10</span>, </span><br><span class="line">          batch_size=<span class="number">32</span>, </span><br><span class="line">          callbacks=callbacks_list,     <span class="comment"># 训练时使用这些回调</span></span><br><span class="line">          validation_data=(x_val, y_val))  <span class="comment"># callback 里用到了 val，所以这里必须有 val</span></span><br></pre></td></tr></table></figure>
-<h4 id="编写自己的回调函数"><a class="markdownIt-Anchor" href="#编写自己的回调函数"></a> 编写自己的回调函数</h4>
-<p>除了使用 Keras 内置的回调，还可以自己写 callback 来完成内置没有的操作。</p>
+
+<h4 id="编写自己的回调函数"><a href="#编写自己的回调函数" class="headerlink" title="编写自己的回调函数"></a>编写自己的回调函数</h4><p>除了使用 Keras 内置的回调，还可以自己写 callback 来完成内置没有的操作。</p>
 <p>自己写回调通过创建 <code>keras.callbacks.Callback</code> 的子类来实现。和写游戏脚本很类似，在这个子类中实现一些方法，然后这些方法就会在训练过程中的特定时间点被调用：</p>
 <table>
 <thead>
@@ -203,8 +199,7 @@
 <th>被调用的时间</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>on_epoch_begin</td>
 <td>在每轮开始时被调用</td>
 </tr>
@@ -236,8 +231,7 @@
 <td>on_train_end</td>
 <td>在训练结束时被调用</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>这些方法接受一个 logs 参数（dict类型的），里面包含前一个epoch 或 batch 或 train 的信息，包括训练指标、验证指标之类的。</p>
 <p>在这些方法中，还可以访问：</p>
 <ul>
@@ -246,8 +240,8 @@
 </ul>
 <p>例如，我们编写一个自定义回调函数，在每轮结束后将模型每层对验证集的第一个样本的激活计算值保存下来：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ActivationLogger</span><span class="params">(keras.callbacks.Callback)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_model</span><span class="params">(self, model)</span>:</span>  <span class="comment"># 在训练之前由父模型调用，告诉回调函数是哪个模型在调用它</span></span><br><span class="line">        self.model = model</span><br><span class="line">        layer_outputs = [layer.output <span class="keyword">for</span> layer <span class="keyword">in</span> model.layers]</span><br><span class="line">        self.activations_model = keras.models.Model(model.input, layer_outputs)  <span class="comment"># 模型实例，返回每层的激活</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_epoch_end</span><span class="params">(self, epoch, logs=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.validation_data <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">'Requires validation_data.'</span>)</span><br><span class="line">        validation_sample = self.validation_data[<span class="number">0</span>][<span class="number">0</span>:<span class="number">1</span>]</span><br><span class="line">        activations = self.activations_model.predict(validation_sample)</span><br><span class="line">        <span class="keyword">with</span> open(<span class="string">f'activations_at_epoch_<span class="subst">&#123;epoch&#125;</span>.npz'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">            np.savez(f, activations)</span><br></pre></td></tr></table></figure>
-<h3 id="tensorboard-简介-tensorflow-的可视化框架"><a class="markdownIt-Anchor" href="#tensorboard-简介-tensorflow-的可视化框架"></a> TensorBoard 简介: TensorFlow 的可视化框架</h3>
-<p>为了做出更好模型，除了思考构架、编写代码，我们还需要获取关于模型的信息、了解训练过程中模型内部正在发生什么，并用这些信息来知道我们再思考、再优化模型。</p>
+
+<h3 id="TensorBoard-简介-TensorFlow-的可视化框架"><a href="#TensorBoard-简介-TensorFlow-的可视化框架" class="headerlink" title="TensorBoard 简介: TensorFlow 的可视化框架"></a>TensorBoard 简介: TensorFlow 的可视化框架</h3><p>为了做出更好模型，除了思考构架、编写代码，我们还需要获取关于模型的信息、了解训练过程中模型内部正在发生什么，并用这些信息来知道我们再思考、再优化模型。</p>
 <p>思考是在你的脑子里完成的，编写模型的代码可以用 Keras API 轻松实现，而了解模型可以借用 TensorBoard。TensorBoard 是内置于 TensorFlow 中的基于浏览器的可视化工具，它能在训练过程中让你可视化地监控模型内部发生的一切。</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghp9tjfuzcj312g0d6acp.jpg" alt="取得进展的循环"></p>
 <p>TensorBoard 主要有一下几个作用：</p>
@@ -259,6 +253,7 @@
 </ul>
 <p>我们在 IMDB 情感分析任务上训练一个一维卷积神经网络，来演示 TensorBoard 的使用:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.datasets <span class="keyword">import</span> imdb</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing <span class="keyword">import</span> sequence</span><br><span class="line"></span><br><span class="line">max_features = <span class="number">2000</span></span><br><span class="line">max_len = <span class="number">500</span></span><br><span class="line"></span><br><span class="line">(x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=max_features)</span><br><span class="line">x_train = sequence.pad_sequences(x_train, maxlen=max_len)</span><br><span class="line">x_test = sequence.pad_sequences(x_test, maxlen=max_len)</span><br><span class="line"></span><br><span class="line">model = keras.models.Sequential()</span><br><span class="line">model.add(layers.Embedding(max_features, <span class="number">128</span>,</span><br><span class="line">                           input_length=max_len,</span><br><span class="line">                           name=<span class="string">'embed'</span>))</span><br><span class="line">model.add(layers.Conv1D(<span class="number">32</span>, <span class="number">7</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.MaxPool1D(<span class="number">5</span>))</span><br><span class="line">model.add(layers.Conv1D(<span class="number">32</span>, <span class="number">7</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.GlobalMaxPooling1D())</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">model.summary()</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>,</span><br><span class="line">              loss=<span class="string">'binary_crossentropy'</span>,</span><br><span class="line">              metrics=[<span class="string">'acc'</span>])</span><br></pre></td></tr></table></figure>
+
 <pre><code>Model: &quot;sequential&quot;
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
@@ -278,16 +273,19 @@ dense (Dense)                (None, 1)                 33
 Total params: 291,937
 Trainable params: 291,937
 Non-trainable params: 0
-_________________________________________________________________
-</code></pre>
+_________________________________________________________________</code></pre>
 <p>要使用 TensorBoard，在开始训练之前还需要做一些准备。首先，为 TensorBoard 需要的日志文件创建一个目录，并开启 TensorBoard 的服务。在 shell 里：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir my_log_dir</span></span><br></pre></td></tr></table></figure>
+
 <p>或者，在 Jupyter Notebook 中：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%mkdir my_log_dir</span><br></pre></td></tr></table></figure>
+
 <p>然后，实例化一个 TensorBoard 回调函数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">tensorboard_callback = tf.keras.callbacks.TensorBoard(</span><br><span class="line">    log_dir=<span class="string">'my_log_dir'</span>,  <span class="comment"># 日志文件的储存位置</span></span><br><span class="line">    histogram_freq=<span class="number">1</span>,      <span class="comment"># 每 histogram_freq 轮之后记录激活直方图</span></span><br><span class="line">    embeddings_freq=<span class="number">1</span>,     <span class="comment"># 每 histogram_freq 轮之后记录词嵌入</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
 <p>最后，在训练时使用这个回调就可以了：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">history = model.fit(x_train, y_train, </span><br><span class="line">                    epochs=<span class="number">20</span>, </span><br><span class="line">                    batch_size=<span class="number">128</span>, </span><br><span class="line">                    validation_split=<span class="number">0.2</span>, </span><br><span class="line">                    callbacks=[tensorboard_callback])</span><br></pre></td></tr></table></figure>
+
 <pre><code>Epoch 1/20
 157/157 [==============================] - 25s 156ms/step - loss: 0.6376 - acc: 0.6424 - val_loss: 0.7053 - val_acc: 0.7210
 Epoch 2/20
@@ -327,26 +325,28 @@ Epoch 18/20
 Epoch 19/20
 157/157 [==============================] - 25s 161ms/step - loss: 0.1056 - acc: 0.9916 - val_loss: 1.2272 - val_acc: 0.8666
 Epoch 20/20
-157/157 [==============================] - 25s 160ms/step - loss: 0.1086 - acc: 0.9904 - val_loss: 1.2287 - val_acc: 0.8682
-</code></pre>
+157/157 [==============================] - 25s 160ms/step - loss: 0.1086 - acc: 0.9904 - val_loss: 1.2287 - val_acc: 0.8682</code></pre>
 <p>开始训练之后，就可以开启 TensorBoard 服务：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tensorboard --logdir=my_log_dir</span></span><br></pre></td></tr></table></figure>
+
 <p>或者在 Jupyter Notebook 里：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%load_ext tensorboard</span><br><span class="line">%tensorboard --logdir=my_log_dir</span><br></pre></td></tr></table></figure>
+
 <p>现在就可以在浏览器中打开 <code>http://localhost:6006</code> 来查看 TensorBoard 的可视化模型的训练过程了。</p>
 <ul>
 <li>Scalars 标签页中，可以看到训练过程中精度、损失的变化曲线，和我们之前每次训练完之后用 plt 画的是同样的内容，不过在  TensorBoard 里你可以随时刷新去看，不用等到训练完成；</li>
 <li>Graph 标签页中，显示的是 Keras 模型背后的底层 TensorFlow 运算图的可视化，这个底层运算图比我们的 Keras 模型复杂，这就是 Keras 为我们简化的工作，Keras 让我们不去接触那些复杂的东西，让工作流程变得非常简单；如果你想看 Keras 模型本身的图表示，可以用 <code>keras.utils.plot_model</code>：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">tf.keras.utils.plot_model(model, show_shapes=<span class="literal">True</span>, to_file=<span class="string">'model.png'</span>)</span><br><span class="line"><span class="comment"># show_shapes=True 可以把各层的输入输出张量形状显示出来</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghurzd5lj0j30fd0jzq4p.jpg" alt="png"></p>
 <ul>
 <li>Histograms 标签页中，有每层的激活值直方图；</li>
 <li>Projector 标签页中，有我们的词表中 2000 个单词的词嵌入空间关系。这是由 Embedding 层学习到的 128 维的嵌入空间用 PCA 之类的算法降到 2 维或者 3 维后得到的“投影”影像。如果你对里面每个点的意义感兴趣，可以点击某个点，查看其编号，然后用下面的代码还原出单词来看看：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">index_word = &#123;v: k <span class="keyword">for</span> k, v <span class="keyword">in</span> imdb.get_word_index().items()&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_word_of_index</span><span class="params">(idx)</span>:</span>  <span class="comment"># idx 输入看到的词编号</span></span><br><span class="line">    print(index_word[idx])</span><br><span class="line"></span><br><span class="line">show_word_of_index(<span class="number">123</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>ever
-</code></pre>
+
+<pre><code>ever</code></pre>
 
   </div>
 </article>
@@ -384,7 +384,7 @@ Epoch 20/20
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#deep-learning-with-python"><span class="toc-number">1.</span> <span class="toc-text"> Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#72-inspecting-and-monitoring-deep-learning-models-using-keras-callbacks-and-tensorboard"><span class="toc-number">1.1.</span> <span class="toc-text"> 7.2 Inspecting and monitoring deep-learning models using Keras callbacks and TensorBoard</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#训练中将回调函数作用于模型"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 训练中将回调函数作用于模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-callback"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> 使用 callback</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写自己的回调函数"><span class="toc-number">1.1.1.2.</span> <span class="toc-text"> 编写自己的回调函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tensorboard-简介-tensorflow-的可视化框架"><span class="toc-number">1.1.2.</span> <span class="toc-text"> TensorBoard 简介: TensorFlow 的可视化框架</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Deep-Learning-with-Python"><span class="toc-number">1.</span> <span class="toc-text">Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-Inspecting-and-monitoring-deep-learning-models-using-Keras-callbacks-and-TensorBoard"><span class="toc-number">1.1.</span> <span class="toc-text">7.2 Inspecting and monitoring deep-learning models using Keras callbacks and TensorBoard</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#训练中将回调函数作用于模型"><span class="toc-number">1.1.1.</span> <span class="toc-text">训练中将回调函数作用于模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-callback"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">使用 callback</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写自己的回调函数"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">编写自己的回调函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TensorBoard-简介-TensorFlow-的可视化框架"><span class="toc-number">1.1.2.</span> <span class="toc-text">TensorBoard 简介: TensorFlow 的可视化框架</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -416,7 +416,7 @@ Epoch 20/20
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 CDFMLR
+    Copyright &copy; 2021 CDFMLR
   </div>
   <div class="footer-right">
     <nav>
