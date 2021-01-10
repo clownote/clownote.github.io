@@ -15,7 +15,7 @@
 <meta property="og:description" content="命令式编程 V.S. 声明式编程 Programming: Imperative &amp;amp; Declarative   Q：检查 students 里的学生的平均分，并输出平均分的第一名。 12345678910111213141516171819202122232425struct Student &amp;#123;    let name: String    let scores: [Subje">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming.png">
-<meta property="og:updated_time" content="2021-01-10T03:18:39.851Z">
+<meta property="og:updated_time" content="2021-01-10T03:27:05.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="命令式编程 V.S. 声明式编程">
 <meta name="twitter:description" content="命令式编程 V.S. 声明式编程 Programming: Imperative &amp;amp; Declarative   Q：检查 students 里的学生的平均分，并输出平均分的第一名。 12345678910111213141516171819202122232425struct Student &amp;#123;    let name: String    let scores: [Subje">
@@ -135,7 +135,7 @@
       
         <time datetime="2021-01-09T22:43:12.990Z" itemprop="datePublished">2021-01-09</time>
         
-        (Updated: <time datetime="2021-01-10T03:18:39.851Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T03:27:05.545Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -153,7 +153,7 @@
     <h1 id="命令式编程-V-S-声明式编程"><a href="#命令式编程-V-S-声明式编程" class="headerlink" title="命令式编程 V.S. 声明式编程"></a>命令式编程 V.S. 声明式编程</h1><blockquote>
 <p>Programming: Imperative &amp; Declarative</p>
 </blockquote>
-<p><img src="/2021/01/09/note/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming.png" alt="ImperativeDeclarativeProgramming"></p>
+<p><img src="ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming.png" alt="ImperativeDeclarativeProgramming"></p>
 <p>Q：检查 students 里的学生的平均分，并输出平均分的第一名。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> name: <span class="type">String</span></span><br><span class="line">    <span class="keyword">let</span> scores: [<span class="type">Subject</span>: <span class="type">Int</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Subject</span>: <span class="title">String</span>, <span class="title">CaseIterable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">Chinese</span>, <span class="type">Math</span>, <span class="type">English</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s1 = <span class="type">Student</span>(</span><br><span class="line">    name: <span class="string">"Foo"</span>,</span><br><span class="line">    scores: [.<span class="type">Chinese</span>: <span class="number">86</span>, .<span class="type">Math</span>: <span class="number">92</span>, .<span class="type">English</span>: <span class="number">73</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s2 = <span class="type">Student</span>(</span><br><span class="line">    name: <span class="string">"Bar"</span>,</span><br><span class="line">    scores: [.<span class="type">Chinese</span>: <span class="number">99</span>, .<span class="type">Math</span>: <span class="number">52</span>, .<span class="type">English</span>: <span class="number">97</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s3 = <span class="type">Student</span>(</span><br><span class="line">    name: <span class="string">"Joe"</span>,</span><br><span class="line">    scores: [.<span class="type">Chinese</span>: <span class="number">91</span>, .<span class="type">Math</span>: <span class="number">92</span>, .<span class="type">English</span>: <span class="number">100</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> students = [s1, s2, s3]</span><br></pre></td></tr></table></figure>
 
