@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Leetcode 239. 滑动窗口最大值题目给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。 返回滑动窗口中的最大值。 进阶： 你能在线性时间复杂度内解决此题吗？ 示例: 123456789101112输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3输出: [3">
-<meta name="keywords" content="School">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Leetcode 239. 滑动窗口最大值题目给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。 返回滑动窗口中的最大值。 进阶： 你能在线性时间复杂度内解决此题吗？ 示例: 123456789101112输入: nums &#x3D; [1,3,-1,-3,5,3,6,7], 和 k &amp;#x3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 239. 滑动窗口最大值">
 <meta property="og:url" content="https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode 239. 滑动窗口最大值题目给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。 返回滑动窗口中的最大值。 进阶： 你能在线性时间复杂度内解决此题吗？ 示例: 123456789101112输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3输出: [3">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.537Z">
+<meta property="og:description" content="Leetcode 239. 滑动窗口最大值题目给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。 返回滑动窗口中的最大值。 进阶： 你能在线性时间复杂度内解决此题吗？ 示例: 123456789101112输入: nums &#x3D; [1,3,-1,-3,5,3,6,7], 和 k &amp;#x3">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-26T15:29:53.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.370Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="School">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode 239. 滑动窗口最大值">
-<meta name="twitter:description" content="Leetcode 239. 滑动窗口最大值题目给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。 返回滑动窗口中的最大值。 进阶： 你能在线性时间复杂度内解决此题吗？ 示例: 123456789101112输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3输出: [3">
     
     
         
@@ -39,19 +39,23 @@
     <!-- title -->
     <title>Leetcode 239. 滑动窗口最大值</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -69,7 +73,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -79,7 +83,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/03/28/python_booklet/Python基础手册P2 基本数据类型/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/03/28/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP2%20%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2020/03/26/School/Leetcode_P641_design-circular-deque/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -95,21 +99,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&text=Leetcode 239. 滑动窗口最大值"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&is_video=false&description=Leetcode 239. 滑动窗口最大值"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&text=Leetcode 239. 滑动窗口最大值"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&is_video=false&description=Leetcode 239. 滑动窗口最大值"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Leetcode 239. 滑动窗口最大值&body=Check out this article: https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&name=Leetcode 239. 滑动窗口最大值&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&name=Leetcode 239. 滑动窗口最大值&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-239-滑动窗口最大值"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 239. 滑动窗口最大值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双向队列法"><span class="toc-number">1.2.</span> <span class="toc-text">双向队列法</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-239-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 239. 滑动窗口最大值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">双向队列法</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +139,7 @@
       
         <time datetime="2020-03-26T15:29:53.000Z" itemprop="datePublished">2020-03-26</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.537Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.370Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -146,7 +150,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/School/">School</a>
+        <a class="tag-link-link" href="/tags/School/" rel="tag">School</a>
     </div>
 
 
@@ -155,13 +159,12 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="Leetcode-239-滑动窗口最大值"><a href="#Leetcode-239-滑动窗口最大值" class="headerlink" title="Leetcode 239. 滑动窗口最大值"></a>Leetcode <a href="https://leetcode-cn.com/problems/sliding-window-maximum/" target="_blank" rel="noopener">239. 滑动窗口最大值</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个数组 <em>nums</em>，有一个大小为 <em>k</em> 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 <em>k</em> 个数字。滑动窗口每次只向右移动一位。</p>
+    <h1 id="Leetcode-239-滑动窗口最大值"><a href="#Leetcode-239-滑动窗口最大值" class="headerlink" title="Leetcode 239. 滑动窗口最大值"></a>Leetcode <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sliding-window-maximum/">239. 滑动窗口最大值</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个数组 <em>nums</em>，有一个大小为 <em>k</em> 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 <em>k</em> 个数字。滑动窗口每次只向右移动一位。</p>
 <p>返回滑动窗口中的最大值。</p>
 <p><strong>进阶：</strong></p>
 <p>你能在线性时间复杂度内解决此题吗？</p>
 <p><strong>示例:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3</span><br><span class="line">输出: [3,3,5,5,6,7] </span><br><span class="line">解释: </span><br><span class="line"></span><br><span class="line">  滑动窗口的位置                最大值</span><br><span class="line">---------------               -----</span><br><span class="line">[1  3  -1] -3  5  3  6  7       3</span><br><span class="line"> 1 [3  -1  -3] 5  3  6  7       3</span><br><span class="line"> 1  3 [-1  -3  5] 3  6  7       5</span><br><span class="line"> 1  3  -1 [-3  5  3] 6  7       5</span><br><span class="line"> 1  3  -1  -3 [5  3  6] 7       6</span><br><span class="line"> 1  3  -1  -3  5 [3  6  7]      7</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入: nums &#x3D; [1,3,-1,-3,5,3,6,7], 和 k &#x3D; 3</span><br><span class="line">输出: [3,3,5,5,6,7] </span><br><span class="line">解释: </span><br><span class="line"></span><br><span class="line">  滑动窗口的位置                最大值</span><br><span class="line">---------------               -----</span><br><span class="line">[1  3  -1] -3  5  3  6  7       3</span><br><span class="line"> 1 [3  -1  -3] 5  3  6  7       3</span><br><span class="line"> 1  3 [-1  -3  5] 3  6  7       5</span><br><span class="line"> 1  3  -1 [-3  5  3] 6  7       5</span><br><span class="line"> 1  3  -1  -3 [5  3  6] 7       6</span><br><span class="line"> 1  3  -1  -3  5 [3  6  7]      7</span><br></pre></td></tr></table></figure>
 <p><strong>提示：</strong></p>
 <ul>
 <li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
@@ -169,8 +172,7 @@
 <li><code>1 &lt;= k &lt;= nums.length</code></li>
 </ul>
 <h2 id="双向队列法"><a href="#双向队列法" class="headerlink" title="双向队列法"></a>双向队列法</h2><p>我们可以维护一个一个<strong>双向队列</strong>，在里面维护存在于<strong>当前窗口中的</strong>逐步最大值索引 ，每一步右端压入当前索引、清除比当前小的值的索引。从 k 处开始，每次取左端值即当前滑窗的最大值。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maxSlidingWindow</span><span class="params">(nums []<span class="keyword">int</span>, k <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) &lt; k || k &lt;= <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> nums</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    memo := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span> e <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">    swMax := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">1</span>)</span><br><span class="line">    swMax[<span class="number">0</span>] = nums[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; k; i++ &#123;</span><br><span class="line">        <span class="keyword">for</span> e = <span class="built_in">len</span>(memo); e &gt; <span class="number">0</span> &amp;&amp; nums[i] &gt; nums[memo[e<span class="number">-1</span>]]; e-- &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        memo = memo[:e]</span><br><span class="line">        memo = <span class="built_in">append</span>(memo, i)</span><br><span class="line">        <span class="keyword">if</span> nums[i] &gt; swMax[<span class="number">0</span>] &#123;</span><br><span class="line">            swMax[<span class="number">0</span>] = nums[i]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// fmt.Println(memo)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := k; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        <span class="comment">// leaving</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(memo) != <span class="number">0</span> &amp;&amp; memo[<span class="number">0</span>] == i - k &#123;</span><br><span class="line">            memo = memo[<span class="number">1</span>:]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// entering</span></span><br><span class="line">        <span class="keyword">for</span> e = <span class="built_in">len</span>(memo); e &gt; <span class="number">0</span> &amp;&amp; nums[i] &gt; nums[memo[e<span class="number">-1</span>]]; e-- &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        memo = memo[:e]</span><br><span class="line">        memo = <span class="built_in">append</span>(memo, i)</span><br><span class="line">        <span class="comment">// ans</span></span><br><span class="line">        swMax = <span class="built_in">append</span>(swMax, nums[memo[<span class="number">0</span>]])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> swMax</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maxSlidingWindow</span><span class="params">(nums []<span class="keyword">int</span>, k <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) &lt; k || k &lt;= <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> nums</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    memo := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span> e <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">    swMax := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">1</span>)</span><br><span class="line">    swMax[<span class="number">0</span>] = nums[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; k; i++ &#123;</span><br><span class="line">        <span class="keyword">for</span> e = <span class="built_in">len</span>(memo); e &gt; <span class="number">0</span> &amp;&amp; nums[i] &gt; nums[memo[e<span class="number">-1</span>]]; e-- &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        memo = memo[:e]</span><br><span class="line">        memo = <span class="built_in">append</span>(memo, i)</span><br><span class="line">        <span class="keyword">if</span> nums[i] &gt; swMax[<span class="number">0</span>] &#123;</span><br><span class="line">            swMax[<span class="number">0</span>] = nums[i]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// fmt.Println(memo)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := k; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        <span class="comment">// leaving</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(memo) != <span class="number">0</span> &amp;&amp; memo[<span class="number">0</span>] == i - k &#123;</span><br><span class="line">            memo = memo[<span class="number">1</span>:]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// entering</span></span><br><span class="line">        <span class="keyword">for</span> e = <span class="built_in">len</span>(memo); e &gt; <span class="number">0</span> &amp;&amp; nums[i] &gt; nums[memo[e<span class="number">-1</span>]]; e-- &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        memo = memo[:e]</span><br><span class="line">        memo = <span class="built_in">append</span>(memo, i)</span><br><span class="line">        <span class="comment">// ans</span></span><br><span class="line">        swMax = <span class="built_in">append</span>(swMax, nums[memo[<span class="number">0</span>]])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> swMax</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -200,7 +202,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -208,21 +210,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-239-滑动窗口最大值"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 239. 滑动窗口最大值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双向队列法"><span class="toc-number">1.2.</span> <span class="toc-text">双向队列法</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-239-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 239. 滑动窗口最大值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">双向队列法</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&text=Leetcode 239. 滑动窗口最大值"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&is_video=false&description=Leetcode 239. 滑动窗口最大值"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&text=Leetcode 239. 滑动窗口最大值"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&is_video=false&description=Leetcode 239. 滑动窗口最大值"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Leetcode 239. 滑动窗口最大值&body=Check out this article: https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&name=Leetcode 239. 滑动窗口最大值&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&title=Leetcode 239. 滑动窗口最大值"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/03/26/School/Leetcode_P239_sliding-window-maximum/&name=Leetcode 239. 滑动窗口最大值&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -252,7 +254,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -263,16 +265,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -293,7 +307,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

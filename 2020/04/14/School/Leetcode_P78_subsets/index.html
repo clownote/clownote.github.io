@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Leetcode 78. 子集题目给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。 说明：解集不能包含重复的子集。 示例: 123456789101112输入: nums = [1,2,3]输出:[  [3],  [1],  [2],  [1,2,3],  [1,3],  [2,3],  [1,2],  []]  来源：力扣（LeetCode）链接：https://le">
-<meta name="keywords" content="School">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Leetcode 78. 子集题目给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。 说明：解集不能包含重复的子集。 示例: 123456789101112输入: nums &#x3D; [1,2,3]输出:[  [3],  [1],  [2],  [1,2,3],  [1,3],  [2,3],  [1,2],  []] 来源：力扣（LeetCode）链接：https:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 78. 子集">
 <meta property="og:url" content="https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode 78. 子集题目给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。 说明：解集不能包含重复的子集。 示例: 123456789101112输入: nums = [1,2,3]输出:[  [3],  [1],  [2],  [1,2,3],  [1,3],  [2,3],  [1,2],  []]  来源：力扣（LeetCode）链接：https://le">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:description" content="Leetcode 78. 子集题目给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。 说明：解集不能包含重复的子集。 示例: 123456789101112输入: nums &#x3D; [1,2,3]输出:[  [3],  [1],  [2],  [1,2,3],  [1,3],  [2,3],  [1,2],  []] 来源：力扣（LeetCode）链接：https:">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gdt1clsxr0j31c60u0not.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.537Z">
+<meta property="article:published_time" content="2020-04-14T09:34:39.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.370Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="School">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode 78. 子集">
-<meta name="twitter:description" content="Leetcode 78. 子集题目给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。 说明：解集不能包含重复的子集。 示例: 123456789101112输入: nums = [1,2,3]输出:[  [3],  [1],  [2],  [1,2,3],  [1,3],  [2,3],  [1,2],  []]  来源：力扣（LeetCode）链接：https://le">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gdt1clsxr0j31c60u0not.jpg">
     
     
@@ -41,19 +41,23 @@
     <!-- title -->
     <title>Leetcode 78. 子集</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -71,7 +75,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -97,21 +101,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&text=Leetcode 78. 子集"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&is_video=false&description=Leetcode 78. 子集"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&text=Leetcode 78. 子集"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&is_video=false&description=Leetcode 78. 子集"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Leetcode 78. 子集&body=Check out this article: https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&name=Leetcode 78. 子集&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&name=Leetcode 78. 子集&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-78-子集"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 78. 子集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#位运算"><span class="toc-number">1.2.</span> <span class="toc-text">位运算</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-78-%E5%AD%90%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 78. 子集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="toc-number">1.2.</span> <span class="toc-text">位运算</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -137,7 +141,7 @@
       
         <time datetime="2020-04-14T09:34:39.000Z" itemprop="datePublished">2020-04-14</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.537Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.370Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -148,7 +152,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/School/">School</a>
+        <a class="tag-link-link" href="/tags/School/" rel="tag">School</a>
     </div>
 
 
@@ -157,24 +161,19 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="Leetcode-78-子集"><a href="#Leetcode-78-子集" class="headerlink" title="Leetcode 78. 子集"></a>Leetcode <a href="https://leetcode-cn.com/problems/subsets/" target="_blank" rel="noopener">78. 子集</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。</p>
+    <h1 id="Leetcode-78-子集"><a href="#Leetcode-78-子集" class="headerlink" title="Leetcode 78. 子集"></a>Leetcode <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/subsets/">78. 子集</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。</p>
 <p>说明：解集不能包含重复的子集。</p>
 <p>示例:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入: nums = [1,2,3]</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [3],</span><br><span class="line">  [1],</span><br><span class="line">  [2],</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3],</span><br><span class="line">  [2,3],</span><br><span class="line">  [1,2],</span><br><span class="line">  []</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/subsets" target="_blank" rel="noopener">https://leetcode-cn.com/problems/subsets</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入: nums &#x3D; [1,2,3]</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [3],</span><br><span class="line">  [1],</span><br><span class="line">  [2],</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3],</span><br><span class="line">  [2,3],</span><br><span class="line">  [1,2],</span><br><span class="line">  []</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/subsets">https://leetcode-cn.com/problems/subsets</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><p>其实嘛，取子集这件事情，对每一个元素就两种状态，取和不取，共有 $2^{len(nums)}$种可能。这可以直接用一个二进制 bit （boolean）位向量表示:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">幂集 = [</span><br><span class="line">    [],</span><br><span class="line">    [<span class="number">1</span>],</span><br><span class="line">    [<span class="number">2</span>],</span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>],</span><br><span class="line">    [<span class="number">3</span>],</span><br><span class="line">    [<span class="number">1</span>,<span class="number">3</span>],</span><br><span class="line">    [<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 0 表示不取</span></span><br><span class="line"><span class="comment"># 1 表示取</span></span><br><span class="line">对应取的状态 = [</span><br><span class="line">    [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">    [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">    [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">    [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
 <p>可以看到，所有对应取的状态合在一起，其实就是遍历了 <code>len(nums)</code> 位的二进制位向量所有可能的取值。如果用整数表示二进制位向量，即遍历 <code>[0, 1 &lt;&lt; len(nums) - 1]</code> 。这样实现起来很简单了，跑一个循环就行：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1</span> &lt;&lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>在这个遍历里，把二进制位向量映射到原数组的索引，就能取出一个子集了：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">s := []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line"><span class="keyword">for</span> j, ii := <span class="number">0</span>, i; j &lt; <span class="built_in">len</span>(nums); j, ii = j+<span class="number">1</span>, ii&gt;&gt;<span class="number">1</span> &#123;</span><br><span class="line">    <span class="comment">// 这个 for 其实就是每次从低位端 pop 一个位出来，这个位对应一个索引嘛</span></span><br><span class="line">    <span class="comment">// pop 出的是 1 就取这个索引处的元素进子集</span></span><br><span class="line">    <span class="keyword">if</span> ii &amp; <span class="number">1</span> == <span class="number">1</span> &#123;</span><br><span class="line">        s = <span class="built_in">append</span>(s, nums[j])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>合在一起，就有了完整的 Golang 实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">subsets</span><span class="params">(nums []<span class="keyword">int</span>)</span> [][]<span class="title">int</span></span> &#123;</span><br><span class="line">    subs := [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1</span> &lt;&lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        s := []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> j, ii := <span class="number">0</span>, i; j &lt; <span class="built_in">len</span>(nums); j, ii = j+<span class="number">1</span>, ii&gt;&gt;<span class="number">1</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> ii &amp; <span class="number">1</span> == <span class="number">1</span> &#123;</span><br><span class="line">                s = <span class="built_in">append</span>(s, nums[j])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        subs = <span class="built_in">append</span>(subs, s)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> subs</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>啊，我写不清这个，，，我觉得二进制、位运算这种东西相当自然，就像我们算 1 + 1 很自然就得到了 2，用二进制位向量是一种很自然的事，它就该这么用，所有反倒难以解释了😂</p>
 <p>也许这不是一个很好的思路，但从结果上来看，这个算法还是比较快的：</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gdt1clsxr0j31c60u0not.jpg" alt="屏幕快照 2020-04-14 08.50.13"></p>
@@ -207,7 +206,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -215,21 +214,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-78-子集"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 78. 子集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#位运算"><span class="toc-number">1.2.</span> <span class="toc-text">位运算</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-78-%E5%AD%90%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 78. 子集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="toc-number">1.2.</span> <span class="toc-text">位运算</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&text=Leetcode 78. 子集"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&is_video=false&description=Leetcode 78. 子集"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&text=Leetcode 78. 子集"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&is_video=false&description=Leetcode 78. 子集"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Leetcode 78. 子集&body=Check out this article: https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&name=Leetcode 78. 子集&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&title=Leetcode 78. 子集"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/&name=Leetcode 78. 子集&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -259,7 +258,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -270,16 +269,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -300,7 +311,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

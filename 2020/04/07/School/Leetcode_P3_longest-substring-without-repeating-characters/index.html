@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Leetcode 3. 无重复字符的最长子串题目给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 1: 123输入: &amp;quot;abcabcbb&amp;quot;输出: 3 解释: 因为无重复字符的最长子串是 &amp;quot;abc&amp;quot;，所以其长度为 3。  示例 2: 123输入: &amp;quot;bbbbb&amp;quot;输出: 1解释: 因为无重复字符的最长子串是 &amp;quot;">
-<meta name="keywords" content="School">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Leetcode 3. 无重复字符的最长子串题目给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 1: 123输入: &quot;abcabcbb&quot;输出: 3 解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。  示例 2: 123输入: &quot;bbbbb&quot;输出: 1解释: 因为无重复字符的最长子串是 &quot;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 3. 无重复字符的最长子串">
 <meta property="og:url" content="https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode 3. 无重复字符的最长子串题目给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 1: 123输入: &amp;quot;abcabcbb&amp;quot;输出: 3 解释: 因为无重复字符的最长子串是 &amp;quot;abc&amp;quot;，所以其长度为 3。  示例 2: 123输入: &amp;quot;bbbbb&amp;quot;输出: 1解释: 因为无重复字符的最长子串是 &amp;quot;">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:description" content="Leetcode 3. 无重复字符的最长子串题目给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 1: 123输入: &quot;abcabcbb&quot;输出: 3 解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。  示例 2: 123输入: &quot;bbbbb&quot;输出: 1解释: 因为无重复字符的最长子串是 &quot;">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdkvuf8tzaj31l10u0dkk.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.537Z">
+<meta property="article:published_time" content="2020-04-07T08:12:39.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.370Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="School">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode 3. 无重复字符的最长子串">
-<meta name="twitter:description" content="Leetcode 3. 无重复字符的最长子串题目给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 1: 123输入: &amp;quot;abcabcbb&amp;quot;输出: 3 解释: 因为无重复字符的最长子串是 &amp;quot;abc&amp;quot;，所以其长度为 3。  示例 2: 123输入: &amp;quot;bbbbb&amp;quot;输出: 1解释: 因为无重复字符的最长子串是 &amp;quot;">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdkvuf8tzaj31l10u0dkk.jpg">
     
     
@@ -41,19 +41,23 @@
     <!-- title -->
     <title>Leetcode 3. 无重复字符的最长子串</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -71,7 +75,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -97,21 +101,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&text=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&is_video=false&description=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&text=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&is_video=false&description=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Leetcode 3. 无重复字符的最长子串&body=Check out this article: https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&name=Leetcode 3. 无重复字符的最长子串&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&name=Leetcode 3. 无重复字符的最长子串&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-3-无重复字符的最长子串"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 3. 无重复字符的最长子串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可能是滑窗的解法"><span class="toc-number">1.2.</span> <span class="toc-text">可能是滑窗的解法</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-3-%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 3. 无重复字符的最长子串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E6%98%AF%E6%BB%91%E7%AA%97%E7%9A%84%E8%A7%A3%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">可能是滑窗的解法</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -137,7 +141,7 @@
       
         <time datetime="2020-04-07T08:12:39.000Z" itemprop="datePublished">2020-04-07</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.537Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.370Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -148,7 +152,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/School/">School</a>
+        <a class="tag-link-link" href="/tags/School/" rel="tag">School</a>
     </div>
 
 
@@ -157,7 +161,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="Leetcode-3-无重复字符的最长子串"><a href="#Leetcode-3-无重复字符的最长子串" class="headerlink" title="Leetcode 3. 无重复字符的最长子串"></a>Leetcode <a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">3. 无重复字符的最长子串</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。</p>
+    <h1 id="Leetcode-3-无重复字符的最长子串"><a href="#Leetcode-3-无重复字符的最长子串" class="headerlink" title="Leetcode 3. 无重复字符的最长子串"></a>Leetcode <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">3. 无重复字符的最长子串</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。</p>
 <p>示例 1:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;abcabcbb&quot;</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span><br></pre></td></tr></table></figure>
 
@@ -168,11 +172,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;pwwkew&quot;</span><br><span class="line">输出: 3</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。</span><br></pre></td></tr></table></figure>
 
 <p>​     请注意，你的答案必须是 子串 的长度，”pwke” 是一个子序列，不是子串。</p>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-substring-without-repeating-characters</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters">https://leetcode-cn.com/problems/longest-substring-without-repeating-characters</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h2 id="可能是滑窗的解法"><a href="#可能是滑窗的解法" class="headerlink" title="可能是滑窗的解法"></a>可能是滑窗的解法</h2><p>（这道题我去年写的了，大概看了一下，还可以，就不重新写 了）</p>
 <p>其实就是像人一样去找，这个算法还是很直接暴力的，C语言实现：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="keyword">char</span> * s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *pmhead = s;</span><br><span class="line">    <span class="keyword">char</span> *pmtail = s;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">max</span> = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">char</span> c = *s;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">char</span> *pc;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (c = s[i++], c != <span class="string">'\0'</span>) &#123;</span><br><span class="line">        j = pmtail - pmhead;</span><br><span class="line">        pc = <span class="built_in">memchr</span>(pmhead, c, j);</span><br><span class="line">        <span class="keyword">if</span> (pc != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j &gt; <span class="built_in">max</span>) &#123;</span><br><span class="line">                <span class="built_in">max</span> = j;</span><br><span class="line">            &#125;</span><br><span class="line">            pmhead = pc + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pmtail++;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (pmtail - pmhead &gt; <span class="built_in">max</span>) &#123;</span><br><span class="line">        <span class="built_in">max</span> = pmtail - pmhead;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">max</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="keyword">char</span> * s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *pmhead = s;</span><br><span class="line">    <span class="keyword">char</span> *pmtail = s;</span><br><span class="line">    <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">char</span> c = *s;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">char</span> *pc;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (c = s[i++], c != <span class="string">&#x27;\0&#x27;</span>) &#123;</span><br><span class="line">        j = pmtail - pmhead;</span><br><span class="line">        pc = <span class="built_in">memchr</span>(pmhead, c, j);</span><br><span class="line">        <span class="keyword">if</span> (pc != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j &gt; max) &#123;</span><br><span class="line">                max = j;</span><br><span class="line">            &#125;</span><br><span class="line">            pmhead = pc + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pmtail++;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (pmtail - pmhead &gt; max) &#123;</span><br><span class="line">        max = pmtail - pmhead;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gdkvuf8tzaj31l10u0dkk.jpg" alt="image-20200407080959808"></p>
 
   </div>
@@ -203,7 +206,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -211,21 +214,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-3-无重复字符的最长子串"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 3. 无重复字符的最长子串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可能是滑窗的解法"><span class="toc-number">1.2.</span> <span class="toc-text">可能是滑窗的解法</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-3-%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 3. 无重复字符的最长子串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E6%98%AF%E6%BB%91%E7%AA%97%E7%9A%84%E8%A7%A3%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">可能是滑窗的解法</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&text=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&is_video=false&description=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&text=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&is_video=false&description=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Leetcode 3. 无重复字符的最长子串&body=Check out this article: https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&name=Leetcode 3. 无重复字符的最长子串&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&title=Leetcode 3. 无重复字符的最长子串"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/07/School/Leetcode_P3_longest-substring-without-repeating-characters/&name=Leetcode 3. 无重复字符的最长子串&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -255,7 +258,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -266,16 +269,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -296,7 +311,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

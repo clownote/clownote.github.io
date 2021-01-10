@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="如何用 pip 安装自己写的包昨天突发奇想，想让自己写的包也可以像我们常用的 numpy、flask、tensorflow 那样直接一个 pip install XXX 命令就安装上。 要实现这个，首先，我们需要了解 pip 和 Pypi。 （如果你懂一点点英语，请直接看这篇文档：Packaging and distributing projects） （如果你用 Windows，我不保证你可以顺">
-<meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何用 pip 安装自己写的包">
 <meta property="og:url" content="https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="如何用 pip 安装自己写的包昨天突发奇想，想让自己写的包也可以像我们常用的 numpy、flask、tensorflow 那样直接一个 pip install XXX 命令就安装上。 要实现这个，首先，我们需要了解 pip 和 Pypi。 （如果你懂一点点英语，请直接看这篇文档：Packaging and distributing projects） （如果你用 Windows，我不保证你可以顺">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gejog1c7xdj31e00u0kdb.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.545Z">
+<meta property="article:published_time" content="2020-05-07T10:17:44.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.374Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何用 pip 安装自己写的包">
-<meta name="twitter:description" content="如何用 pip 安装自己写的包昨天突发奇想，想让自己写的包也可以像我们常用的 numpy、flask、tensorflow 那样直接一个 pip install XXX 命令就安装上。 要实现这个，首先，我们需要了解 pip 和 Pypi。 （如果你懂一点点英语，请直接看这篇文档：Packaging and distributing projects） （如果你用 Windows，我不保证你可以顺">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gejog1c7xdj31e00u0kdb.jpg">
     
     
@@ -41,19 +41,23 @@
     <!-- title -->
     <title>如何用 pip 安装自己写的包</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -71,7 +75,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -81,7 +85,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/05/12/DeepLearningWithPython/Deep-Learning with-Python-ch2/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/05/12/DeepLearningWithPython/Deep-Learning%20with-Python-ch2/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2020/04/28/School/leetcode_P236_lowest-common-ancestor-of-a-binary-tree/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -97,21 +101,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&text=如何用 pip 安装自己写的包"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&is_video=false&description=如何用 pip 安装自己写的包"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&text=如何用 pip 安装自己写的包"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&is_video=false&description=如何用 pip 安装自己写的包"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=如何用 pip 安装自己写的包&body=Check out this article: https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&name=如何用 pip 安装自己写的包&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&name=如何用 pip 安装自己写的包&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何用-pip-安装自己写的包"><span class="toc-number">1.</span> <span class="toc-text">如何用 pip 安装自己写的包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pypi"><span class="toc-number">1.1.</span> <span class="toc-text">Pypi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目结构"><span class="toc-number">1.2.</span> <span class="toc-text">项目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setup-py"><span class="toc-number">1.3.</span> <span class="toc-text">setup.py</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册-Pypi-账号"><span class="toc-number">1.4.</span> <span class="toc-text">注册 Pypi 账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打包、上传"><span class="toc-number">1.5.</span> <span class="toc-text">打包、上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用-Pip-安装自己写的包"><span class="toc-number">1.6.</span> <span class="toc-text">用 Pip 安装自己写的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">1.7.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8-pip-%E5%AE%89%E8%A3%85%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84%E5%8C%85"><span class="toc-number">1.</span> <span class="toc-text">如何用 pip 安装自己写的包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pypi"><span class="toc-number">1.1.</span> <span class="toc-text">Pypi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">项目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setup-py"><span class="toc-number">1.3.</span> <span class="toc-text">setup.py</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C-Pypi-%E8%B4%A6%E5%8F%B7"><span class="toc-number">1.4.</span> <span class="toc-text">注册 Pypi 账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8C%85%E3%80%81%E4%B8%8A%E4%BC%A0"><span class="toc-number">1.5.</span> <span class="toc-text">打包、上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8-Pip-%E5%AE%89%E8%A3%85%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84%E5%8C%85"><span class="toc-number">1.6.</span> <span class="toc-text">用 Pip 安装自己写的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.7.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -137,7 +141,7 @@
       
         <time datetime="2020-05-07T10:17:44.000Z" itemprop="datePublished">2020-05-07</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.545Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.374Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -148,7 +152,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/python/">python</a>
+        <a class="tag-link-link" href="/tags/python/" rel="tag">python</a>
     </div>
 
 
@@ -159,37 +163,35 @@
   <div class="content" itemprop="articleBody">
     <h1 id="如何用-pip-安装自己写的包"><a href="#如何用-pip-安装自己写的包" class="headerlink" title="如何用 pip 安装自己写的包"></a>如何用 pip 安装自己写的包</h1><p>昨天突发奇想，想让自己写的包也可以像我们常用的 numpy、flask、tensorflow 那样直接一个 <code>pip install XXX</code> 命令就安装上。</p>
 <p>要实现这个，首先，我们需要了解 pip 和 Pypi。</p>
-<p>（如果你懂一点点英语，请直接看这篇文档：<a href="https://packaging.python.org/guides/distributing-packages-using-setuptools/#packaging-and-distributing-projects" target="_blank" rel="noopener">Packaging and distributing projects</a>）</p>
+<p>（如果你懂一点点英语，请直接看这篇文档：<a target="_blank" rel="noopener" href="https://packaging.python.org/guides/distributing-packages-using-setuptools/#packaging-and-distributing-projects">Packaging and distributing projects</a>）</p>
 <p>（如果你用 Windows，我不保证你可以顺利完成所有操作，自求多福 [告辞]）</p>
 <h2 id="Pypi"><a href="#Pypi" class="headerlink" title="Pypi"></a>Pypi</h2><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gejog1c7xdj31e00u0kdb.jpg" alt="pypi"></p>
 <blockquote>
 <p>The Python Package Index (PyPI) is a repository of software for the Python programming language.</p>
 </blockquote>
-<p>这是 <a href="https://pypi.org/" target="_blank" rel="noopener">Pypi</a> 的官网上对自己的描述，大概翻译一下：</p>
+<p>这是 <a target="_blank" rel="noopener" href="https://pypi.org/">Pypi</a> 的官网上对自己的描述，大概翻译一下：</p>
 <blockquote>
 <p>Python Package Index (PyPI) 是 Python 编程语言的软件库。</p>
 </blockquote>
 <p>其实，我们平时使用 pip 时，就是在 Pypi 里拉取这些包的，例如：</p>
 <ul>
-<li><a href="https://pypi.org/project/numpy/" target="_blank" rel="noopener">numpy</a>: pip install numpy</li>
-<li><a href="https://pypi.org/project/tensorflow/" target="_blank" rel="noopener">tensorflow</a>: pip install tensorflow</li>
+<li><a target="_blank" rel="noopener" href="https://pypi.org/project/numpy/">numpy</a>: pip install numpy</li>
+<li><a target="_blank" rel="noopener" href="https://pypi.org/project/tensorflow/">tensorflow</a>: pip install tensorflow</li>
 </ul>
-<p>如何用 pip 安装包可以参考：<a href="https://packaging.python.org/tutorials/installing-packages/" target="_blank" rel="noopener">文档 - Installing Packages</a>，这不是本文的重点。</p>
-<p>我们接下来参考 <a href="https://packaging.python.org/tutorials/packaging-projects/" target="_blank" rel="noopener">文档 - Packaging Python Projects</a>，讨论如何打包、发布自己的项目，然后用 pip 安装自己写的包。</p>
+<p>如何用 pip 安装包可以参考：<a target="_blank" rel="noopener" href="https://packaging.python.org/tutorials/installing-packages/">文档 - Installing Packages</a>，这不是本文的重点。</p>
+<p>我们接下来参考 <a target="_blank" rel="noopener" href="https://packaging.python.org/tutorials/packaging-projects/">文档 - Packaging Python Projects</a>，讨论如何打包、发布自己的项目，然后用 pip 安装自己写的包。</p>
 <h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>大家都知道（不然这篇文章还不适合现在的你，不用看了），我们写一个 Python 项目时，最基本的目录结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">packaging_tutorial/</span><br><span class="line">  example_pkg/</span><br><span class="line">    __init__.py</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">packaging_tutorial&#x2F;</span><br><span class="line">  example_pkg&#x2F;</span><br><span class="line">    __init__.py</span><br></pre></td></tr></table></figure>
 <p>当我们要开源或者以其他形式发布一个项目时，比如放到 Github 之前，还会加一些测试、LICENSE、README，目录就变成了这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">packaging_tutorial/</span><br><span class="line">  example_pkg/</span><br><span class="line">    __init__.py</span><br><span class="line">  tests/</span><br><span class="line">  LICENSE</span><br><span class="line">  README.md</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">packaging_tutorial&#x2F;</span><br><span class="line">  example_pkg&#x2F;</span><br><span class="line">    __init__.py</span><br><span class="line">  tests&#x2F;</span><br><span class="line">  LICENSE</span><br><span class="line">  README.md</span><br></pre></td></tr></table></figure>
 <p>现在我们要打包发布这个项目，还需要再加一个 <code>setup.py</code>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">packaging_tutorial/</span><br><span class="line">  example_pkg/</span><br><span class="line">    __init__.py</span><br><span class="line">  tests/</span><br><span class="line">  setup.py</span><br><span class="line">  LICENSE</span><br><span class="line">  README.md</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">packaging_tutorial&#x2F;</span><br><span class="line">  example_pkg&#x2F;</span><br><span class="line">    __init__.py</span><br><span class="line">  tests&#x2F;</span><br><span class="line">  setup.py</span><br><span class="line">  LICENSE</span><br><span class="line">  README.md</span><br></pre></td></tr></table></figure>
+
 
 <h2 id="setup-py"><a href="#setup-py" class="headerlink" title="setup.py"></a>setup.py</h2><p><code> setup.py</code> 描述了你的项目，告诉别人你项目的名称、版本、描述、依赖……类似于写 node.js 同学的 <code>package.json </code>。</p>
 <p>说的官方一点就是：setup.py 是 setuptools 的构建脚本。它告诉 setuptools 关于你的软件包（如名称和版本）以及要包含哪些代码文件。</p>
 <p>一个基本的 setup.py 长这样：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> setuptools <span class="keyword">import</span> setup</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"README.md"</span>, <span class="string">"r"</span>) <span class="keyword">as</span> fh:</span><br><span class="line">    long_description = fh.read()</span><br><span class="line"></span><br><span class="line">setup(</span><br><span class="line">    name=<span class="string">'packaging_tutorial'</span>,</span><br><span class="line">    version=<span class="string">'0.0.1'</span>,</span><br><span class="line">    packages=setuptools.find_packages(),</span><br><span class="line">    url=<span class="string">'https://github.com/pypa/sampleproject'</span>,</span><br><span class="line">    license=<span class="string">'MIT'</span>,</span><br><span class="line">    author=<span class="string">'Example Author'</span>,</span><br><span class="line">    author_email=<span class="string">'author@example.com'</span>,</span><br><span class="line">    description=<span class="string">'A small example package'</span>,</span><br><span class="line">    long_description=long_description,</span><br><span class="line">    long_description_content_type=<span class="string">"text/markdown"</span>,</span><br><span class="line">    install_requires=[<span class="string">'numpy'</span>],</span><br><span class="line">    classifiers=[</span><br><span class="line">        <span class="string">"Programming Language :: Python :: 3"</span>,</span><br><span class="line">        <span class="string">"License :: OSI Approved :: MIT License"</span>,</span><br><span class="line">        <span class="string">"Operating System :: OS Independent"</span>,</span><br><span class="line">    ],</span><br><span class="line">    python_requires=<span class="string">'&gt;=3.6'</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> setuptools <span class="keyword">import</span> setup</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;README.md&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> fh:</span><br><span class="line">    long_description = fh.read()</span><br><span class="line"></span><br><span class="line">setup(</span><br><span class="line">    name=<span class="string">&#x27;packaging_tutorial&#x27;</span>,</span><br><span class="line">    version=<span class="string">&#x27;0.0.1&#x27;</span>,</span><br><span class="line">    packages=setuptools.find_packages(),</span><br><span class="line">    url=<span class="string">&#x27;https://github.com/pypa/sampleproject&#x27;</span>,</span><br><span class="line">    license=<span class="string">&#x27;MIT&#x27;</span>,</span><br><span class="line">    author=<span class="string">&#x27;Example Author&#x27;</span>,</span><br><span class="line">    author_email=<span class="string">&#x27;author@example.com&#x27;</span>,</span><br><span class="line">    description=<span class="string">&#x27;A small example package&#x27;</span>,</span><br><span class="line">    long_description=long_description,</span><br><span class="line">    long_description_content_type=<span class="string">&quot;text/markdown&quot;</span>,</span><br><span class="line">    install_requires=[<span class="string">&#x27;numpy&#x27;</span>],</span><br><span class="line">    classifiers=[</span><br><span class="line">        <span class="string">&quot;Programming Language :: Python :: 3&quot;</span>,</span><br><span class="line">        <span class="string">&quot;License :: OSI Approved :: MIT License&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Operating System :: OS Independent&quot;</span>,</span><br><span class="line">    ],</span><br><span class="line">    python_requires=<span class="string">&#x27;&gt;=3.6&#x27;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>其实基本看名字就知道是些什么了，我们只说明几个特别的：</p>
 <ul>
 <li><code>packages</code>，这里可以写一个list，比如 <code>packages=[&#39;example_pkg1&#39;, &#39;example_pkg2&#39;, ...]</code>，即你的目录里的 Python 包（带<code>__init__.py</code>的那种目录），也可以如官网建议的直接让 setuptools 给你去找。</li>
@@ -198,49 +200,41 @@
 <li><code>long_description</code>，我们从 README.md 里直接读取的 markdown 文档，所以把<code>long_description_content_type</code> 对于设置了 markdown。</li>
 </ul>
 <ul>
-<li><code>install_requires</code>，是你这个项目依赖的包，可以让 pip 安装你的包的时候检查依赖，如果依赖没有安装或版本不对，就把正确的依赖也一起装上。注意，这里的依赖必须是 pypi 里有的(即你可以用 pip install xxx 安装的)。要了解更多请看：<a href="https://packaging.python.org/discussions/install-requires-vs-requirements/#install-requires-vs-requirements-files" target="_blank" rel="noopener">install_requires vs requirements files</a></li>
+<li><code>install_requires</code>，是你这个项目依赖的包，可以让 pip 安装你的包的时候检查依赖，如果依赖没有安装或版本不对，就把正确的依赖也一起装上。注意，这里的依赖必须是 pypi 里有的(即你可以用 pip install xxx 安装的)。要了解更多请看：<a target="_blank" rel="noopener" href="https://packaging.python.org/discussions/install-requires-vs-requirements/#install-requires-vs-requirements-files">install_requires vs requirements files</a></li>
 </ul>
 <ul>
-<li><code>classifiers</code>，就是给你的项目贴些标签，方便别人检索啦，可选的在这个目录里：<a href="https://pypi.org/classifiers/" target="_blank" rel="noopener">https://pypi.org/classifiers/</a></li>
+<li><code>classifiers</code>，就是给你的项目贴些标签，方便别人检索啦，可选的在这个目录里：<a target="_blank" rel="noopener" href="https://pypi.org/classifiers/">https://pypi.org/classifiers/</a></li>
 </ul>
-<p>setup.py 里还可以指定很多其他东西的，具体看文档：<a href="https://packaging.python.org/guides/distributing-packages-using-setuptools/#setup-args" target="_blank" rel="noopener">https://packaging.python.org/guides/distributing-packages-using-setuptools/#setup-args</a></p>
+<p>setup.py 里还可以指定很多其他东西的，具体看文档：<a target="_blank" rel="noopener" href="https://packaging.python.org/guides/distributing-packages-using-setuptools/#setup-args">https://packaging.python.org/guides/distributing-packages-using-setuptools/#setup-args</a></p>
 <hr>
 <p>写完 setup.py 其实我们就可以在自己的电脑上 pip 安装这个包了！</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> packaging_tutorial</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pip3 install .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> python3</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; import example_pkg    <span class="comment"># 注意这里import的不是setup里的name，而是packages列表里的包名</span></span></span><br></pre></td></tr></table></figure>
-
 <p>如果本地安装没问题（我没遇到问题，不清楚有没有坑），接下来，我们把包就要上传到 Pypi 了。</p>
 <h2 id="注册-Pypi-账号"><a href="#注册-Pypi-账号" class="headerlink" title="注册 Pypi 账号"></a>注册 Pypi 账号</h2><p>和 GitHub 一样哈，你得先注册一个号才能上传到 Pypi。</p>
-<p>直接点这个链接注册：<a href="https://pypi.org/account/register/" target="_blank" rel="noopener">https://pypi.org/account/register/</a>。</p>
-<p>注册好之后，生成一个 token：<a href="https://pypi.org/manage/account/#api-tokens%E3%80%82%E7%94%B1%E4%BA%8E%E6%88%91%E4%BB%AC%E6%98%AF%E8%A6%81%E4%B8%8A%E4%BC%A0%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E6%89%80%E4%BB%A5%E4%B8%8D%E8%A6%81%E9%99%90%E5%88%B6" target="_blank" rel="noopener">https://pypi.org/manage/account/#api-tokens。由于我们是要上传新项目，所以不要限制</a> scope 到特定的项目。</p>
+<p>直接点这个链接注册：<a target="_blank" rel="noopener" href="https://pypi.org/account/register/">https://pypi.org/account/register/</a>。</p>
+<p>注册好之后，生成一个 token：<a target="_blank" rel="noopener" href="https://pypi.org/manage/account/#api-tokens%E3%80%82%E7%94%B1%E4%BA%8E%E6%88%91%E4%BB%AC%E6%98%AF%E8%A6%81%E4%B8%8A%E4%BC%A0%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E6%89%80%E4%BB%A5%E4%B8%8D%E8%A6%81%E9%99%90%E5%88%B6">https://pypi.org/manage/account/#api-tokens。由于我们是要上传新项目，所以不要限制</a> scope 到特定的项目。</p>
 <p>⚠️<strong>注意：token 生成出来以后不要马上关掉页面，不然就没了！！！把 token 复制粘贴保存到个本地的文件里(你要手抄我不反对，一百多位，别抄错就行 [狗头])。</strong></p>
 <p>然后，创建一个纯文本文件 <code>$HOME/.pypirc</code> （Windows 咋搞自行解决，我不用Windows），在里面写：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[pypi]</span><br><span class="line">username = __token__</span><br><span class="line">password = &lt;换成你刚刚复制下来的 token, 包括 `pypi-` 前缀&gt;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[pypi]</span><br><span class="line">username &#x3D; __token__</span><br><span class="line">password &#x3D; &lt;换成你刚刚复制下来的 token, 包括 &#96;pypi-&#96; 前缀&gt;</span><br></pre></td></tr></table></figure>
 <p>注意，<strong>不要把username改成你的用户名</strong>，就是写 <code>username = __token__</code>，固定der！因为我们是要用 token 嘛，所以用户是 <code>__token__</code>。<code>password = token</code> 把 token 换成你的 token，注意不要换行，也不要加其他乱七八糟的空白字符（如果你要Windows的记事本，请小心BOM）。</p>
 <p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[pypi]</span><br><span class="line">username = __token__</span><br><span class="line">password = pypi-BCqRT66666666kLTI1NjQzZGUJXsgElwaS576OnvGVIshizhegedeshisabiJzaW9uIjogMXC05ZzcIWlOs2lyTZCOCCCCU1NwACvbnL9IsWyPMiOiAidXiJBBBcmcicN0AAAYgCB82jrAI9RDJl5BJfK2333333</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[pypi]</span><br><span class="line">username &#x3D; __token__</span><br><span class="line">password &#x3D; pypi-BCqRT66666666kLTI1NjQzZGUJXsgElwaS576OnvGVIshizhegedeshisabiJzaW9uIjogMXC05ZzcIWlOs2lyTZCOCCCCU1NwACvbnL9IsWyPMiOiAidXiJBBBcmcicN0AAAYgCB82jrAI9RDJl5BJfK2333333</span><br></pre></td></tr></table></figure>
 <h2 id="打包、上传"><a href="#打包、上传" class="headerlink" title="打包、上传"></a>打包、上传</h2><p>打包很简单：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> packaging_tutorial</span><br><span class="line">$ python setup.py sdist</span><br><span class="line">$ tree .</span><br><span class="line">.</span><br><span class="line">├── LICENSE</span><br><span class="line">├── README.md</span><br><span class="line">├── packaging_tutorial.egg-info</span><br><span class="line">│   ├── PKG-INFO</span><br><span class="line">│   ├── SOURCES.txt</span><br><span class="line">│   ├── dependency_links.txt</span><br><span class="line">│   ├── requires.txt</span><br><span class="line">│   └── top_level.txt</span><br><span class="line">├── dist</span><br><span class="line">│   └── packaging_tutorial-0.0.1.tar.gz</span><br><span class="line">├── setup.py</span><br><span class="line">└── example_pkg</span><br><span class="line">    ├── __init__.py</span><br><span class="line">    └── src.py</span><br></pre></td></tr></table></figure>
-
 <p>你会看见出来些 <code>packaging_tutorial.egg-info</code>、<code>dist</code> 啦。如果你没兴趣，就不用管它们，把他们看成“编译”出来的二进制文件就好。这些也不用加版本管理里，你随时可以生成的。</p>
 <p>然后就是上传了，这一步需要我们先安装一个 twine：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install twine</span><br></pre></td></tr></table></figure>
-
 <p>好了之后，用 twine 就可以把包上传到 pypi 了：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ twine upload dist/*</span><br></pre></td></tr></table></figure>
-
 <p>当然，你可以只上传某个特定版本： <code>twine upload dist/packaging_tutorial-0.0.1.tar.gz</code>。</p>
-<p>如果失败，请检查你的网络，确保你可以上 <a href="https://pypi.org/" target="_blank" rel="noopener">pypi官网</a> (搞这些最好科学上网，不然我不知道能不能成)；还有检查你的 <code>$HOME/.pypirc</code>，token 有没有写错。</p>
+<p>如果失败，请检查你的网络，确保你可以上 <a target="_blank" rel="noopener" href="https://pypi.org/">pypi官网</a> (搞这些最好科学上网，不然我不知道能不能成)；还有检查你的 <code>$HOME/.pypirc</code>，token 有没有写错。</p>
 <p>上传完它就会输出一个 URL：<code>https://pypi.org/project/&lt;sampleproject&gt;</code>，打开就可以在 pypi 里看到你的项目了！</p>
 <h2 id="用-Pip-安装自己写的包"><a href="#用-Pip-安装自己写的包" class="headerlink" title="用 Pip 安装自己写的包"></a>用 Pip 安装自己写的包</h2><p>最后，换台计算机（我们自己的电脑上已经安装过了嘛，痛失贞洁了，不好玩了）。</p>
 <p>在另一台机器上（安装了 python、pip的）：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install packaging_tutorial</span><br></pre></td></tr></table></figure>
-
 <p>你可以看到下载、依赖处理、安装的过程。好了之后你就可以用自己写的包了：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python</span><br><span class="line">&gt;&gt;&gt; import example_pkg</span><br></pre></td></tr></table></figure>
-
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>这篇文章只是对整个流程简要的记录和介绍，官方的这篇文章写了更完整的介绍：<a href="https://packaging.python.org/guides/distributing-packages-using-setuptools/#packaging-and-distributing-projects" target="_blank" rel="noopener">Packaging and distributing projects</a>。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>这篇文章只是对整个流程简要的记录和介绍，官方的这篇文章写了更完整的介绍：<a target="_blank" rel="noopener" href="https://packaging.python.org/guides/distributing-packages-using-setuptools/#packaging-and-distributing-projects">Packaging and distributing projects</a>。</p>
 
   </div>
 </article>
@@ -270,7 +264,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -278,21 +272,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何用-pip-安装自己写的包"><span class="toc-number">1.</span> <span class="toc-text">如何用 pip 安装自己写的包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pypi"><span class="toc-number">1.1.</span> <span class="toc-text">Pypi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目结构"><span class="toc-number">1.2.</span> <span class="toc-text">项目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setup-py"><span class="toc-number">1.3.</span> <span class="toc-text">setup.py</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册-Pypi-账号"><span class="toc-number">1.4.</span> <span class="toc-text">注册 Pypi 账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打包、上传"><span class="toc-number">1.5.</span> <span class="toc-text">打包、上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用-Pip-安装自己写的包"><span class="toc-number">1.6.</span> <span class="toc-text">用 Pip 安装自己写的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">1.7.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8-pip-%E5%AE%89%E8%A3%85%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84%E5%8C%85"><span class="toc-number">1.</span> <span class="toc-text">如何用 pip 安装自己写的包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pypi"><span class="toc-number">1.1.</span> <span class="toc-text">Pypi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">项目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setup-py"><span class="toc-number">1.3.</span> <span class="toc-text">setup.py</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C-Pypi-%E8%B4%A6%E5%8F%B7"><span class="toc-number">1.4.</span> <span class="toc-text">注册 Pypi 账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8C%85%E3%80%81%E4%B8%8A%E4%BC%A0"><span class="toc-number">1.5.</span> <span class="toc-text">打包、上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8-Pip-%E5%AE%89%E8%A3%85%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84%E5%8C%85"><span class="toc-number">1.6.</span> <span class="toc-text">用 Pip 安装自己写的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.7.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&text=如何用 pip 安装自己写的包"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&is_video=false&description=如何用 pip 安装自己写的包"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&text=如何用 pip 安装自己写的包"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&is_video=false&description=如何用 pip 安装自己写的包"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=如何用 pip 安装自己写的包&body=Check out this article: https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&name=如何用 pip 安装自己写的包&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&title=如何用 pip 安装自己写的包"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/05/07/blog/pip-install-yourselfs-packages/&name=如何用 pip 安装自己写的包&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -322,7 +316,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -333,16 +327,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -363,7 +369,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

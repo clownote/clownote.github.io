@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Java 基本数据类型Java 的两大数据类型:  内置数据类型 引用数据类型  内置数据类型对于每一种 数据类型 都有一个 包装类，如：void类型的包装类是 java.lang.Void。 对于数值类型的包装类，我们都可以从中获取对应类型的二进制位数、取值范围。    原语 对应的 JDK 类    boolean java.lang.Boolean   byte java.lang.Byte">
-<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java-基本数据类型">
 <meta property="og:url" content="https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Java 基本数据类型Java 的两大数据类型:  内置数据类型 引用数据类型  内置数据类型对于每一种 数据类型 都有一个 包装类，如：void类型的包装类是 java.lang.Void。 对于数值类型的包装类，我们都可以从中获取对应类型的二进制位数、取值范围。    原语 对应的 JDK 类    boolean java.lang.Boolean   byte java.lang.Byte">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.533Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-04-15T16:37:53.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.362Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java-基本数据类型">
-<meta name="twitter:description" content="Java 基本数据类型Java 的两大数据类型:  内置数据类型 引用数据类型  内置数据类型对于每一种 数据类型 都有一个 包装类，如：void类型的包装类是 java.lang.Void。 对于数值类型的包装类，我们都可以从中获取对应类型的二进制位数、取值范围。    原语 对应的 JDK 类    boolean java.lang.Boolean   byte java.lang.Byte">
     
     
         
@@ -39,19 +39,23 @@
     <!-- title -->
     <title>Java-基本数据类型</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -69,7 +73,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -95,21 +99,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&text=Java-基本数据类型"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&is_video=false&description=Java-基本数据类型"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&text=Java-基本数据类型"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&is_video=false&description=Java-基本数据类型"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Java-基本数据类型&body=Check out this article: https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&name=Java-基本数据类型&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&name=Java-基本数据类型&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-基本数据类型"><span class="toc-number">1.</span> <span class="toc-text">Java 基本数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#内置数据类型"><span class="toc-number">1.1.</span> <span class="toc-text">内置数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#void"><span class="toc-number">1.1.1.</span> <span class="toc-text">void</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整数型"><span class="toc-number">1.1.2.</span> <span class="toc-text">整数型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浮点型"><span class="toc-number">1.1.3.</span> <span class="toc-text">浮点型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符型"><span class="toc-number">1.1.4.</span> <span class="toc-text">字符型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#布尔型"><span class="toc-number">1.1.5.</span> <span class="toc-text">布尔型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用数据类型"><span class="toc-number">1.2.</span> <span class="toc-text">引用数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-变量"><span class="toc-number">1.3.</span> <span class="toc-text">Java 变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常量"><span class="toc-number">1.3.1.</span> <span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#字面值常量"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">字面值常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#声明常量"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">声明常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串常量"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">字符串常量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型转换"><span class="toc-number">1.3.2.</span> <span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#自动类型转换"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">自动类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#强制类型转换"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">强制类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据类型转换的补充"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">数据类型转换的补充</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1、包装类过渡类型转换"><span class="toc-number">1.3.2.3.1.</span> <span class="toc-text">1、包装类过渡类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2、字符串与其它类型间的转换"><span class="toc-number">1.3.2.3.2.</span> <span class="toc-text">2、字符串与其它类型间的转换</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#其它类型向字符串的转换"><span class="toc-number">1.3.2.3.2.1.</span> <span class="toc-text">其它类型向字符串的转换</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#字符串作为值-向其它类型的转换"><span class="toc-number">1.3.2.3.2.2.</span> <span class="toc-text">字符串作为值,向其它类型的转换</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#总结"><span class="toc-number">1.3.2.3.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">Java 基本数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">内置数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#void"><span class="toc-number">1.1.1.</span> <span class="toc-text">void</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E5%9E%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">整数型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">浮点型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%9E%8B"><span class="toc-number">1.1.4.</span> <span class="toc-text">字符型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%9E%8B"><span class="toc-number">1.1.5.</span> <span class="toc-text">布尔型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">引用数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-%E5%8F%98%E9%87%8F"><span class="toc-number">1.3.</span> <span class="toc-text">Java 变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E9%9D%A2%E5%80%BC%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">字面值常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">声明常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">字符串常量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">自动类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">强制类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E8%A1%A5%E5%85%85"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">数据类型转换的补充</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E8%BF%87%E6%B8%A1%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.3.1.</span> <span class="toc-text">1、包装类过渡类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.3.2.</span> <span class="toc-text">2、字符串与其它类型间的转换</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B%E5%90%91%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.3.2.1.</span> <span class="toc-text">其它类型向字符串的转换</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%9C%E4%B8%BA%E5%80%BC-%E5%90%91%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.3.2.2.</span> <span class="toc-text">字符串作为值,向其它类型的转换</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.2.3.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +139,7 @@
       
         <time datetime="2019-04-15T16:37:53.000Z" itemprop="datePublished">2019-04-15</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.533Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.362Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -151,7 +155,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Java/">Java</a>
+        <a class="tag-link-link" href="/tags/Java/" rel="tag">Java</a>
     </div>
 
 
@@ -250,8 +254,7 @@
 </tr>
 </tbody></table>
 <p>整型字面值常量都可以用十(正常书写)、八(以<code>0</code>开头)、十六(以<code>0x</code>开头)进制表示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int decimal = 100;</span><br><span class="line">int octal = 0114;</span><br><span class="line">int hexadecimal = 0x64;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int decimal &#x3D; 100;</span><br><span class="line">int octal &#x3D; 0114;</span><br><span class="line">int hexadecimal &#x3D; 0x64;</span><br></pre></td></tr></table></figure>
 <h3 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h3><blockquote>
 <p>浮点数不能用来表示精确的值。</p>
 </blockquote>
@@ -319,22 +322,18 @@
 <p>引用变量一旦声明后，类型就不能被改变了，但一个引用变量可以用来引用任何与之兼容的类型。</p>
 <h2 id="Java-变量"><a href="#Java-变量" class="headerlink" title="Java 变量"></a>Java 变量</h2><p>声明一个变量，需要使用如下的格式的语句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type varName;</span><br></pre></td></tr></table></figure>
-
 <p>也可以在声明的同时，对它初始化：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type varName = initialValue;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type varName &#x3D; initialValue;</span><br></pre></td></tr></table></figure>
 <p>【注】初始化一个对象时，使用：<code>ClassName instanceName = new ClassName();</code></p>
 <h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>常量在程序运行时是不能被修改的。</p>
 <h4 id="字面值常量"><a href="#字面值常量" class="headerlink" title="字面值常量"></a>字面值常量</h4><p>字面值常量，就是直接在程序里写一个值，比如 <code>100</code>, <code>-100.0</code>, <code>&#39;A&#39;</code>…<br>这个东西很好理解，特殊的已经在上面的内置类型表格中有说明了。</p>
 <p>字面值常量可以赋给任何内置类型的变量。</p>
 <h4 id="声明常量"><a href="#声明常量" class="headerlink" title="声明常量"></a>声明常量</h4><p>我们也可以像声明变量一样声明一个常量。</p>
 <p>在 Java 中，使用 <code>final</code> 关键字来修饰常量，声明方式和变量类似：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final double PI = 3.1415927;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final double PI &#x3D; 3.1415927;</span><br></pre></td></tr></table></figure>
 <p>按照惯例，常量名应该用<strong>全部大写</strong>的名称表示。</p>
 <h4 id="字符串常量"><a href="#字符串常量" class="headerlink" title="字符串常量"></a>字符串常量</h4><p>和其他语言一样，Java的字符串常量也是包含在两个引号之间的字符序列，其中可以使用转义字符，也可以含有Unicode字符：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;Hello World&quot;</span><br><span class="line">&quot;two\nlines&quot;</span><br><span class="line">&quot;\&quot;This is in quotes\&quot;&quot;</span><br><span class="line">&quot;\u0001&quot;</span><br></pre></td></tr></table></figure>
-
 <p>常用的转义字符如下：</p>
 <table>
 <thead>
@@ -397,18 +396,15 @@
 <li>浮点数到整数的转换是通过舍弃小数得到，而不是四舍五入。</li>
 </ol>
 <h4 id="自动类型转换"><a href="#自动类型转换" class="headerlink" title="自动类型转换"></a>自动类型转换</h4><p>在自动类型转换中，类型总是从<strong>低级</strong>到<strong>高级</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">低  ----------------------------------------&gt;  高</span><br><span class="line"></span><br><span class="line">byte, short, char —&gt; int —&gt; long —&gt; float —&gt; double</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">低  ----------------------------------------&gt;  高</span><br><span class="line"></span><br><span class="line">byte, short, char —&gt; int —&gt; long —&gt; float —&gt; double </span><br></pre></td></tr></table></figure>
 <p>⚠️【注意】在进行整数运算时，如果是两个比int类型小的类型做运算，java在编译的时候就会将它们统一强转成int类型。当有比int类型大的类型运算时，会自动转换成它们中最大类型那个。</p>
 <h4 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h4><p>通过下面这种语句可以强制类型转化：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(type)value</span><br></pre></td></tr></table></figure>
-
 <p>⚠️【注意】转换的数据类型必须是兼容的。</p>
 <h4 id="数据类型转换的补充"><a href="#数据类型转换的补充" class="headerlink" title="数据类型转换的补充"></a>数据类型转换的补充</h4><h5 id="1、包装类过渡类型转换"><a href="#1、包装类过渡类型转换" class="headerlink" title="1、包装类过渡类型转换"></a>1、包装类过渡类型转换</h5><p>一般情况下，我们首先声明一个变量，然后生成一个对应的包装类，就可以利用包装类的各种方法进行类型转换了。</p>
 <p>例如：</p>
 <p>当希望把float型转换为double型时：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span> f1 = <span class="number">100.00f</span>;</span><br><span class="line">Float F1 = <span class="keyword">new</span> Float(f1);</span><br><span class="line"><span class="keyword">double</span> d1 = F1.doubleValue();     <span class="comment">//F1.doubleValue()为Float类的返回double值型的方法</span></span><br></pre></td></tr></table></figure>
-
 <p>简单类型的变量转换为相应的包装类，可以利用包装类的构造函数。<br>即：<code>Boolean(boolean value)、Character(char value)</code>、<code>Integer(int value)</code>、<code>Long(long value)</code>、<code>Float(float value)</code>、<code>Double(double value)</code>。</p>
 <p>而在各个包装类中，总有形为 <code>××Value()</code> 的方法，来得到其对应的简单类型数据。<br>利用这种方法，也可以实现不同数值型变量间的转换。<br>例如，对于一个双精度实型类，<code>intValue()</code> 可以得到其对应的整型变量，而 <code>doubleValue()</code> 可以得到其对应的双精度实型变量。</p>
 <h5 id="2、字符串与其它类型间的转换"><a href="#2、字符串与其它类型间的转换" class="headerlink" title="2、字符串与其它类型间的转换"></a>2、字符串与其它类型间的转换</h5><h6 id="其它类型向字符串的转换"><a href="#其它类型向字符串的转换" class="headerlink" title="其它类型向字符串的转换"></a>其它类型向字符串的转换</h6><ol>
@@ -417,8 +413,7 @@
 <li>使用String的方法: <code>String.valueOf(X);</code></li>
 </ol>
 <p>⚠️【注意】在使用 <code>2</code> 时需要注意：<strong>任何字符类型与字符串相加，结果都是拼接。</strong><br>例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="keyword">null</span>;</span><br><span class="line">s += <span class="string">"hello"</span>;</span><br><span class="line">System.out.println(s);  <span class="comment">// 输出 nullhello</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="keyword">null</span>;</span><br><span class="line">s += <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">System.out.println(s);  <span class="comment">// 输出 nullhello</span></span><br></pre></td></tr></table></figure>
 <h6 id="字符串作为值-向其它类型的转换"><a href="#字符串作为值-向其它类型的转换" class="headerlink" title="字符串作为值,向其它类型的转换"></a>字符串作为值,向其它类型的转换</h6><ol>
 <li>先转换成相应的封装器实例,再调用对应的方法转换成其它类型</li>
 </ol>
@@ -427,8 +422,7 @@
 <ol start="2">
 <li>静态parseXXX方法</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"1"</span>;</span><br><span class="line"><span class="keyword">byte</span> b = Byte.parseByte( s );</span><br><span class="line"><span class="keyword">short</span> t = Short.parseShort( s );</span><br><span class="line"><span class="keyword">int</span> i = Integer.parseInt( s );</span><br><span class="line"><span class="keyword">long</span> l = Long.parseLong( s );</span><br><span class="line">Float f = Float.parseFloat( s );</span><br><span class="line">Double d = Double.parseDouble( s );</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">&quot;1&quot;</span>;</span><br><span class="line"><span class="keyword">byte</span> b = Byte.parseByte( s );</span><br><span class="line"><span class="keyword">short</span> t = Short.parseShort( s );</span><br><span class="line"><span class="keyword">int</span> i = Integer.parseInt( s );</span><br><span class="line"><span class="keyword">long</span> l = Long.parseLong( s );</span><br><span class="line">Float f = Float.parseFloat( s );</span><br><span class="line">Double d = Double.parseDouble( s );</span><br></pre></td></tr></table></figure>
 <h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ol>
 <li>只有 boolean 不参与数据类型的转换</li>
 <li>自动类型的转换：<ul>
@@ -470,7 +464,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -478,21 +472,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-基本数据类型"><span class="toc-number">1.</span> <span class="toc-text">Java 基本数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#内置数据类型"><span class="toc-number">1.1.</span> <span class="toc-text">内置数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#void"><span class="toc-number">1.1.1.</span> <span class="toc-text">void</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整数型"><span class="toc-number">1.1.2.</span> <span class="toc-text">整数型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浮点型"><span class="toc-number">1.1.3.</span> <span class="toc-text">浮点型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符型"><span class="toc-number">1.1.4.</span> <span class="toc-text">字符型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#布尔型"><span class="toc-number">1.1.5.</span> <span class="toc-text">布尔型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用数据类型"><span class="toc-number">1.2.</span> <span class="toc-text">引用数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-变量"><span class="toc-number">1.3.</span> <span class="toc-text">Java 变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常量"><span class="toc-number">1.3.1.</span> <span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#字面值常量"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">字面值常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#声明常量"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">声明常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串常量"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">字符串常量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型转换"><span class="toc-number">1.3.2.</span> <span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#自动类型转换"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">自动类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#强制类型转换"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">强制类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据类型转换的补充"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">数据类型转换的补充</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1、包装类过渡类型转换"><span class="toc-number">1.3.2.3.1.</span> <span class="toc-text">1、包装类过渡类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2、字符串与其它类型间的转换"><span class="toc-number">1.3.2.3.2.</span> <span class="toc-text">2、字符串与其它类型间的转换</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#其它类型向字符串的转换"><span class="toc-number">1.3.2.3.2.1.</span> <span class="toc-text">其它类型向字符串的转换</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#字符串作为值-向其它类型的转换"><span class="toc-number">1.3.2.3.2.2.</span> <span class="toc-text">字符串作为值,向其它类型的转换</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#总结"><span class="toc-number">1.3.2.3.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">Java 基本数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">内置数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#void"><span class="toc-number">1.1.1.</span> <span class="toc-text">void</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E5%9E%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">整数型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">浮点型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%9E%8B"><span class="toc-number">1.1.4.</span> <span class="toc-text">字符型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%9E%8B"><span class="toc-number">1.1.5.</span> <span class="toc-text">布尔型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">引用数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-%E5%8F%98%E9%87%8F"><span class="toc-number">1.3.</span> <span class="toc-text">Java 变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E9%9D%A2%E5%80%BC%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">字面值常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">声明常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">字符串常量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">自动类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">强制类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E8%A1%A5%E5%85%85"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">数据类型转换的补充</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E8%BF%87%E6%B8%A1%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.3.1.</span> <span class="toc-text">1、包装类过渡类型转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.3.2.</span> <span class="toc-text">2、字符串与其它类型间的转换</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B%E5%90%91%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.3.2.1.</span> <span class="toc-text">其它类型向字符串的转换</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%9C%E4%B8%BA%E5%80%BC-%E5%90%91%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.3.2.2.</span> <span class="toc-text">字符串作为值,向其它类型的转换</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.2.3.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&text=Java-基本数据类型"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&is_video=false&description=Java-基本数据类型"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&text=Java-基本数据类型"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&is_video=false&description=Java-基本数据类型"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Java-基本数据类型&body=Check out this article: https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&name=Java-基本数据类型&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&title=Java-基本数据类型"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/15/Java_intro/Day4_Java_Types/&name=Java-基本数据类型&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -522,7 +516,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -533,16 +527,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -563,7 +569,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4  来源：力扣（LeetCode）链接：https://leetc">
-<meta name="keywords" content="School">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4 来源：力扣（LeetCode）链接：https:&#x2F;&#x2F;leetco">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 136. 只出现一次的数字">
 <meta property="og:url" content="https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4  来源：力扣（LeetCode）链接：https://leetc">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4 来源：力扣（LeetCode）链接：https:&#x2F;&#x2F;leetco">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdmdhgx8xwj317x0u04qd.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.537Z">
+<meta property="article:published_time" content="2020-04-08T14:57:55.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.366Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="School">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode 136. 只出现一次的数字">
-<meta name="twitter:description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4  来源：力扣（LeetCode）链接：https://leetc">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdmdhgx8xwj317x0u04qd.jpg">
     
     
@@ -41,19 +41,23 @@
     <!-- title -->
     <title>Leetcode 136. 只出现一次的数字</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -71,7 +75,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -97,21 +101,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&text=Leetcode 136. 只出现一次的数字"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&is_video=false&description=Leetcode 136. 只出现一次的数字"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&text=Leetcode 136. 只出现一次的数字"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&is_video=false&description=Leetcode 136. 只出现一次的数字"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Leetcode 136. 只出现一次的数字&body=Check out this article: https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&name=Leetcode 136. 只出现一次的数字&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&name=Leetcode 136. 只出现一次的数字&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-136-只出现一次的数字"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 136. 只出现一次的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表"><span class="toc-number">1.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异或"><span class="toc-number">1.3.</span> <span class="toc-text">异或</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-136-%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 136. 只出现一次的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E6%88%96"><span class="toc-number">1.3.</span> <span class="toc-text">异或</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -137,7 +141,7 @@
       
         <time datetime="2020-04-08T14:57:55.000Z" itemprop="datePublished">2020-04-08</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.537Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.366Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -148,7 +152,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/School/">School</a>
+        <a class="tag-link-link" href="/tags/School/" rel="tag">School</a>
     </div>
 
 
@@ -157,7 +161,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="Leetcode-136-只出现一次的数字"><a href="#Leetcode-136-只出现一次的数字" class="headerlink" title="Leetcode 136. 只出现一次的数字"></a>Leetcode <a href="https://leetcode-cn.com/problems/single-number/" target="_blank" rel="noopener">136. 只出现一次的数字</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。</p>
+    <h1 id="Leetcode-136-只出现一次的数字"><a href="#Leetcode-136-只出现一次的数字" class="headerlink" title="Leetcode 136. 只出现一次的数字"></a>Leetcode <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/single-number/">136. 只出现一次的数字</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。</p>
 <p>说明：</p>
 <p>你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？</p>
 <p>示例 1:</p>
@@ -165,11 +169,9 @@
 
 <p>示例 2:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [4,1,2,1,2]</span><br><span class="line">输出: 4</span><br></pre></td></tr></table></figure>
-
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/single-number" target="_blank" rel="noopener">https://leetcode-cn.com/problems/single-number</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/single-number">https://leetcode-cn.com/problems/single-number</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p>这道题最简单的方法，哈希表暴力存一下出现次数就好了。由于题目保证最多有出现两次，所以用个bool去存出现次数就行了，Golang 实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">singleNumber</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    memo := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">bool</span>)</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        memo[v] = !memo[v]</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">for</span> k, v := <span class="keyword">range</span> memo &#123;</span><br><span class="line">        <span class="keyword">if</span> v &#123;</span><br><span class="line">            <span class="keyword">return</span> k</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="异或"><a href="#异或" class="headerlink" title="异或"></a>异或</h2><p>按位异或（C风格写做 <code>^</code>）有很多有趣的性质，这道题可以用其中的一两个：</p>
 <ol>
 <li><code>x ^ x = 0</code></li>
@@ -177,14 +179,11 @@
 </ol>
 <p>其实这两个性质还是很显然的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  100110</span><br><span class="line">^ 100110</span><br><span class="line">--------</span><br><span class="line">  000000</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  000000</span><br><span class="line">^ 100110</span><br><span class="line">--------</span><br><span class="line">  100110</span><br></pre></td></tr></table></figure>
-
 <p>这两个性质合在一起就有：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a ^ a ^ b ^ b ^ ... ^ z = z</span><br><span class="line">// 省略的那里也是一对一对的，只有z是单独一个</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a ^ a ^ b ^ b ^ ... ^ z &#x3D; z</span><br><span class="line">&#x2F;&#x2F; 省略的那里也是一对一对的，只有z是单独一个</span><br></pre></td></tr></table></figure>
 <p>这道题就解决了。</p>
 <p>Golang 实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">singleNumber</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    x := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        x ^= v</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gdmdhgx8xwj317x0u04qd.jpg" alt="image-20200408150554908"></p>
 
   </div>
@@ -215,7 +214,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -223,21 +222,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-136-只出现一次的数字"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 136. 只出现一次的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表"><span class="toc-number">1.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异或"><span class="toc-number">1.3.</span> <span class="toc-text">异或</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Leetcode-136-%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97"><span class="toc-number">1.</span> <span class="toc-text">Leetcode 136. 只出现一次的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E6%88%96"><span class="toc-number">1.3.</span> <span class="toc-text">异或</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&text=Leetcode 136. 只出现一次的数字"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&is_video=false&description=Leetcode 136. 只出现一次的数字"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&text=Leetcode 136. 只出现一次的数字"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&is_video=false&description=Leetcode 136. 只出现一次的数字"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Leetcode 136. 只出现一次的数字&body=Check out this article: https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&name=Leetcode 136. 只出现一次的数字&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&title=Leetcode 136. 只出现一次的数字"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/&name=Leetcode 136. 只出现一次的数字&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -267,7 +266,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -278,16 +277,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -308,7 +319,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

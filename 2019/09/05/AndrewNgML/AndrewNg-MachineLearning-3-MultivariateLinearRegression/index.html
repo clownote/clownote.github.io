@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Notes of Andrew Ng’s Machine Learning —— (3) Multivariate Linear RegressionMultiple FeaturesLinear regression with multiple variables is alse known as “multivariate linear regression“. NotationsWe now">
-<meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多变量线性回归">
 <meta property="og:url" content="https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Notes of Andrew Ng’s Machine Learning —— (3) Multivariate Linear RegressionMultiple FeaturesLinear regression with multiple variables is alse known as “multivariate linear regression“. NotationsWe now">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6ljh8xnnuj30g508ttam.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6mi7c257sj30eg07wt9v.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6mi84pb5bj30e807pjsd.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.525Z">
+<meta property="article:published_time" content="2019-09-05T17:11:21.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.358Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多变量线性回归">
-<meta name="twitter:description" content="Notes of Andrew Ng’s Machine Learning —— (3) Multivariate Linear RegressionMultiple FeaturesLinear regression with multiple variables is alse known as “multivariate linear regression“. NotationsWe now">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6ljh8xnnuj30g508ttam.jpg">
     
     
@@ -43,19 +43,23 @@
     <!-- title -->
     <title>多变量线性回归</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -73,7 +77,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -99,21 +103,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&text=多变量线性回归"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&is_video=false&description=多变量线性回归"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&text=多变量线性回归"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&is_video=false&description=多变量线性回归"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=多变量线性回归&body=Check out this article: https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&name=多变量线性回归&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&name=多变量线性回归&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-3-Multivariate-Linear-Regression"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (3) Multivariate Linear Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiple-Features"><span class="toc-number">1.1.</span> <span class="toc-text">Multiple Features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Notations"><span class="toc-number">1.1.1.</span> <span class="toc-text">Notations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hypothesis"><span class="toc-number">1.1.2.</span> <span class="toc-text">Hypothesis</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient-Descent-For-Multiple-Variables"><span class="toc-number">1.2.</span> <span class="toc-text">Gradient Descent For Multiple Variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-Scaling"><span class="toc-number">1.3.</span> <span class="toc-text">Feature Scaling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-scaling"><span class="toc-number">1.3.1.</span> <span class="toc-text">Feature scaling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean-normalization"><span class="toc-number">1.3.2.</span> <span class="toc-text">Mean normalization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement"><span class="toc-number">1.3.3.</span> <span class="toc-text">Implement</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#In-octave"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">In octave</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Learning-Rate"><span class="toc-number">1.4.</span> <span class="toc-text">Learning Rate</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Debugging-gradient-descent"><span class="toc-number">1.4.1.</span> <span class="toc-text">Debugging gradient descent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Automatic-convergence-test"><span class="toc-number">1.4.2.</span> <span class="toc-text">Automatic convergence test</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Making-sure-gradient-descent-is-working-correctly"><span class="toc-number">1.4.3.</span> <span class="toc-text">Making sure gradient descent is working correctly</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement-1"><span class="toc-number">1.4.4.</span> <span class="toc-text">Implement</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features-and-Polynomial-Regression"><span class="toc-number">1.5.</span> <span class="toc-text">Features and Polynomial Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine-Features"><span class="toc-number">1.5.1.</span> <span class="toc-text">Combine Features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Polynomial-Regression"><span class="toc-number">1.5.2.</span> <span class="toc-text">Polynomial Regression</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-3-Multivariate-Linear-Regression"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (3) Multivariate Linear Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiple-Features"><span class="toc-number">1.1.</span> <span class="toc-text">Multiple Features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Notations"><span class="toc-number">1.1.1.</span> <span class="toc-text">Notations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hypothesis"><span class="toc-number">1.1.2.</span> <span class="toc-text">Hypothesis</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient-Descent-For-Multiple-Variables"><span class="toc-number">1.2.</span> <span class="toc-text">Gradient Descent For Multiple Variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-Scaling"><span class="toc-number">1.3.</span> <span class="toc-text">Feature Scaling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-scaling"><span class="toc-number">1.3.1.</span> <span class="toc-text">Feature scaling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean-normalization"><span class="toc-number">1.3.2.</span> <span class="toc-text">Mean normalization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement"><span class="toc-number">1.3.3.</span> <span class="toc-text">Implement</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#In-octave"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">In octave</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Learning-Rate"><span class="toc-number">1.4.</span> <span class="toc-text">Learning Rate</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Debugging-gradient-descent"><span class="toc-number">1.4.1.</span> <span class="toc-text">Debugging gradient descent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Automatic-convergence-test"><span class="toc-number">1.4.2.</span> <span class="toc-text">Automatic convergence test</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Making-sure-gradient-descent-is-working-correctly"><span class="toc-number">1.4.3.</span> <span class="toc-text">Making sure gradient descent is working correctly</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement-1"><span class="toc-number">1.4.4.</span> <span class="toc-text">Implement</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features-and-Polynomial-Regression"><span class="toc-number">1.5.</span> <span class="toc-text">Features and Polynomial Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine-Features"><span class="toc-number">1.5.1.</span> <span class="toc-text">Combine Features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Polynomial-Regression"><span class="toc-number">1.5.2.</span> <span class="toc-text">Polynomial Regression</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -139,7 +143,7 @@
       
         <time datetime="2019-09-05T17:11:21.000Z" itemprop="datePublished">2019-09-05</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.525Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.358Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -155,7 +159,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>
+        <a class="tag-link-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a>
     </div>
 
 
@@ -211,7 +215,8 @@
 </ul>
 <p>For example, if $x_i$ represents housing prices with a range of 100 to 2000 and a mean value of 1000, then, $x_i := \dfrac{price-1000}{1900}$.</p>
 <h4 id="In-octave"><a href="#In-octave" class="headerlink" title="In octave"></a>In octave</h4><p>In octave, the function <code>mean</code> can offer us the avaerage of values for feature (i), when the function <code>std</code> gives us the standard deviation of values for feature (i). So we can program like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">function [X_norm, mu, sigma] = featureNormalize(X)</span><br><span class="line">%FEATURENORMALIZE Normalizes the features in X </span><br><span class="line">%   FEATURENORMALIZE(X) returns a normalized version of X where</span><br><span class="line">%   the mean value of each feature is 0 and the standard deviation</span><br><span class="line">%   is 1. This is often a good preprocessing step to do when</span><br><span class="line">%   working with learning algorithms.</span><br><span class="line"></span><br><span class="line">X_norm = X;</span><br><span class="line">mu = zeros(1, size(X, 2));</span><br><span class="line">sigma = zeros(1, size(X, 2));</span><br><span class="line"></span><br><span class="line">% Instructions: First, for each feature dimension, compute the mean</span><br><span class="line">%               of the feature and subtract it from the dataset,</span><br><span class="line">%               storing the mean value in mu. Next, compute the </span><br><span class="line">%               standard deviation of each feature and divide</span><br><span class="line">%               each feature by it&apos;s standard deviation, storing</span><br><span class="line">%               the standard deviation in sigma. </span><br><span class="line">%</span><br><span class="line">%               Note that X is a matrix where each column is a </span><br><span class="line">%               feature and each row is an example. You need </span><br><span class="line">%               to perform the normalization separately for </span><br><span class="line">%               each feature. </span><br><span class="line">%</span><br><span class="line"></span><br><span class="line">mu = mean(X);</span><br><span class="line">sigma = std(X);</span><br><span class="line">X_norm = (X - mu) ./ sigma;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">function [X_norm, mu, sigma] &#x3D; featureNormalize(X)</span><br><span class="line">%FEATURENORMALIZE Normalizes the features in X </span><br><span class="line">%   FEATURENORMALIZE(X) returns a normalized version of X where</span><br><span class="line">%   the mean value of each feature is 0 and the standard deviation</span><br><span class="line">%   is 1. This is often a good preprocessing step to do when</span><br><span class="line">%   working with learning algorithms.</span><br><span class="line"></span><br><span class="line">X_norm &#x3D; X;</span><br><span class="line">mu &#x3D; zeros(1, size(X, 2));</span><br><span class="line">sigma &#x3D; zeros(1, size(X, 2));</span><br><span class="line"></span><br><span class="line">% Instructions: First, for each feature dimension, compute the mean</span><br><span class="line">%               of the feature and subtract it from the dataset,</span><br><span class="line">%               storing the mean value in mu. Next, compute the </span><br><span class="line">%               standard deviation of each feature and divide</span><br><span class="line">%               each feature by it&#39;s standard deviation, storing</span><br><span class="line">%               the standard deviation in sigma. </span><br><span class="line">%</span><br><span class="line">%               Note that X is a matrix where each column is a </span><br><span class="line">%               feature and each row is an example. You need </span><br><span class="line">%               to perform the normalization separately for </span><br><span class="line">%               each feature. </span><br><span class="line">%</span><br><span class="line"></span><br><span class="line">mu &#x3D; mean(X);</span><br><span class="line">sigma &#x3D; std(X);</span><br><span class="line">X_norm &#x3D; (X - mu) .&#x2F; sigma;</span><br><span class="line"></span><br><span class="line">end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
 <h2 id="Learning-Rate"><a href="#Learning-Rate" class="headerlink" title="Learning Rate"></a>Learning Rate</h2><h3 id="Debugging-gradient-descent"><a href="#Debugging-gradient-descent" class="headerlink" title="Debugging gradient descent"></a>Debugging gradient descent</h3><p>Make a plot with <em>number of iterations</em> on the x-axis. Now plot the cost functiong $J(\theta)$ over the number of iterations of  gradient descent. If $J(\theta)$ ever increases, then you probably need to decrease learning rate $\alpha$.</p>
 <h3 id="Automatic-convergence-test"><a href="#Automatic-convergence-test" class="headerlink" title="Automatic convergence test"></a>Automatic convergence test</h3><p>Declare convergence if $J(\theta)$ decreases by less than $\epsilon$, where $\epsilon$ is some small value such as $10^{-3}$. However in practice it’s difficult to choose this threshold value.</p>
@@ -226,7 +231,6 @@
 <h3 id="Implement-1"><a href="#Implement-1" class="headerlink" title="Implement"></a>Implement</h3><p>We should try different $\alpha$ to find a fit one by drawing #iterations-J(θ) plots.</p>
 <p>E.g. To choose $\alpha$, try:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">... , 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, ...</span><br></pre></td></tr></table></figure>
-
 <h2 id="Features-and-Polynomial-Regression"><a href="#Features-and-Polynomial-Regression" class="headerlink" title="Features and Polynomial Regression"></a>Features and Polynomial Regression</h2><h3 id="Combine-Features"><a href="#Combine-Features" class="headerlink" title="Combine Features"></a>Combine Features</h3><p>We can improve our features and the form of our hypothesis function in a couple different ways.</p>
 <p>For example, we can <strong>combine</strong> multiple features into one, Such as combining $x_1$ and $x_2$ into a new feature $x_3$ by taking $x_1 \cdot x_2$.</p>
 <h3 id="Polynomial-Regression"><a href="#Polynomial-Regression" class="headerlink" title="Polynomial Regression"></a>Polynomial Regression</h3><p>To fit the data well, our hypothesis function may need to be non-linear. So we can <strong>change the behavior or curve</strong> of our hypothesis function by making it a quadratic, cubic or square root function (or any other form).</p>
@@ -265,7 +269,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -273,21 +277,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-3-Multivariate-Linear-Regression"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (3) Multivariate Linear Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiple-Features"><span class="toc-number">1.1.</span> <span class="toc-text">Multiple Features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Notations"><span class="toc-number">1.1.1.</span> <span class="toc-text">Notations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hypothesis"><span class="toc-number">1.1.2.</span> <span class="toc-text">Hypothesis</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient-Descent-For-Multiple-Variables"><span class="toc-number">1.2.</span> <span class="toc-text">Gradient Descent For Multiple Variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-Scaling"><span class="toc-number">1.3.</span> <span class="toc-text">Feature Scaling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-scaling"><span class="toc-number">1.3.1.</span> <span class="toc-text">Feature scaling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean-normalization"><span class="toc-number">1.3.2.</span> <span class="toc-text">Mean normalization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement"><span class="toc-number">1.3.3.</span> <span class="toc-text">Implement</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#In-octave"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">In octave</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Learning-Rate"><span class="toc-number">1.4.</span> <span class="toc-text">Learning Rate</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Debugging-gradient-descent"><span class="toc-number">1.4.1.</span> <span class="toc-text">Debugging gradient descent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Automatic-convergence-test"><span class="toc-number">1.4.2.</span> <span class="toc-text">Automatic convergence test</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Making-sure-gradient-descent-is-working-correctly"><span class="toc-number">1.4.3.</span> <span class="toc-text">Making sure gradient descent is working correctly</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement-1"><span class="toc-number">1.4.4.</span> <span class="toc-text">Implement</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features-and-Polynomial-Regression"><span class="toc-number">1.5.</span> <span class="toc-text">Features and Polynomial Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine-Features"><span class="toc-number">1.5.1.</span> <span class="toc-text">Combine Features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Polynomial-Regression"><span class="toc-number">1.5.2.</span> <span class="toc-text">Polynomial Regression</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-3-Multivariate-Linear-Regression"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (3) Multivariate Linear Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiple-Features"><span class="toc-number">1.1.</span> <span class="toc-text">Multiple Features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Notations"><span class="toc-number">1.1.1.</span> <span class="toc-text">Notations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hypothesis"><span class="toc-number">1.1.2.</span> <span class="toc-text">Hypothesis</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient-Descent-For-Multiple-Variables"><span class="toc-number">1.2.</span> <span class="toc-text">Gradient Descent For Multiple Variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-Scaling"><span class="toc-number">1.3.</span> <span class="toc-text">Feature Scaling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-scaling"><span class="toc-number">1.3.1.</span> <span class="toc-text">Feature scaling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean-normalization"><span class="toc-number">1.3.2.</span> <span class="toc-text">Mean normalization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement"><span class="toc-number">1.3.3.</span> <span class="toc-text">Implement</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#In-octave"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">In octave</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Learning-Rate"><span class="toc-number">1.4.</span> <span class="toc-text">Learning Rate</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Debugging-gradient-descent"><span class="toc-number">1.4.1.</span> <span class="toc-text">Debugging gradient descent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Automatic-convergence-test"><span class="toc-number">1.4.2.</span> <span class="toc-text">Automatic convergence test</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Making-sure-gradient-descent-is-working-correctly"><span class="toc-number">1.4.3.</span> <span class="toc-text">Making sure gradient descent is working correctly</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement-1"><span class="toc-number">1.4.4.</span> <span class="toc-text">Implement</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features-and-Polynomial-Regression"><span class="toc-number">1.5.</span> <span class="toc-text">Features and Polynomial Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Combine-Features"><span class="toc-number">1.5.1.</span> <span class="toc-text">Combine Features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Polynomial-Regression"><span class="toc-number">1.5.2.</span> <span class="toc-text">Polynomial Regression</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&text=多变量线性回归"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&is_video=false&description=多变量线性回归"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&text=多变量线性回归"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&is_video=false&description=多变量线性回归"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=多变量线性回归&body=Check out this article: https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&name=多变量线性回归&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&title=多变量线性回归"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/05/AndrewNgML/AndrewNg-MachineLearning-3-MultivariateLinearRegression/&name=多变量线性回归&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -317,7 +321,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -328,16 +332,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -358,7 +374,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

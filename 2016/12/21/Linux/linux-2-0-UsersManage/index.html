@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="用户管理 su：切换用户  123$ su [-]用户名    -   ：有则重启shell，重装$PATH（环境变量），pwd切换至用户名的$HOME（家目录）         无则不变 环境变量（检索命令的目录），pwd不变  用户名 ：缺省为 root 12345678[me@Example ~]$ su - root密码：[root@Example~]# whoamiroot[root@E">
-<meta name="keywords" content="Linux">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="用户管理 su：切换用户  123$ su [-]用户名    -   ：有则重启shell，重装$PATH（环境变量），pwd切换至用户名的$HOME（家目录）         无则不变 环境变量（检索命令的目录），pwd不变 用户名 ：缺省为 root 12345678[me@Example ~]$ su - root密码：[root@Example~]# whoamiroot[root@Ex">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux-2.0-用户管理">
 <meta property="og:url" content="https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="用户管理 su：切换用户  123$ su [-]用户名    -   ：有则重启shell，重装$PATH（环境变量），pwd切换至用户名的$HOME（家目录）         无则不变 环境变量（检索命令的目录），pwd不变  用户名 ：缺省为 root 12345678[me@Example ~]$ su - root密码：[root@Example~]# whoamiroot[root@E">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.533Z">
+<meta property="og:description" content="用户管理 su：切换用户  123$ su [-]用户名    -   ：有则重启shell，重装$PATH（环境变量），pwd切换至用户名的$HOME（家目录）         无则不变 环境变量（检索命令的目录），pwd不变 用户名 ：缺省为 root 12345678[me@Example ~]$ su - root密码：[root@Example~]# whoamiroot[root@Ex">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-12-21T14:26:02.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.366Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux-2.0-用户管理">
-<meta name="twitter:description" content="用户管理 su：切换用户  123$ su [-]用户名    -   ：有则重启shell，重装$PATH（环境变量），pwd切换至用户名的$HOME（家目录）         无则不变 环境变量（检索命令的目录），pwd不变  用户名 ：缺省为 root 12345678[me@Example ~]$ su - root密码：[root@Example~]# whoamiroot[root@E">
     
     
         
@@ -39,19 +39,23 @@
     <!-- title -->
     <title>linux-2.0-用户管理</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -69,7 +73,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -95,21 +99,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&text=linux-2.0-用户管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&is_video=false&description=linux-2.0-用户管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&text=linux-2.0-用户管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&is_video=false&description=linux-2.0-用户管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=linux-2.0-用户管理&body=Check out this article: https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&name=linux-2.0-用户管理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&name=linux-2.0-用户管理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户管理"><span class="toc-number">1.</span> <span class="toc-text">用户管理</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">用户管理</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +139,7 @@
       
         <time datetime="2016-12-21T14:26:02.000Z" itemprop="datePublished">2016-12-21</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.533Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.366Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -151,7 +155,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Linux/">Linux</a>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
     </div>
 
 
@@ -164,39 +168,33 @@
 <li><code>su</code>：切换用户</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ su [-]用户名</span><br><span class="line">    -   ：有则重启shell，重装$PATH（环境变量），pwd切换至用户名的$HOME（家目录）</span><br><span class="line">         无则不变 环境变量（检索命令的目录），pwd不变</span><br></pre></td></tr></table></figure>
-
 <p>用户名 ：缺省为 root</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[me@Example ~]$ su - root</span><br><span class="line">密码：</span><br><span class="line">[root@Example~]# whoami</span><br><span class="line">root</span><br><span class="line">[root@Example~]# exit</span><br><span class="line">logout</span><br><span class="line">[me@Example~]$ whoami</span><br><span class="line">me</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>passwd</code>：修改密码</li>
 </ul>
 <p>1⃣️ <em>普通用户：</em></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ passwd            修改当前用户密码</span><br></pre></td></tr></table></figure>
-
 <p>多按几个回车可取消退出</p>
 <p>对于root “too short”的密码重输也可以成功</p>
 <p>2⃣️ <em>root：</em></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># passwd username    修改某用户密码</span><br><span class="line"># passwd -S username    查看密码状态，【注意】S大写</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>新建，删除 用户</li>
 </ul>
 <ol>
 <li>useradd：新建用户：<code># useradd new_user_name</code></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Example ~]# useradd newone</span><br><span class="line">[root@Example ~]# passwd -S newone</span><br><span class="line">newone LK [2016-12-18 0 99999 7 -1](tel:2016-12-18 0 99999 7 -1)(密码已被锁定。)       # 说明密码未设定</span><br><span class="line">[root@Example ~]# passwd newone</span><br><span class="line">更改用户 newone 的密码 。</span><br><span class="line">新的 密码：             # 尝试键入一个弱口令</span><br><span class="line">无效的密码:  过于简单化/系统化        # 提示口令过于简单，但不阻止</span><br><span class="line">重新输入新的 密码:                   # 仍输入那个弱口令，可以成功，因为是root</span><br><span class="line">passwd： 所有的身份验证令牌已经成功更新。</span><br><span class="line"># 如果是普通用户，键入弱口令不可成。（不会叫“Retype“，而是“New“）</span><br><span class="line">[root@Example ~]# passwd -S newone</span><br><span class="line">newone PS [2016-12-18 0 99999 7 -1](tel:2016-12-18 0 99999 7 -1)(密码已设置，使用 SHA512 加密。</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Example ~]# useradd newone</span><br><span class="line">[root@Example ~]# passwd -S newone</span><br><span class="line">newone LK [2016-12-18 0 99999 7 -1](tel:2016-12-18 0 99999 7 -1)(密码已被锁定。)       # 说明密码未设定</span><br><span class="line">[root@Example ~]# passwd newone</span><br><span class="line">更改用户 newone 的密码 。</span><br><span class="line">新的 密码：             # 尝试键入一个弱口令</span><br><span class="line">无效的密码:  过于简单化&#x2F;系统化        # 提示口令过于简单，但不阻止</span><br><span class="line">重新输入新的 密码:                   # 仍输入那个弱口令，可以成功，因为是root</span><br><span class="line">passwd： 所有的身份验证令牌已经成功更新。</span><br><span class="line"># 如果是普通用户，键入弱口令不可成。（不会叫“Retype“，而是“New“）</span><br><span class="line">[root@Example ~]# passwd -S newone</span><br><span class="line">newone PS [2016-12-18 0 99999 7 -1](tel:2016-12-18 0 99999 7 -1)(密码已设置，使用 SHA512 加密。</span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>userdel：删除用户:  <code>userdel [-r] [-f] user_name</code></li>
 </ol>
 <p>​                <code>-r</code> ：同时删除用户的家目录</p>
 <p>​                        无’-r’时，家目录不会被删除</p>
 <p>​                <code>-f</code> ：强行删除，哪怕用户已登录，这个选项有些危险，会使系统进入不一致状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Example ~]# userdel -r newone</span><br><span class="line">userdel: user newone is currently used by process 3848    # 用户正登录，删除失败</span><br><span class="line">[root@Example ~]# userdel -fr newone                        #用 -f 强行删除</span><br><span class="line">userdel: user newone is currently used by process 3848    # 说明用户正登录，但命令本身已经成功</span><br><span class="line"># 这时虽然还被删user还是登入、活跃状态，但已经被删除，登出后不可再登入</span><br><span class="line"></span><br><span class="line">--------------------</span><br><span class="line"></span><br><span class="line">[newone@Example ~]$ exit                                    #退出用户</span><br><span class="line">logout</span><br><span class="line"></span><br><span class="line">--------------------</span><br><span class="line"></span><br><span class="line">[root@Example ~]# userdel -r newone</span><br><span class="line">userdel：用户“newone”不存在                            #再作尝试时，确定用户已被之前的 -f 删除</span><br><span class="line">[root@Example ~]# ls /home</span><br><span class="line">c  lost+found                                        #家目录被 -r 删除</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Example ~]# userdel -r newone</span><br><span class="line">userdel: user newone is currently used by process 3848    # 用户正登录，删除失败</span><br><span class="line">[root@Example ~]# userdel -fr newone                        #用 -f 强行删除</span><br><span class="line">userdel: user newone is currently used by process 3848    # 说明用户正登录，但命令本身已经成功</span><br><span class="line"># 这时虽然还被删user还是登入、活跃状态，但已经被删除，登出后不可再登入</span><br><span class="line"></span><br><span class="line">--------------------</span><br><span class="line"></span><br><span class="line">[newone@Example ~]$ exit                                    #退出用户</span><br><span class="line">logout</span><br><span class="line"></span><br><span class="line">--------------------</span><br><span class="line"></span><br><span class="line">[root@Example ~]# userdel -r newone</span><br><span class="line">userdel：用户“newone”不存在                            #再作尝试时，确定用户已被之前的 -f 删除</span><br><span class="line">[root@Example ~]# ls &#x2F;home</span><br><span class="line">c  lost+found                                        #家目录被 -r 删除</span><br></pre></td></tr></table></figure>
 <p>参考：</p>
-<p><a href="https://www.linuxidc.com/Linux/2016-05/131755.htm" target="_blank" rel="noopener">https://www.linuxidc.com/Linux/2016-05/131755.htm</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.linuxidc.com/Linux/2016-05/131755.htm">https://www.linuxidc.com/Linux/2016-05/131755.htm</a></p>
 
   </div>
 </article>
@@ -226,7 +224,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -234,21 +232,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用户管理"><span class="toc-number">1.</span> <span class="toc-text">用户管理</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">用户管理</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&text=linux-2.0-用户管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&is_video=false&description=linux-2.0-用户管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&text=linux-2.0-用户管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&is_video=false&description=linux-2.0-用户管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=linux-2.0-用户管理&body=Check out this article: https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&name=linux-2.0-用户管理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&title=linux-2.0-用户管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2016/12/21/Linux/linux-2-0-UsersManage/&name=linux-2.0-用户管理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -278,7 +276,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -289,16 +287,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -319,7 +329,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

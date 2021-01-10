@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Deep Learning with Python这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，当我完成所以文章后，会在 GitHub 发布我写的所有  Jupyter notebooks。 你可以在这个网址在线阅读这本书的">
-<meta name="keywords" content="Machine Learning,Deep Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python深度学习之机器学习基础">
-<meta property="og:url" content="https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/index.html">
+<meta property="og:url" content="https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Deep Learning with Python这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，当我完成所以文章后，会在 GitHub 发布我写的所有  Jupyter notebooks。 你可以在这个网址在线阅读这本书的">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggkhlemz7cj31io0k0n02.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggki8sc8x0j31os0u0q90.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggkzvwdlyaj30vc0u0jwu.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggl4f43cguj31iy0dc77b.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglyp8zx9jj31jc0iiq75.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.525Z">
+<meta property="article:published_time" content="2020-07-10T16:59:15.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.358Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Machine Learning">
+<meta property="article:tag" content="Deep Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python深度学习之机器学习基础">
-<meta name="twitter:description" content="Deep Learning with Python这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，当我完成所以文章后，会在 GitHub 发布我写的所有  Jupyter notebooks。 你可以在这个网址在线阅读这本书的">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggkhlemz7cj31io0k0n02.jpg">
     
     
@@ -45,19 +46,23 @@
     <!-- title -->
     <title>Python深度学习之机器学习基础</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -75,7 +80,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -88,7 +93,7 @@
         <li><a class="icon" href="/2020/07/26/blog/GitHub-Actions-Hexo-CI-CD/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2020/07/08/DeepLearningWithPython/Deep-Learning with-Python-ch3/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/07/08/DeepLearningWithPython/Deep-Learning%20with-Python-ch3/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -101,21 +106,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&text=Python深度学习之机器学习基础"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&is_video=false&description=Python深度学习之机器学习基础"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Python深度学习之机器学习基础&body=Check out this article: https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&name=Python深度学习之机器学习基础&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&text=Python深度学习之机器学习基础"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&is_video=false&description=Python深度学习之机器学习基础"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python深度学习之机器学习基础&body=Check out this article: https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&name=Python深度学习之机器学习基础&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Deep-Learning-with-Python"><span class="toc-number">1.</span> <span class="toc-text">Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的四个分支"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习的四个分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习模型评估"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习模型评估</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#训练集、验证集和测试集"><span class="toc-number">1.2.1.</span> <span class="toc-text">训练集、验证集和测试集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简单留出验证"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">简单留出验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#K折验证"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">K折验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带有打乱数据的重复K折验证"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">带有打乱数据的重复K折验证</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#划分时的注意事项"><span class="toc-number">1.2.2.</span> <span class="toc-text">划分时的注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据预处理、特征工程和特征学习"><span class="toc-number">1.3.</span> <span class="toc-text">数据预处理、特征工程和特征学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据预处理"><span class="toc-number">1.3.1.</span> <span class="toc-text">数据预处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特征工程"><span class="toc-number">1.3.2.</span> <span class="toc-text">特征工程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过拟合和欠拟合"><span class="toc-number">1.4.</span> <span class="toc-text">过拟合和欠拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增加训练数据"><span class="toc-number">1.4.1.</span> <span class="toc-text">增加训练数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减小网络大小"><span class="toc-number">1.4.2.</span> <span class="toc-text">减小网络大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加权重正则化"><span class="toc-number">1.4.3.</span> <span class="toc-text">添加权重正则化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加-dropout"><span class="toc-number">1.4.4.</span> <span class="toc-text">添加 dropout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的通用工作流程"><span class="toc-number">1.5.</span> <span class="toc-text">机器学习的通用工作流程</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Deep-Learning-with-Python"><span class="toc-number">1.</span> <span class="toc-text">Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%88%86%E6%94%AF"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习的四个分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习模型评估</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E9%9B%86%E3%80%81%E9%AA%8C%E8%AF%81%E9%9B%86%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86"><span class="toc-number">1.2.1.</span> <span class="toc-text">训练集、验证集和测试集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%95%99%E5%87%BA%E9%AA%8C%E8%AF%81"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">简单留出验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#K%E6%8A%98%E9%AA%8C%E8%AF%81"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">K折验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A6%E6%9C%89%E6%89%93%E4%B9%B1%E6%95%B0%E6%8D%AE%E7%9A%84%E9%87%8D%E5%A4%8DK%E6%8A%98%E9%AA%8C%E8%AF%81"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">带有打乱数据的重复K折验证</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%92%E5%88%86%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.2.2.</span> <span class="toc-text">划分时的注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86%E3%80%81%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E5%92%8C%E7%89%B9%E5%BE%81%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.3.</span> <span class="toc-text">数据预处理、特征工程和特征学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">1.3.1.</span> <span class="toc-text">数据预处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">特征工程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%E5%92%8C%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="toc-number">1.4.</span> <span class="toc-text">过拟合和欠拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE"><span class="toc-number">1.4.1.</span> <span class="toc-text">增加训练数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%8F%E7%BD%91%E7%BB%9C%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.4.2.</span> <span class="toc-text">减小网络大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%9D%83%E9%87%8D%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-number">1.4.3.</span> <span class="toc-text">添加权重正则化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0-dropout"><span class="toc-number">1.4.4.</span> <span class="toc-text">添加 dropout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%80%9A%E7%94%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">机器学习的通用工作流程</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -141,7 +146,7 @@
       
         <time datetime="2020-07-10T16:59:15.000Z" itemprop="datePublished">2020-07-10</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.525Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.358Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -157,7 +162,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Deep-Learning/">Deep Learning</a>, <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>
+        <a class="tag-link-link" href="/tags/Deep-Learning/" rel="tag">Deep Learning</a>, <a class="tag-link-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a>
     </div>
 
 
@@ -167,8 +172,8 @@
 
   <div class="content" itemprop="articleBody">
     <h1 id="Deep-Learning-with-Python"><a href="#Deep-Learning-with-Python" class="headerlink" title="Deep Learning with Python"></a>Deep Learning with Python</h1><p>这篇文章是我学习《Deep Learning with Python》(第二版，François Chollet 著) 时写的系列笔记之一。文章的内容是从  Jupyter notebooks 转成 Markdown 的，当我完成所以文章后，会在 GitHub 发布我写的所有  Jupyter notebooks。</p>
-<p>你可以在这个网址在线阅读这本书的正版原文(英文)：<a href="https://livebook.manning.com/book/deep-learning-with-python" target="_blank" rel="noopener">https://livebook.manning.com/book/deep-learning-with-python</a></p>
-<p>这本书的作者也给出了一套 Jupyter notebooks：<a href="https://github.com/fchollet/deep-learning-with-python-notebooks" target="_blank" rel="noopener">https://github.com/fchollet/deep-learning-with-python-notebooks</a></p>
+<p>你可以在这个网址在线阅读这本书的正版原文(英文)：<a target="_blank" rel="noopener" href="https://livebook.manning.com/book/deep-learning-with-python">https://livebook.manning.com/book/deep-learning-with-python</a></p>
+<p>这本书的作者也给出了一套 Jupyter notebooks：<a target="_blank" rel="noopener" href="https://github.com/fchollet/deep-learning-with-python-notebooks">https://github.com/fchollet/deep-learning-with-python-notebooks</a></p>
 <hr>
 <p>本文为 <strong>第4章 机器学习基础</strong> (Chapter 4. Fundamentals of machine learning) 的笔记整合。</p>
 <p>本文目录：</p>
@@ -200,7 +205,6 @@
 <p>可用的数据多的时候才能用这个。不然数据少了，分出来的验证集就太小，不够一般，效果不好。</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggkhlemz7cj31io0k0n02.jpg" alt="简单留出验证的示意图"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hold-out validation</span></span><br><span class="line"></span><br><span class="line">num_validation_samples = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line">np.random.shuffle(data)    <span class="comment"># 洗牌，打乱数据</span></span><br><span class="line"></span><br><span class="line">validation_data = data[:num_validation_samples]    <span class="comment">#定义验证集</span></span><br><span class="line">data = data[num_validation_samples:]</span><br><span class="line"></span><br><span class="line">training_data = data[:]    <span class="comment"># 定义训练集</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在训练集训练模型，在验证集评估</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(training_data)</span><br><span class="line">validation_score = model.evaluate(validation_data)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 然后这里可以根据结果调整模型，</span></span><br><span class="line"><span class="comment">## 然后重新训练、评估，然后再次调整...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在调整好超参数之后，用除了测试集的所有数据来训练最终模型</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(np.concatenate([training_data, validation_data]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用测试集来评估最终模型</span></span><br><span class="line">test_score = model.evaluate(test_data)</span><br></pre></td></tr></table></figure>
-
 <h4 id="K折验证"><a href="#K折验证" class="headerlink" title="K折验证"></a>K折验证</h4><blockquote>
 <p>K-FOLD VALIDATION</p>
 </blockquote>
@@ -208,16 +212,14 @@
 <p>这种方法对不同的训练、验证集划分对结果影响比较大时会很有效（比如数据比较少的时候）</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggki8sc8x0j31os0u0q90.jpg" alt="K折验证示意图"></p>
 <p>emmm，我觉得这个图有点问题，应该除了那些灰色的是 Validation，白的应该都是 Training。（中文译本上就是这种）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># K-fold cross-validation</span></span><br><span class="line"></span><br><span class="line">k = <span class="number">4</span></span><br><span class="line">num_validation_samples = len(data) // k</span><br><span class="line"></span><br><span class="line">np.random.shuffle(data)</span><br><span class="line"></span><br><span class="line">validation_scores = []</span><br><span class="line"><span class="keyword">for</span> fold <span class="keyword">in</span> range(k):</span><br><span class="line">    <span class="comment"># 选择验证集</span></span><br><span class="line">    validation_data = data[num_validation_samples * fold:</span><br><span class="line">                           num_validation_samples * (fold + <span class="number">1</span>)]</span><br><span class="line">    <span class="comment"># 用剩下的做训练集</span></span><br><span class="line">    training_data = data[:num_validation_samples * fold] + </span><br><span class="line">                    data[num_validation_samples * (fold + <span class="number">1</span>):]</span><br><span class="line">    </span><br><span class="line">    model = get_model()    <span class="comment"># 注意是用个全新的模型</span></span><br><span class="line">    </span><br><span class="line">    model.train(training_data)</span><br><span class="line">    </span><br><span class="line">    validation_score = model.evaluate(validation_data)</span><br><span class="line">    validation_scores.append(validation_score)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 总的验证值是所有的平均</span></span><br><span class="line">validation_score = np.average(validation_scores)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后根据结果做各种超参数调整啦</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后在除了测试集的所有数据上训练</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(data)</span><br><span class="line">test_score = model.evaluate(test_data)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># K-fold cross-validation</span></span><br><span class="line"></span><br><span class="line">k = <span class="number">4</span></span><br><span class="line">num_validation_samples = <span class="built_in">len</span>(data) // k</span><br><span class="line"></span><br><span class="line">np.random.shuffle(data)</span><br><span class="line"></span><br><span class="line">validation_scores = []</span><br><span class="line"><span class="keyword">for</span> fold <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">    <span class="comment"># 选择验证集</span></span><br><span class="line">    validation_data = data[num_validation_samples * fold:</span><br><span class="line">                           num_validation_samples * (fold + <span class="number">1</span>)]</span><br><span class="line">    <span class="comment"># 用剩下的做训练集</span></span><br><span class="line">    training_data = data[:num_validation_samples * fold] + </span><br><span class="line">                    data[num_validation_samples * (fold + <span class="number">1</span>):]</span><br><span class="line">    </span><br><span class="line">    model = get_model()    <span class="comment"># 注意是用个全新的模型</span></span><br><span class="line">    </span><br><span class="line">    model.train(training_data)</span><br><span class="line">    </span><br><span class="line">    validation_score = model.evaluate(validation_data)</span><br><span class="line">    validation_scores.append(validation_score)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 总的验证值是所有的平均</span></span><br><span class="line">validation_score = np.average(validation_scores)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后根据结果做各种超参数调整啦</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后在除了测试集的所有数据上训练</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(data)</span><br><span class="line">test_score = model.evaluate(test_data)</span><br></pre></td></tr></table></figure>
 <h4 id="带有打乱数据的重复K折验证"><a href="#带有打乱数据的重复K折验证" class="headerlink" title="带有打乱数据的重复K折验证"></a>带有打乱数据的重复K折验证</h4><blockquote>
 <p>ITERATED K-FOLD VALIDATION WITH SHUFFLING</p>
 </blockquote>
 <p>就是重复跑 P 次 K折验证，每次开始前洗牌。</p>
 <p>这个是数据比较少，又要求尽可能精确的时候用的。要跑 P*K 次，所以比较耗时。</p>
 <p>书上没给这个的代码，就是在 K折 的基础上再加一层循环：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ITERATED K-FOLD VALIDATION WITH SHUFFLING</span></span><br><span class="line"></span><br><span class="line">p = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">k = <span class="number">4</span></span><br><span class="line">num_validation_samples = len(data) // k</span><br><span class="line"></span><br><span class="line">total_validation_scores = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(p):</span><br><span class="line">    np.random.shuffle(data)</span><br><span class="line">    </span><br><span class="line">    validation_scores = []</span><br><span class="line">    <span class="keyword">for</span> fold <span class="keyword">in</span> range(k):</span><br><span class="line">        <span class="comment"># <span class="doctag">TODO:</span> K折验证的那堆代码</span></span><br><span class="line">    </span><br><span class="line">    validation_score = np.average(validation_scores)</span><br><span class="line">    total_validation_scores.append(validation_score)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 总的验证值是所有的平均</span></span><br><span class="line">validation_score = np.average(total_validation_scores)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后根据结果做各种超参数调整啦</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后在除了测试集的所有数据上训练</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(data)</span><br><span class="line">test_score = model.evaluate(test_data)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ITERATED K-FOLD VALIDATION WITH SHUFFLING</span></span><br><span class="line"></span><br><span class="line">p = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">k = <span class="number">4</span></span><br><span class="line">num_validation_samples = <span class="built_in">len</span>(data) // k</span><br><span class="line"></span><br><span class="line">total_validation_scores = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(p):</span><br><span class="line">    np.random.shuffle(data)</span><br><span class="line">    </span><br><span class="line">    validation_scores = []</span><br><span class="line">    <span class="keyword">for</span> fold <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">        <span class="comment"># <span class="doctag">TODO:</span> K折验证的那堆代码</span></span><br><span class="line">    </span><br><span class="line">    validation_score = np.average(validation_scores)</span><br><span class="line">    total_validation_scores.append(validation_score)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 总的验证值是所有的平均</span></span><br><span class="line">validation_score = np.average(total_validation_scores)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后根据结果做各种超参数调整啦</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后在除了测试集的所有数据上训练</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(data)</span><br><span class="line">test_score = model.evaluate(test_data)</span><br></pre></td></tr></table></figure>
 <h3 id="划分时的注意事项"><a href="#划分时的注意事项" class="headerlink" title="划分时的注意事项"></a>划分时的注意事项</h3><ul>
 <li><strong>数据代表性</strong>：训练集和测试集都要可以代表所有数据。比如做数字识别，不能训练集里只有 0～7，测试集里全是 8～9。做这种之前要把所有数据随机洗牌打乱，然后再分训练集和测试集。</li>
 <li><strong>时间箭头</strong>：如果是那种做跟时间有关的预测（给过去的，预测未来的），开始之前<strong>不要打乱数据</strong>，要保持数据的时间顺序（打乱了会时间泄露，就是模型从“未来”学习了），并且测试集的数据要晚于训练集。</li>
@@ -238,7 +240,6 @@
 </ol>
 <p>如果严格一点（但不是必须的），我们可以把数据里的特征分别处理成平均值为 0，标准差为 1 的。用 Numpy 搞这个很简单：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># x 是二维的：(samples, features)</span></span><br><span class="line">x -= x.mean(axis=<span class="number">0</span>)</span><br><span class="line">x /= x.std(axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
 <ol start="3">
 <li>HANDLING MISSING VALUES 缺失值处理：一般来说，只要 0 不是有意义的值，就可以用 0 来代替缺失值。网络可以学会 0 是缺失的这种意思的。还有如果你的测试集是有缺失情况的，但训练集没有，就要手动加些人工数据去让网络学会缺失情况。</li>
 </ol>
@@ -246,8 +247,7 @@
 <p>我们的机器学习模型一般不能从任意的真实数据里面高效地自动学习，所以我们需要特征工程。特征工程的本质就是用更简单的方式表达问题，从而使问题变得更容易解决。</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggkzvwdlyaj30vc0u0jwu.jpg" alt="特征工程示意图"></p>
 <p>特征工程在深度学习之前都至关重要，浅层的学习一般都没有足够的假设空间去自己学习出关键的特征。但现在我们用深度学习可以免去大多数的特征工程了，深度学习可以自己从数据里学出有用的特征来，但是利用特征工程，我们的深度学习过程可以更加优雅、高效。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Clown0te(<span class="string">"防盗文爬:)虫的追踪标签，读者不必在意"</span>).by(CDFMLR)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Clown0te(<span class="string">&quot;防盗文爬:)虫的追踪标签，读者不必在意&quot;</span>).by(CDFMLR)</span><br></pre></td></tr></table></figure>
 <h2 id="过拟合和欠拟合"><a href="#过拟合和欠拟合" class="headerlink" title="过拟合和欠拟合"></a>过拟合和欠拟合</h2><blockquote>
 <p>4.4 Overfitting and underfitting</p>
 </blockquote>
@@ -266,8 +266,7 @@
 <li>L2 regularization：添加与权重系数的平方值成正比的值（权重的 L2 范数，the L2 norm of the weights），在神经网络中，L2 正则化也叫权重衰减(weight decay)。</li>
 </ul>
 <p>在 Keras 里，添加权重正则化可以通过在层里传一个权重正则化实例来实现：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> regularizers</span><br><span class="line"></span><br><span class="line">model = models.Sequential()</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, kernel_regularizer=regularizers.l2(<span class="number">0.001</span>), </span><br><span class="line">                       activation=<span class="string">'relu'</span>, input_shape=(<span class="number">10000</span>,)))</span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, kernel_regularizer=regularizers.l2(<span class="number">0.001</span>),</span><br><span class="line">                       activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>))</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> regularizers</span><br><span class="line"></span><br><span class="line">model = models.Sequential()</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, kernel_regularizer=regularizers.l2(<span class="number">0.001</span>), </span><br><span class="line">                       activation=<span class="string">&#x27;relu&#x27;</span>, input_shape=(<span class="number">10000</span>,)))</span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, kernel_regularizer=regularizers.l2(<span class="number">0.001</span>),</span><br><span class="line">                       activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">&#x27;sigmoid&#x27;</span>))</span><br></pre></td></tr></table></figure>
 <p><code>regularizers.l2(0.001)</code> 的意思是在损失函数中添加一项惩罚 <code>0.001 * weight_coefficient_value</code>。这个东西只在训练的时候被添加，在用测试集评估的时候不会生效，所以你看到的训练时的损失值要远大于测试时的。</p>
 <p>这里也可以把 L2 换成用 L1：<code>regularizers.l1(0.001)</code>，或者 L1、L2 同时上：<code>regularizers.l1_l2(l1=0.001, l2=0.001)</code>。</p>
 <h3 id="添加-dropout"><a href="#添加-dropout" class="headerlink" title="添加 dropout"></a>添加 dropout</h3><p>对于神经网络的正则化，Dropout 其实才是是最常用、有效的方法。</p>
@@ -276,19 +275,15 @@
 <p>这里有一个 dropout rate，表示把多少比例的特征置为0，这个比例通常取 0.2~0.5。还有，在测试的时候不 dropout 啊，但测试时的输出要按照 dropout rate 来缩小，以平衡测试和训练时的结果。</p>
 <p>也就是说，比如我们搞一个 dropout rate 为 0.5 的，即在训练的时候扔一半：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># training case</span></span><br><span class="line">layer_output *= np.random.randint(<span class="number">0</span>, high=<span class="number">2</span>, size=layer_output.shape)</span><br></pre></td></tr></table></figure>
-
 <p>然后测试的时候，相应的缩小50%：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># testing case</span></span><br><span class="line">layer_output *= <span class="number">0.5</span></span><br></pre></td></tr></table></figure>
-
 <p>但通常，我们不是在测试的时候缩小；而是在训练的时候扩大，然后测试的时候就不用动了：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># training case</span></span><br><span class="line">layer_output *= np.random.randint(<span class="number">0</span>, high=<span class="number">2</span>, size=layer_output.shape)</span><br><span class="line">layer_output /= <span class="number">0.5</span></span><br></pre></td></tr></table></figure>
-
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggl4f43cguj31iy0dc77b.jpg" alt="训练时对激活矩阵使用 dropout，并在训练时成比例增大。测试时激活矩阵保持不变"></p>
 <p>在 Keras 里，我们可以通过添加 Dropout 层来实现这个东西：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.add(layers.Dropout(<span class="number">0.5</span>))</span><br></pre></td></tr></table></figure>
-
 <p>例如，我们在我们 IMDB 的网络里面加上 Dropout：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = models.Sequential()</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, activation=<span class="string">'relu'</span>, input_shape=(<span class="number">10000</span>,)))</span><br><span class="line">model.add(layers.Dropout(<span class="number">0.5</span>))</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.Dropout(<span class="number">0.5</span>))</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = models.Sequential()</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, activation=<span class="string">&#x27;relu&#x27;</span>, input_shape=(<span class="number">10000</span>,)))</span><br><span class="line">model.add(layers.Dropout(<span class="number">0.5</span>))</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model.add(layers.Dropout(<span class="number">0.5</span>))</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">&#x27;sigmoid&#x27;</span>))</span><br></pre></td></tr></table></figure>
 
 <h2 id="机器学习的通用工作流程"><a href="#机器学习的通用工作流程" class="headerlink" title="机器学习的通用工作流程"></a>机器学习的通用工作流程</h2><blockquote>
 <p>4.5 The universal workflow of machine learning</p>
@@ -341,7 +336,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -349,21 +344,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Deep-Learning-with-Python"><span class="toc-number">1.</span> <span class="toc-text">Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的四个分支"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习的四个分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习模型评估"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习模型评估</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#训练集、验证集和测试集"><span class="toc-number">1.2.1.</span> <span class="toc-text">训练集、验证集和测试集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简单留出验证"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">简单留出验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#K折验证"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">K折验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带有打乱数据的重复K折验证"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">带有打乱数据的重复K折验证</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#划分时的注意事项"><span class="toc-number">1.2.2.</span> <span class="toc-text">划分时的注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据预处理、特征工程和特征学习"><span class="toc-number">1.3.</span> <span class="toc-text">数据预处理、特征工程和特征学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据预处理"><span class="toc-number">1.3.1.</span> <span class="toc-text">数据预处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特征工程"><span class="toc-number">1.3.2.</span> <span class="toc-text">特征工程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过拟合和欠拟合"><span class="toc-number">1.4.</span> <span class="toc-text">过拟合和欠拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增加训练数据"><span class="toc-number">1.4.1.</span> <span class="toc-text">增加训练数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减小网络大小"><span class="toc-number">1.4.2.</span> <span class="toc-text">减小网络大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加权重正则化"><span class="toc-number">1.4.3.</span> <span class="toc-text">添加权重正则化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加-dropout"><span class="toc-number">1.4.4.</span> <span class="toc-text">添加 dropout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的通用工作流程"><span class="toc-number">1.5.</span> <span class="toc-text">机器学习的通用工作流程</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Deep-Learning-with-Python"><span class="toc-number">1.</span> <span class="toc-text">Deep Learning with Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%88%86%E6%94%AF"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习的四个分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习模型评估</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E9%9B%86%E3%80%81%E9%AA%8C%E8%AF%81%E9%9B%86%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86"><span class="toc-number">1.2.1.</span> <span class="toc-text">训练集、验证集和测试集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%95%99%E5%87%BA%E9%AA%8C%E8%AF%81"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">简单留出验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#K%E6%8A%98%E9%AA%8C%E8%AF%81"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">K折验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A6%E6%9C%89%E6%89%93%E4%B9%B1%E6%95%B0%E6%8D%AE%E7%9A%84%E9%87%8D%E5%A4%8DK%E6%8A%98%E9%AA%8C%E8%AF%81"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">带有打乱数据的重复K折验证</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%92%E5%88%86%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.2.2.</span> <span class="toc-text">划分时的注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86%E3%80%81%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E5%92%8C%E7%89%B9%E5%BE%81%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.3.</span> <span class="toc-text">数据预处理、特征工程和特征学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">1.3.1.</span> <span class="toc-text">数据预处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">特征工程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%E5%92%8C%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="toc-number">1.4.</span> <span class="toc-text">过拟合和欠拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE"><span class="toc-number">1.4.1.</span> <span class="toc-text">增加训练数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%8F%E7%BD%91%E7%BB%9C%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.4.2.</span> <span class="toc-text">减小网络大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%9D%83%E9%87%8D%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-number">1.4.3.</span> <span class="toc-text">添加权重正则化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0-dropout"><span class="toc-number">1.4.4.</span> <span class="toc-text">添加 dropout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%80%9A%E7%94%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">机器学习的通用工作流程</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&text=Python深度学习之机器学习基础"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&is_video=false&description=Python深度学习之机器学习基础"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Python深度学习之机器学习基础&body=Check out this article: https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning with-Python-ch4/&name=Python深度学习之机器学习基础&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&text=Python深度学习之机器学习基础"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&is_video=false&description=Python深度学习之机器学习基础"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python深度学习之机器学习基础&body=Check out this article: https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&title=Python深度学习之机器学习基础"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/07/10/DeepLearningWithPython/Deep-Learning%20with-Python-ch4/&name=Python深度学习之机器学习基础&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -393,7 +388,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -404,16 +399,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -434,7 +441,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

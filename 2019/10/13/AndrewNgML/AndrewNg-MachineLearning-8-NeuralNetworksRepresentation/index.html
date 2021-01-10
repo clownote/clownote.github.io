@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Notes of Andrew Ng’s Machine Learning —— (8) Neural Networks: RepresentationModel RepresentationLet’s examine how we will represent a hypothesis function using neural networks. At a very simple level,">
-<meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="神经网络的描述">
 <meta property="og:url" content="https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Notes of Andrew Ng’s Machine Learning —— (8) Neural Networks: RepresentationModel RepresentationLet’s examine how we will represent a hypothesis function using neural networks. At a very simple level,">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g7qukjiuo1j308h04d0sv.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g7qukcx6wij30gb07raaw.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g7vfhtjp3aj30hb09h40o.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g7vhuzddrnj30h309en0f.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g7vhzbeut9j308u02w3yn.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.525Z">
+<meta property="article:published_time" content="2019-10-13T11:09:05.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.358Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="神经网络的描述">
-<meta name="twitter:description" content="Notes of Andrew Ng’s Machine Learning —— (8) Neural Networks: RepresentationModel RepresentationLet’s examine how we will represent a hypothesis function using neural networks. At a very simple level,">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g7qukjiuo1j308h04d0sv.jpg">
     
     
@@ -45,19 +45,23 @@
     <!-- title -->
     <title>神经网络的描述</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -75,7 +79,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -101,21 +105,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&text=神经网络的描述"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&is_video=false&description=神经网络的描述"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&text=神经网络的描述"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&is_video=false&description=神经网络的描述"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=神经网络的描述&body=Check out this article: https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&name=神经网络的描述&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&name=神经网络的描述&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-8-Neural-Networks-Representation"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (8) Neural Networks: Representation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Model-Representation"><span class="toc-number">1.1.</span> <span class="toc-text">Model Representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Examples-and-Intuitions"><span class="toc-number">1.2.</span> <span class="toc-text">Examples and Intuitions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Neural-Network-for-XNOR"><span class="toc-number">1.2.1.</span> <span class="toc-text">A Neural Network for XNOR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiclass-Classification"><span class="toc-number">1.3.</span> <span class="toc-text">Multiclass Classification</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-8-Neural-Networks-Representation"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (8) Neural Networks: Representation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Model-Representation"><span class="toc-number">1.1.</span> <span class="toc-text">Model Representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Examples-and-Intuitions"><span class="toc-number">1.2.</span> <span class="toc-text">Examples and Intuitions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Neural-Network-for-XNOR"><span class="toc-number">1.2.1.</span> <span class="toc-text">A Neural Network for XNOR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiclass-Classification"><span class="toc-number">1.3.</span> <span class="toc-text">Multiclass Classification</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -141,7 +145,7 @@
       
         <time datetime="2019-10-13T11:09:05.000Z" itemprop="datePublished">2019-10-13</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.525Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.358Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -157,7 +161,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>
+        <a class="tag-link-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a>
     </div>
 
 
@@ -220,7 +224,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -228,21 +232,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-8-Neural-Networks-Representation"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (8) Neural Networks: Representation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Model-Representation"><span class="toc-number">1.1.</span> <span class="toc-text">Model Representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Examples-and-Intuitions"><span class="toc-number">1.2.</span> <span class="toc-text">Examples and Intuitions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Neural-Network-for-XNOR"><span class="toc-number">1.2.1.</span> <span class="toc-text">A Neural Network for XNOR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiclass-Classification"><span class="toc-number">1.3.</span> <span class="toc-text">Multiclass Classification</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-8-Neural-Networks-Representation"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (8) Neural Networks: Representation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Model-Representation"><span class="toc-number">1.1.</span> <span class="toc-text">Model Representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Examples-and-Intuitions"><span class="toc-number">1.2.</span> <span class="toc-text">Examples and Intuitions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Neural-Network-for-XNOR"><span class="toc-number">1.2.1.</span> <span class="toc-text">A Neural Network for XNOR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiclass-Classification"><span class="toc-number">1.3.</span> <span class="toc-text">Multiclass Classification</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&text=神经网络的描述"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&is_video=false&description=神经网络的描述"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&text=神经网络的描述"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&is_video=false&description=神经网络的描述"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=神经网络的描述&body=Check out this article: https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&name=神经网络的描述&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&title=神经网络的描述"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/10/13/AndrewNgML/AndrewNg-MachineLearning-8-NeuralNetworksRepresentation/&name=神经网络的描述&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -272,7 +276,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -283,16 +287,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -313,7 +329,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Notes of Andrew Ng’s Machine Learning —— (14) Dimensionality ReductionMotivationData CompressionDimensionality reduction is another type of unsupervised learning problem. There are a couple of differe">
-<meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="维数约减">
 <meta property="og:url" content="https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Notes of Andrew Ng’s Machine Learning —— (14) Dimensionality ReductionMotivationData CompressionDimensionality reduction is another type of unsupervised learning problem. There are a couple of differe">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pbajmgl3j30mt0byq68.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g8pbaeml8oj30p30brgt7.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pd8wo33nj30po0dbn3e.jpg">
@@ -22,10 +21,11 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g8pksu0z5nj30nu07mn1t.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8plgct2i6j31iy0oywjp.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g8ta88gafkj30oz0djaeo.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.525Z">
+<meta property="article:published_time" content="2019-11-13T16:50:27.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.358Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="维数约减">
-<meta name="twitter:description" content="Notes of Andrew Ng’s Machine Learning —— (14) Dimensionality ReductionMotivationData CompressionDimensionality reduction is another type of unsupervised learning problem. There are a couple of differe">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pbajmgl3j30mt0byq68.jpg">
     
     
@@ -48,19 +48,23 @@
     <!-- title -->
     <title>维数约减</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -78,7 +82,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -104,21 +108,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&text=维数约减"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&is_video=false&description=维数约减"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&text=维数约减"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&is_video=false&description=维数约减"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=维数约减&body=Check out this article: https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&name=维数约减&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&name=维数约减&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-14-Dimensionality-Reduction"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (14) Dimensionality Reduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation"><span class="toc-number">1.1.</span> <span class="toc-text">Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Compression"><span class="toc-number">1.1.1.</span> <span class="toc-text">Data Compression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Visualization"><span class="toc-number">1.1.2.</span> <span class="toc-text">Data Visualization</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Principal-Component-Analysis"><span class="toc-number">1.2.</span> <span class="toc-text">Principal Component Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-problem-formulation"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">PCA problem formulation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-Algorithm"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">PCA Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Data-preprocessing"><span class="toc-number">1.2.0.2.1.</span> <span class="toc-text">Data preprocessing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Reduce-data-from-n-dimensions-to-k-dimensions"><span class="toc-number">1.2.0.2.2.</span> <span class="toc-text">Reduce data from $n$-dimensions to $k$-dimensions</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applying-PCA"><span class="toc-number">1.3.</span> <span class="toc-text">Applying PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reconstruction-from-Compressed-Representation"><span class="toc-number">1.3.1.</span> <span class="toc-text">Reconstruction from Compressed Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Choosing-the-k-number-of-principal-components"><span class="toc-number">1.3.2.</span> <span class="toc-text">Choosing the $k$ (number of principal components)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advice-for-Applying-PCA"><span class="toc-number">1.3.3.</span> <span class="toc-text">Advice for Applying PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Supervised-Learning-speedup"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">Supervised Learning speedup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Application-of-PCA"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">Application of PCA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bad-use-of-PCA-To-prevent-overfitting"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">Bad use of PCA: To prevent overfitting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-or-not"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">PCA or not</span></a></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-14-Dimensionality-Reduction"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (14) Dimensionality Reduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation"><span class="toc-number">1.1.</span> <span class="toc-text">Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Compression"><span class="toc-number">1.1.1.</span> <span class="toc-text">Data Compression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Visualization"><span class="toc-number">1.1.2.</span> <span class="toc-text">Data Visualization</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Principal-Component-Analysis"><span class="toc-number">1.2.</span> <span class="toc-text">Principal Component Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-problem-formulation"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">PCA problem formulation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-Algorithm"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">PCA Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Data-preprocessing"><span class="toc-number">1.2.0.2.1.</span> <span class="toc-text">Data preprocessing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Reduce-data-from-n-dimensions-to-k-dimensions"><span class="toc-number">1.2.0.2.2.</span> <span class="toc-text">Reduce data from $n$-dimensions to $k$-dimensions</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applying-PCA"><span class="toc-number">1.3.</span> <span class="toc-text">Applying PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reconstruction-from-Compressed-Representation"><span class="toc-number">1.3.1.</span> <span class="toc-text">Reconstruction from Compressed Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Choosing-the-k-number-of-principal-components"><span class="toc-number">1.3.2.</span> <span class="toc-text">Choosing the $k$ (number of principal components)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advice-for-Applying-PCA"><span class="toc-number">1.3.3.</span> <span class="toc-text">Advice for Applying PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Supervised-Learning-speedup"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">Supervised Learning speedup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Application-of-PCA"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">Application of PCA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bad-use-of-PCA-To-prevent-overfitting"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">Bad use of PCA: To prevent overfitting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-or-not"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">PCA or not</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -144,7 +148,7 @@
       
         <time datetime="2019-11-13T16:50:27.000Z" itemprop="datePublished">2019-11-13</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.525Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.358Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -160,7 +164,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>
+        <a class="tag-link-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a>
     </div>
 
 
@@ -211,8 +215,7 @@
 <li><p>Compute <code>convariance matrix</code> (notated a big Sigma, notice that it’s different from a sum notation):<br>$$<br>\Sigma = \frac{1}{m}\sum_{i=1}^n(x^{(i)})(x^{(i)})^T<br>$$</p>
 </li>
 <li><p>Compute <code>eigenvectors</code> of matrix $\Sigma$:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[U, S, V] = svd(Sigma);</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[U, S, V] &#x3D; svd(Sigma);</span><br></pre></td></tr></table></figure></li>
 <li><p>Get from <code>svd</code>:<br>$$<br>U = \left[\begin{array}{cccc}<br>| &amp; | &amp;  &amp; |\<br>u^{(1)} &amp; u^{(2)} &amp; \cdots &amp; u^{(n)}\<br>| &amp; | &amp;  &amp; |<br>\end{array}\right]<br>\in \R^{n\times n}<br>\Rightarrow<br>U_{reduce}=\left[\begin{array}{cccc}<br>| &amp; | &amp;  &amp; |\<br>u^{(1)} &amp; u^{(2)} &amp; \cdots &amp; u^{(k)}\<br>| &amp; | &amp;  &amp; |<br>\end{array}\right]<br>$$</p>
 </li>
 <li><p>Make $x\in\R^n\to z\in\R^k$:<br>$$<br>z = U_{reduce}^Tx<br>=\left[\begin{array}{ccc}<br>– &amp; (u^{(1)})^T &amp; –\<br> &amp; \vdots &amp; \<br>– &amp; (u^{(k)})^T &amp; –\<br>\end{array}\right]x<br>$$</p>
@@ -221,8 +224,7 @@
 <p>This does do the right thing of minimizing this square projection error although the  mathematical proof of that is beyond the scope of this course.</p>
 <p>Summary:</p>
 <p>After mean normalization (ensure every feature has zero mean) and optionally feature scaling:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Sigma = 1/m * X&apos; * X;</span><br><span class="line">[U, S, V] = svd(Sigma);</span><br><span class="line"></span><br><span class="line">Ureduce = U(:, 1:K);</span><br><span class="line">Z = X * Ureduce;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Sigma &#x3D; 1&#x2F;m * X&#39; * X;</span><br><span class="line">[U, S, V] &#x3D; svd(Sigma);</span><br><span class="line"></span><br><span class="line">Ureduce &#x3D; U(:, 1:K);</span><br><span class="line">Z &#x3D; X * Ureduce;</span><br></pre></td></tr></table></figure>
 <h2 id="Applying-PCA"><a href="#Applying-PCA" class="headerlink" title="Applying PCA"></a>Applying PCA</h2><h3 id="Reconstruction-from-Compressed-Representation"><a href="#Reconstruction-from-Compressed-Representation" class="headerlink" title="Reconstruction from Compressed Representation"></a>Reconstruction from Compressed Representation</h3><p>With PCA, we compressed data from n-dimension to a lower k-dimension. There should be a way to go back from the compressed representation to an approximation of our original high-dimensional data. We call this way <em>reconstruction</em>.</p>
 <p>Recall that our PCA is working as $z= U_{reduce}^Tx$.</p>
 <p>To reconstruction, what we will do is:<br>$$<br>x_{approx}=U_{reduce}z<br>$$<br>It makes $z\in\R^k \to x_{approx}\in\R^n$. The $x_{approx}$ will be close to $x$, but we can hardly expect $x=x_{approx}$.</p>
@@ -312,7 +314,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -320,21 +322,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-14-Dimensionality-Reduction"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (14) Dimensionality Reduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation"><span class="toc-number">1.1.</span> <span class="toc-text">Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Compression"><span class="toc-number">1.1.1.</span> <span class="toc-text">Data Compression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Visualization"><span class="toc-number">1.1.2.</span> <span class="toc-text">Data Visualization</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Principal-Component-Analysis"><span class="toc-number">1.2.</span> <span class="toc-text">Principal Component Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-problem-formulation"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">PCA problem formulation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-Algorithm"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">PCA Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Data-preprocessing"><span class="toc-number">1.2.0.2.1.</span> <span class="toc-text">Data preprocessing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Reduce-data-from-n-dimensions-to-k-dimensions"><span class="toc-number">1.2.0.2.2.</span> <span class="toc-text">Reduce data from $n$-dimensions to $k$-dimensions</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applying-PCA"><span class="toc-number">1.3.</span> <span class="toc-text">Applying PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reconstruction-from-Compressed-Representation"><span class="toc-number">1.3.1.</span> <span class="toc-text">Reconstruction from Compressed Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Choosing-the-k-number-of-principal-components"><span class="toc-number">1.3.2.</span> <span class="toc-text">Choosing the $k$ (number of principal components)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advice-for-Applying-PCA"><span class="toc-number">1.3.3.</span> <span class="toc-text">Advice for Applying PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Supervised-Learning-speedup"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">Supervised Learning speedup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Application-of-PCA"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">Application of PCA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bad-use-of-PCA-To-prevent-overfitting"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">Bad use of PCA: To prevent overfitting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-or-not"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">PCA or not</span></a></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-14-Dimensionality-Reduction"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (14) Dimensionality Reduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation"><span class="toc-number">1.1.</span> <span class="toc-text">Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Compression"><span class="toc-number">1.1.1.</span> <span class="toc-text">Data Compression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Visualization"><span class="toc-number">1.1.2.</span> <span class="toc-text">Data Visualization</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Principal-Component-Analysis"><span class="toc-number">1.2.</span> <span class="toc-text">Principal Component Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-problem-formulation"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">PCA problem formulation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-Algorithm"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">PCA Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Data-preprocessing"><span class="toc-number">1.2.0.2.1.</span> <span class="toc-text">Data preprocessing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Reduce-data-from-n-dimensions-to-k-dimensions"><span class="toc-number">1.2.0.2.2.</span> <span class="toc-text">Reduce data from $n$-dimensions to $k$-dimensions</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applying-PCA"><span class="toc-number">1.3.</span> <span class="toc-text">Applying PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reconstruction-from-Compressed-Representation"><span class="toc-number">1.3.1.</span> <span class="toc-text">Reconstruction from Compressed Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Choosing-the-k-number-of-principal-components"><span class="toc-number">1.3.2.</span> <span class="toc-text">Choosing the $k$ (number of principal components)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advice-for-Applying-PCA"><span class="toc-number">1.3.3.</span> <span class="toc-text">Advice for Applying PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Supervised-Learning-speedup"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">Supervised Learning speedup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Application-of-PCA"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">Application of PCA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bad-use-of-PCA-To-prevent-overfitting"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">Bad use of PCA: To prevent overfitting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA-or-not"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">PCA or not</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&text=维数约减"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&is_video=false&description=维数约减"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&text=维数约减"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&is_video=false&description=维数约减"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=维数约减&body=Check out this article: https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&name=维数约减&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&title=维数约减"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/11/13/AndrewNgML/AndrewNg-MachineLearning-14-DimensionalityReduction/&name=维数约减&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -364,7 +366,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -375,16 +377,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -405,7 +419,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

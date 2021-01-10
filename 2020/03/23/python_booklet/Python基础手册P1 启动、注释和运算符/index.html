@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Python基础手册P1 启动、注释和运算符[TOC] 开始之前我很长时间之前就打算写一个系列的文章，以一个非初学者的视角讨论 Python 基础。 从入门到进阶的初学者指南很多，有的写的也相当出色，比如我自己入门学习的廖雪峰老师的Python教程。说实话，要在这些入门教程中再添一笔，不是件容易的事，我也无心研究编程入门教学。 我希望的是，整理一下 Python 基础，并少量对照源码，通过自己的研">
-<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python基础手册P1 启动、注释和运算符">
-<meta property="og:url" content="https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/index.html">
+<meta property="og:url" content="https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Python基础手册P1 启动、注释和运算符[TOC] 开始之前我很长时间之前就打算写一个系列的文章，以一个非初学者的视角讨论 Python 基础。 从入门到进阶的初学者指南很多，有的写的也相当出色，比如我自己入门学习的廖雪峰老师的Python教程。说实话，要在这些入门教程中再添一笔，不是件容易的事，我也无心研究编程入门教学。 我希望的是，整理一下 Python 基础，并少量对照源码，通过自己的研">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.549Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-23T14:55:09.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.378Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python基础手册P1 启动、注释和运算符">
-<meta name="twitter:description" content="Python基础手册P1 启动、注释和运算符[TOC] 开始之前我很长时间之前就打算写一个系列的文章，以一个非初学者的视角讨论 Python 基础。 从入门到进阶的初学者指南很多，有的写的也相当出色，比如我自己入门学习的廖雪峰老师的Python教程。说实话，要在这些入门教程中再添一笔，不是件容易的事，我也无心研究编程入门教学。 我希望的是，整理一下 Python 基础，并少量对照源码，通过自己的研">
     
     
         
@@ -39,19 +39,23 @@
     <!-- title -->
     <title>Python基础手册P1 启动、注释和运算符</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -69,7 +73,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -95,21 +99,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&text=Python基础手册P1 启动、注释和运算符"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&is_video=false&description=Python基础手册P1 启动、注释和运算符"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Python基础手册P1 启动、注释和运算符&body=Check out this article: https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&name=Python基础手册P1 启动、注释和运算符&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&text=Python基础手册P1 启动、注释和运算符"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&is_video=false&description=Python基础手册P1 启动、注释和运算符"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python基础手册P1 启动、注释和运算符&body=Check out this article: https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&name=Python基础手册P1 启动、注释和运算符&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python基础手册P1-启动、注释和运算符"><span class="toc-number">1.</span> <span class="toc-text">Python基础手册P1 启动、注释和运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开始之前"><span class="toc-number">1.1.</span> <span class="toc-text">开始之前</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python解释器"><span class="toc-number">1.2.</span> <span class="toc-text">Python解释器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动"><span class="toc-number">1.2.1.</span> <span class="toc-text">启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#退出"><span class="toc-number">1.2.2.</span> <span class="toc-text">退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令行参数传递"><span class="toc-number">1.2.3.</span> <span class="toc-text">命令行参数传递</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定源程序编码"><span class="toc-number">1.2.4.</span> <span class="toc-text">指定源程序编码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python注释"><span class="toc-number">1.3.</span> <span class="toc-text">Python注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python基本运算符"><span class="toc-number">1.4.</span> <span class="toc-text">Python基本运算符</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1-%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">Python基础手册P1 启动、注释和运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D"><span class="toc-number">1.1.</span> <span class="toc-text">开始之前</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">Python解释器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%80%E5%87%BA"><span class="toc-number">1.2.2.</span> <span class="toc-text">退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-number">1.2.3.</span> <span class="toc-text">命令行参数传递</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E6%BA%90%E7%A8%8B%E5%BA%8F%E7%BC%96%E7%A0%81"><span class="toc-number">1.2.4.</span> <span class="toc-text">指定源程序编码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E6%B3%A8%E9%87%8A"><span class="toc-number">1.3.</span> <span class="toc-text">Python注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.4.</span> <span class="toc-text">Python基本运算符</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +139,7 @@
       
         <time datetime="2020-03-23T14:55:09.000Z" itemprop="datePublished">2020-03-23</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.549Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.378Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -144,14 +148,14 @@
       
     <div class="article-category">
         <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/Python/">Python</a> › <a class="category-link" href="/categories/Python/基础手册/">基础手册</a>
+        <a class="category-link" href="/categories/Python/">Python</a> › <a class="category-link" href="/categories/Python/%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8C/">基础手册</a>
     </div>
 
 
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Python/">Python</a>
+        <a class="tag-link-link" href="/tags/Python/" rel="tag">Python</a>
     </div>
 
 
@@ -167,7 +171,7 @@
 <p>这个系列暂定名为《Python基础手册》。这更像是一本给自己的 Python 操作手册，一本 My version 的 Python Cookbook。</p>
 <p>看看基础，写写实例，读读源码，再作成笔记，希望助更多学习 Python 的朋友一臂之力。</p>
 <hr>
-<p>既然不是面向初学者，那就需要读者有一定的基础。比如，在阅读本文前，您应该懂得命令行的使用，如果这方面的知识您有所欠缺，我推荐学习 Zed A. Shaw 的《命令行快速入门》（您可以在 <a href="https://learnpythonthehardway.org/book/appendixa.html" target="_blank" rel="noopener">Zed A. Shaw 的网站</a> 上阅读这一内容）。</p>
+<p>既然不是面向初学者，那就需要读者有一定的基础。比如，在阅读本文前，您应该懂得命令行的使用，如果这方面的知识您有所欠缺，我推荐学习 Zed A. Shaw 的《命令行快速入门》（您可以在 <a target="_blank" rel="noopener" href="https://learnpythonthehardway.org/book/appendixa.html">Zed A. Shaw 的网站</a> 上阅读这一内容）。</p>
 <p>（你大可不看。我尝试过很多办法力荐身边的朋友（那些惯用Windows的朋友）使用命令行，但都基本无效。我现在不想再做这件事了，既然有人可以忍受不会使用命令行而带来的不便，那我也不好说什么。毕竟，我会使用命令行，用的不好，但足够应付我遇到的问题，而你不会命令行，麻烦的不是我。在享受命令行的强大的同时，冷眼嘲讽那些看着视窗，对于“从特定文件中提取特定的字段来批量重命名数百个文件”这样的简单入门级命令行任务无从下手、只好开始百度“一键批量重命名神器.exe下载”的典型***也是一件令人愉悦的事）</p>
 <p>哈哈，言重了，其实 Python 也可以相当优雅的完成这个任务，有机会的话，我会在以后的文章中介绍如何用 Python 解决这些琐事。但这需要我们现在先来看一看 Python 到底怎么用👇👇👇</p>
 <h2 id="Python解释器"><a href="#Python解释器" class="headerlink" title="Python解释器"></a>Python解释器</h2><p>你知道 Python 是解释型语言啦，所以有一个叫 Python 解释器的东西啦。我们写的 Python 代码就是通过解释器运行起来的。</p>
@@ -188,23 +192,18 @@
 <h3 id="命令行参数传递"><a href="#命令行参数传递" class="headerlink" title="命令行参数传递"></a>命令行参数传递</h3><p>调用解释器时，脚本名和附加参数传入一个名为 <code>sys.argv</code> 的字符串列表，这类似于C语言main函数的 <code>char *argv[]</code>。</p>
 <p>取用 <code>sys.argv</code> 前要 <code>import sys</code>。</p>
 <p>关于 argv 的行为，我们借用C/C++的 switch-case 语句的形式来讨论：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (输入命令) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"$ python"</span>: </span><br><span class="line">        <span class="comment">// sys.argv 有一个元素：sys.argv[0] 此时为空字符串</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"$ python -"</span>:</span><br><span class="line">        <span class="comment">// sys.argv[0] 被设定为 '-'</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"$ python -c command [arg] ..."</span>:</span><br><span class="line">        <span class="comment">// sys.argv[0] 被设定为 '-c'</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"$ python -m module [arg] ..."</span>:</span><br><span class="line">        <span class="comment">// sys.argv[0] 被设定为指定模块的全名</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">注意C/C++的这个语句switch后面括号内的“表达式”必须是整数类型！</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (输入命令) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;$ python&quot;</span>: </span><br><span class="line">        <span class="comment">// sys.argv 有一个元素：sys.argv[0] 此时为空字符串</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;$ python -&quot;</span>:</span><br><span class="line">        <span class="comment">// sys.argv[0] 被设定为 &#x27;-&#x27;</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;$ python -c command [arg] ...&quot;</span>:</span><br><span class="line">        <span class="comment">// sys.argv[0] 被设定为 &#x27;-c&#x27;</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;$ python -m module [arg] ...&quot;</span>:</span><br><span class="line">        <span class="comment">// sys.argv[0] 被设定为指定模块的全名</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">注意C/C++的这个语句switch后面括号内的“表达式”必须是整数类型！</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 <p>⚠️【注意】：<code>-c</code> 指令 或者 <code>-m</code> 模块 之后的参数不会被 Python 解释器的选项处理机制所截获，而是留在 <code>sys.argv</code> 中，供脚本命令操作。<br>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ python3 -i -c &apos;import sys&apos; 1 2 3</span><br><span class="line">&gt;&gt;&gt; sys.argv</span><br><span class="line">[&apos;-c&apos;, &apos;1&apos;, &apos;2&apos;, &apos;3&apos;]</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ python3 -i -c &#39;import sys&#39; 1 2 3</span><br><span class="line">&gt;&gt;&gt; sys.argv</span><br><span class="line">[&#39;-c&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;]</span><br></pre></td></tr></table></figure>
 <h3 id="指定源程序编码"><a href="#指定源程序编码" class="headerlink" title="指定源程序编码"></a>指定源程序编码</h3><p>默认情况下，Python 源文件是 UTF-8 编码。<br>在 <code>#!</code> 行（首行）后插入至少一行特殊的注释行来定义源文件的编码:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: encoding -*-</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://docs.python.org/3/library/codecs.html#module-codecs" target="_blank" rel="noopener">可用的 encoding 列表</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/codecs.html#module-codecs">可用的 encoding 列表</a></p>
 <p>⚠️【注意】如果使用 Microsoft Windows 自带的 记事本（‘Notepad’）进行 python 源码的编辑，注意使用 <code>utf-8 without BOM</code> 编码！</p>
 <h2 id="Python注释"><a href="#Python注释" class="headerlink" title="Python注释"></a>Python注释</h2><p>没有人会否认注释的重要性。在开始讨论其他语法之前，我们有必要看一看注释怎么写。</p>
 <p>Python 中的注释以 <code>#</code> 字符起始，直至实际的行尾(physical line, 表示实际的换行而非编辑器的自动换行)。<br>注释可以从行首开始，也可以在空白或代码之后，但是不出现在字符串中。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是一个注释</span></span><br></pre></td></tr></table></figure>
-
 <p>写文档注释的时候，我们常借用多行字符串：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(a)</span>:</span></span><br><span class="line">    <span class="string">"""函数func是用来干什么的</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    详细行为描述...</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">    	a: 参数a是什么</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    	返回值是什么</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cls</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""类的总结</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    详细行为描述...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Attributes:</span></span><br><span class="line"><span class="string">        a: 属性a的说明</span></span><br><span class="line"><span class="string">        b: 属性b的说明</span></span><br><span class="line"><span class="string">    """</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">a</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;函数func是用来干什么的</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    详细行为描述...</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">    	a: 参数a是什么</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    	返回值是什么</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cls</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;类的总结</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    详细行为描述...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Attributes:</span></span><br><span class="line"><span class="string">        a: 属性a的说明</span></span><br><span class="line"><span class="string">        b: 属性b的说明</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 <p>【注】关于文档注释，我们会在本系列后面的【Python代码风格】一文中详细介绍。</p>
 <h2 id="Python基本运算符"><a href="#Python基本运算符" class="headerlink" title="Python基本运算符"></a>Python基本运算符</h2><p>计算机，如其名，是计算的好手！既然编程语言是人类和计算机沟通的语言，那这些语言就应该可以方便简介地让计算机算起来——从加减乘除开始。Python 的加减乘除运算我们都很熟悉，基本就是我们在小学数学中看到的那些写法：</p>
 <table>
@@ -224,7 +223,7 @@
 </tr>
 <tr>
 <td><code>//</code></td>
-<td>除运输，返回结果取整(<a href="https://zh.wikipedia.org/wiki/%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">floor, 向下取整</a>)后的整数</td>
+<td>除运输，返回结果取整(<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8F%96%E6%95%B4%E5%87%BD%E6%95%B0">floor, 向下取整</a>)后的整数</td>
 </tr>
 <tr>
 <td><code>%</code></td>
@@ -253,8 +252,7 @@
 <li>交互模式中，最近一个表达式的值赋给变量 <code>_</code>。</li>
 <li>浮点数有完整的支持；整数和浮点数的混合计算中，整数会被转换为浮点数。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = <span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">NameError: name <span class="string">'c'</span> <span class="keyword">is</span> <span class="keyword">not</span> defined</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a + b</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>_ + <span class="number">3</span>    <span class="comment"># (3) + 3</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = _ * <span class="number">2</span>    <span class="comment"># c = (6) * 2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = <span class="number">0.3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a + d</span><br><span class="line"><span class="number">1.3</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = <span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">NameError: name <span class="string">&#x27;c&#x27;</span> <span class="keyword">is</span> <span class="keyword">not</span> defined</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a + b</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>_ + <span class="number">3</span>    <span class="comment"># (3) + 3</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = _ * <span class="number">2</span>    <span class="comment"># c = (6) * 2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = <span class="number">0.3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a + d</span><br><span class="line"><span class="number">1.3</span></span><br></pre></td></tr></table></figure>
 <p>对于整数类型，你还可以像 C 一样，做位运算：</p>
 <table>
 <thead>
@@ -320,7 +318,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -328,21 +326,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python基础手册P1-启动、注释和运算符"><span class="toc-number">1.</span> <span class="toc-text">Python基础手册P1 启动、注释和运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开始之前"><span class="toc-number">1.1.</span> <span class="toc-text">开始之前</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python解释器"><span class="toc-number">1.2.</span> <span class="toc-text">Python解释器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动"><span class="toc-number">1.2.1.</span> <span class="toc-text">启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#退出"><span class="toc-number">1.2.2.</span> <span class="toc-text">退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令行参数传递"><span class="toc-number">1.2.3.</span> <span class="toc-text">命令行参数传递</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定源程序编码"><span class="toc-number">1.2.4.</span> <span class="toc-text">指定源程序编码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python注释"><span class="toc-number">1.3.</span> <span class="toc-text">Python注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python基本运算符"><span class="toc-number">1.4.</span> <span class="toc-text">Python基本运算符</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1-%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">Python基础手册P1 启动、注释和运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D"><span class="toc-number">1.1.</span> <span class="toc-text">开始之前</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">Python解释器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%80%E5%87%BA"><span class="toc-number">1.2.2.</span> <span class="toc-text">退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-number">1.2.3.</span> <span class="toc-text">命令行参数传递</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E6%BA%90%E7%A8%8B%E5%BA%8F%E7%BC%96%E7%A0%81"><span class="toc-number">1.2.4.</span> <span class="toc-text">指定源程序编码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E6%B3%A8%E9%87%8A"><span class="toc-number">1.3.</span> <span class="toc-text">Python注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.4.</span> <span class="toc-text">Python基本运算符</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&text=Python基础手册P1 启动、注释和运算符"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&is_video=false&description=Python基础手册P1 启动、注释和运算符"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Python基础手册P1 启动、注释和运算符&body=Check out this article: https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/03/23/python_booklet/Python基础手册P1 启动、注释和运算符/&name=Python基础手册P1 启动、注释和运算符&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&text=Python基础手册P1 启动、注释和运算符"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&is_video=false&description=Python基础手册P1 启动、注释和运算符"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python基础手册P1 启动、注释和运算符&body=Check out this article: https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&title=Python基础手册P1 启动、注释和运算符"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2020/03/23/python_booklet/Python%E5%9F%BA%E7%A1%80%E6%89%8B%E5%86%8CP1%20%E5%90%AF%E5%8A%A8%E3%80%81%E6%B3%A8%E9%87%8A%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/&name=Python基础手册P1 启动、注释和运算符&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -372,7 +370,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -383,16 +381,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -413,7 +423,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Notes of Andrew Ng’s Machine Learning —— (6) ClassificationIntro of ClassificationClassification problems are something like giving a patient with a tumor, we have to predict whether the tumor is mali">
-<meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分类问题">
 <meta property="og:url" content="https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Notes of Andrew Ng’s Machine Learning —— (6) ClassificationIntro of ClassificationClassification problems are something like giving a patient with a tumor, we have to predict whether the tumor is mali">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g72ld52460j30ur0g8ta7.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g72ng9ovwsj306e04u74d.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g72niix9vaj30m20cin2i.jpg">
@@ -21,10 +20,11 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g757sf5lm8j30f504w3zi.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g758q7xincj31lc0mq76b.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g78nj8fvy4j30d507agmp.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.525Z">
+<meta property="article:published_time" content="2019-09-24T16:03:36.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.358Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分类问题">
-<meta name="twitter:description" content="Notes of Andrew Ng’s Machine Learning —— (6) ClassificationIntro of ClassificationClassification problems are something like giving a patient with a tumor, we have to predict whether the tumor is mali">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g72ld52460j30ur0g8ta7.jpg">
     
     
@@ -47,19 +47,23 @@
     <!-- title -->
     <title>分类问题</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -77,7 +81,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -103,21 +107,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&text=分类问题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&is_video=false&description=分类问题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&text=分类问题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&is_video=false&description=分类问题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=分类问题&body=Check out this article: https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&name=分类问题&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&name=分类问题&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-6-Classification"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (6) Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro-of-Classification"><span class="toc-number">1.1.</span> <span class="toc-text">Intro of Classification</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Logistic-Regression"><span class="toc-number">1.2.</span> <span class="toc-text">Logistic Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hypothesis-Representation"><span class="toc-number">1.2.1.</span> <span class="toc-text">Hypothesis Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decision-Boundary"><span class="toc-number">1.2.2.</span> <span class="toc-text">Decision Boundary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logistic-Regression-Model"><span class="toc-number">1.2.3.</span> <span class="toc-text">Logistic Regression Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cost-Function"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">Cost Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Simplified-Cost-Function"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">Simplified Cost Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Gradient-Descent"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">Gradient Descent</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Advanced-Optimization"><span class="toc-number">1.3.</span> <span class="toc-text">Advanced Optimization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiclass-Classification"><span class="toc-number">1.4.</span> <span class="toc-text">Multiclass Classification</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-6-Classification"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (6) Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro-of-Classification"><span class="toc-number">1.1.</span> <span class="toc-text">Intro of Classification</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Logistic-Regression"><span class="toc-number">1.2.</span> <span class="toc-text">Logistic Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hypothesis-Representation"><span class="toc-number">1.2.1.</span> <span class="toc-text">Hypothesis Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decision-Boundary"><span class="toc-number">1.2.2.</span> <span class="toc-text">Decision Boundary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logistic-Regression-Model"><span class="toc-number">1.2.3.</span> <span class="toc-text">Logistic Regression Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cost-Function"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">Cost Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Simplified-Cost-Function"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">Simplified Cost Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Gradient-Descent"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">Gradient Descent</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Advanced-Optimization"><span class="toc-number">1.3.</span> <span class="toc-text">Advanced Optimization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiclass-Classification"><span class="toc-number">1.4.</span> <span class="toc-text">Multiclass Classification</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -143,7 +147,7 @@
       
         <time datetime="2019-09-24T16:03:36.000Z" itemprop="datePublished">2019-09-24</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.525Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.358Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -159,7 +163,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>
+        <a class="tag-link-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a>
     </div>
 
 
@@ -205,11 +209,9 @@
 <p>We are not suggest to write these more sophisticated algorithms ourself but use the libraries instead, as they’re already tested and highly optimized. Octave provides them.</p>
 <p>We can use octave’s <code>fminunc()</code> optimization algorithm to do that.</p>
 <p>To use this advanced optimization, we first need to provide a function that evaluates the following two functions for a given inpuit value $\theta$:<br>$$<br>J(\theta), \qquad \frac{\partial}{\partial\theta_j}J(\theta)<br>$$<br>We can write a single function that retunrs both of these:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function [jVal, gradient] = costFunction(theta)</span><br><span class="line">	jVal = &lt;code to compute J(theta)&gt;</span><br><span class="line">	gradient = &lt;code to compute derivative of J(theta)&gt;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function [jVal, gradient] &#x3D; costFunction(theta)</span><br><span class="line">	jVal &#x3D; &lt;code to compute J(theta)&gt;</span><br><span class="line">	gradient &#x3D; &lt;code to compute derivative of J(theta)&gt;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <p>Then we are going to set a <code>optimset</code> and a initial theta as well, then send them to <code>fminunc()</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">options = optimset(&apos;GradObj&apos;, &apos;on&apos;, &apos;MaxIter&apos;, 100);</span><br><span class="line">initialTheta = zeros(2, 1);</span><br><span class="line"></span><br><span class="line">[optTheta, functionVal, exitFlag] = fminunc(@costFunction, initialTheta, options);</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">options &#x3D; optimset(&#39;GradObj&#39;, &#39;on&#39;, &#39;MaxIter&#39;, 100);</span><br><span class="line">initialTheta &#x3D; zeros(2, 1);</span><br><span class="line"></span><br><span class="line">[optTheta, functionVal, exitFlag] &#x3D; fminunc(@costFunction, initialTheta, options);</span><br></pre></td></tr></table></figure>
 <h2 id="Multiclass-Classification"><a href="#Multiclass-Classification" class="headerlink" title="Multiclass Classification"></a>Multiclass Classification</h2><p>Now we will approach the classification of data when we have more than two categories. Instead of $y={0,1}$ we will expand our definition so that $y={0,1…n}$.</p>
 <p>Since $y={0,1…n}$, we divide our problem into $n+1$ ($+1$ because the index starts at $0$) binary classification problems; in each one, we predict the probability that ‘$y$’ is a member of one of our classes.<br>$$<br>\begin{array}{l}<br>y \in {0,1,\cdots,n}\\<br>h_\theta^{(0)}(x)=P(y=0|x;\theta)\<br>h_\theta^{(0)}(x)=P(y=0|x;\theta)\<br>\vdots\<br>h_\theta^{(0)}(x)=P(y=0|x;\theta)\\<br>prediction = \mathop{max}\limits_{\theta}\big(h_\theta^{(i)}(x)\big)<br>\end{array}<br>$$<br>We are basically choosing one class and then lumping all the others into a single second class. We do this repeatedly, applying binary logistic regression to each case, and then use the hypothesis that returned the highest value as our prediction.</p>
 <p>The following image shows how one could classify 3 classes:</p>
@@ -245,7 +247,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -253,21 +255,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-6-Classification"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (6) Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro-of-Classification"><span class="toc-number">1.1.</span> <span class="toc-text">Intro of Classification</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Logistic-Regression"><span class="toc-number">1.2.</span> <span class="toc-text">Logistic Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hypothesis-Representation"><span class="toc-number">1.2.1.</span> <span class="toc-text">Hypothesis Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decision-Boundary"><span class="toc-number">1.2.2.</span> <span class="toc-text">Decision Boundary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logistic-Regression-Model"><span class="toc-number">1.2.3.</span> <span class="toc-text">Logistic Regression Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cost-Function"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">Cost Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Simplified-Cost-Function"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">Simplified Cost Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Gradient-Descent"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">Gradient Descent</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Advanced-Optimization"><span class="toc-number">1.3.</span> <span class="toc-text">Advanced Optimization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiclass-Classification"><span class="toc-number">1.4.</span> <span class="toc-text">Multiclass Classification</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-6-Classification"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (6) Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro-of-Classification"><span class="toc-number">1.1.</span> <span class="toc-text">Intro of Classification</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Logistic-Regression"><span class="toc-number">1.2.</span> <span class="toc-text">Logistic Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hypothesis-Representation"><span class="toc-number">1.2.1.</span> <span class="toc-text">Hypothesis Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decision-Boundary"><span class="toc-number">1.2.2.</span> <span class="toc-text">Decision Boundary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logistic-Regression-Model"><span class="toc-number">1.2.3.</span> <span class="toc-text">Logistic Regression Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cost-Function"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">Cost Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Simplified-Cost-Function"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">Simplified Cost Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Gradient-Descent"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">Gradient Descent</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Advanced-Optimization"><span class="toc-number">1.3.</span> <span class="toc-text">Advanced Optimization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiclass-Classification"><span class="toc-number">1.4.</span> <span class="toc-text">Multiclass Classification</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&text=分类问题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&is_video=false&description=分类问题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&text=分类问题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&is_video=false&description=分类问题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=分类问题&body=Check out this article: https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&name=分类问题&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&title=分类问题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/09/24/AndrewNgML/AndrewNg-MachineLearning-6-Classification/&name=分类问题&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -297,7 +299,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -308,16 +310,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -338,7 +352,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

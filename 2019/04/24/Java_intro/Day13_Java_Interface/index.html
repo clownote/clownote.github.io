@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Java 接口根据设计，抽象方法指定一个契约（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。 当在应用程序中需要一组可分组到一起的常见行为（例如 java.util.List），但它们存在两个或多个实现时，可以考虑使用接口 定义该行为。 接口 像是仅包含抽象方法的抽象类；它们仅定义契约，而不定义实现">
-<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java-接口">
 <meta property="og:url" content="https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Java 接口根据设计，抽象方法指定一个契约（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。 当在应用程序中需要一组可分组到一起的常见行为（例如 java.util.List），但它们存在两个或多个实现时，可以考虑使用接口 定义该行为。 接口 像是仅包含抽象方法的抽象类；它们仅定义契约，而不定义实现">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.533Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-04-24T16:37:53.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.362Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java-接口">
-<meta name="twitter:description" content="Java 接口根据设计，抽象方法指定一个契约（通过方法名、参数和返回类型）但未提供可重用的代码。当在抽象类的一个子类中实现行为的方式与另一个子类中不同时，抽象方法（在抽象类上定义）就会很有用。 当在应用程序中需要一组可分组到一起的常见行为（例如 java.util.List），但它们存在两个或多个实现时，可以考虑使用接口 定义该行为。 接口 像是仅包含抽象方法的抽象类；它们仅定义契约，而不定义实现">
     
     
         
@@ -39,19 +39,23 @@
     <!-- title -->
     <title>Java-接口</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -69,7 +73,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -95,21 +99,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&text=Java-接口"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&is_video=false&description=Java-接口"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&text=Java-接口"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&is_video=false&description=Java-接口"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Java-接口&body=Check out this article: https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&name=Java-接口&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&name=Java-接口&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-接口"><span class="toc-number">1.</span> <span class="toc-text">Java 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义接口"><span class="toc-number">1.1.</span> <span class="toc-text">定义接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">Java 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.1.</span> <span class="toc-text">定义接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +139,7 @@
       
         <time datetime="2019-04-24T16:37:53.000Z" itemprop="datePublished">2019-04-24</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.533Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.362Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -151,7 +155,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Java/">Java</a>
+        <a class="tag-link-link" href="/tags/Java/" rel="tag">Java</a>
     </div>
 
 
@@ -165,16 +169,13 @@
 <p><strong>接口</strong> 像是<strong>仅</strong>包含抽象方法的抽象类；它们<strong>仅</strong>定义契约，而不定义实现。</p>
 <h2 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h2><p>接口声明看起来像类声明，但使用了 <code>interface</code> 关键字：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InterfaceName</span> </span>&#123;</span><br><span class="line">    <span class="function">returnType <span class="title">methodName</span><span class="params">(argumentList)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>接口中定义的方法没有方法主体。接口的实现者负责提供方法主体（与抽象方法一样）。</p>
 <h2 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h2><p>要在类上定义一个接口，则需要<em>实现</em> 该接口，这意味着提供一个方法主体来进一步提供履行接口契约的行为。</p>
 <p>可以使用 <code>implements</code> 关键字实现接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Manager</span> <span class="keyword">extends</span> <span class="title">Employee</span> <span class="keyword">implements</span> <span class="title">BonusEligible</span>, <span class="title">StockOptionRecipient</span> </span>&#123;</span><br><span class="line">  <span class="comment">// And so on</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>implements</code> 操作类似 继承用的 extends，接口是使用 <code>implements</code> 关键字，二者不同的是，接口可以有好多个，但继承只能有一个。</p>
 <p>然后，我们要在 implements 了接口的类里实现该接口：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Manager</span> <span class="keyword">extends</span> <span class="title">Employee</span> <span class="keyword">implements</span> <span class="title">StockOptionRecipient</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Manager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">processStockOptions</span> <span class="params">(<span class="keyword">int</span> numberOfOptions, BigDecimal price)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">"I can't believe I got "</span> + number + <span class="string">" options at $"</span> +</span><br><span class="line">    price.toPlainString() + <span class="string">"!"</span>); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Manager</span> <span class="keyword">extends</span> <span class="title">Employee</span> <span class="keyword">implements</span> <span class="title">StockOptionRecipient</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Manager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">processStockOptions</span> <span class="params">(<span class="keyword">int</span> numberOfOptions, BigDecimal price)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;I can&#x27;t believe I got &quot;</span> + number + <span class="string">&quot; options at $&quot;</span> +</span><br><span class="line">    price.toPlainString() + <span class="string">&quot;!&quot;</span>); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>实现该接口时，需要提供该接口上的一个或多个方法的行为。注意实现的方法必须与接口中的匹配（名称、参数、返回值），还需要添加 <code>public</code> 访问修饰符。</p>
 
   </div>
@@ -205,7 +206,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -213,21 +214,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-接口"><span class="toc-number">1.</span> <span class="toc-text">Java 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义接口"><span class="toc-number">1.1.</span> <span class="toc-text">定义接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">Java 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.1.</span> <span class="toc-text">定义接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&text=Java-接口"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&is_video=false&description=Java-接口"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&text=Java-接口"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&is_video=false&description=Java-接口"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=Java-接口&body=Check out this article: https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&name=Java-接口&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&title=Java-接口"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/04/24/Java_intro/Day13_Java_Interface/&name=Java-接口&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -257,7 +258,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -268,16 +269,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -298,7 +311,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

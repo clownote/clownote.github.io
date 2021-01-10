@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Notes of Andrew Ng’s Machine Learning —— (12) Support Vector MachinesLarge Margin ClassificationOptimization ObjectiveThe Support Vector Machine (or SVM) is a powerful algorithm that is widely used in">
-<meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="支持向量机">
 <meta property="og:url" content="https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/index.html">
 <meta property="og:site_name" content="clownote">
 <meta property="og:description" content="Notes of Andrew Ng’s Machine Learning —— (12) Support Vector MachinesLarge Margin ClassificationOptimization ObjectiveThe Support Vector Machine (or SVM) is a powerful algorithm that is widely used in">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8f4rfgycnj31lc0mqjsr.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8f58f0dolj31ao0h6wpq.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8f5vx0x43j31dm0ni156.jpg">
@@ -29,10 +28,11 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8jukxlnxkj306u04laad.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8jul1utnaj306i04ezk4.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8jul8myufj30mv0cz0xu.jpg">
-<meta property="og:updated_time" content="2021-01-10T03:27:05.525Z">
+<meta property="article:published_time" content="2019-11-04T16:38:39.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:14:09.358Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="支持向量机">
-<meta name="twitter:description" content="Notes of Andrew Ng’s Machine Learning —— (12) Support Vector MachinesLarge Margin ClassificationOptimization ObjectiveThe Support Vector Machine (or SVM) is a powerful algorithm that is widely used in">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8f4rfgycnj31lc0mqjsr.jpg">
     
     
@@ -55,19 +55,23 @@
     <!-- title -->
     <title>支持向量机</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
     <!--Google search varification (PRIVATE)-->
-    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc">
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -85,7 +89,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -111,21 +115,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&text=支持向量机"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&is_video=false&description=支持向量机"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&text=支持向量机"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&is_video=false&description=支持向量机"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=支持向量机&body=Check out this article: https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&name=支持向量机&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&name=支持向量机&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-12-Support-Vector-Machines"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (12) Support Vector Machines</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Large-Margin-Classification"><span class="toc-number">1.1.</span> <span class="toc-text">Large Margin Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimization-Objective"><span class="toc-number">1.1.1.</span> <span class="toc-text">Optimization Objective</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Large-Margin-Intuition"><span class="toc-number">1.1.2.</span> <span class="toc-text">Large Margin Intuition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mathematics-Behind-Large-Margin-Classification"><span class="toc-number">1.1.3.</span> <span class="toc-text">Mathematics Behind Large Margin Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Vector-Inner-Product"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Vector Inner Product</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM-Decision-Boundary"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">SVM Decision Boundary</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kernels"><span class="toc-number">1.2.</span> <span class="toc-text">kernels</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kernels-and-Similarity"><span class="toc-number">1.2.1.</span> <span class="toc-text">Kernels and Similarity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SVM-with-Kernels"><span class="toc-number">1.2.2.</span> <span class="toc-text">SVM with Kernels</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Support-Vector-Machine-With-Kernels-Algorithm"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">The Support Vector Machine With Kernels Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM-parameters"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">SVM parameters</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVM-in-Practice"><span class="toc-number">1.3.</span> <span class="toc-text">SVM in Practice</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-An-SVM"><span class="toc-number">1.3.1.</span> <span class="toc-text">Using An SVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other-choices-of-kernel"><span class="toc-number">1.3.2.</span> <span class="toc-text">Other choices of kernel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multi-class-classification"><span class="toc-number">1.3.3.</span> <span class="toc-text">Multi-class classification</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logistic-regression-v-s-SVMs"><span class="toc-number">1.3.4.</span> <span class="toc-text">Logistic regression v.s. SVMs</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-12-Support-Vector-Machines"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (12) Support Vector Machines</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Large-Margin-Classification"><span class="toc-number">1.1.</span> <span class="toc-text">Large Margin Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimization-Objective"><span class="toc-number">1.1.1.</span> <span class="toc-text">Optimization Objective</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Large-Margin-Intuition"><span class="toc-number">1.1.2.</span> <span class="toc-text">Large Margin Intuition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mathematics-Behind-Large-Margin-Classification"><span class="toc-number">1.1.3.</span> <span class="toc-text">Mathematics Behind Large Margin Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Vector-Inner-Product"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Vector Inner Product</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM-Decision-Boundary"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">SVM Decision Boundary</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kernels"><span class="toc-number">1.2.</span> <span class="toc-text">kernels</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kernels-and-Similarity"><span class="toc-number">1.2.1.</span> <span class="toc-text">Kernels and Similarity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SVM-with-Kernels"><span class="toc-number">1.2.2.</span> <span class="toc-text">SVM with Kernels</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Support-Vector-Machine-With-Kernels-Algorithm"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">The Support Vector Machine With Kernels Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM-parameters"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">SVM parameters</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVM-in-Practice"><span class="toc-number">1.3.</span> <span class="toc-text">SVM in Practice</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-An-SVM"><span class="toc-number">1.3.1.</span> <span class="toc-text">Using An SVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other-choices-of-kernel"><span class="toc-number">1.3.2.</span> <span class="toc-text">Other choices of kernel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multi-class-classification"><span class="toc-number">1.3.3.</span> <span class="toc-text">Multi-class classification</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logistic-regression-v-s-SVMs"><span class="toc-number">1.3.4.</span> <span class="toc-text">Logistic regression v.s. SVMs</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -151,7 +155,7 @@
       
         <time datetime="2019-11-04T16:38:39.000Z" itemprop="datePublished">2019-11-04</time>
         
-        (Updated: <time datetime="2021-01-10T03:27:05.525Z" itemprop="dateModified">2021-01-10</time>)
+        (Updated: <time datetime="2021-01-10T04:14:09.358Z" itemprop="dateModified">2021-01-10</time>)
         
       
     </div>
@@ -167,7 +171,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>
+        <a class="tag-link-link" href="/tags/Machine-Learning/" rel="tag">Machine Learning</a>
     </div>
 
 
@@ -191,8 +195,8 @@
 <h3 id="Large-Margin-Intuition"><a href="#Large-Margin-Intuition" class="headerlink" title="Large Margin Intuition"></a>Large Margin Intuition</h3><p>Let’s say the SVM decision boundary:<br>$$<br>\min_\theta<br>C\sum_{i=1}^m \large[ y^{(i)} \mathop{\textrm{cost}_1}(\theta^Tx^{(i)})</p>
 <ul>
 <li>(1 - y^{(i)})\ \mathop{\textrm{cost}_0}(\theta^Tx^{(i)})\large]</li>
-<li>\frac{1}{2}\sum_{j=1}^n \theta_j^2<br>$$<br>If we set $C$ a very  large value, $100000$ for example, when this optimization objective , we’re going to be highly motivated to choose a value, so that <strong>the first term is equal to zero</strong>. And our goal become:<br>$$<br>\begin{array}{l}<br>  \min_\theta \frac{1}{2}\sum_{j=1}^{n}\theta_j^2 \\<br>  s.t. \quad \begin{array}{l}<pre><code>  \theta^Tx^{(i)} \ge 1 &amp; \textrm{if } y^{(i)}=1\\
-  \theta^Tx^{(i)} \le -1 &amp; \textrm{if } y^{(i)}=0</code></pre>
+<li>\frac{1}{2}\sum_{j=1}^n \theta_j^2<br>$$<br>If we set $C$ a very  large value, $100000$ for example, when this optimization objective , we’re going to be highly motivated to choose a value, so that <strong>the first term is equal to zero</strong>. And our goal become:<br>$$<br>\begin{array}{l}<br>  \min_\theta \frac{1}{2}\sum_{j=1}^{n}\theta_j^2 \\<br>  s.t. \quad \begin{array}{l}<pre><code>  \theta^Tx^&#123;(i)&#125; \ge 1 &amp; \textrm&#123;if &#125; y^&#123;(i)&#125;=1\\
+  \theta^Tx^&#123;(i)&#125; \le -1 &amp; \textrm&#123;if &#125; y^&#123;(i)&#125;=0</code></pre>
   \end{array}<br>\end{array}<br>$$<br>We will get a very intersting decision boundary. The Support Vector Machines will choose a decision boundary that does a great job of separating the positive and negative examples (the black line below install of others).</li>
 </ul>
 <p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g8f6tz8op1j30q60kon78.jpg" alt="image-20191029171503318"></p>
@@ -332,7 +336,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -340,21 +344,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng’s-Machine-Learning-——-12-Support-Vector-Machines"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (12) Support Vector Machines</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Large-Margin-Classification"><span class="toc-number">1.1.</span> <span class="toc-text">Large Margin Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimization-Objective"><span class="toc-number">1.1.1.</span> <span class="toc-text">Optimization Objective</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Large-Margin-Intuition"><span class="toc-number">1.1.2.</span> <span class="toc-text">Large Margin Intuition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mathematics-Behind-Large-Margin-Classification"><span class="toc-number">1.1.3.</span> <span class="toc-text">Mathematics Behind Large Margin Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Vector-Inner-Product"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Vector Inner Product</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM-Decision-Boundary"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">SVM Decision Boundary</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kernels"><span class="toc-number">1.2.</span> <span class="toc-text">kernels</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kernels-and-Similarity"><span class="toc-number">1.2.1.</span> <span class="toc-text">Kernels and Similarity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SVM-with-Kernels"><span class="toc-number">1.2.2.</span> <span class="toc-text">SVM with Kernels</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Support-Vector-Machine-With-Kernels-Algorithm"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">The Support Vector Machine With Kernels Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM-parameters"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">SVM parameters</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVM-in-Practice"><span class="toc-number">1.3.</span> <span class="toc-text">SVM in Practice</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-An-SVM"><span class="toc-number">1.3.1.</span> <span class="toc-text">Using An SVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other-choices-of-kernel"><span class="toc-number">1.3.2.</span> <span class="toc-text">Other choices of kernel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multi-class-classification"><span class="toc-number">1.3.3.</span> <span class="toc-text">Multi-class classification</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logistic-regression-v-s-SVMs"><span class="toc-number">1.3.4.</span> <span class="toc-text">Logistic regression v.s. SVMs</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Notes-of-Andrew-Ng%E2%80%99s-Machine-Learning-%E2%80%94%E2%80%94-12-Support-Vector-Machines"><span class="toc-number">1.</span> <span class="toc-text">Notes of Andrew Ng’s Machine Learning —— (12) Support Vector Machines</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Large-Margin-Classification"><span class="toc-number">1.1.</span> <span class="toc-text">Large Margin Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimization-Objective"><span class="toc-number">1.1.1.</span> <span class="toc-text">Optimization Objective</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Large-Margin-Intuition"><span class="toc-number">1.1.2.</span> <span class="toc-text">Large Margin Intuition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mathematics-Behind-Large-Margin-Classification"><span class="toc-number">1.1.3.</span> <span class="toc-text">Mathematics Behind Large Margin Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Vector-Inner-Product"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Vector Inner Product</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM-Decision-Boundary"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">SVM Decision Boundary</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kernels"><span class="toc-number">1.2.</span> <span class="toc-text">kernels</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kernels-and-Similarity"><span class="toc-number">1.2.1.</span> <span class="toc-text">Kernels and Similarity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SVM-with-Kernels"><span class="toc-number">1.2.2.</span> <span class="toc-text">SVM with Kernels</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Support-Vector-Machine-With-Kernels-Algorithm"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">The Support Vector Machine With Kernels Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM-parameters"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">SVM parameters</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVM-in-Practice"><span class="toc-number">1.3.</span> <span class="toc-text">SVM in Practice</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-An-SVM"><span class="toc-number">1.3.1.</span> <span class="toc-text">Using An SVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other-choices-of-kernel"><span class="toc-number">1.3.2.</span> <span class="toc-text">Other choices of kernel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multi-class-classification"><span class="toc-number">1.3.3.</span> <span class="toc-text">Multi-class classification</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logistic-regression-v-s-SVMs"><span class="toc-number">1.3.4.</span> <span class="toc-text">Logistic regression v.s. SVMs</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&text=支持向量机"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&is_video=false&description=支持向量机"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&text=支持向量机"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&is_video=false&description=支持向量机"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="mailto:?subject=支持向量机&body=Check out this article: https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&name=支持向量机&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&title=支持向量机"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2019/11/04/AndrewNgML/AndrewNg-MachineLearning-12-SupportVectorMachines/&name=支持向量机&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -384,7 +388,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/cdfmlr">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
          
           <li><a href="/search/">搜索</a></li>
         
@@ -395,16 +399,28 @@
 
     </div>
     <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
 
+
     <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -425,7 +441,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->
