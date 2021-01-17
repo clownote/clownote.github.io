@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="用 GitHub Actions 自动打包发布 Python 项目前言还在手动打包上传 PyPI？GitHub Actions 自动化真香～！ 在《Python 代码一键转流程图》一文里，我介绍了我的开源项目 PyFlowchart。过去这段时间里，已经有好几位小伙伴为这个项目提出了建议，或者报告了 Bug 啦。在这几位朋友的帮助下，项目也迭代了几个版本了。之前，这个项目每次版本更新，我都需要做很">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用GitHub Actions自动打包发布Python项目">
+<meta property="og:url" content="https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="用 GitHub Actions 自动打包发布 Python 项目前言还在手动打包上传 PyPI？GitHub Actions 自动化真香～！ 在《Python 代码一键转流程图》一文里，我介绍了我的开源项目 PyFlowchart。过去这段时间里，已经有好几位小伙伴为这个项目提出了建议，或者报告了 Bug 啦。在这几位朋友的帮助下，项目也迭代了几个版本了。之前，这个项目每次版本更新，我都需要做很">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-16T13:45:04.867Z">
+<meta property="article:modified_time" content="2021-01-17T07:13:09.188Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>用GitHub Actions自动打包发布Python项目</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/01/14/SwiftUI/SwiftUIDataStateAndBinding/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&text=用GitHub Actions自动打包发布Python项目"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&is_video=false&description=用GitHub Actions自动打包发布Python项目"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=用GitHub Actions自动打包发布Python项目&body=Check out this article: https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&name=用GitHub Actions自动打包发布Python项目&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8-GitHub-Actions-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83-Python-%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">用 GitHub Actions 自动打包发布 Python 项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-GitHub-%E4%B8%8A%E4%BF%9D%E5%AD%98-token"><span class="toc-number">1.2.</span> <span class="toc-text">在 GitHub 上保存 token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-workflow"><span class="toc-number">1.3.</span> <span class="toc-text">创建 workflow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">1.4.</span> <span class="toc-text">定义工作流程的工作环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%87%BA%E9%A1%B9%E7%9B%AE%EF%BC%8C%E6%9E%84%E5%BB%BA%E5%8F%91%E8%A1%8C%E7%89%88"><span class="toc-number">1.5.</span> <span class="toc-text">签出项目，构建发行版</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E5%88%B0-PyPI-%E5%92%8C-TestPyPI"><span class="toc-number">1.6.</span> <span class="toc-text">发布到 PyPI 和 TestPyPI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E4%BA%8B%EF%BC%8C%E6%94%B6%E5%B7%A5%EF%BC%81"><span class="toc-number">1.7.</span> <span class="toc-text">完事，收工！</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        用GitHub Actions自动打包发布Python项目
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-01-16T13:45:04.867Z" itemprop="datePublished">2021-01-16</time>
+        
+        (Updated: <time datetime="2021-01-17T07:13:09.188Z" itemprop="dateModified">2021-01-17</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="用-GitHub-Actions-自动打包发布-Python-项目"><a href="#用-GitHub-Actions-自动打包发布-Python-项目" class="headerlink" title="用 GitHub Actions 自动打包发布 Python 项目"></a>用 GitHub Actions 自动打包发布 Python 项目</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>还在手动打包上传 PyPI？GitHub Actions 自动化真香～！</p>
+<p>在《<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012419550/article/details/109258117">Python 代码一键转流程图</a>》一文里，我介绍了我的开源项目 <a target="_blank" rel="noopener" href="https://github.com/cdfmlr/pyflowchart">PyFlowchart</a>。过去这段时间里，已经有好几位小伙伴为这个项目提出了建议，或者报告了 Bug 啦。在这几位朋友的帮助下，项目也迭代了几个版本了。之前，这个项目每次版本更新，我都需要做很多写代码意外的麻烦工作：</p>
+<ol>
+<li>在 GitHub 上 publish 一个 release，</li>
+<li>手动打包上传 PyPI。</li>
+</ol>
+<p>这个过程非常反人类，release 一个版本要做两个工作。更可怕的是，打包上传 PyPI 的工作十分模版化（鄙人拙作《<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012419550/article/details/105967006">如何用 pip 安装自己写的包</a>》一文介绍了这个过程）。我觉得作为开发者，不应该把时间浪费在这种套路工作上。</p>
+<p>于是我想去了过去我写过一篇叫做《<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012419550/article/details/107594751">还在手动发博客？GitHub Actions自动化真香</a>》的文章，大致介绍了我是如何利用 GitHub Actions 自动更新博客网站的。所以，今回，我尝试用 GitHub Actions 搭建了一套发布新版本时，自动打包上传 PyPI 📦 的工作流程。</p>
+<p>现在，发布新的版本时，就只需在 GitHub 上新建一个 Release。GitHub Actions 会自动帮我完成构建、打包、上传 PyPI 的工作。</p>
+<p>本文就介绍如何利用 GitHub Actions 自动发布 Python 包到 PyPI。</p>
+<p>（注：我在 PyFlowchart 项目中使用的实现和下文略有不同，我根据需求做了一些修改，如果你感兴趣，可以看一看我的实现：<a target="_blank" rel="noopener" href="https://github.com/cdfmlr/pyflowchart/tree/master/.github/workflows%EF%BC%89">https://github.com/cdfmlr/pyflowchart/tree/master/.github/workflows）</a></p>
+<hr>
+<blockquote>
+<p>下文翻译自 PyPA 的文章《Publishing package distribution releases using GitHub Actions CI/CD workflows》</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://packaging.python.org/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/">https://packaging.python.org/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/features/actions">GitHub Actions CI/CD</a> 允许在 GitHub 平台上特定的事件发生时自动运行一系列的命令。用这个就可以做设置一个响应 push 事件的工作流程。本文将展示如何当有 git push 时发布一个新的 Python 包发行版（到 PyPI）。我们将使用到 <a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/pypi-publish">pypa/gh-action-pypi-publish GitHub Action</a>。</p>
+<p>注意：这个教程假设你已经有在 GitHub 上有一个 Python 项目，并且你知道如何构建包，并把它发布到 PyPI。</p>
+<h2 id="在-GitHub-上保存-token"><a href="#在-GitHub-上保存-token" class="headerlink" title="在 GitHub 上保存 token"></a>在 GitHub 上保存 token</h2><p>在本文中，我们会把项目上传到 PyPI 和 TestPyPI。所以需要生成两份独立的 token，并把它们保存到 GitHub 的仓库设置中。</p>
+<p>我们开始吧！🚀</p>
+<ol>
+<li>访问 <a target="_blank" rel="noopener" href="https://pypi.org/manage/account/#api-tokens">https://pypi.org/manage/account/#api-tokens</a> ，创建一个新的 <a target="_blank" rel="noopener" href="https://pypi.org/help/#apitoken">API token</a>。 如果你已经在 PyPI 里发布过你的项目了，那么你应该把 token 的范围(token scope) 限定为只能操作这个项目的。你可以把新 token 命名为 <code>GitHub Actions CI/CD —project-org/project-repo</code> 之类的，方便辨识。生成 token 后<strong>不要关闭浏览器页面—— token 只会显示一次</strong>。</li>
+<li>在另一个浏览器选项卡或窗口中，打开 GitHub 上你的项目页面，点击 <code>Settings</code> 选项卡，然后点击左侧边栏里的 <a target="_blank" rel="noopener" href="https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables">Secrets</a> 。</li>
+<li>创建一个新的 sercret，命令为 <code>PYPI_API_TOKEN</code>，然后复制粘贴第一步生成的 token。</li>
+<li>访问 <a target="_blank" rel="noopener" href="https://test.pypi.org/manage/account/#api-tokens">https://test.pypi.org/manage/account/#api-tokens</a> ，重复之前的步骤，把 TestPyPI 的 token 保存成 <code>TEST_PYPI_API_TOKEN</code>。</li>
+</ol>
+<p><strong>注意</strong>：如果你还没有 TestPyPI 账号，你应该注册一个。TestPyPI 和 PyPI 的账号不共通哦。</p>
+<h2 id="创建-workflow"><a href="#创建-workflow" class="headerlink" title="创建 workflow"></a>创建 workflow</h2><p>GitHub CI/CD 工作流程（workflow）是用 YAML 格式的文件储存到仓库的 <code>.github/workflows/</code> 目录里的。</p>
+<p>我们创建一个  <code>.github/workflows/publish-to-test-pypi.yml</code> 文件。</p>
+<p>我们将从一个有意义的名称开始，然后定义触发 GitHub 运行此工作流程的事件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Publish</span> <span class="string">Python</span> <span class="string">🐍</span> <span class="string">distributions</span> <span class="string">📦</span> <span class="string">to</span> <span class="string">PyPI</span> <span class="string">and</span> <span class="string">TestPyPI</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span> <span class="string">push</span></span><br></pre></td></tr></table></figure>
+<h2 id="定义工作流程的工作环境"><a href="#定义工作流程的工作环境" class="headerlink" title="定义工作流程的工作环境"></a>定义工作流程的工作环境</h2><p>现在，我们来为工作（job）添加初始设置。这个过程将执行我们稍后定义的命令。在这里，我们将使用Ubuntu 18.04：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-n-publish:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">Build</span> <span class="string">and</span> <span class="string">publish</span> <span class="string">Python</span> <span class="string">🐍</span> <span class="string">distributions</span> <span class="string">📦</span> <span class="string">to</span> <span class="string">PyPI</span> <span class="string">and</span> <span class="string">TestPyPI</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-18.04</span></span><br></pre></td></tr></table></figure>
+<h2 id="签出项目，构建发行版"><a href="#签出项目，构建发行版" class="headerlink" title="签出项目，构建发行版"></a>签出项目，构建发行版</h2><p>然后，在该 <code>build-n-publish</code> 部分下添加以下内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">steps:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@master</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Set</span> <span class="string">up</span> <span class="string">Python</span> <span class="number">3.7</span></span><br><span class="line">  <span class="attr">uses:</span> <span class="string">actions/setup-python@v1</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">python-version:</span> <span class="number">3.7</span></span><br></pre></td></tr></table></figure>
+<p>这些操作会把我们的项目源码下载到 CI 运行容器里，然后安装并激活 Python 3.7 环境。</p>
+<p>现在，我们就可以从源码构建 dist 了。在此示例中，我们将使用<code>build</code>包，所以假设项目里已正确设置 <code>pyproject.toml</code> （请参见 <a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0517">PEP 517</a> / <a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0518">PEP 518</a>）。</p>
+<p>（注：emmm，其实这里不写 <code>pyproject.toml</code> 问题也不大）</p>
+<p>提示：你可以使用任何其他方法来构建发行版，只要将准备好上传的包保存到 <code>dist/</code> 文件夹中即可。</p>
+<p>将下面的代码加到 <code>steps</code> 里：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">pypa/build</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">&gt;-</span></span><br><span class="line">    <span class="string">python</span> <span class="string">-m</span></span><br><span class="line">    <span class="string">pip</span> <span class="string">install</span></span><br><span class="line">    <span class="string">build</span></span><br><span class="line">    <span class="string">--user</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">a</span> <span class="string">binary</span> <span class="string">wheel</span> <span class="string">and</span> <span class="string">a</span> <span class="string">source</span> <span class="string">tarball</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">&gt;-</span></span><br><span class="line">    <span class="string">python</span> <span class="string">-m</span></span><br><span class="line">    <span class="string">build</span></span><br><span class="line">    <span class="string">--sdist</span></span><br><span class="line">    <span class="string">--wheel</span></span><br><span class="line">    <span class="string">--outdir</span> <span class="string">dist/</span></span><br><span class="line">    <span class="string">.</span></span><br></pre></td></tr></table></figure>
+<h2 id="发布到-PyPI-和-TestPyPI"><a href="#发布到-PyPI-和-TestPyPI" class="headerlink" title="发布到 PyPI 和 TestPyPI"></a>发布到 PyPI 和 TestPyPI</h2><p>最后，添加如下代码：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Publish</span> <span class="string">distribution</span> <span class="string">📦</span> <span class="string">to</span> <span class="string">Test</span> <span class="string">PyPI</span></span><br><span class="line">  <span class="attr">uses:</span> <span class="string">pypa/gh-action-pypi-publish@master</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.TEST_PYPI_API_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="attr">repository_url:</span> <span class="string">https://test.pypi.org/legacy/</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Publish</span> <span class="string">distribution</span> <span class="string">📦</span> <span class="string">to</span> <span class="string">PyPI</span></span><br><span class="line">  <span class="attr">if:</span> <span class="string">startsWith(github.ref,</span> <span class="string">&#x27;refs/tags&#x27;</span><span class="string">)</span></span><br><span class="line">  <span class="attr">uses:</span> <span class="string">pypa/gh-action-pypi-publish@master</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.PYPI_API_TOKEN</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这两个 step 调用了 <a target="_blank" rel="noopener" href="https://github.com/pypa/gh-action-pypi-publish">pypa/gh-action-pypi-publish</a> GitHub Action：</p>
+<p>第一个步骤无条件地将 <code>dist/</code> 文件夹的内容上传到TestPyPI。第二个步骤将其内容上传到 PyPI，这一步只会对被打了标签（git tag）的提交执行。</p>
+<h2 id="完事，收工！"><a href="#完事，收工！" class="headerlink" title="完事，收工！"></a>完事，收工！</h2><p>现在，每当你将打了标签（tag）的提交 push 到 GitHub 上时，此工作流程都会将其发布到 PyPI。同时，对于任意 push ，它都会将其打包发布到 TestPyPI，这对于提供 alpha 测试版本以及确保发布渠道保持健康非常有用！</p>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">by(<span class="string">&quot;CDFMLR&quot;</span>, <span class="string">&quot;2021-01-17&quot;</span>)</span><br><span class="line"><span class="comment"># 啊，今天昆明都下雪了，家里巨冷。。。</span></span><br><span class="line"><span class="comment"># See you ❄️</span></span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8-GitHub-Actions-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83-Python-%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">用 GitHub Actions 自动打包发布 Python 项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-GitHub-%E4%B8%8A%E4%BF%9D%E5%AD%98-token"><span class="toc-number">1.2.</span> <span class="toc-text">在 GitHub 上保存 token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-workflow"><span class="toc-number">1.3.</span> <span class="toc-text">创建 workflow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">1.4.</span> <span class="toc-text">定义工作流程的工作环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%87%BA%E9%A1%B9%E7%9B%AE%EF%BC%8C%E6%9E%84%E5%BB%BA%E5%8F%91%E8%A1%8C%E7%89%88"><span class="toc-number">1.5.</span> <span class="toc-text">签出项目，构建发行版</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E5%88%B0-PyPI-%E5%92%8C-TestPyPI"><span class="toc-number">1.6.</span> <span class="toc-text">发布到 PyPI 和 TestPyPI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E4%BA%8B%EF%BC%8C%E6%94%B6%E5%B7%A5%EF%BC%81"><span class="toc-number">1.7.</span> <span class="toc-text">完事，收工！</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&text=用GitHub Actions自动打包发布Python项目"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&is_video=false&description=用GitHub Actions自动打包发布Python项目"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=用GitHub Actions自动打包发布Python项目&body=Check out this article: https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&title=用GitHub Actions自动打包发布Python项目"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/01/16/blog/PyPiGitHubActions/&name=用GitHub Actions自动打包发布Python项目&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
