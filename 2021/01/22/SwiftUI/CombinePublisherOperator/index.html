@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Publisher 和常用 Operator Publisher 和 Subscriber 的调用关系：   常用 Publisher Empty: 不会发布任何 output，只在被订阅的时候发布一个 finished（Empty 可以用于表示某个事件已经发生）  123check(&quot;Empty&quot;) &amp;#123;    Empty&lt;Int, SampleError&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Publisher 和常用 Operator">
+<meta property="og:url" content="https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Publisher 和常用 Operator Publisher 和 Subscriber 的调用关系：   常用 Publisher Empty: 不会发布任何 output，只在被订阅的时候发布一个 finished（Empty 可以用于表示某个事件已经发生）  123check(&quot;Empty&quot;) &amp;#123;    Empty&lt;Int, SampleError&amp;gt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmwd9v2rvdj31ey0s844e.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmwd9tm6vyj31ey0qujtz.jpg">
+<meta property="article:published_time" content="2021-01-22T12:36:59.810Z">
+<meta property="article:modified_time" content="2021-01-22T06:43:34.800Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="SwiftUI">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmwd9v2rvdj31ey0s844e.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Publisher 和常用 Operator</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/01/20/SwiftUI/AsyncProgrammingAndCombine/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&text=Publisher 和常用 Operator"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&is_video=false&description=Publisher 和常用 Operator"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Publisher 和常用 Operator&body=Check out this article: https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&name=Publisher 和常用 Operator&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Publisher-%E5%92%8C%E5%B8%B8%E7%94%A8-Operator"><span class="toc-number">1.</span> <span class="toc-text">Publisher 和常用 Operator</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-Publisher"><span class="toc-number">1.1.</span> <span class="toc-text">常用 Publisher</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-Operator"><span class="toc-number">1.2.</span> <span class="toc-text">常用 Operator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">错误处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E9%94%99%E8%AF%AF"><span class="toc-number">1.3.1.</span> <span class="toc-text">发布错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">错误转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E6%81%A2%E5%A4%8D"><span class="toc-number">1.3.3.</span> <span class="toc-text">错误恢复</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Utils-swift"><span class="toc-number">1.4.</span> <span class="toc-text">Utils.swift</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.5.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Publisher 和常用 Operator
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-01-22T12:36:59.810Z" itemprop="datePublished">2021-01-22</time>
+        
+        (Updated: <time datetime="2021-01-22T06:43:34.800Z" itemprop="dateModified">2021-01-22</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Swift/" rel="tag">Swift</a>, <a class="tag-link-link" href="/tags/SwiftUI/" rel="tag">SwiftUI</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Publisher-和常用-Operator"><a href="#Publisher-和常用-Operator" class="headerlink" title="Publisher 和常用 Operator"></a>Publisher 和常用 Operator</h1><p> Publisher 和 Subscriber 的调用关系：</p>
+<p> <img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmwd9v2rvdj31ey0s844e.jpg" alt="Publisher and Subscriber"></p>
+<h2 id="常用-Publisher"><a href="#常用-Publisher" class="headerlink" title="常用 Publisher"></a>常用 Publisher</h2><ul>
+<li><code>Empty</code>: 不会发布任何 output，只在被订阅的时候发布一个 finished（Empty 可以用于表示某个事件已经发生）</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Empty&quot;</span>) &#123;</span><br><span class="line">    <span class="type">Empty</span>&lt;<span class="type">Int</span>, <span class="type">SampleError</span>&gt;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Just</code>: 表示一个单一的值，在被订阅后，这个值会被发送出去，然后 finished</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Just&quot;</span>) &#123;</span><br><span class="line">    <span class="type">Just</span>(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Sequence Publisher：发布一个序列（数组 or <code>Range</code>），被订阅时，Sequence 中的元素被逐个发 送出来。</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Sequence&quot;</span>) &#123;</span><br><span class="line">    <span class="type">Publishers</span>.<span class="type">Sequence</span>&lt;[<span class="type">Int</span>], <span class="type">Never</span>&gt;(sequence: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> Swift 标准库和 Foundation 中的很多类型都有获取 CombinePublisher 的简便方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Sequence&quot;</span>) &#123;</span><br><span class="line">    [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>].publisher</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常用-Operator"><a href="#常用-Operator" class="headerlink" title="常用 Operator"></a>常用 Operator</h2><p> Operator 其实是 Publisher 的 extesnion 中所提供的一些方法，作用于 Publisher，返回 Publisher。</p>
+<ul>
+<li><p>map</p>
+<p>和普通序列的 map 类似：</p>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a: [<span class="type">Int</span>] <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].map &#123; <span class="variable">$0</span> <span class="operator">*</span> <span class="number">2</span> &#125; <span class="comment">// 结果是 [Int]</span></span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;Map&quot;</span>) &#123;</span><br><span class="line">    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].publisher.map &#123; <span class="variable">$0</span> <span class="operator">*</span> <span class="number">2</span> &#125; <span class="comment">// 结果是 publisher</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;Map Just&quot;</span>) &#123;</span><br><span class="line">    <span class="type">Just</span>(<span class="number">5</span>)</span><br><span class="line">        .map &#123; <span class="variable">$0</span> <span class="operator">*</span> <span class="number">2</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>reduce</p>
+<p>和普通序列的 reduce 类似，将一系列元素按照某种规则进行合并，得到一个最终的结果：</p>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].reduce(<span class="number">0</span>, <span class="operator">+</span>) <span class="comment">// (1 =&gt; 3 =&gt; 6 =&gt; 10) =&gt; 15</span></span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;Reduce&quot;</span>) &#123;</span><br><span class="line">    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].publisher <span class="comment">// output(1), output(2), ... output(5), finished</span></span><br><span class="line">        .reduce(<span class="number">0</span>, <span class="operator">+</span>) <span class="comment">// 上游 finished 后，将之前发布的值逐个 reduce，发布结果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>scan: 和 reduce 类似的操作，但记录下每一个中途的过程</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].scan(<span class="number">0</span>, <span class="operator">+</span>) <span class="comment">// 这个方法不在标准库里，是自己 extension Sequence 实现的，See Utils.swift</span></span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;Scan&quot;</span>) &#123;</span><br><span class="line">    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].publisher</span><br><span class="line">        .scan(<span class="number">0</span>, <span class="operator">+</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>compactMap</code>: 将 map 结果中那些 nil 的元素去除掉</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Compact Map&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;3&quot;</span>, <span class="string">&quot;cat&quot;</span>, <span class="string">&quot;5&quot;</span>].publisher</span><br><span class="line">        .compactMap &#123; <span class="type">Int</span>(<span class="variable">$0</span>) &#125; <span class="comment">// Int(&quot;cat) == nil: 被丢弃</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// compactMap == map + filter:</span></span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;Compact Map By Filter&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;3&quot;</span>, <span class="string">&quot;cat&quot;</span>, <span class="string">&quot;5&quot;</span>].publisher</span><br><span class="line">        .map &#123; <span class="type">Int</span>(<span class="variable">$0</span>) &#125;</span><br><span class="line">        .filter &#123; <span class="variable">$0</span> <span class="operator">!=</span> <span class="literal">nil</span> &#125; <span class="comment">// Optional&lt;Int&gt;</span></span><br><span class="line">        .map &#123; <span class="variable">$0</span><span class="operator">!</span> &#125; <span class="comment">// Int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>flatMap</code>: “嵌套，降维”：将外层 Publisher 发出的事件中的值传递给内层 Publisher，然后汇总内层 Publisher 给出的事件输出</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Flat Map 1&quot;</span>) &#123;</span><br><span class="line">    [[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]].publisher</span><br><span class="line">        .flatMap &#123; <span class="variable">$0</span>.publisher &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;Flat Map 2&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>].publisher</span><br><span class="line">        .flatMap &#123; letter <span class="keyword">in</span></span><br><span class="line">            [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].publisher</span><br><span class="line">                .map &#123; number <span class="keyword">in</span> <span class="string">&quot;<span class="subst">\(letter)</span><span class="subst">\(number)</span>&quot;</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>removeDuplicates: 移除连续的重复事件值</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Remove Duplicates&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;S&quot;</span>, <span class="string">&quot;Sw&quot;</span>, <span class="string">&quot;Sw&quot;</span>, <span class="string">&quot;Sw&quot;</span>, <span class="string">&quot;Swi&quot;</span>, <span class="string">&quot;Swif&quot;</span>, <span class="string">&quot;Swift&quot;</span>, <span class="string">&quot;Swift&quot;</span>, <span class="string">&quot;Swif&quot;</span>]</span><br><span class="line">        .publisher.removeDuplicates()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>eraseToAnyPublisher</code>: 抹去 Publisher 的具体嵌套类型，得到 AnyPublisher</p>
+<p>经过层层 Operator 的处理，最终得到的 Publisher 的 Output 类型是很深的嵌套的，用 eraseToAnyPublisher 可以把这些潜逃抹去，只留下最终关注的类型。</p>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;erase To AnyPublisher&quot;</span>) &#123; () -&gt; <span class="type">AnyPublisher</span>&lt;<span class="type">String</span>, <span class="type">Never</span>&gt; <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">let</span> p0 <span class="operator">=</span> [<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>].publisher</span><br><span class="line">        .flatMap &#123; letter <span class="keyword">in</span></span><br><span class="line">            [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].publisher</span><br><span class="line">                .map &#123; number <span class="keyword">in</span> <span class="string">&quot;<span class="subst">\(letter)</span><span class="subst">\(number)</span>&quot;</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;p0:&quot;</span>, p0)</span><br><span class="line">    <span class="keyword">let</span> p1 <span class="operator">=</span> p0.eraseToAnyPublisher()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;p1:&quot;</span>, p1)</span><br><span class="line">    <span class="keyword">return</span> p1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>merge</code>: 将两个事件流进行合并，在对应的时间完整保留两个事件流的全部事件.</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmwd9tm6vyj31ey0qujtz.jpg" alt="merge"></p>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p0 <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].publisher</span><br><span class="line"><span class="keyword">let</span> p1 <span class="operator">=</span> [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>].publisher</span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;merge&quot;</span>) &#123;</span><br><span class="line">    p0.merge(with: p1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><h3 id="发布错误"><a href="#发布错误" class="headerlink" title="发布错误"></a>发布错误</h3><ul>
+<li><code>Fail</code> Publisher: 在被订阅时发送一个错误事件</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Fail&quot;</span>) &#123;</span><br><span class="line">    <span class="type">Fail</span>&lt;<span class="type">Int</span>, <span class="type">SampleError</span>&gt;(error: .sampleError) <span class="comment">// SampleError 是自己在 Util.swift 里定义的</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>tryMap</code>: 可以抛出错误的 map</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Throw&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;UnexpectedNoNumber&quot;</span>, <span class="string">&quot;4&quot;</span>].publisher</span><br><span class="line">        .tryMap &#123; s -&gt; <span class="type">Int</span> <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> value <span class="operator">=</span> <span class="type">Int</span>(s) <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="type">SampleError</span>.sampleError <span class="comment">// 抛出错误后 Publisher 就停了</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 类似 <code>tryMap</code> 的还有 <code>try&#123;Reduce|Scan|Filter&#125;</code>…</p>
+<h3 id="错误转换"><a href="#错误转换" class="headerlink" title="错误转换"></a>错误转换</h3><ul>
+<li><p><code>mapError</code>: 将 Publisher 的 Failure 转换成 Subscriber 所需要的 Failure 类型</p>
+<p>e.g. Publisher 发的是 SampleError，Subscriber 想要 MyError，则如下处理之：</p>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">MyError</span>: <span class="title">Error</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> myError</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;Map Error&quot;</span>) &#123;</span><br><span class="line">    <span class="type">Fail</span>&lt;<span class="type">Int</span>, <span class="type">SampleError</span>&gt;(error: .sampleError)</span><br><span class="line">        .mapError &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="type">MyError</span>.myError &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="错误恢复"><a href="#错误恢复" class="headerlink" title="错误恢复"></a>错误恢复</h3><ul>
+<li><p><code>replaceError</code>: 把错误替换成某个值，并且立即发送 finished 事件</p>
+<p>Note: <code>Publisher&lt;Output, Failure&gt;</code> –(replaceError)–&gt; <code>Publisher&lt;Output, Never&gt;</code></p>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Replace Error&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;UnexpectedNoNumber&quot;</span>, <span class="string">&quot;4&quot;</span>].publisher</span><br><span class="line">        .tryMap &#123; s -&gt; <span class="type">Int</span> <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> value <span class="operator">=</span> <span class="type">Int</span>(s) <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="type">SampleError</span>.sampleError <span class="comment">// 抛出错误后 Publisher 就停了</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        &#125;</span><br><span class="line">        .replaceError(with: <span class="operator">-</span><span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>catch</code>: 当上游 Publisher 发生错误时，使用一个新的 Publisher 来把原来的 Publisher 替换掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">publisher: Publisher&lt;Output, Failure&gt;</span><br><span class="line">handler: Publisher&lt;Output, Never&gt;</span><br><span class="line"></span><br><span class="line">publisher.catch(handler)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Catch with Just&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;UnexpectedNoNumber&quot;</span>, <span class="string">&quot;4&quot;</span>].publisher</span><br><span class="line">        .tryMap &#123; s -&gt; <span class="type">Int</span> <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> value <span class="operator">=</span> <span class="type">Int</span>(s) <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="type">SampleError</span>.sampleError</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        &#125;</span><br><span class="line">        .catch &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="type">Just</span>(<span class="operator">-</span><span class="number">1</span>) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;Catch with Another Publisher&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;UnexpectedNoNumber&quot;</span>, <span class="string">&quot;4&quot;</span>].publisher</span><br><span class="line">        .tryMap &#123; s -&gt; <span class="type">Int</span> <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> value <span class="operator">=</span> <span class="type">Int</span>(s) <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="type">SampleError</span>.sampleError</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        &#125;</span><br><span class="line">        .catch &#123; <span class="keyword">_</span> <span class="keyword">in</span> [<span class="operator">-</span><span class="number">1</span>, <span class="operator">-</span><span class="number">2</span>, <span class="operator">-</span><span class="number">3</span>].publisher &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<p> 👆上面处理总而言之都是遇到错误原来的 Publisher 就停了，现实里我们可能像处理完错误值后继续接收原来的发布，这就需要：</p>
+<ul>
+<li><code>flatMap</code> + <code>catch</code>: 处理错误值，然后继续原来的 Publish</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">check(<span class="string">&quot;Catch and Continue&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;UnexpectedNoNumber&quot;</span>, <span class="string">&quot;4&quot;</span>].publisher</span><br><span class="line">        .flatMap &#123; s <span class="keyword">in</span></span><br><span class="line">            <span class="type">Just</span>(s)</span><br><span class="line">                .tryMap &#123; s -&gt; <span class="type">Int</span> <span class="keyword">in</span></span><br><span class="line">                    <span class="keyword">guard</span> <span class="keyword">let</span> value <span class="operator">=</span> <span class="type">Int</span>(s) <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="type">SampleError</span>.sampleError</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> value</span><br><span class="line">                &#125;</span><br><span class="line">                .catch &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="type">Just</span>(<span class="operator">-</span><span class="number">1</span>) &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Print 大法，看看具体步骤：</span></span><br><span class="line"></span><br><span class="line">check(<span class="string">&quot;Catch and Continue with Print&quot;</span>) &#123;</span><br><span class="line">    [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;UnexpectedNoNumber&quot;</span>, <span class="string">&quot;4&quot;</span>].publisher</span><br><span class="line">        .print(<span class="string">&quot;[ Original ]&quot;</span>)</span><br><span class="line">        .flatMap &#123; s <span class="keyword">in</span></span><br><span class="line">            <span class="type">Just</span>(s)</span><br><span class="line">                .tryMap &#123; s -&gt; <span class="type">Int</span> <span class="keyword">in</span></span><br><span class="line">                    <span class="keyword">guard</span> <span class="keyword">let</span> value <span class="operator">=</span> <span class="type">Int</span>(s) <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="type">SampleError</span>.sampleError</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> value</span><br><span class="line">                &#125;</span><br><span class="line">                .print(<span class="string">&quot;[ TryMap ]&quot;</span>)</span><br><span class="line">                .catch &#123; <span class="keyword">_</span> <span class="keyword">in</span> <span class="type">Just</span>(<span class="operator">-</span><span class="number">1</span>).print(<span class="string">&quot;[ Just ]&quot;</span>) &#125;</span><br><span class="line">                .print(<span class="string">&quot;[ Catch ]&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Utils-swift"><a href="#Utils-swift" class="headerlink" title="Utils.swift"></a>Utils.swift</h2><p>前面提到的 <code>Utils.swift</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">check</span>&lt;P: Publisher&gt;<span class="params">(<span class="keyword">_</span> title: String, publisher: <span class="params">()</span></span></span> -&gt; <span class="type">P</span>) -&gt; <span class="type">AnyCancellable</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;----- <span class="subst">\(title)</span> -----&quot;</span>)</span><br><span class="line">    <span class="keyword">defer</span> &#123; <span class="built_in">print</span>(<span class="string">&quot;&quot;</span>) &#125;</span><br><span class="line">    <span class="keyword">return</span> publisher()</span><br><span class="line">        .print()</span><br><span class="line">        .sink(</span><br><span class="line">            receiveCompletion: &#123; <span class="keyword">_</span> <span class="keyword">in</span>&#125;,</span><br><span class="line">            receiveValue: &#123; <span class="keyword">_</span> <span class="keyword">in</span> &#125;</span><br><span class="line">        )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">delay</span><span class="params">(<span class="keyword">_</span> seconds: TimeInterval = <span class="number">0</span>, on queue: DispatchQueue = .main, block: @escaping <span class="params">()</span></span></span> -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">    queue.asyncAfter(deadline: .now() <span class="operator">+</span> seconds, execute: block)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">SampleError</span>: <span class="title">Error</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> sampleError</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Sequence</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">scan</span>&lt;ResultElement&gt;<span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">_</span> initial: ResultElement,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">_</span> nextPartialResult: <span class="params">(ResultElement, Element)</span></span></span> -&gt; <span class="type">ResultElement</span></span><br><span class="line">        ) -&gt; [<span class="type">ResultElement</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> result: [<span class="type">ResultElement</span>] <span class="operator">=</span> []</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="keyword">self</span> &#123;</span><br><span class="line">            result.append(nextPartialResult(result.last <span class="operator">??</span> initial, x))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">TimeEventItem</span>&lt;<span class="title">Value</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">let</span> duration: <span class="type">TimeInterval</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">let</span> value: <span class="type">Value</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(duration: <span class="type">TimeInterval</span>, value: <span class="type">Value</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.duration <span class="operator">=</span> duration</span><br><span class="line">        <span class="keyword">self</span>.value <span class="operator">=</span> value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TimeEventItem</span>: <span class="title">Equatable</span> <span class="title">where</span> <span class="title">Value</span>: <span class="title">Equatable</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TimeEventItem</span>: <span class="title">CustomStringConvertible</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> description: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;[<span class="subst">\(duration)</span>] - <span class="subst">\(value)</span>&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">TimerPublisher</span>&lt;<span class="title">Value</span>&gt;: <span class="title">Publisher</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">typealias</span> <span class="type">Output</span> <span class="operator">=</span> <span class="type">TimeEventItem</span>&lt;<span class="type">Value</span>&gt;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">typealias</span> <span class="type">Failure</span> <span class="operator">=</span> <span class="type">Never</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> items: [<span class="type">TimeEventItem</span>&lt;<span class="type">Value</span>&gt;]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(<span class="keyword">_</span> items: [<span class="type">TimeEventItem</span>&lt;<span class="type">Value</span>&gt;]) &#123;</span><br><span class="line">        <span class="keyword">self</span>.items <span class="operator">=</span> items</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">receive</span>&lt;S&gt;<span class="params">(subscriber: S)</span></span> <span class="keyword">where</span> <span class="type">S</span> : <span class="type">Subscriber</span>, <span class="type">Failure</span> <span class="operator">==</span> <span class="type">S</span>.<span class="type">Failure</span>, <span class="type">Output</span> <span class="operator">==</span> <span class="type">S</span>.<span class="type">Input</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> data <span class="operator">=</span> items.sorted &#123; <span class="variable">$0</span>.duration <span class="operator">&lt;</span> <span class="variable">$1</span>.duration &#125;</span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> data.indices &#123;</span><br><span class="line">            <span class="keyword">let</span> item <span class="operator">=</span> items[index]</span><br><span class="line">            <span class="type">MyPlayground_Sources</span>.delay(item.duration) &#123;</span><br><span class="line">                <span class="keyword">_</span> <span class="operator">=</span> subscriber.receive(item)</span><br><span class="line">                <span class="keyword">if</span> index <span class="operator">==</span> data.endIndex <span class="operator">-</span> <span class="number">1</span> &#123;</span><br><span class="line">                    subscriber.receive(completion: .finished)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Dictionary</span> <span class="title">where</span> <span class="title">Key</span> == <span class="title">TimeInterval</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> timerPublisher: <span class="type">TimerPublisher</span>&lt;<span class="type">Value</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> items <span class="operator">=</span> map &#123; kvp <span class="keyword">in</span></span><br><span class="line">            <span class="type">TimeEventItem</span>(duration: kvp.key, value: kvp.value)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">TimerPublisher</span>(items)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p> [1] 王巍 (@onevcat). SwiftUI 与 Combine 编程. ch6</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Publisher-%E5%92%8C%E5%B8%B8%E7%94%A8-Operator"><span class="toc-number">1.</span> <span class="toc-text">Publisher 和常用 Operator</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-Publisher"><span class="toc-number">1.1.</span> <span class="toc-text">常用 Publisher</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-Operator"><span class="toc-number">1.2.</span> <span class="toc-text">常用 Operator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">错误处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E9%94%99%E8%AF%AF"><span class="toc-number">1.3.1.</span> <span class="toc-text">发布错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">错误转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E6%81%A2%E5%A4%8D"><span class="toc-number">1.3.3.</span> <span class="toc-text">错误恢复</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Utils-swift"><span class="toc-number">1.4.</span> <span class="toc-text">Utils.swift</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.5.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&text=Publisher 和常用 Operator"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&is_video=false&description=Publisher 和常用 Operator"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Publisher 和常用 Operator&body=Check out this article: https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&title=Publisher 和常用 Operator"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/01/22/SwiftUI/CombinePublisherOperator/&name=Publisher 和常用 Operator&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
