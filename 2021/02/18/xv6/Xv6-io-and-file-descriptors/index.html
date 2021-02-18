@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Xv6 I&#x2F;O 与文件描述符 参考: xv6-riscv-book 1.2 I&#x2F;O and File descriptors  Xv6 I&#x2F;O 系统调用本文会使用到如下 Xv6 的 I&#x2F;O 系统调用：    系统调用 说明    int open(char *file, int flags) 打开一个文件，flags 用来指示读or写，返回一个文件描述符   int write(int fd,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xv6 I&#x2F;O 与文件描述符">
+<meta property="og:url" content="https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Xv6 I&#x2F;O 与文件描述符 参考: xv6-riscv-book 1.2 I&#x2F;O and File descriptors  Xv6 I&#x2F;O 系统调用本文会使用到如下 Xv6 的 I&#x2F;O 系统调用：    系统调用 说明    int open(char *file, int flags) 打开一个文件，flags 用来指示读or写，返回一个文件描述符   int write(int fd,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
+<meta property="article:published_time" content="2021-02-18T17:37:17.516Z">
+<meta property="article:modified_time" content="2021-02-18T09:40:06.706Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="xv6">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api.ixiaowai.cn/api/api.php">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Xv6 I/O 与文件描述符</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/02/18/xv6/Xv6-processes/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&text=Xv6 I/O 与文件描述符"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&is_video=false&description=Xv6 I/O 与文件描述符"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 I/O 与文件描述符&body=Check out this article: https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&name=Xv6 I/O 与文件描述符&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xv6-I-O-%E4%B8%8E%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">Xv6 I&#x2F;O 与文件描述符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Xv6-I-O-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">Xv6 I&#x2F;O 系统调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Xv6-%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">1.2.</span> <span class="toc-text">Xv6 文件描述符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-amp-write"><span class="toc-number">1.3.</span> <span class="toc-text">read &amp; write</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.</span> <span class="toc-text">重定向的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%81%8F%E7%A7%BB"><span class="toc-number">1.5.</span> <span class="toc-text">共享偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dup"><span class="toc-number">1.6.</span> <span class="toc-text">dup</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Xv6 I/O 与文件描述符
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-02-18T17:37:17.516Z" itemprop="datePublished">2021-02-18</time>
+        
+        (Updated: <time datetime="2021-02-18T09:40:06.706Z" itemprop="dateModified">2021-02-18</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/xv6/" rel="tag">xv6</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://api.ixiaowai.cn/api/api.php" alt="Meaning Unknown&#39;s Head Image"></p>
+<h1 id="Xv6-I-O-与文件描述符"><a href="#Xv6-I-O-与文件描述符" class="headerlink" title="Xv6 I/O 与文件描述符"></a>Xv6 I/O 与文件描述符</h1><blockquote>
+<p>参考: <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv-book">xv6-riscv-book</a> 1.2 I/O and File descriptors</p>
+</blockquote>
+<h2 id="Xv6-I-O-系统调用"><a href="#Xv6-I-O-系统调用" class="headerlink" title="Xv6 I/O 系统调用"></a>Xv6 I/O 系统调用</h2><p>本文会使用到如下 Xv6 的 I/O 系统调用：</p>
+<table>
+<thead>
+<tr>
+<th>系统调用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int open(char *file, int flags)</td>
+<td>打开一个文件，flags 用来指示读or写，返回一个文件描述符</td>
+</tr>
+<tr>
+<td>int write(int fd, char *buf, int n)</td>
+<td>从 buf 写 n 个字节到文件描述符 fd，返回写入的字节数</td>
+</tr>
+<tr>
+<td>int read(int fd, char *buf, int n)</td>
+<td>从文件描述符 fd 读 n 个字节到 buf，返回读取的字节数或 <code>0</code> 表示 EOF（文件结束）</td>
+</tr>
+<tr>
+<td>int close(int fd)</td>
+<td>释放打开的文件描述符 fd</td>
+</tr>
+<tr>
+<td>int dup(int fd)</td>
+<td>返回一个新的文件描述符，指向与 fd 相同的文件</td>
+</tr>
+</tbody></table>
+<p>open 的 flags 由 <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/fcntl.h#L1-L5"> kernel/fcntl.h:1-5</a> 提供：</p>
+<table>
+<thead>
+<tr>
+<th>flag</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>O_RDONLY</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>O_WRONLY</td>
+<td>只写</td>
+</tr>
+<tr>
+<td>O_RDWR</td>
+<td>读和写</td>
+</tr>
+<tr>
+<td>O_CREATE</td>
+<td>不存在时新建</td>
+</tr>
+<tr>
+<td>O_TRUNC</td>
+<td>把文件截断到 0 长度</td>
+</tr>
+</tbody></table>
+<p>这些都是用 bit 描述的，可以做或运算：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fd = open(<span class="string">&quot;/dir/file&quot;</span>, O_CREATE|O_WRONLY);</span><br></pre></td></tr></table></figure>
+<h2 id="Xv6-文件描述符"><a href="#Xv6-文件描述符" class="headerlink" title="Xv6 文件描述符"></a>Xv6 文件描述符</h2><p>文件描述符就是一个整数，用来代表一个打开的 IO 对象（如文件），通过文件描述符就可以对 IO 对象进行读写操作。程序一开始就会被分配给如下惯例文件描述符：</p>
+<table>
+<thead>
+<tr>
+<th>文件描述符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>stdin  标准输入</td>
+</tr>
+<tr>
+<td>1</td>
+<td>stdout 标准输出</td>
+</tr>
+<tr>
+<td>2</td>
+<td>stderr 标准错误</td>
+</tr>
+</tbody></table>
+<h2 id="read-amp-write"><a href="#read-amp-write" class="headerlink" title="read &amp; write"></a>read &amp; write</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// useio.c</span></span><br><span class="line"><span class="comment">// Copies data from its standard input to its standard output.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/stat.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;user/user.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">512</span>];</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(;;) &#123;</span><br><span class="line">		n = read(<span class="number">0</span>, buf, <span class="keyword">sizeof</span> buf);  <span class="comment">// 0: stdin</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">break</span>;  <span class="comment">// EOF</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (n &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="built_in">fprintf</span>(<span class="number">2</span>, <span class="string">&quot;read error\n&quot;</span>);  <span class="comment">// 2: stderr</span></span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (write(<span class="number">1</span>, buf, n) != n) &#123;  <span class="comment">// 1: stdout</span></span><br><span class="line">			<span class="built_in">fprintf</span>(<span class="number">2</span>, <span class="string">&quot;write error\n&quot;</span>);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个程序从标准输入读，写到标准输出，相当于一个简化的 cat：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ useio &gt; fff</span><br><span class="line">123456  <span class="comment"># 这是输入的</span></span><br><span class="line">$ useio &lt; fff</span><br><span class="line">123456  <span class="comment"># 这是输出的</span></span><br></pre></td></tr></table></figure>
+<h2 id="重定向的实现"><a href="#重定向的实现" class="headerlink" title="重定向的实现"></a>重定向的实现</h2><p>在通过如 open 的系统调用打开一个文件时，被分配给的文件描述符总是当前可用的描述符中<strong>最小的</strong>。</p>
+<p>用这个特性就可以实现输入输出的重定向。Xv6 的 Shell (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//user/sh.c#L82">user/sh.c:82</a>) 里就是这么实现的。</p>
+<p>下面的程序实现一个 <code>cat &lt; input.txt</code> 的效果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// uredirection.c</span></span><br><span class="line"><span class="comment">// A simplified version of the code a shell runs for the command `cat &lt; input.txt`</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/stat.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;user/user.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/fcntl.h&quot;</span>  <span class="comment">// define O_RDONLY</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *argv[<span class="number">2</span>];</span><br><span class="line">	argv[<span class="number">0</span>] = <span class="string">&quot;cat&quot;</span>;</span><br><span class="line">	argv[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (fork() == <span class="number">0</span>) &#123;  <span class="comment">// subprocess</span></span><br><span class="line">		close(<span class="number">0</span>);  <span class="comment">// close stdin</span></span><br><span class="line">		<span class="comment">// A newly allocated file descriptor is always the lowest-numbered unused descriptor of the current process.</span></span><br><span class="line">		open(<span class="string">&quot;input.txt&quot;</span>, O_RDONLY);  <span class="comment">// 0 =&gt; input.txt</span></span><br><span class="line">		<span class="comment">// exec replaces the calling process’s memory but preserves its file table.</span></span><br><span class="line">		exec(<span class="string">&quot;cat&quot;</span>, argv);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cat &gt; input.txt</span><br><span class="line">&lt;Input something here&gt;</span><br><span class="line">$ uredirection</span><br><span class="line">&lt;what is inputted above&gt;</span><br></pre></td></tr></table></figure>
+<p>fork 和 exec 分离的一个好处就是 shell 可以在 fork 和 exec 之间优雅实现重定向，如上面的程序。如果把二者合并，提供一个 <code>forkexec</code>  系统调用，重定向的实现就很烦了：需要多传参数；或者在调用 forkexec 前设置 shell 进程自己的描述符，然后又改回去；或者让每个程序自己去支持重定向。</p>
+<h2 id="共享偏移"><a href="#共享偏移" class="headerlink" title="共享偏移"></a>共享偏移</h2><p>fork 的时候会拷贝文件描述符表，但每个文件的偏移量（读/写到哪）会在父子进程间共享。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// usharedoffset.c</span></span><br><span class="line"><span class="comment">// Although fork copies the file descriptor table, each underlying file offset is shared between parent and child. </span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/stat.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;user/user.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/fcntl.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (fork() == <span class="number">0</span>) &#123;</span><br><span class="line">		write(<span class="number">1</span>, <span class="string">&quot;hello &quot;</span>, <span class="number">6</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		wait(<span class="number">0</span>);</span><br><span class="line">		write(<span class="number">1</span>, <span class="string">&quot;world\n&quot;</span>, <span class="number">6</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行效果：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;&quot;</span> &gt; output.txt</span><br><span class="line">$ usharedoffset &gt; output.txt</span><br><span class="line">$ cat output.txt</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+<h2 id="dup"><a href="#dup" class="headerlink" title="dup"></a>dup</h2><p>dup “复制”一个现有的文件描述符，返回的新描述符指向和原来一样的 I/O 物体（比如文件）。类似于 fork，新旧文件描述符共享 offset。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// udup.c </span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// The dup system call duplicates an existing file descriptor, </span></span><br><span class="line"><span class="comment">// returning a new one that refers to the same underlying I/O object. </span></span><br><span class="line"><span class="comment">// Both file descriptors share an offset, just as the file descriptors </span></span><br><span class="line"><span class="comment">// duplicated by fork do. </span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/stat.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;user/user.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/fcntl.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd = dup(<span class="number">1</span>);</span><br><span class="line">	write(<span class="number">1</span>, <span class="string">&quot;hello &quot;</span>, <span class="number">6</span>);</span><br><span class="line">	write(fd, <span class="string">&quot;world\n&quot;</span>, <span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行效果：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ udup &gt; output.txt</span><br><span class="line">$ cat output.txt</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+<p>利用 dup，shell 就可以实现 <code>ls existing-file non-existing-file &gt; tmp1 2&gt;&amp;1</code> 了。 <code>2&gt;&amp;1</code> 就是 <code>2 = dup(1)</code>，让标准错误和标准输出指向同一个文件，并且共享偏移（一直往后写）。</p>
+<hr>
+<p>EOF</p>
+<hr>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># By CDFMLR 2021-02-18</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;See you.🧑‍💻&quot;</span></span><br></pre></td></tr></table></figure>
+<p>顶部图片来自于<a target="_blank" rel="noopener" href="https://api.ixiaowai.cn/">小歪API</a>，系随机选取的图片，仅用于检测屏幕显示的机械、光电性能，与文章的任何内容及观点无关，也并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。如有侵权，联系删除。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xv6-I-O-%E4%B8%8E%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">Xv6 I&#x2F;O 与文件描述符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Xv6-I-O-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">Xv6 I&#x2F;O 系统调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Xv6-%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">1.2.</span> <span class="toc-text">Xv6 文件描述符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-amp-write"><span class="toc-number">1.3.</span> <span class="toc-text">read &amp; write</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.</span> <span class="toc-text">重定向的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%81%8F%E7%A7%BB"><span class="toc-number">1.5.</span> <span class="toc-text">共享偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dup"><span class="toc-number">1.6.</span> <span class="toc-text">dup</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&text=Xv6 I/O 与文件描述符"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&is_video=false&description=Xv6 I/O 与文件描述符"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 I/O 与文件描述符&body=Check out this article: https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&title=Xv6 I/O 与文件描述符"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/02/18/xv6/Xv6-io-and-file-descriptors/&name=Xv6 I/O 与文件描述符&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
