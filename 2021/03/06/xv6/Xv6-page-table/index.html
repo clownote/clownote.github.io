@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Xv6 Page Table Learning xv6-riscv-book Chapter 3 Page tables  [TOC] Isolate different process’s address spaces and to multiplex them onto a single physical memory. Paging hardwareSv39 RISC-V:  Xv6 ru">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xv6 Page Table">
+<meta property="og:url" content="https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Xv6 Page Table Learning xv6-riscv-book Chapter 3 Page tables  [TOC] Isolate different process’s address spaces and to multiplex them onto a single physical memory. Paging hardwareSv39 RISC-V:  Xv6 ru">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
+<meta property="og:image" content="https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/Xv6-page-table/virtual-and-physical-addresses.png">
+<meta property="og:image" content="https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/Xv6-page-table/detailed-address-translation.png">
+<meta property="og:image" content="https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/Xv6-page-table/kernel-address-space.png">
+<meta property="og:image" content="https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/Xv6-page-table/user-addrrss-space.png">
+<meta property="article:published_time" content="2021-03-06T11:46:37.038Z">
+<meta property="article:modified_time" content="2021-03-09T03:54:25.452Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="xv6">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api.ixiaowai.cn/api/api.php">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Xv6 Page Table</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/03/02/xv6/Xv6-Lab-system-calls/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&text=Xv6 Page Table"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&is_video=false&description=Xv6 Page Table"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 Page Table&body=Check out this article: https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&name=Xv6 Page Table&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xv6-Page-Table"><span class="toc-number">1.</span> <span class="toc-text">Xv6 Page Table</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Paging-hardware"><span class="toc-number">1.1.</span> <span class="toc-text">Paging hardware</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kernel-address-space"><span class="toc-number">1.2.</span> <span class="toc-text">Kernel address space</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-an-address-space"><span class="toc-number">1.3.</span> <span class="toc-text">Creating an address space</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Physical-memory-allocation"><span class="toc-number">1.4.</span> <span class="toc-text">Physical memory allocation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Physical-memory-allocator"><span class="toc-number">1.5.</span> <span class="toc-text">Physical memory allocator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Process-address-space"><span class="toc-number">1.6.</span> <span class="toc-text">Process address space</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sbrk"><span class="toc-number">1.7.</span> <span class="toc-text">sbrk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec"><span class="toc-number">1.8.</span> <span class="toc-text">exec</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Xv6 Page Table
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-03-06T11:46:37.038Z" itemprop="datePublished">2021-03-06</time>
+        
+        (Updated: <time datetime="2021-03-09T03:54:25.452Z" itemprop="dateModified">2021-03-09</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/xv6/" rel="tag">xv6</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://api.ixiaowai.cn/api/api.php" alt="Meaning Unknown&#39;s Head Image"></p>
+<h1 id="Xv6-Page-Table"><a href="#Xv6-Page-Table" class="headerlink" title="Xv6 Page Table"></a>Xv6 Page Table</h1><blockquote>
+<p>Learning <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv-book">xv6-riscv-book</a> Chapter 3 Page tables</p>
+</blockquote>
+<p>[TOC]</p>
+<p>Isolate different process’s address spaces and to multiplex them onto a single physical memory.</p>
+<h2 id="Paging-hardware"><a href="#Paging-hardware" class="headerlink" title="Paging hardware"></a>Paging hardware</h2><p><strong>Sv39</strong> RISC-V:</p>
+<ul>
+<li><p>Xv6 runs on <strong>Sv39</strong> RISC-V: only the bottom 39 bits of a 64-bit virtual address are used; the top 25 bits are not used. </p>
+</li>
+<li><p>a RISC-V <strong>page table</strong>: an array of $2^{27}$ <em>page table entries (PTEs)</em></p>
+</li>
+<li><p>a <strong>PTE</strong>: a 44-bit <em>physical page number (PPN)</em> and flags.</p>
+</li>
+</ul>
+<hr>
+<p>[Logically] The <strong>paging hardware</strong>: virtual address =&gt; physical address: </p>
+<ul>
+<li>handle a <strong>39-bit virtual address</strong><ul>
+<li>top 27 bits of the 39 bits: index into the page table to find a PTE</li>
+<li>bottom 12 bits: do not change</li>
+</ul>
+</li>
+<li>making a <strong>56-bit physical address</strong>: <ul>
+<li><strong>top 44 bits</strong> come from the PPN in the PTE</li>
+<li><strong>bottom 12 bits</strong> are copied from the original virtual address.</li>
+</ul>
+</li>
+</ul>
+<p><img src="Xv6-page-table/virtual-and-physical-addresses.png" alt="Figure 3.1: RISC-V virtual and physical addresses, with a simplified logical page table."></p>
+<p>Virtual-to-physical address translations: aligned chunks of $2^{12}$ bytes. (Such a chunk is called a <em>page</em>.)</p>
+<hr>
+<p>[Actually] Virtual -&gt; Physical address <strong>translation</strong>:</p>
+<p><img src="Xv6-page-table/detailed-address-translation.png" alt="Figure 3.2: RISC-V address translation details."></p>
+<ul>
+<li>page table: three-level tree: pages of PTEs</li>
+<li>each PTEs page: 4096-bits: contains 512 PTEs to the next level</li>
+<li>the top 27 bits virtual address to find PTE:<ul>
+<li>9 bits =&gt; tree root</li>
+<li>9 bits =&gt; mid level</li>
+<li>9 bits =&gt; final PTE</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>In translation: any of the three required PTEs is <strong>not present</strong>:</p>
+<ul>
+<li>paging hardware raises a <em>page-fault exception</em></li>
+<li>kernel handles the exception</li>
+</ul>
+<hr>
+<p><strong>Flag bits of PTE</strong>: how the associated virtual address is allowed to be used:</p>
+<ul>
+<li><code>PTE_V</code>:  is the PTE present?</li>
+<li><code>PTE_R</code>: allowed to read (to the page)?</li>
+<li><code>PTE_W</code>: allowed to write?</li>
+<li><code>PTE_X</code>: interpret the content of the page as instructions and execute</li>
+<li><code>PTE_U</code>: allowed <strong>user mode</strong> instructions to access the page</li>
+</ul>
+<p>(defined in <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/riscv.h#L329-L333">kernel/riscv.h:329-333</a>)</p>
+<hr>
+<p>Tell the hardware to <strong>use a page table</strong>:</p>
+<ul>
+<li>Kernel: write the physical address of the root page-table page into the <code>satp</code> register</li>
+<li>CPU: translate all addresses generated by subsequent instructions using the page table on its <code>satp</code></li>
+<li>Each CPU has its own <code>satp</code>: different CPUs can run processes with a private address space described by its own page table.</li>
+</ul>
+<hr>
+<p>Notes about terms:</p>
+<ul>
+<li>Physical memory refers to storage cells in DRAM</li>
+<li>A byte of physical memory has an address, called a physical address</li>
+<li>Instructions use only virtual addresses</li>
+<li>The paging hardware translates virtual addresses to physical addresses, and then sends them to the DRAM hardware to read or write storage</li>
+<li>virtual memory ≠ virtual addresses<ul>
+<li>virtual memory: the collection of abstractions and mechanisms the kernel provides to manage physical memory and virtual addresses.</li>
+<li>virtual addresses &amp; physical addresses: a physical object</li>
+</ul>
+</li>
+</ul>
+<h2 id="Kernel-address-space"><a href="#Kernel-address-space" class="headerlink" title="Kernel address space"></a>Kernel address space</h2><ul>
+<li>User address space: Xv6 maintains one page table per process.</li>
+<li><strong>Kernel address space</strong>: an <strong>additional single page table</strong> to give the kernel itself access to :<ul>
+<li>physical memory</li>
+<li>hardware resources at predictable virtual addresses</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>kernel address space layout: <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/memlayout.h">kernel/memlayout.h</a></p>
+<p><img src="Xv6-page-table/kernel-address-space.png" alt="xv6’s kernel address space"></p>
+<p>QEMU physical address space:</p>
+<ul>
+<li>below <code>0x80000000</code>: device interfaces to software as <em>memory-mapped</em> control registers:  <ul>
+<li>kernel interacts with the devices by reading/writing these special physical addresses.</li>
+</ul>
+</li>
+<li><code>0x80000000 ~ PHYSTOP</code>: RAM (physical memory) <code>PHYSTOP = at least 0x86400000</code>: <ul>
+<li>kernel gets at RAM and memory-mapped device registers using “direct mapping” (<code>VA=X -&gt; PA=X</code>)</li>
+<li>the kernel itself is located at <code>KERNBASE=0x80000000</code> in both the virtual address space and in physical memory</li>
+</ul>
+</li>
+<li>special kernel virtual addresses aren’t direct-mapped:<ol>
+<li>The trampoline page: mapped at the top of the virtual address space (the same as user page tables)</li>
+</ol>
+<ul>
+<li>NOTE: the page holding trampoline is mapped twice in the kernel virtual address space: once at top of the virtual address space and once with a direct mapping</li>
+</ul>
+<ol start="2">
+<li>The kernel stack pages: Each process has its own kernel stack mapped below an unmapped <em>guard page</em> (whose PTE is invalid: PTE_V is not set). </li>
+</ol>
+<ul>
+<li>guard page:  if the kernel overflows a kernel stack into guard page =&gt; a kernel panic</li>
+<li>without guard page:  overflowing stack overwrite other kernel memory =&gt; any incorrect operation</li>
+</ul>
+</li>
+</ul>
+<h2 id="Creating-an-address-space"><a href="#Creating-an-address-space" class="headerlink" title="Creating an address space"></a>Creating an address space</h2><blockquote>
+<p> <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/vm.c#L1">vm.c</a></p>
+</blockquote>
+<p>Central data structure:</p>
+<ul>
+<li><code>pagetable_t</code>: a pointer to a RISC-V root page-table page</li>
+</ul>
+<p>Functions:</p>
+<ul>
+<li><code>kvmXXX</code>: manipulate the kernel page table</li>
+<li><code>uvmXXX</code>: manipulate a user page table</li>
+<li>others: usedfor both</li>
+</ul>
+<p>Key functions:</p>
+<ul>
+<li><code>walk</code>: finds the PTE for a virtual addres</li>
+<li><code>mappages</code>: installs PTEs for new mappings</li>
+<li><code>copyin</code>: copy from user to kernel (system call arguments)</li>
+<li><code>copyout</code>: copy from kernel to user</li>
+</ul>
+<p>Boot: </p>
+<ul>
+<li>main -&gt; kvminit: create the kernel’s page table</li>
+<li>(kvminit -&gt; kvmmap -&gt; mappages -&gt; walk)</li>
+<li>main -&gt; kvminithart:  install the kernel page table</li>
+<li>main -&gt; procinit (in kernel/proc.c): allocates a kernel stack for each pro- cess</li>
+</ul>
+<hr>
+<p>Each RISC-V CPU caches page table entries in a <em>Translation Look-aside Buffer (TLB)</em>: </p>
+<ul>
+<li>xv6 changes a page table =&gt; must tell the CPU to invalidate corresponding cached TLB entries.<ul>
+<li><code>sfence.vma</code> instruction: flushes the current CPU’s TLB</li>
+<li>in <code>kvminithart</code> after reloading the <code>satp</code> register</li>
+<li>in the <code>trampoline</code> code that switches to a user page table before returning to user space  (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/trampoline.S#L79">kernel/trampoline.S:79</a>)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Physical-memory-allocation"><a href="#Physical-memory-allocation" class="headerlink" title="Physical memory allocation"></a>Physical memory allocation</h2><p>The kernel must allocate and free physical memory at run-time for page tables, user memory, kernel stacks, and pipe buffers.</p>
+<ul>
+<li>uses the physical memory between the end of the kernel and PHYSTOP for run-time allocation</li>
+<li>allocates and frees whole 4096-byte pages at a time</li>
+<li>keeps track of which pages are free by a <strong>linked list</strong>：<ul>
+<li><code>allocation</code>: removing a page from the linked list</li>
+<li><code>freeing</code>: adding the freed page to the list</li>
+</ul>
+</li>
+</ul>
+<h2 id="Physical-memory-allocator"><a href="#Physical-memory-allocator" class="headerlink" title="Physical memory allocator"></a>Physical memory allocator</h2><p>allocator: <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/kalloc.c#L1">kalloc.c</a></p>
+<ul>
+<li>data structure:  <em>free list</em><ul>
+<li>element: <code>struct run</code></li>
+<li>protected: spin lock</li>
+</ul>
+</li>
+</ul>
+<p>main calls <code>kinit</code> to initialize the allocator:</p>
+<ul>
+<li>initializes the lock</li>
+<li>initializes the free list to hold every page in [end of the kernel, PHYSTOP]</li>
+</ul>
+<h2 id="Process-address-space"><a href="#Process-address-space" class="headerlink" title="Process address space"></a>Process address space</h2><ul>
+<li>Each process has a separate page table</li>
+<li>switch processes =&gt; change page table</li>
+<li>process ask for more memory: <ul>
+<li>xv6 uses kalloc to allocate physical pages</li>
+<li>adds PTEs to the process’s page table</li>
+</ul>
+</li>
+</ul>
+<p><img src="Xv6-page-table/user-addrrss-space.png" alt="A process’s user address space, with its initial stack."></p>
+<h2 id="sbrk"><a href="#sbrk" class="headerlink" title="sbrk"></a>sbrk</h2><p><code>sbrk</code>: the system call for a process to shrink or grow its memory.</p>
+<p>implement:</p>
+<p>sbrk =&gt; <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/proc.c#L253">kernel/proc: growproc</a> =&gt; uvmalloc / uvmdealloc =&gt; kalloc / kfree</p>
+<h2 id="exec"><a href="#exec" class="headerlink" title="exec"></a>exec</h2><p><code>exec</code>: creates the user part of an address space.</p>
+<ol>
+<li>opens the named binary <code>path</code> using <code>namei</code></li>
+<li> checks the ELF header</li>
+<li>allocates a new page table with no user mappings with <code>proc_pagetable</code></li>
+<li>load program into memory: <ol>
+<li>allocates memory for each ELF segment with <code>uvmalloc</code></li>
+<li>loads each segment into memory with <code>loadseg</code></li>
+</ol>
+</li>
+<li>allocates and initializes the user stack</li>
+<li>copies the argument strings to the top of the stack, recording the pointers to them in ustack</li>
+</ol>
+<hr>
+<p>EOF</p>
+<hr>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># By CDFMLR 2021-03-09</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;See you.&quot;</span></span><br></pre></td></tr></table></figure>
+<p>顶部图片来自于<a target="_blank" rel="noopener" href="https://api.ixiaowai.cn/">小歪API</a>，系随机选取的图片，仅用于检测屏幕显示的机械、光电性能，与文章的任何内容及观点无关，也并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。如有侵权，联系删除。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xv6-Page-Table"><span class="toc-number">1.</span> <span class="toc-text">Xv6 Page Table</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Paging-hardware"><span class="toc-number">1.1.</span> <span class="toc-text">Paging hardware</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kernel-address-space"><span class="toc-number">1.2.</span> <span class="toc-text">Kernel address space</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-an-address-space"><span class="toc-number">1.3.</span> <span class="toc-text">Creating an address space</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Physical-memory-allocation"><span class="toc-number">1.4.</span> <span class="toc-text">Physical memory allocation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Physical-memory-allocator"><span class="toc-number">1.5.</span> <span class="toc-text">Physical memory allocator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Process-address-space"><span class="toc-number">1.6.</span> <span class="toc-text">Process address space</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sbrk"><span class="toc-number">1.7.</span> <span class="toc-text">sbrk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec"><span class="toc-number">1.8.</span> <span class="toc-text">exec</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&text=Xv6 Page Table"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&is_video=false&description=Xv6 Page Table"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 Page Table&body=Check out this article: https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&title=Xv6 Page Table"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/03/06/xv6/Xv6-page-table/&name=Xv6 Page Table&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
