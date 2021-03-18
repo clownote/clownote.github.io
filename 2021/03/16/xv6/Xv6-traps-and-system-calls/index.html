@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Traps and system calls Learning xv6-riscv-book Chapter 4 Traps and system calls  [TOC]  Trap: CPU transfer to speical code to handle events  system call: ecall into the kernel exception: something il">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xv6 traps and system calls">
+<meta property="og:url" content="https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Traps and system calls Learning xv6-riscv-book Chapter 4 Traps and system calls  [TOC]  Trap: CPU transfer to speical code to handle events  system call: ecall into the kernel exception: something il">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
+<meta property="article:published_time" content="2021-03-16T21:59:28.476Z">
+<meta property="article:modified_time" content="2021-03-18T14:09:05.557Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="xv6">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api.ixiaowai.cn/api/api.php">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Xv6 traps and system calls</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/03/11/xv6/Xv6-Lab-page-tables/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&text=Xv6 traps and system calls"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&is_video=false&description=Xv6 traps and system calls"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 traps and system calls&body=Check out this article: https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&name=Xv6 traps and system calls&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Traps-and-system-calls"><span class="toc-number">1.</span> <span class="toc-text">Traps and system calls</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RISC-V-trap-machinery"><span class="toc-number">1.1.</span> <span class="toc-text">RISC-V trap machinery</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Registers"><span class="toc-number">1.1.1.</span> <span class="toc-text">Registers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hardware-trap-handling-sequence"><span class="toc-number">1.1.2.</span> <span class="toc-text">hardware trap handling sequence</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Traps-from-user-space"><span class="toc-number">1.2.</span> <span class="toc-text">Traps from user space</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#uservec"><span class="toc-number">1.2.1.</span> <span class="toc-text">uservec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usertrap"><span class="toc-number">1.2.2.</span> <span class="toc-text">usertrap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usertrapret"><span class="toc-number">1.2.3.</span> <span class="toc-text">usertrapret</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#userret"><span class="toc-number">1.2.4.</span> <span class="toc-text">userret</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Calling-system-calls"><span class="toc-number">1.3.</span> <span class="toc-text">Calling system calls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#System-call-arguments"><span class="toc-number">1.4.</span> <span class="toc-text">System call arguments</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Traps-from-kernel-space"><span class="toc-number">1.5.</span> <span class="toc-text">Traps from kernel space</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Page-fault-exceptions"><span class="toc-number">1.6.</span> <span class="toc-text">Page-fault exceptions</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Xv6 traps and system calls
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-03-16T21:59:28.476Z" itemprop="datePublished">2021-03-16</time>
+        
+        (Updated: <time datetime="2021-03-18T14:09:05.557Z" itemprop="dateModified">2021-03-18</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/xv6/" rel="tag">xv6</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://api.ixiaowai.cn/api/api.php" alt="Meaning Unknown&#39;s Head Image"></p>
+<h1 id="Traps-and-system-calls"><a href="#Traps-and-system-calls" class="headerlink" title="Traps and system calls"></a>Traps and system calls</h1><blockquote>
+<p>Learning <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv-book">xv6-riscv-book</a> Chapter 4 Traps and system calls</p>
+</blockquote>
+<p>[TOC]</p>
+<hr>
+<p><strong>Trap</strong>: CPU transfer to speical code to handle events</p>
+<ul>
+<li><strong>system call</strong>: ecall into the kernel</li>
+<li><strong>exception</strong>: something illegal</li>
+<li><strong>interrupt</strong>: from device</li>
+</ul>
+<hr>
+<p>xv6 kernel handles all traps.</p>
+<p>code -&gt; trap (handling in kernel) -&gt; resume</p>
+<hr>
+<p>trap handling proceeds:</p>
+<ol>
+<li><strong>hardware</strong> actions by CPU</li>
+<li><strong>vector</strong> prepares for kernel C code</li>
+<li>trap <strong>handler</strong> decides what to do </li>
+<li>do system call / device service</li>
+</ol>
+<hr>
+<p>three cases of assembly vectors:</p>
+<ul>
+<li>traps from user space</li>
+<li>traps from kernel space</li>
+<li>timer interrupts</li>
+</ul>
+<h2 id="RISC-V-trap-machinery"><a href="#RISC-V-trap-machinery" class="headerlink" title="RISC-V trap machinery"></a>RISC-V trap machinery</h2><h3 id="Registers"><a href="#Registers" class="headerlink" title="Registers"></a>Registers</h3><p>A set of <strong>registers</strong>: </p>
+<ul>
+<li>kernel reads about a trap</li>
+<li>kernel writes to tell the CPU how to handle traps.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>register</th>
+<th>description</th>
+<th>write by</th>
+<th>when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>stvec</td>
+<td>address of trap handler</td>
+<td>kernel</td>
+<td></td>
+</tr>
+<tr>
+<td>sepc</td>
+<td>saved PC when a trap occurs</td>
+<td>RISC-V</td>
+<td>when a trap occurs</td>
+</tr>
+<tr>
+<td>scause</td>
+<td>reason of trap</td>
+<td>RISC-V</td>
+<td></td>
+</tr>
+<tr>
+<td>sscratch</td>
+<td>places a value that comes in handy</td>
+<td>kernel</td>
+<td>at the very start of a traphandler</td>
+</tr>
+<tr>
+<td>sstatus</td>
+<td><strong>SIE</strong> bit: device interrupts are enabled? (defer until set)<br /><strong>SPP</strong> bit: trap from user or supervisor mode?(ctrl what mode sret returns)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>These registers  are in <strong>supervisor mode</strong>: cannot be r/w in user mode</p>
+<p><strong>Machine mode</strong> has an equivalent set of these regs: only for <strong>timer interrupts</strong></p>
+<p>Each CPU has its own set: can handling traps at a same time</p>
+<h3 id="hardware-trap-handling-sequence"><a href="#hardware-trap-handling-sequence" class="headerlink" title="hardware trap handling sequence"></a>hardware trap handling sequence</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">trap_occurs:</span><br><span class="line">	<span class="keyword">if</span> trap <span class="keyword">is</span> DeviceInterrupt:</span><br><span class="line">        sstatus.SIE = <span class="number">0</span></span><br><span class="line">        goto end</span><br><span class="line">    sstatus.SIE = <span class="number">0</span>  <span class="comment"># disable interrupts</span></span><br><span class="line">    sepc = pc</span><br><span class="line">    sstatus.SPP = current_mode()</span><br><span class="line">    scause = trap.cause</span><br><span class="line">    set_mode(.supervisor)</span><br><span class="line">    pc = stvec(trap)</span><br><span class="line">    execute(pc)</span><br><span class="line">end:</span><br></pre></td></tr></table></figure>
+<p>note: CPU does minimal work: </p>
+<ul>
+<li>kernel page table / stack are not switched</li>
+<li>registers other than PC are not saved</li>
+</ul>
+<p>(kernel must do these tasks 👆)</p>
+<h2 id="Traps-from-user-space"><a href="#Traps-from-user-space" class="headerlink" title="Traps from user space"></a>Traps from user space</h2><p>Traps from user space: </p>
+<ol>
+<li>trap occurs:<ol>
+<li>uservec (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/trampoline.S#L16">trampoline.S:16</a>)</li>
+<li>usertrap (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/trap.c#L37">trap.c:37</a>)</li>
+</ol>
+</li>
+<li>handle trap</li>
+<li>returing:<ol>
+<li>usertrapret (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/trap.c#L90">trap.c:90</a>)</li>
+<li>userret (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/077323a8f0b3440fcc3d082096a2d83fe5461d70/kernel/trampoline.S#L88">trampoline.S:88)</a>)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<p>Hardware doesn’t switch page tables during a trap:</p>
+<ul>
+<li>user page table includes a mapping for <code>uservec</code></li>
+<li><code>uservec</code> switch <code>satp</code> to kernel page table</li>
+<li><code>uservec</code> must be at the same address in k &amp; u. (to continue pc after switch)</li>
+</ul>
+<p>So, xv6 use a <em>trampiline</em> page （VA at <code>TRAMPILINE</code>） to contains uservec. The contents of trampiline pages are set in <code>trampiline.S</code>.</p>
+<hr>
+<h3 id="uservec"><a href="#uservec" class="headerlink" title="uservec"></a>uservec</h3><ol>
+<li>starts: all registers -&gt; values of interrupted code (<code>sscratch</code> points to <code>p-&gt;trapframe</code>);<ul>
+<li><code>csrrw</code> instruction: <code>swaps(a0, sscratch)</code></li>
+</ul>
+</li>
+<li>save user registers to <code>trapframe</code> (at <code>a0</code>)</li>
+<li>save <code>a0</code> to <code>trapframe</code></li>
+<li>switch <code>satp</code> to kernel page table (in trapframe)</li>
+<li>calls <code>usertrap</code></li>
+</ol>
+<h3 id="usertrap"><a href="#usertrap" class="headerlink" title="usertrap"></a>usertrap</h3><p>(<code>usertrap</code> handle trap from user space, kernel traps are handled by <code>kerneltrap</code>)</p>
+<ul>
+<li>determine the cause of the trap</li>
+<li>process trap: <ul>
+<li>save <code>sepc</code> (the saved user program counter)</li>
+<li>if trap is SystemCall: calls <code>syscall()</code></li>
+<li>if trap is DeviceIntrrupt: calls <code>devintr</code></li>
+</ul>
+</li>
+<li>return by <code>usertrapret</code></li>
+</ul>
+<h3 id="usertrapret"><a href="#usertrapret" class="headerlink" title="usertrapret"></a>usertrapret</h3><p>sets up the RISC-V control registers to prepare for a future trap from user space:</p>
+<ul>
+<li>stvec</li>
+<li>tramframe</li>
+<li>sepc</li>
+<li>calls <code>userret</code></li>
+</ul>
+<h3 id="userret"><a href="#userret" class="headerlink" title="userret"></a>userret</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">userret(TRAPFRAME, userpagetable);</span><br><span class="line">          (a0)         (a1)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>switches <code>satp</code> to user page table.</li>
+<li>restores saved registers from trapframe.</li>
+<li><code>sret</code> return to user space.</li>
+</ul>
+<h2 id="Calling-system-calls"><a href="#Calling-system-calls" class="headerlink" title="Calling system calls"></a>Calling system calls</h2><p>e.g. (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//user/initcode.S#L11">user/initcode.S:11</a>) calling <code>exec</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># exec(init, argv)</span><br><span class="line">.globl start</span><br><span class="line">start:</span><br><span class="line">        la a0, init</span><br><span class="line">        la a1, argv</span><br><span class="line">        li a7, SYS_exec</span><br><span class="line">        ecall</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>a0</code>, <code>a1</code> &lt;- arguments</li>
+<li><code>a7</code> &lt;- system call number</li>
+<li><code>ecall</code> -&gt; uservec -&gt; usertrap -&gt; syscall</li>
+<li><code>syscall</code>: <ul>
+<li>retrieves syscall number from saved a7 in the trapframe</li>
+<li>use syscall number to index into <code>syscalls</code></li>
+</ul>
+</li>
+<li>system call implementation function returns:<ul>
+<li><code>syscall</code> records return value in <code>p-&gt;trapframe-&gt;a0</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="System-call-arguments"><a href="#System-call-arguments" class="headerlink" title="System call arguments"></a>System call arguments</h2><p>system call wrapper functions:</p>
+<ul>
+<li>places arguments in registers</li>
+<li>trap: registers are saved to trapframe</li>
+<li><code>argint</code>, <code>argaddr</code>, <code>argfd</code>: retrieve arguments as integer, pointer or file descriptor.</li>
+</ul>
+<hr>
+<p>pointer argument: (e.g. str):</p>
+<ul>
+<li>fetchstr -&gt; copyinstr</li>
+<li>copyinstr: copies bytes from srcva (in user pagetable) to dst.<ul>
+<li>use <code>walkaddr</code> to walk the page table (in software) to get pa for srcva</li>
+</ul>
+</li>
+</ul>
+<h2 id="Traps-from-kernel-space"><a href="#Traps-from-kernel-space" class="headerlink" title="Traps from kernel space"></a>Traps from kernel space</h2><ul>
+<li><p><code>kernelvec</code> (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/kernelvec.S#L10">kernelvec.S:10</a>)</p>
+</li>
+<li><p><code>kerneltrap</code> (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/trap.c#L134">trap.c:134</a>)</p>
+<ul>
+<li><p>handle types of trap:</p>
+<ul>
+<li>devintr</li>
+<li>exception (kernel error =&gt; fatal): calls <code>panic</code>, stops executing</li>
+<li>timer interrupt: <code>yield</code> to give up CPU.</li>
+</ul>
+</li>
+<li><p>return: restores control registers, return to kernelvec</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Page-fault-exceptions"><a href="#Page-fault-exceptions" class="headerlink" title="Page-fault exceptions"></a>Page-fault exceptions</h2><p>Xv6: exception happens:</p>
+<ul>
+<li>exception from user space: kill the faulting process;</li>
+<li>exception from kernel: panic! </li>
+</ul>
+<p>Real world: more interesting ways. e.g. use page faults to implement <em>copy-on-write</em> (COW)  <em>fork</em>.</p>
+<hr>
+<ul>
+<li>Xv6 fork: calling <code>uvmcopy</code> to copy parent’s memory into child. (no share)</li>
+<li>COW fork: safely share phyical memory<ul>
+<li>share all physical pages (read-only)</li>
+<li>when child or patent store: raise a <em>page-fault exception</em></li>
+<li>response to this exception: <ul>
+<li>makes a copy of the page that contains the faulted address.</li>
+<li>both allow to read/write<ul>
+<li>one for child, one for parent</li>
+</ul>
+</li>
+<li>resumes the process caused the fault</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><em>page-fault exception</em>: CPU cannot translate a virtual address to a physical address</p>
+<ul>
+<li>load page faults</li>
+<li>store page faults</li>
+<li>instruction page fault</li>
+</ul>
+<p>A page-fault exception happen:</p>
+<ul>
+<li><code>scause</code> &lt;- PageFault</li>
+<li><code>stval</code> &lt;- address that couldn’t be translated</li>
+</ul>
+<p><strong>avoid complete copy &amp; transparent</strong></p>
+<hr>
+<p>Other page faults feature:</p>
+<ul>
+<li>lazy allocation: <ul>
+<li>sbrk =&gt; grows address space, but not marks valid in pgtbl</li>
+<li>page fault on new address =&gt;  allocates physical memory, maps into the pgtbl</li>
+</ul>
+</li>
+<li>paging from disk:<ul>
+<li>app need more memory than physical RAM =&gt; write some pages to disk</li>
+<li>pg fault =&gt; if in disk: allocates a page of physical memory, read page from disk. (may evict another page to disk)</li>
+</ul>
+</li>
+<li>automically extending stacks</li>
+<li>memory-mapped files</li>
+<li>…</li>
+</ul>
+<hr>
+<p>EOF</p>
+<hr>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># By CDFMLR 2021-03-18</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;See you.&quot;</span></span><br></pre></td></tr></table></figure>
+<p>顶部图片来自于<a target="_blank" rel="noopener" href="https://api.ixiaowai.cn/">小歪API</a>，系随机选取的图片，仅用于检测屏幕显示的机械、光电性能，与文章的任何内容及观点无关，也并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。如有侵权，联系删除。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Traps-and-system-calls"><span class="toc-number">1.</span> <span class="toc-text">Traps and system calls</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RISC-V-trap-machinery"><span class="toc-number">1.1.</span> <span class="toc-text">RISC-V trap machinery</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Registers"><span class="toc-number">1.1.1.</span> <span class="toc-text">Registers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hardware-trap-handling-sequence"><span class="toc-number">1.1.2.</span> <span class="toc-text">hardware trap handling sequence</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Traps-from-user-space"><span class="toc-number">1.2.</span> <span class="toc-text">Traps from user space</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#uservec"><span class="toc-number">1.2.1.</span> <span class="toc-text">uservec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usertrap"><span class="toc-number">1.2.2.</span> <span class="toc-text">usertrap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usertrapret"><span class="toc-number">1.2.3.</span> <span class="toc-text">usertrapret</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#userret"><span class="toc-number">1.2.4.</span> <span class="toc-text">userret</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Calling-system-calls"><span class="toc-number">1.3.</span> <span class="toc-text">Calling system calls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#System-call-arguments"><span class="toc-number">1.4.</span> <span class="toc-text">System call arguments</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Traps-from-kernel-space"><span class="toc-number">1.5.</span> <span class="toc-text">Traps from kernel space</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Page-fault-exceptions"><span class="toc-number">1.6.</span> <span class="toc-text">Page-fault exceptions</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&text=Xv6 traps and system calls"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&is_video=false&description=Xv6 traps and system calls"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 traps and system calls&body=Check out this article: https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&title=Xv6 traps and system calls"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/03/16/xv6/Xv6-traps-and-system-calls/&name=Xv6 traps and system calls&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
