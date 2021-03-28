@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Lab: traps6.S081 的 Xv6 RISC-V Lab traps，实验内容：  https:&#x2F;&#x2F;pdos.csail.mit.edu&#x2F;6.S081&#x2F;2020&#x2F;labs&#x2F;traps.html  123$ git fetch$ git checkout traps$ make clean RISC-V assembly这题没什么具体要做的，就看一看，跟着题目学一下 RISC- V 汇编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.S081 Xv6 Lab 4 traps">
+<meta property="og:url" content="https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Lab: traps6.S081 的 Xv6 RISC-V Lab traps，实验内容：  https:&#x2F;&#x2F;pdos.csail.mit.edu&#x2F;6.S081&#x2F;2020&#x2F;labs&#x2F;traps.html  123$ git fetch$ git checkout traps$ make clean RISC-V assembly这题没什么具体要做的，就看一看，跟着题目学一下 RISC- V 汇编">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
+<meta property="article:published_time" content="2021-03-26T09:51:03.275Z">
+<meta property="article:modified_time" content="2021-03-28T05:00:01.727Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="xv6">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api.ixiaowai.cn/api/api.php">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>6.S081 Xv6 Lab 4 traps</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2021/03/27/blog/riscv-gdb-python-exception/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2021/03/16/xv6/Xv6-traps-and-system-calls/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&text=6.S081 Xv6 Lab 4 traps"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&is_video=false&description=6.S081 Xv6 Lab 4 traps"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=6.S081 Xv6 Lab 4 traps&body=Check out this article: https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&name=6.S081 Xv6 Lab 4 traps&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lab-traps"><span class="toc-number">1.</span> <span class="toc-text">Lab: traps</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RISC-V-assembly"><span class="toc-number">1.1.</span> <span class="toc-text">RISC-V assembly</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backtrace"><span class="toc-number">1.2.</span> <span class="toc-text">Backtrace</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.1.</span> <span class="toc-text">关键代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Diff"><span class="toc-number">1.2.2.</span> <span class="toc-text">Diff</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Alarm"><span class="toc-number">1.3.</span> <span class="toc-text">Alarm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.1.</span> <span class="toc-text">关键实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%90bug%E7%9A%84sizeof"><span class="toc-number">1.3.2.</span> <span class="toc-text">某bug的sizeof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Diff-1"><span class="toc-number">1.3.3.</span> <span class="toc-text">Diff</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">1.4.</span> <span class="toc-text">实验结果</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        6.S081 Xv6 Lab 4 traps
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-03-26T09:51:03.275Z" itemprop="datePublished">2021-03-26</time>
+        
+        (Updated: <time datetime="2021-03-28T05:00:01.727Z" itemprop="dateModified">2021-03-28</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/xv6/" rel="tag">xv6</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://api.ixiaowai.cn/api/api.php" alt="Meaning Unknown&#39;s Head Image"></p>
+<h1 id="Lab-traps"><a href="#Lab-traps" class="headerlink" title="Lab: traps"></a>Lab: traps</h1><p>6.S081 的 Xv6 RISC-V <strong>Lab traps</strong>，实验内容：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html">https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html</a></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch</span><br><span class="line">$ git checkout traps</span><br><span class="line">$ make clean</span><br></pre></td></tr></table></figure>
+<h2 id="RISC-V-assembly"><a href="#RISC-V-assembly" class="headerlink" title="RISC-V assembly"></a>RISC-V assembly</h2><p>这题没什么具体要做的，就看一看，跟着题目学一下 RISC- V 汇编。</p>
+<h2 id="Backtrace"><a href="#Backtrace" class="headerlink" title="Backtrace"></a>Backtrace</h2><p>这题主要是实现打印函数栈。就是 GDB 里面 bt 的这种效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(gdb) bt</span><br><span class="line">#0  fork () at kernel&#x2F;proc.c:260</span><br><span class="line">#1  0x0000000080002c3c in sys_fork () at kernel&#x2F;sysproc.c:29</span><br><span class="line">#2  0x0000000080002bb0 in syscall () at kernel&#x2F;syscall.c:140</span><br><span class="line">#3  0x000000008000289a in usertrap () at kernel&#x2F;trap.c:67</span><br><span class="line">#4  0x0000000000000050 in ?? ()</span><br></pre></td></tr></table></figure>
+<h3 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h3><p><code>kernel/riscv.h</code>: 实现一个获取当前 frame pointer 的方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> uint64</span><br><span class="line">r_fp()</span><br><span class="line">&#123;</span><br><span class="line">	uint64 x;</span><br><span class="line">	<span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">&quot;mv %0, s0&quot;</span> : <span class="string">&quot;=r&quot;</span> (x) )</span></span>;</span><br><span class="line">	<span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>kernel/printf.c</code>: 打印 backtrace：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">backtrace(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;backtrace:\n&quot;</span>);</span><br><span class="line">	uint64 fp = r_fp();</span><br><span class="line">	<span class="keyword">while</span> (PGROUNDDOWN(fp) &lt; PGROUNDUP(fp)) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>, *(uint64*)(fp<span class="number">-8</span>));</span><br><span class="line">		fp = *(uint64*)(fp<span class="number">-16</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Diff"><a href="#Diff" class="headerlink" title="Diff"></a>Diff</h3><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">diff --git a/kernel/defs.h b/kernel/defs.h</span></span><br><span class="line"><span class="comment">index 4b9bbc0..137c786 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/defs.h</span></span><br><span class="line"><span class="comment">+++ b/kernel/defs.h</span></span><br><span class="line"><span class="meta">@@ -80,6 +80,7 @@</span> int             pipewrite(struct pipe*, uint64, int);</span><br><span class="line"> void            printf(char*, ...);</span><br><span class="line"> void            panic(char*) __attribute__((noreturn));</span><br><span class="line"> void            printfinit(void);</span><br><span class="line"><span class="addition">+void            backtrace(void);</span></span><br><span class="line"> </span><br><span class="line"> // proc.c</span><br><span class="line"> int             cpuid(void);</span><br><span class="line"><span class="comment">diff --git a/kernel/printf.c b/kernel/printf.c</span></span><br><span class="line"><span class="comment">index e1347de..fbdeb68 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/printf.c</span></span><br><span class="line"><span class="comment">+++ b/kernel/printf.c</span></span><br><span class="line"><span class="meta">@@ -121,6 +121,9 @@</span> panic(char *s)</span><br><span class="line">   printf(&quot;panic: &quot;);</span><br><span class="line">   printf(s);</span><br><span class="line">   printf(&quot;\n&quot;);</span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+  backtrace();</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line">   panicked = 1; // freeze uart output from other CPUs</span><br><span class="line">   for(;;)</span><br><span class="line">     ;</span><br><span class="line"><span class="meta">@@ -132,3 +135,18 @@</span> printfinit(void)</span><br><span class="line">   initlock(&amp;pr.lock, &quot;pr&quot;);</span><br><span class="line">   pr.locking = 1;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+// print a backtrace: </span></span><br><span class="line"><span class="addition">+// a list of the function calls on the stack above </span></span><br><span class="line"><span class="addition">+// the point at which the error occurred.</span></span><br><span class="line"><span class="addition">+void</span></span><br><span class="line"><span class="addition">+backtrace(void)</span></span><br><span class="line"><span class="addition">+&#123;</span></span><br><span class="line"><span class="addition">+	printf(&quot;backtrace:\n&quot;);</span></span><br><span class="line"><span class="addition">+	uint64 fp = r_fp();</span></span><br><span class="line"><span class="addition">+	while (PGROUNDDOWN(fp) &lt; PGROUNDUP(fp)) &#123;</span></span><br><span class="line"><span class="addition">+		printf(&quot;%p\n&quot;, *(uint64*)(fp-8));</span></span><br><span class="line"><span class="addition">+		fp = *(uint64*)(fp-16);</span></span><br><span class="line"><span class="addition">+	&#125;</span></span><br><span class="line"><span class="addition">+&#125;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="comment">diff --git a/kernel/riscv.h b/kernel/riscv.h</span></span><br><span class="line"><span class="comment">index 0aec003..c95316e 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/riscv.h</span></span><br><span class="line"><span class="comment">+++ b/kernel/riscv.h</span></span><br><span class="line"><span class="meta">@@ -319,6 +319,16 @@</span> sfence_vma()</span><br><span class="line">   asm volatile(&quot;sfence.vma zero, zero&quot;);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"><span class="addition">+// compiler stores the frame pointer of the currently</span></span><br><span class="line"><span class="addition">+// executing function in s0.</span></span><br><span class="line"><span class="addition">+// this function reads current frame pointer, namely s0</span></span><br><span class="line"><span class="addition">+static inline uint64</span></span><br><span class="line"><span class="addition">+r_fp()</span></span><br><span class="line"><span class="addition">+&#123;</span></span><br><span class="line"><span class="addition">+	uint64 x;</span></span><br><span class="line"><span class="addition">+	asm volatile(&quot;mv %0, s0&quot; : &quot;=r&quot; (x) );</span></span><br><span class="line"><span class="addition">+	return x;</span></span><br><span class="line"><span class="addition">+&#125;</span></span><br><span class="line"> </span><br><span class="line"> #define PGSIZE 4096 // bytes per page</span><br><span class="line"> #define PGSHIFT 12  // bits of offset within a page</span><br><span class="line"><span class="comment">diff --git a/kernel/sysproc.c b/kernel/sysproc.c</span></span><br><span class="line"><span class="comment">index e8bcda9..a520959 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/sysproc.c</span></span><br><span class="line"><span class="comment">+++ b/kernel/sysproc.c</span></span><br><span class="line"><span class="meta">@@ -58,6 +58,8 @@</span> sys_sleep(void)</span><br><span class="line">   int n;</span><br><span class="line">   uint ticks0;</span><br><span class="line"> </span><br><span class="line"><span class="addition">+  backtrace();</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line">   if(argint(0, &amp;n) &lt; 0)</span><br><span class="line">     return -1;</span><br><span class="line">   acquire(&amp;tickslock);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Alarm"><a href="#Alarm" class="headerlink" title="Alarm"></a>Alarm</h2><p>做一套系统调用，在用户进程每运行指定次数时钟后，调用该进程提供的一个 handler。</p>
+<p>其实也不难，（我觉得比页表简单），跟着 hint 一步步做就行了。</p>
+<h3 id="关键实现"><a href="#关键实现" class="headerlink" title="关键实现"></a>关键实现</h3><ol>
+<li><code>kernel/proc.h</code>: 在 proc 结构体里添加需要的字段（间隔时长、已运行时长计数、处理函数地址(vm)、保存 alarm 前的寄存器）：</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">proc</span> &#123;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">int</span> alarm_interval;     <span class="comment">// the alarm interval (ticks)</span></span><br><span class="line">  <span class="keyword">int</span> alarm_passed;       <span class="comment">// how many ticks have passed since the last call</span></span><br><span class="line">  uint64 alarm_handler;   <span class="comment">// pointer to the alarm handler function</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">trapframe</span> <span class="title">etpfm</span>;</span> <span class="comment">// trapframe to resume</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>添加 <code>sys_sigalarm</code> 系统调用：接收参数，为进程设置 alarm 的间隔时长和处理函数。最终的实现在 <code>kernel/sysproc.c</code> （添加新系统调用的完整步骤见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012419550/article/details/114286013">6.S081 Xv6 Lab 2: system calls</a>）:</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">uint64</span><br><span class="line">sys_sigalarm(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> interval;</span><br><span class="line">	uint64 handler;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(argint(<span class="number">0</span>, &amp;interval) &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(argaddr(<span class="number">1</span>, &amp;handler) &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span> =</span> myproc();</span><br><span class="line"></span><br><span class="line">	p-&gt;alarm_interval = interval;</span><br><span class="line">	p-&gt;alarm_handler = handler;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>在 <code>usertrap</code> （<code>kernel/trap.c</code>）中处理时钟中断时，如果进程需要 alarm 就保存当前 trapframe 到 etpfm，调用 handler （把 handler 地址放到 trapframe-&gt;epc，回到用户空间之后就会运行该函数）：</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">usertrap(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">if</span>(which_dev == <span class="number">2</span>) &#123;</span><br><span class="line">	<span class="comment">// alarm</span></span><br><span class="line">	<span class="keyword">if</span> (p-&gt;alarm_interval) &#123;</span><br><span class="line">	  <span class="keyword">if</span> (++p-&gt;alarm_passed == p-&gt;alarm_interval) &#123;</span><br><span class="line">		memmove(&amp;(p-&gt;etpfm), p-&gt;trapframe, <span class="keyword">sizeof</span>(struct trapframe));</span><br><span class="line">		<span class="comment">// return to alarm handler: call p-&gt;alarm_handler();</span></span><br><span class="line">		p-&gt;trapframe-&gt;epc = p-&gt;alarm_handler;</span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;</span><br><span class="line">    yield();</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>实现  <code>sys_sigalarm</code> 系统调用，恢复 alarm 前的 trapframe（回到用户空间就会接着 alarm 之前的 PC 开始运行），把 alarm_passed 计数器置为零（允许下一次 alarm）：</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">uint64</span><br><span class="line">sys_sigreturn(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span> =</span> myproc();</span><br><span class="line">	memmove(p-&gt;trapframe, &amp;(p-&gt;etpfm), <span class="keyword">sizeof</span>(struct trapframe));</span><br><span class="line">	p-&gt;alarm_passed = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="某bug的sizeof"><a href="#某bug的sizeof" class="headerlink" title="某bug的sizeof"></a>某bug的sizeof</h3><p>我做的时候不小心写了个 sizeof 的语法错误，找了半个小时呢。。。（这个问题超初学者的，，我对8起 K&amp;R）</p>
+<p>我一开始是这么写的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trapframe</span> &#123;</span>...&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">proc</span> &#123;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">trapframe</span> *<span class="title">trapframe</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">trapframe</span> <span class="title">etpfm</span>;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> </span><br><span class="line">usertrap(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">    memmove(&amp;(p-&gt;etpfm), p-&gt;trapframe, <span class="keyword">sizeof</span>(p-&gt;trapframe));</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">uint64</span><br><span class="line">sys_sigreturn(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	memmove(p-&gt;trapframe, &amp;(p-&gt;etpfm), <span class="keyword">sizeof</span>(p-&gt;trapframe));</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决：把 <code>sizeof(p-&gt;trapframe)</code> 改成 <code>sizeof(struct trapframe)</code>。</p>
+<h3 id="Diff-1"><a href="#Diff-1" class="headerlink" title="Diff"></a>Diff</h3><p>emmm，上一题做完忘记 commit 了，所以下面这个 diff 也包含了上一题（backtrace）的：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">diff --git a/Makefile b/Makefile</span></span><br><span class="line"><span class="comment">index 1fa367e..a74296b 100644</span></span><br><span class="line"><span class="comment">--- a/Makefile</span></span><br><span class="line"><span class="comment">+++ b/Makefile</span></span><br><span class="line"><span class="meta">@@ -175,6 +175,7 @@</span> UPROGS=\</span><br><span class="line"> 	$U/_grind\</span><br><span class="line"> 	$U/_wc\</span><br><span class="line"> 	$U/_zombie\</span><br><span class="line"><span class="addition">+	$U/_alarmtest\</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">diff --git a/grade-lab-traps b/grade-lab-traps</span></span><br><span class="line"><span class="comment">index 058e77b..8619bbe 100755</span></span><br><span class="line"><span class="comment">--- a/grade-lab-traps</span></span><br><span class="line"><span class="comment">+++ b/grade-lab-traps</span></span><br><span class="line"><span class="meta">@@ -60,7 +60,7 @@</span> def test_alarmtest_test2():</span><br><span class="line"> def test_usertests():</span><br><span class="line">     r.run_qemu(shell_script([</span><br><span class="line">         &#x27;usertests&#x27;</span><br><span class="line"><span class="deletion">-    ]), timeout=300)</span></span><br><span class="line"><span class="addition">+    ]), timeout=500)</span></span><br><span class="line">     r.match(&#x27;^ALL TESTS PASSED$&#x27;)</span><br><span class="line"> </span><br><span class="line"> @test(1, &quot;time&quot;)</span><br><span class="line"><span class="comment">diff --git a/kernel/defs.h b/kernel/defs.h</span></span><br><span class="line"><span class="comment">index 4b9bbc0..137c786 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/defs.h</span></span><br><span class="line"><span class="comment">+++ b/kernel/defs.h</span></span><br><span class="line"><span class="meta">@@ -80,6 +80,7 @@</span> int             pipewrite(struct pipe*, uint64, int);</span><br><span class="line"> void            printf(char*, ...);</span><br><span class="line"> void            panic(char*) __attribute__((noreturn));</span><br><span class="line"> void            printfinit(void);</span><br><span class="line"><span class="addition">+void            backtrace(void);</span></span><br><span class="line"> </span><br><span class="line"> // proc.c</span><br><span class="line"> int             cpuid(void);</span><br><span class="line"><span class="comment">diff --git a/kernel/printf.c b/kernel/printf.c</span></span><br><span class="line"><span class="comment">index e1347de..fbdeb68 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/printf.c</span></span><br><span class="line"><span class="comment">+++ b/kernel/printf.c</span></span><br><span class="line"><span class="meta">@@ -121,6 +121,9 @@</span> panic(char *s)</span><br><span class="line">   printf(&quot;panic: &quot;);</span><br><span class="line">   printf(s);</span><br><span class="line">   printf(&quot;\n&quot;);</span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+  backtrace();</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line">   panicked = 1; // freeze uart output from other CPUs</span><br><span class="line">   for(;;)</span><br><span class="line">     ;</span><br><span class="line"><span class="meta">@@ -132,3 +135,18 @@</span> printfinit(void)</span><br><span class="line">   initlock(&amp;pr.lock, &quot;pr&quot;);</span><br><span class="line">   pr.locking = 1;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+// print a backtrace: </span></span><br><span class="line"><span class="addition">+// a list of the function calls on the stack above </span></span><br><span class="line"><span class="addition">+// the point at which the error occurred.</span></span><br><span class="line"><span class="addition">+void</span></span><br><span class="line"><span class="addition">+backtrace(void)</span></span><br><span class="line"><span class="addition">+&#123;</span></span><br><span class="line"><span class="addition">+	printf(&quot;backtrace:\n&quot;);</span></span><br><span class="line"><span class="addition">+	uint64 fp = r_fp();</span></span><br><span class="line"><span class="addition">+	while (PGROUNDDOWN(fp) &lt; PGROUNDUP(fp)) &#123;</span></span><br><span class="line"><span class="addition">+		printf(&quot;%p\n&quot;, *(uint64*)(fp-8));</span></span><br><span class="line"><span class="addition">+		fp = *(uint64*)(fp-16);</span></span><br><span class="line"><span class="addition">+	&#125;</span></span><br><span class="line"><span class="addition">+&#125;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="comment">diff --git a/kernel/proc.c b/kernel/proc.c</span></span><br><span class="line"><span class="comment">index dab1e1d..237fecb 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/proc.c</span></span><br><span class="line"><span class="comment">+++ b/kernel/proc.c</span></span><br><span class="line"><span class="meta">@@ -127,6 +127,11 @@</span> found:</span><br><span class="line">   p-&gt;context.ra = (uint64)forkret;</span><br><span class="line">   p-&gt;context.sp = p-&gt;kstack + PGSIZE;</span><br><span class="line"> </span><br><span class="line"><span class="addition">+  // Initialize alarm</span></span><br><span class="line"><span class="addition">+  p-&gt;alarm_interval = 0;</span></span><br><span class="line"><span class="addition">+  p-&gt;alarm_passed = 0;</span></span><br><span class="line"><span class="addition">+  p-&gt;alarm_handler = 0;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line">   return p;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">diff --git a/kernel/proc.h b/kernel/proc.h</span></span><br><span class="line"><span class="comment">index 9c16ea7..2dac44f 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/proc.h</span></span><br><span class="line"><span class="comment">+++ b/kernel/proc.h</span></span><br><span class="line"><span class="meta">@@ -103,4 +103,9 @@</span> struct proc &#123;</span><br><span class="line">   struct file *ofile[NOFILE];  // Open files</span><br><span class="line">   struct inode *cwd;           // Current directory</span><br><span class="line">   char name[16];               // Process name (debugging)</span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+  int alarm_interval;          // the alarm interval (ticks)</span></span><br><span class="line"><span class="addition">+  int alarm_passed;            // how many ticks have passed since the last call</span></span><br><span class="line"><span class="addition">+  uint64 alarm_handler;        // pointer to the alarm handler function</span></span><br><span class="line"><span class="addition">+  struct trapframe etpfm;      // trapframe to resume, 啊, 不会xv6的动态内存分配，所以这里直接 hardcode 一个对象了。</span></span><br><span class="line"> &#125;;</span><br><span class="line"><span class="comment">diff --git a/kernel/riscv.h b/kernel/riscv.h</span></span><br><span class="line"><span class="comment">index 0aec003..c95316e 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/riscv.h</span></span><br><span class="line"><span class="comment">+++ b/kernel/riscv.h</span></span><br><span class="line"><span class="meta">@@ -319,6 +319,16 @@</span> sfence_vma()</span><br><span class="line">   asm volatile(&quot;sfence.vma zero, zero&quot;);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"><span class="addition">+// compiler stores the frame pointer of the currently</span></span><br><span class="line"><span class="addition">+// executing function in s0.</span></span><br><span class="line"><span class="addition">+// this function reads current frame pointer, namely s0</span></span><br><span class="line"><span class="addition">+static inline uint64</span></span><br><span class="line"><span class="addition">+r_fp()</span></span><br><span class="line"><span class="addition">+&#123;</span></span><br><span class="line"><span class="addition">+	uint64 x;</span></span><br><span class="line"><span class="addition">+	asm volatile(&quot;mv %0, s0&quot; : &quot;=r&quot; (x) );</span></span><br><span class="line"><span class="addition">+	return x;</span></span><br><span class="line"><span class="addition">+&#125;</span></span><br><span class="line"> </span><br><span class="line"> #define PGSIZE 4096 // bytes per page</span><br><span class="line"> #define PGSHIFT 12  // bits of offset within a page</span><br><span class="line"><span class="comment">diff --git a/kernel/syscall.c b/kernel/syscall.c</span></span><br><span class="line"><span class="comment">index c1b3670..eb079af 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/syscall.c</span></span><br><span class="line"><span class="comment">+++ b/kernel/syscall.c</span></span><br><span class="line"><span class="meta">@@ -104,6 +104,8 @@</span> extern uint64 sys_unlink(void);</span><br><span class="line"> extern uint64 sys_wait(void);</span><br><span class="line"> extern uint64 sys_write(void);</span><br><span class="line"> extern uint64 sys_uptime(void);</span><br><span class="line"><span class="addition">+extern uint64 sys_sigalarm(void);</span></span><br><span class="line"><span class="addition">+extern uint64 sys_sigreturn(void);</span></span><br><span class="line"> </span><br><span class="line"> static uint64 (*syscalls[])(void) = &#123;</span><br><span class="line"> [SYS_fork]    sys_fork,</span><br><span class="line"><span class="meta">@@ -127,6 +129,8 @@</span> static uint64 (*syscalls[])(void) = &#123;</span><br><span class="line"> [SYS_link]    sys_link,</span><br><span class="line"> [SYS_mkdir]   sys_mkdir,</span><br><span class="line"> [SYS_close]   sys_close,</span><br><span class="line"><span class="addition">+[SYS_sigalarm]  sys_sigalarm,</span></span><br><span class="line"><span class="addition">+[SYS_sigreturn] sys_sigreturn,</span></span><br><span class="line"> &#125;;</span><br><span class="line"> </span><br><span class="line"> void</span><br><span class="line"><span class="comment">diff --git a/kernel/syscall.h b/kernel/syscall.h</span></span><br><span class="line"><span class="comment">index bc5f356..382d781 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/syscall.h</span></span><br><span class="line"><span class="comment">+++ b/kernel/syscall.h</span></span><br><span class="line"><span class="meta">@@ -20,3 +20,5 @@</span></span><br><span class="line"> #define SYS_link   19</span><br><span class="line"> #define SYS_mkdir  20</span><br><span class="line"> #define SYS_close  21</span><br><span class="line"><span class="addition">+#define SYS_sigalarm  22</span></span><br><span class="line"><span class="addition">+#define SYS_sigreturn 23</span></span><br><span class="line"><span class="comment">diff --git a/kernel/sysproc.c b/kernel/sysproc.c</span></span><br><span class="line"><span class="comment">index e8bcda9..5b64016 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/sysproc.c</span></span><br><span class="line"><span class="comment">+++ b/kernel/sysproc.c</span></span><br><span class="line"><span class="meta">@@ -58,6 +58,8 @@</span> sys_sleep(void)</span><br><span class="line">   int n;</span><br><span class="line">   uint ticks0;</span><br><span class="line"> </span><br><span class="line"><span class="addition">+  backtrace();</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line">   if(argint(0, &amp;n) &lt; 0)</span><br><span class="line">     return -1;</span><br><span class="line">   acquire(&amp;tickslock);</span><br><span class="line"><span class="meta">@@ -95,3 +97,32 @@</span> sys_uptime(void)</span><br><span class="line">   release(&amp;tickslock);</span><br><span class="line">   return xticks;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+uint64</span></span><br><span class="line"><span class="addition">+sys_sigalarm(void)</span></span><br><span class="line"><span class="addition">+&#123;</span></span><br><span class="line"><span class="addition">+	int interval;</span></span><br><span class="line"><span class="addition">+	uint64 handler;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+	if(argint(0, &amp;interval) &lt; 0)</span></span><br><span class="line"><span class="addition">+		return -1;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+	if(argaddr(1, &amp;handler) &lt; 0)</span></span><br><span class="line"><span class="addition">+		return -1;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+	struct proc *p = myproc();</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+	p-&gt;alarm_interval = interval;</span></span><br><span class="line"><span class="addition">+	p-&gt;alarm_handler = handler;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+	return 0;</span></span><br><span class="line"><span class="addition">+&#125;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+uint64</span></span><br><span class="line"><span class="addition">+sys_sigreturn(void)</span></span><br><span class="line"><span class="addition">+&#123;</span></span><br><span class="line"><span class="addition">+	struct proc *p = myproc();</span></span><br><span class="line"><span class="addition">+	memmove(p-&gt;trapframe, &amp;(p-&gt;etpfm), sizeof(struct trapframe));</span></span><br><span class="line"><span class="addition">+	p-&gt;alarm_passed = 0;</span></span><br><span class="line"><span class="addition">+	return 0;</span></span><br><span class="line"><span class="addition">+&#125;</span></span><br><span class="line"><span class="comment">diff --git a/kernel/trap.c b/kernel/trap.c</span></span><br><span class="line"><span class="comment">index a63249e..9f2a64b 100644</span></span><br><span class="line"><span class="comment">--- a/kernel/trap.c</span></span><br><span class="line"><span class="comment">+++ b/kernel/trap.c</span></span><br><span class="line"><span class="meta">@@ -77,8 +77,20 @@</span> usertrap(void)</span><br><span class="line">     exit(-1);</span><br><span class="line"> </span><br><span class="line">   // give up the CPU if this is a timer interrupt.</span><br><span class="line"><span class="deletion">-  if(which_dev == 2)</span></span><br><span class="line"><span class="addition">+  if(which_dev == 2) &#123;</span></span><br><span class="line"><span class="addition">+	// alarm</span></span><br><span class="line"><span class="addition">+	if (p-&gt;alarm_interval /*&amp;&amp; p-&gt;alarm_handler*/) &#123;  // handler addr might be 0</span></span><br><span class="line"><span class="addition">+	  if (++p-&gt;alarm_passed == p-&gt;alarm_interval) &#123;</span></span><br><span class="line"><span class="addition">+		memmove(&amp;(p-&gt;etpfm), p-&gt;trapframe, sizeof(struct trapframe));</span></span><br><span class="line"><span class="addition">+		// return to alarm handler: call p-&gt;alarm_handler();</span></span><br><span class="line"><span class="addition">+		p-&gt;trapframe-&gt;epc = p-&gt;alarm_handler;</span></span><br><span class="line"><span class="addition">+		// printf(&quot;[DEBUG] alarm: %s(%d), handler=%x\n&quot;, </span></span><br><span class="line"><span class="addition">+		// 		p-&gt;name, p-&gt;pid, p-&gt;alarm_handler);</span></span><br><span class="line"><span class="addition">+		// p-&gt;alarm_passed = 0;  // sigreturn 时再恢复: prevent re-entrant calls to the handler</span></span><br><span class="line"><span class="addition">+	  &#125;</span></span><br><span class="line"><span class="addition">+	&#125;</span></span><br><span class="line">     yield();</span><br><span class="line"><span class="addition">+  &#125;</span></span><br><span class="line"> </span><br><span class="line">   usertrapret();</span><br><span class="line"> &#125;</span><br><span class="line"><span class="comment">diff --git a/user/alarmtest.c b/user/alarmtest.c</span></span><br><span class="line"><span class="comment">index 38f09ff..427c460 100644</span></span><br><span class="line"><span class="comment">--- a/user/alarmtest.c</span></span><br><span class="line"><span class="comment">+++ b/user/alarmtest.c</span></span><br><span class="line"><span class="meta">@@ -101,6 +101,7 @@</span> test1()</span><br><span class="line">     // restored correctly, causing i or j or the address ofj</span><br><span class="line">     // to get an incorrect value.</span><br><span class="line">     printf(&quot;\ntest1 failed: foo() executed fewer times than it was called\n&quot;);</span><br><span class="line"><span class="addition">+	printf(&quot;\ti=%d, j=%d\n&quot;, i, j);</span></span><br><span class="line">   &#125; else &#123;</span><br><span class="line">     printf(&quot;test1 passed\n&quot;);</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">diff --git a/user/user.h b/user/user.h</span></span><br><span class="line"><span class="comment">index b71ecda..57404e0 100644</span></span><br><span class="line"><span class="comment">--- a/user/user.h</span></span><br><span class="line"><span class="comment">+++ b/user/user.h</span></span><br><span class="line"><span class="meta">@@ -23,6 +23,8 @@</span> int getpid(void);</span><br><span class="line"> char* sbrk(int);</span><br><span class="line"> int sleep(int);</span><br><span class="line"> int uptime(void);</span><br><span class="line"><span class="addition">+int sigalarm(int ticks, void (*handler)());</span></span><br><span class="line"><span class="addition">+int sigreturn(void);</span></span><br><span class="line"> </span><br><span class="line"> // ulib.c</span><br><span class="line"> int stat(const char*, struct stat*);</span><br><span class="line"><span class="comment">diff --git a/user/usys.pl b/user/usys.pl</span></span><br><span class="line"><span class="comment">index 01e426e..fa548b0 100755</span></span><br><span class="line"><span class="comment">--- a/user/usys.pl</span></span><br><span class="line"><span class="comment">+++ b/user/usys.pl</span></span><br><span class="line"><span class="meta">@@ -36,3 +36,5 @@</span> entry(&quot;getpid&quot;);</span><br><span class="line"> entry(&quot;sbrk&quot;);</span><br><span class="line"> entry(&quot;sleep&quot;);</span><br><span class="line"> entry(&quot;uptime&quot;);</span><br><span class="line"><span class="addition">+entry(&quot;sigalarm&quot;);</span></span><br><span class="line"><span class="addition">+entry(&quot;sigreturn&quot;);</span></span><br></pre></td></tr></table></figure>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>最后，<code>make grade</code> (我的机器上跑 usertests 巨慢，要改一下 timeout 才能通过。。):</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">== Test answers-traps.txt == answers-traps.txt: OK </span><br><span class="line">== Test backtrace <span class="built_in">test</span> == </span><br><span class="line">$ make qemu-gdb</span><br><span class="line">backtrace <span class="built_in">test</span>: OK (4.7s) </span><br><span class="line">== Test running alarmtest == </span><br><span class="line">$ make qemu-gdb</span><br><span class="line">(3.9s) </span><br><span class="line">== Test   alarmtest: test0 == </span><br><span class="line">  alarmtest: test0: OK </span><br><span class="line">== Test   alarmtest: test1 == </span><br><span class="line">  alarmtest: test1: OK </span><br><span class="line">== Test   alarmtest: test2 == </span><br><span class="line">  alarmtest: test2: OK </span><br><span class="line">== Test usertests == </span><br><span class="line">$ make qemu-gdb</span><br><span class="line">usertests: OK (448.3s) </span><br><span class="line">    (Old xv6.out.usertests failure <span class="built_in">log</span> removed)</span><br><span class="line">== Test time == </span><br><span class="line">time: OK </span><br><span class="line">Score: 85/85</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>EOF</p>
+<hr>
+<p>By CDFMLR 2020-03-28</p>
+<p>顶部图片来自于<a target="_blank" rel="noopener" href="https://api.ixiaowai.cn/">小歪API</a>，系随机选取的图片，仅用于检测屏幕显示的机械、光电性能，与文章的任何内容及观点无关，也并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。如有侵权，联系删除。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lab-traps"><span class="toc-number">1.</span> <span class="toc-text">Lab: traps</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RISC-V-assembly"><span class="toc-number">1.1.</span> <span class="toc-text">RISC-V assembly</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backtrace"><span class="toc-number">1.2.</span> <span class="toc-text">Backtrace</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.1.</span> <span class="toc-text">关键代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Diff"><span class="toc-number">1.2.2.</span> <span class="toc-text">Diff</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Alarm"><span class="toc-number">1.3.</span> <span class="toc-text">Alarm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.1.</span> <span class="toc-text">关键实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%90bug%E7%9A%84sizeof"><span class="toc-number">1.3.2.</span> <span class="toc-text">某bug的sizeof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Diff-1"><span class="toc-number">1.3.3.</span> <span class="toc-text">Diff</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">1.4.</span> <span class="toc-text">实验结果</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&text=6.S081 Xv6 Lab 4 traps"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&is_video=false&description=6.S081 Xv6 Lab 4 traps"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=6.S081 Xv6 Lab 4 traps&body=Check out this article: https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&title=6.S081 Xv6 Lab 4 traps"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/03/26/xv6/Xv6-Lab-traps/&name=6.S081 Xv6 Lab 4 traps&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
