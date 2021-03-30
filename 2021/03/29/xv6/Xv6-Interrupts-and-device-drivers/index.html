@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Xv6 Interrupts and device drivers Learning: xv6-riscv-book Chapter 5 Interrupts and device drivers  Driver:   code in an OS manages a particular device config hardware tells operations handles result">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xv6 Interrupts and device drivers">
+<meta property="og:url" content="https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Xv6 Interrupts and device drivers Learning: xv6-riscv-book Chapter 5 Interrupts and device drivers  Driver:   code in an OS manages a particular device config hardware tells operations handles result">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
+<meta property="og:image" content="https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/Xv6-Interrupts-and-device-drivers/console-output.svg">
+<meta property="article:published_time" content="2021-03-29T16:36:49.049Z">
+<meta property="article:modified_time" content="2021-03-30T05:25:39.820Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api.ixiaowai.cn/api/api.php">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Xv6 Interrupts and device drivers</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/03/27/blog/riscv-gdb-python-exception/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&text=Xv6 Interrupts and device drivers"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&is_video=false&description=Xv6 Interrupts and device drivers"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 Interrupts and device drivers&body=Check out this article: https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&name=Xv6 Interrupts and device drivers&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xv6-Interrupts-and-device-drivers"><span class="toc-number">1.</span> <span class="toc-text">Xv6 Interrupts and device drivers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Console-input"><span class="toc-number">1.1.</span> <span class="toc-text">Console input</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Console-output"><span class="toc-number">1.2.</span> <span class="toc-text">Console output</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrency-in-drivers"><span class="toc-number">1.3.</span> <span class="toc-text">Concurrency in drivers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Timer-interrupts"><span class="toc-number">1.4.</span> <span class="toc-text">Timer interrupts</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Xv6 Interrupts and device drivers
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-03-29T16:36:49.049Z" itemprop="datePublished">2021-03-29</time>
+        
+        (Updated: <time datetime="2021-03-30T05:25:39.820Z" itemprop="dateModified">2021-03-30</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://api.ixiaowai.cn/api/api.php" alt="Meaning Unknown&#39;s Head Image"></p>
+<h1 id="Xv6-Interrupts-and-device-drivers"><a href="#Xv6-Interrupts-and-device-drivers" class="headerlink" title="Xv6 Interrupts and device drivers"></a>Xv6 Interrupts and device drivers</h1><blockquote>
+<p>Learning: <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv-book">xv6-riscv-book</a> Chapter 5 Interrupts and device drivers</p>
+</blockquote>
+<p><em>Driver</em>: </p>
+<ul>
+<li>code in an OS</li>
+<li>manages a particular device<ul>
+<li>config hardware</li>
+<li>tells operations</li>
+<li>handles resulting interrupts</li>
+<li>interacts with processes</li>
+</ul>
+</li>
+</ul>
+<p>Devices -&gt; driver -&gt; interrupts (one type of trap)  -&gt; OS</p>
+<p>xv6 handles driver’s interrupt in <code>devintr</code> (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/trap.c#L177">kernel/trap.c:117</a>)</p>
+<hr>
+<p>Common driver: two contexts:</p>
+<table>
+<thead>
+<tr>
+<th>context</th>
+<th>runs in</th>
+<th>called</th>
+<th>perform</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>top half</em></td>
+<td>a process’s kernel thread</td>
+<td>called via syscalls (e.g. read/write)</td>
+<td>- ask hardware to start an operation<br />- waits for operation to complete</td>
+</tr>
+<tr>
+<td><em>bottom half</em></td>
+<td>excutes at interrupt time</td>
+<td>device completes the  operation =&gt; raise an interrupt</td>
+<td>as interrupt handler: <br />- what operation has completed?<br />- wakes up a waitting proc<br />- tells hw to do next operation</td>
+</tr>
+</tbody></table>
+<h2 id="Console-input"><a href="#Console-input" class="headerlink" title="Console input"></a>Console input</h2><p><a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/console.c"><code>console.c</code></a>: console driver: a simple illustration of driver structure.</p>
+<ul>
+<li>accepts typed chars  via UART hardware</li>
+<li>accumulates a line</li>
+<li>processing sepcial input chars (e.g. <code>^H</code> for <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Backspace">backspace</a>, <code>^D</code> for <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/End-of-Transmission_character">End-of-Transmission</a>)</li>
+<li>user processes use <code>read</code> to fetch inputed lines. </li>
+</ul>
+<p>QEMU: </p>
+<ul>
+<li>keystrokes -&gt; QEMU’s simulated UART hardware</li>
+</ul>
+<p>UART: </p>
+<ul>
+<li><p>(QEMU hardware): emulated 16550 chip connected to keyboard and display.</p>
+</li>
+<li><p>(appears to software): a set of <em>memory-mapped</em> control register. (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/uart.c">kernel/uart.c</a>)</p>
+<ul>
+<li><code>LSR</code>: wheter input chars are waiting to be read</li>
+<li><code>RHR</code>: chars to read (FIFO, if empty -&gt; LSR.ready = 0)</li>
+<li>…</li>
+</ul>
+</li>
+<li><p>initialize:  <code>consoleinit</code> (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/077323a8f0b3440fcc3d082096a2d83fe5461d70/kernel/console.c#L182">kernel/console.c:182</a>)</p>
+<ul>
+<li>generate receive interrupts when the UART receive bytes from input</li>
+<li>generate <em>transmit complete</em> interrupts when finished sending a byte of output</li>
+</ul>
+</li>
+</ul>
+<p>processes (e.g. shell): </p>
+<ul>
+<li>[process] read from console (via file descriptor) -&gt; </li>
+<li>[kernel] <code>consoleread</code> -&gt; </li>
+<li>[consoleread] waits input (<code>sleep</code> to wait user typing) to arrive <code>cons.buf</code>, copies input to user space until  <code>\n</code> -&gt;</li>
+<li>[kernel/consoleread] returns to user process</li>
+</ul>
+<p>User types a character:</p>
+<ul>
+<li>UART hardware ask RISC-V to raise an interrupt</li>
+<li>activates xv6’s trap handler</li>
+<li>handler calls <code>devintr</code></li>
+<li><code>devintr</code> looks <code>scause</code>: discover interrupt is from a device</li>
+<li><code>devintr</code> ask PLIC hardware to tell which device interrupted</li>
+<li>if it was UART: calls <code>uartintr</code></li>
+<li><code>uartintr</code> reads input chars from UART hw</li>
+<li>hands chars to <code>consoleintr</code></li>
+<li><code>consoleintr</code>: accumulate input chars in <code>cons.buf</code> until a whole line arrives</li>
+<li>treats special chars (e.g. backspace)</li>
+<li>when a newline arrives: <code>consoleintr</code> wakes up a waiting <code>consoleread</code></li>
+</ul>
+<h2 id="Console-output"><a href="#Console-output" class="headerlink" title="Console output"></a>Console output</h2><ul>
+<li><code>write</code> to a fie descriptor connected  to console -&gt; <code>uartputc</code></li>
+<li><code>uartputc</code> puts each char into an output buffer (<code>uart_tx_buf</code>), calls <code>uartstart</code></li>
+<li>if buffer full -&gt; <code>uartputc</code> waits</li>
+<li><code>uartstart</code>: if device ready -&gt; transmitting</li>
+<li>UART finishes sending a byte -&gt; generates an interrupt</li>
+<li>interrupt -&gt; <code>uartintr</code> -&gt; <code>uartstart</code></li>
+</ul>
+<p><img src="Xv6-Interrupts-and-device-drivers/console-output.svg" alt="console-output"></p>
+<h2 id="Concurrency-in-drivers"><a href="#Concurrency-in-drivers" class="headerlink" title="Concurrency in drivers"></a>Concurrency in drivers</h2><p><em>I/O concurrency</em>: </p>
+<ul>
+<li>the decoupling of device activity from process activity via buffering and interrupts.<ul>
+<li>console driver can process input even when no process is waiting to read it</li>
+<li>processes can send output without having to wait for the device</li>
+</ul>
+</li>
+</ul>
+<p>Concurrency dangers: </p>
+<ul>
+<li>two processes on different CPUs call <code>consoleread</code> at the same time.<ul>
+<li>solve: acquire a lock</li>
+</ul>
+</li>
+<li>one process waits for input, interrupt of the input arrive when a different process is running.<ul>
+<li>interrupt handlers copy input data to a buffer</li>
+<li>wake up top-half code to do the rest (consoleintr -&gt; consoleread)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Timer-interrupts"><a href="#Timer-interrupts" class="headerlink" title="Timer interrupts"></a>Timer interrupts</h2><p><strong>Clock hardware</strong>: </p>
+<ul>
+<li>attached to each RISC-V CPU</li>
+<li>xv6 programs this clock hw to interrupt each CPU periodically</li>
+</ul>
+<p><strong>Timer interrupt</strong>:</p>
+<p>clock hardware -&gt; timer interrupt -(trap)-&gt; usertrap / kerneltrap -&gt; yield -&gt; switch processes</p>
+<p>RISC-V timer interrupts: can only be taken in MACHINE MODE, not supervisor mode:</p>
+<ul>
+<li>xv6 handles timer interrupts separately from the trap mechanism.<ul>
+<li>before main -&gt; <code>start.c</code> -&gt; <code>timerinit</code>: sets up to receive timer interrupts in machine mode<ul>
+<li>program the CLINT hardware (core-local interruptor) to generate an interrupt after a delay</li>
+<li>set up a scratch area (like trapframe): help the time interrupt handler save registers and address of CLINT</li>
+<li>enables timer interrupt: <code>mtvec &lt;- timervec</code></li>
+</ul>
+</li>
+<li>timer interrupt (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/077323a8f0b3440fcc3d082096a2d83fe5461d70/kernel/kernelvec.S#L93"><code>timervec</code></a>: machine mode) -&gt; handler: raise a <em>software interrupt</em> and return -&gt; delivers softwate interrupt (<code>devintr</code>) with ordinary trap mechanism</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>EOF</p>
+<hr>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># By CDFMLR 2021-03-30</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;See you.&quot;</span></span><br></pre></td></tr></table></figure>
+<p>顶部图片来自于<a target="_blank" rel="noopener" href="https://api.ixiaowai.cn/">小歪API</a>，系随机选取的图片，仅用于检测屏幕显示的机械、光电性能，与文章的任何内容及观点无关，也并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。如有侵权，联系删除。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xv6-Interrupts-and-device-drivers"><span class="toc-number">1.</span> <span class="toc-text">Xv6 Interrupts and device drivers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Console-input"><span class="toc-number">1.1.</span> <span class="toc-text">Console input</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Console-output"><span class="toc-number">1.2.</span> <span class="toc-text">Console output</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrency-in-drivers"><span class="toc-number">1.3.</span> <span class="toc-text">Concurrency in drivers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Timer-interrupts"><span class="toc-number">1.4.</span> <span class="toc-text">Timer interrupts</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&text=Xv6 Interrupts and device drivers"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&is_video=false&description=Xv6 Interrupts and device drivers"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 Interrupts and device drivers&body=Check out this article: https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&title=Xv6 Interrupts and device drivers"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/03/29/xv6/Xv6-Interrupts-and-device-drivers/&name=Xv6 Interrupts and device drivers&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
