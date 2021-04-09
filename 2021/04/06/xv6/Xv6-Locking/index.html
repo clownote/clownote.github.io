@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="LockingConcurrency: situations in which multiple instruction sreams are interleaved, due to multiprocessor parallelism, threasd switching, or interrupts. Concurrency control: strategies aimed at corr">
+    <meta name="description" content="Locking Learning xv6-riscv-book Chapter 5 Locking  Concurrency: situations in which multiple instruction sreams are interleaved, due to multiprocessor parallelism, threasd switching, or interrupts. C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Xv6 Locking">
 <meta property="og:url" content="https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="LockingConcurrency: situations in which multiple instruction sreams are interleaved, due to multiprocessor parallelism, threasd switching, or interrupts. Concurrency control: strategies aimed at corr">
+<meta property="og:description" content="Locking Learning xv6-riscv-book Chapter 5 Locking  Concurrency: situations in which multiple instruction sreams are interleaved, due to multiprocessor parallelism, threasd switching, or interrupts. C">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
 <meta property="og:image" content="https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/Xv6-Locking/race.JPEG">
 <meta property="article:published_time" content="2021-04-06T16:29:00.060Z">
-<meta property="article:modified_time" content="2021-04-09T01:09:25.422Z">
+<meta property="article:modified_time" content="2021-04-09T01:14:26.434Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="CDFMLR, blogs">
 <meta name="twitter:card" content="summary">
@@ -140,7 +140,7 @@
       
         <time datetime="2021-04-06T16:29:00.060Z" itemprop="datePublished">2021-04-06</time>
         
-        (Updated: <time datetime="2021-04-09T01:09:25.422Z" itemprop="dateModified">2021-04-09</time>)
+        (Updated: <time datetime="2021-04-09T01:14:26.434Z" itemprop="dateModified">2021-04-09</time>)
         
       
     </div>
@@ -156,7 +156,10 @@
 
   <div class="content" itemprop="articleBody">
     <p><img src="https://api.ixiaowai.cn/api/api.php" alt="Meaning Unknown&#39;s Head Image"></p>
-<h1 id="Locking"><a href="#Locking" class="headerlink" title="Locking"></a>Locking</h1><p><code>Concurrency</code>: situations in which multiple instruction sreams are interleaved, due to multiprocessor parallelism, threasd switching, or interrupts.</p>
+<h1 id="Locking"><a href="#Locking" class="headerlink" title="Locking"></a>Locking</h1><blockquote>
+<p>Learning <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv-book">xv6-riscv-book</a> Chapter 5 Locking</p>
+</blockquote>
+<p><code>Concurrency</code>: situations in which multiple instruction sreams are interleaved, due to multiprocessor parallelism, threasd switching, or interrupts.</p>
 <p><code>Concurrency control</code>: strategies aimed at correctness under concurrency.</p>
 <p><code>Lock</code>: provides mutual exclusion – ensurign that only one CPU at a time can hold the lock.</p>
 <h2 id="Race-conditions"><a href="#Race-conditions" class="headerlink" title="Race conditions"></a>Race conditions</h2><p>Race condition: </p>
