@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="LockingConcurrency: situations in which multiple instruction sreams are interleaved, due to multiprocessor parallelism, threasd switching, or interrupts. Concurrency control: strategies aimed at corr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xv6 Locking">
+<meta property="og:url" content="https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="LockingConcurrency: situations in which multiple instruction sreams are interleaved, due to multiprocessor parallelism, threasd switching, or interrupts. Concurrency control: strategies aimed at corr">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
+<meta property="og:image" content="https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/Xv6-Locking/race.JPEG">
+<meta property="article:published_time" content="2021-04-06T16:29:00.060Z">
+<meta property="article:modified_time" content="2021-04-09T01:09:25.422Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api.ixiaowai.cn/api/api.php">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Xv6 Locking</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/04/03/xv6/Xv6-Lab-lazy-page-allocation/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&text=Xv6 Locking"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&is_video=false&description=Xv6 Locking"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 Locking&body=Check out this article: https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&name=Xv6 Locking&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Locking"><span class="toc-number">1.</span> <span class="toc-text">Locking</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Race-conditions"><span class="toc-number">1.1.</span> <span class="toc-text">Race conditions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Locks"><span class="toc-number">1.2.</span> <span class="toc-text">Locks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#spinlocks"><span class="toc-number">1.2.1.</span> <span class="toc-text">spinlocks</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-locks"><span class="toc-number">1.3.</span> <span class="toc-text">Using locks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deadlock-and-lock-ordering"><span class="toc-number">1.4.</span> <span class="toc-text">Deadlock and lock ordering</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Locks-and-interrut-handlers"><span class="toc-number">1.5.</span> <span class="toc-text">Locks and interrut handlers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Instruction-and-memory-ordering"><span class="toc-number">1.6.</span> <span class="toc-text">Instruction and memory ordering</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sleep-locks"><span class="toc-number">1.7.</span> <span class="toc-text">Sleep locks</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Xv6 Locking
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-04-06T16:29:00.060Z" itemprop="datePublished">2021-04-06</time>
+        
+        (Updated: <time datetime="2021-04-09T01:09:25.422Z" itemprop="dateModified">2021-04-09</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://api.ixiaowai.cn/api/api.php" alt="Meaning Unknown&#39;s Head Image"></p>
+<h1 id="Locking"><a href="#Locking" class="headerlink" title="Locking"></a>Locking</h1><p><code>Concurrency</code>: situations in which multiple instruction sreams are interleaved, due to multiprocessor parallelism, threasd switching, or interrupts.</p>
+<p><code>Concurrency control</code>: strategies aimed at correctness under concurrency.</p>
+<p><code>Lock</code>: provides mutual exclusion – ensurign that only one CPU at a time can hold the lock.</p>
+<h2 id="Race-conditions"><a href="#Race-conditions" class="headerlink" title="Race conditions"></a>Race conditions</h2><p>Race condition: </p>
+<ul>
+<li>a memory location is accessed concurrently</li>
+<li>at list one <strong>write</strong></li>
+</ul>
+<p>E.g. two CPUs execute list.push at the same time:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">element</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">element</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">element</span> *<span class="title">list</span> =</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">push(<span class="keyword">int</span> data) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">element</span> *<span class="title">l</span>;</span></span><br><span class="line">    </span><br><span class="line">    l = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span> *l);</span><br><span class="line">    l-&gt;data = data;</span><br><span class="line">    l-&gt;next = <span class="built_in">list</span>;  <span class="comment">// race</span></span><br><span class="line">    <span class="built_in">list</span> = l;        <span class="comment">// race</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="Xv6-Locking/race.JPEG" alt="race"></p>
+<p> race condition -&gt; offen bug:</p>
+<ul>
+<li>lost update</li>
+<li>read incompletely-updated data</li>
+</ul>
+<p>To avoid races -&gt; use a <em>lock</em>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">lock</span> <span class="title">listlock</span>;</span>  <span class="comment">// (+)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">push(<span class="keyword">int</span> data) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">element</span> *<span class="title">l</span>;</span></span><br><span class="line">    </span><br><span class="line">    l = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span> *l);</span><br><span class="line">    l-&gt;data = data;</span><br><span class="line">    </span><br><span class="line">    acquire(&amp;listlock);  <span class="comment">// (+)</span></span><br><span class="line">    l-&gt;next = <span class="built_in">list</span>;</span><br><span class="line">    <span class="built_in">list</span> = l;</span><br><span class="line">    release(&amp;listlock);  <span class="comment">// (+)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>between <code>acquire</code> and <code>release</code>: <em>critical section</em>.</p>
+<ul>
+<li>only one CPU at a time can operate on the data structure in the critical section.</li>
+<li>locks limit performance: locks reduce parallelism:<ul>
+<li>conflict</li>
+<li>contention</li>
+</ul>
+</li>
+</ul>
+<p>(A major challenge in kernel design is to avoid lock contention)</p>
+<h2 id="Locks"><a href="#Locks" class="headerlink" title="Locks"></a>Locks</h2><p>Xv6 has two types of locks:</p>
+<ul>
+<li>spinlocks</li>
+<li>sleep-locks</li>
+</ul>
+<h3 id="spinlocks"><a href="#spinlocks" class="headerlink" title="spinlocks"></a>spinlocks</h3><p><a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/spinlock.h">kernel/spinlock.h</a>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">spinlock</span> &#123;</span></span><br><span class="line">  uint locked;       <span class="comment">// Is the lock held?</span></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>acquire</strong>: </p>
+<p>use <code>__sync_lock_test_and_set</code>:</p>
+<ul>
+<li>amoswap <code>lk-&gt;locked</code> and <code>1</code></li>
+<li>return: old(swapped) contents of <code>lk-&gt;locked</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">acquire(struct spinlock *lk)</span><br><span class="line">&#123;   </span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(__sync_lock_test_and_set(&amp;lk-&gt;locked, <span class="number">1</span>) != <span class="number">0</span>)</span><br><span class="line">    ;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>release</strong>:</p>
+<p>use <code>__sync_lock_release</code>:</p>
+<ul>
+<li>atomic <code>lk-&gt;locked = 0</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">release(struct spinlock *lk)</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  __sync_lock_release(&amp;lk-&gt;locked);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Using-locks"><a href="#Using-locks" class="headerlink" title="Using locks"></a>Using locks</h2><ul>
+<li>any time a variable can be written by one CPU at the same time that another CPU can read or write it, a lock should be used</li>
+<li>locks protect invariants: if an invariant involves multiple memory locations, typically all of them need to be protected by a single lock to ensure the invariant is maintained</li>
+<li>not to lock too much (for efficiency)</li>
+</ul>
+<h2 id="Deadlock-and-lock-ordering"><a href="#Deadlock-and-lock-ordering" class="headerlink" title="Deadlock and lock ordering"></a>Deadlock and lock ordering</h2><p>hold serveral locks at the same time:</p>
+<ul>
+<li>IMPORTANT: all code paths acquire those locks in the same order =&gt; lock-order chains</li>
+<li>ORTHERWISE: risk of <em>deadlock</em></li>
+</ul>
+<p>global deadlock-avoiding order: difficult!</p>
+<h2 id="Locks-and-interrut-handlers"><a href="#Locks-and-interrut-handlers" class="headerlink" title="Locks and interrut handlers"></a>Locks and interrut handlers</h2><p>Some xv6 spinlocks protect data that is used by both threads and interrupt handlers:</p>
+<ul>
+<li>To avoid deadlock: when a CPU acquires any lock, xv6 always disables interrupts on that CPU.</li>
+<li><code>push_off</code> in acquire &amp; <code>pop_off</code> in release</li>
+</ul>
+<h2 id="Instruction-and-memory-ordering"><a href="#Instruction-and-memory-ordering" class="headerlink" title="Instruction and memory ordering"></a>Instruction and memory ordering</h2><p>Compiler &amp; CPU may do instruction re-orderings for performance.</p>
+<p>Re-ordering can easily lead to incorrect behavior on multiprocessors. </p>
+<p>To tell hardware and compiler not to perform such re-ordering: </p>
+<ul>
+<li>Xv6 uses <code>__sync_synchronize()</code>: a <em>memory barrier</em> </li>
+</ul>
+<h2 id="Sleep-locks"><a href="#Sleep-locks" class="headerlink" title="Sleep locks"></a>Sleep locks</h2><p>To hold a lock for a long time – use sleep lock</p>
+<p>e.g. file system keeps a file locked while reading &amp; writing its content on the disk.</p>
+<p><em>sleep-locks</em>:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/sleeplock.c#L22">acquiresleep</a>: yields CPU while waiting</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/sleeplock.c#L34">releasesleep</a></li>
+</ul>
+<p>Notice:</p>
+<ul>
+<li>sleep-locks leave interrupts enable: cannot be used in interrupt handlers.</li>
+<li>sleep-locks may yield the CPU: cannot be used inside spinlock critical sections</li>
+</ul>
+<hr>
+<p>CDFMLR 2021.04.08</p>
+<p>顶部图片来自于<a target="_blank" rel="noopener" href="https://api.ixiaowai.cn/">小歪API</a>，系随机选取的图片，仅用于检测屏幕显示的机械、光电性能，与文章的任何内容及观点无关，也并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。如有侵权，联系删除。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Locking"><span class="toc-number">1.</span> <span class="toc-text">Locking</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Race-conditions"><span class="toc-number">1.1.</span> <span class="toc-text">Race conditions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Locks"><span class="toc-number">1.2.</span> <span class="toc-text">Locks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#spinlocks"><span class="toc-number">1.2.1.</span> <span class="toc-text">spinlocks</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-locks"><span class="toc-number">1.3.</span> <span class="toc-text">Using locks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deadlock-and-lock-ordering"><span class="toc-number">1.4.</span> <span class="toc-text">Deadlock and lock ordering</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Locks-and-interrut-handlers"><span class="toc-number">1.5.</span> <span class="toc-text">Locks and interrut handlers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Instruction-and-memory-ordering"><span class="toc-number">1.6.</span> <span class="toc-text">Instruction and memory ordering</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sleep-locks"><span class="toc-number">1.7.</span> <span class="toc-text">Sleep locks</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&text=Xv6 Locking"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&is_video=false&description=Xv6 Locking"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 Locking&body=Check out this article: https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&title=Xv6 Locking"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/&name=Xv6 Locking&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
