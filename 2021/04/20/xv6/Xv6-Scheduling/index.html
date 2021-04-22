@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Xv6 Scheduling Learning xv6-riscv-book Chapter 6 Scheduling   time-share the CPUs: run more processes than CPUs transparent to user processes multiplexing processes onto CPUs:  illusion: each process">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xv6 Scheduling">
+<meta property="og:url" content="https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Xv6 Scheduling Learning xv6-riscv-book Chapter 6 Scheduling   time-share the CPUs: run more processes than CPUs transparent to user processes multiplexing processes onto CPUs:  illusion: each process">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
+<meta property="article:published_time" content="2021-04-20T16:05:42.063Z">
+<meta property="article:modified_time" content="2021-04-22T01:10:25.212Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api.ixiaowai.cn/api/api.php">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Xv6 Scheduling</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/04/06/xv6/Xv6-Locking/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&text=Xv6 Scheduling"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&is_video=false&description=Xv6 Scheduling"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 Scheduling&body=Check out this article: https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&name=Xv6 Scheduling&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xv6-Scheduling"><span class="toc-number">1.</span> <span class="toc-text">Xv6 Scheduling</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiplexing"><span class="toc-number">1.1.</span> <span class="toc-text">Multiplexing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Context-switching"><span class="toc-number">1.2.</span> <span class="toc-text">Context switching</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scheduling"><span class="toc-number">1.3.</span> <span class="toc-text">Scheduling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mycpu-and-myproc"><span class="toc-number">1.4.</span> <span class="toc-text">mycpu and myproc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sleep-and-wakeup"><span class="toc-number">1.5.</span> <span class="toc-text">sleep and wakeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#busy-waiting"><span class="toc-number">1.5.1.</span> <span class="toc-text">busy waiting</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep-wakeup"><span class="toc-number">1.5.2.</span> <span class="toc-text">sleep&#x2F;wakeup</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#intro-sleep-wakeup"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">intro sleep&#x2F;wakeup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lost-wake-up-problem"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">lost wake-up problem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#deadlocks"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">deadlocks</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sleep-and-wakeup-implement"><span class="toc-number">1.6.</span> <span class="toc-text">sleep and wakeup implement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pipes-%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.7.</span> <span class="toc-text">Pipes 实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wait-exit-kill"><span class="toc-number">1.8.</span> <span class="toc-text">wait, exit, kill</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Xv6 Scheduling
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-04-20T16:05:42.063Z" itemprop="datePublished">2021-04-20</time>
+        
+        (Updated: <time datetime="2021-04-22T01:10:25.212Z" itemprop="dateModified">2021-04-22</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://api.ixiaowai.cn/api/api.php" alt="Meaning Unknown&#39;s Head Image"></p>
+<h1 id="Xv6-Scheduling"><a href="#Xv6-Scheduling" class="headerlink" title="Xv6 Scheduling"></a>Xv6 Scheduling</h1><blockquote>
+<p>Learning <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv-book">xv6-riscv-book</a> Chapter 6 Scheduling</p>
+</blockquote>
+<ul>
+<li>time-share the CPUs: run more processes than CPUs</li>
+<li>transparent to user processes</li>
+<li><em>multiplexing</em> processes onto CPUs: <ul>
+<li>illusion: each process has its own virtual CPU</li>
+</ul>
+</li>
+</ul>
+<h2 id="Multiplexing"><a href="#Multiplexing" class="headerlink" title="Multiplexing"></a>Multiplexing</h2><p>Switching CPU among processes:</p>
+<ul>
+<li>sleep/wakeup: process waits for something in the <code>sleep</code> syscall</li>
+<li>periodically forces a switch: cope with processes that compute for long periods</li>
+</ul>
+<p>Illusion: each process has its own CPU.</p>
+<p>Challenges:</p>
+<ul>
+<li>How to switch from one process to another?</li>
+<li>How to force switches in a way that transparent to user processes?</li>
+<li>Avoid races when many CPUs switching among processes concurrently.</li>
+<li>each core must remember which process it is executing</li>
+<li>sleep/wakeup: give up CPU, sleep waiting for an event, wake process up: avoid races, loss wakeup notifications</li>
+</ul>
+<h2 id="Context-switching"><a href="#Context-switching" class="headerlink" title="Context switching"></a>Context switching</h2><ul>
+<li>save hte old thread’s CPU registers</li>
+<li>restore previously-saved registers of the new thread<ul>
+<li>restore sp (stack pointer) &amp; pc (program counter): switch the executing code.</li>
+</ul>
+</li>
+</ul>
+<p><code>swtch</code> (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/swtch.S">kernel/swtch.S</a>): save and restore for a kernel thread switch: switch to scheduler</p>
+<ul>
+<li><code>void swtch(struct context *old, struct context *new);</code></li>
+<li>save and restore <em>context</em> (register sets, <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/proc.h#L2">kernel/proc.h:2</a>)</li>
+<li>swtch does not save <code>pc</code>: save <code>ra</code> – holds the return address from which <code>swtch</code> was called.</li>
+<li>return to instructions pointed by the restored <code>ra</code> (the code called swtch)</li>
+</ul>
+<p>Yield:</p>
+<ul>
+<li>yield -&gt; sched -&gt; swtch -&gt; return to code called sched: <code>scheduler</code></li>
+</ul>
+<h2 id="Scheduling"><a href="#Scheduling" class="headerlink" title="Scheduling"></a>Scheduling</h2><p>Secheduler: a special thread</p>
+<ul>
+<li>per CPU a scheduler</li>
+<li>running  <code>scheduler()</code></li>
+</ul>
+<p><code>scheduler</code>:</p>
+<ul>
+<li><p>choose a process to run</p>
+</li>
+<li><p>swtch to run process</p>
+</li>
+<li><p>eventually swtch back to scheduler</p>
+</li>
+<li><p>scheduler acquires <code>switch_to_proc-&gt;lock</code>, no release </p>
+</li>
+</ul>
+<p>Kernel thread gives up CPU: calls <code>sched</code> -&gt; switch to scheduler</p>
+<p>scheduler &amp; sched: <em>co-rountines</em> (switch between two threads).</p>
+<p><code>p-&gt;lock</code>: </p>
+<ul>
+<li>often acquires in one thread and releases it in other<ul>
+<li>once scheduler starts to convert a RUNNABLE process to RUNNING, the lock cannot be released until the kernel thread is completely running (after the swtch, for example in yield).</li>
+<li>interplay between exit and wait, the machinery to avoid lost wakeups</li>
+<li>avoidance of races between a process exiting and other processes reading or writing its state</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<h2 id="mycpu-and-myproc"><a href="#mycpu-and-myproc" class="headerlink" title="mycpu and myproc"></a>mycpu and myproc</h2><p><code>struct cpu</code>: Xv6 maintains for each CPU:</p>
+<ul>
+<li>currently running process</li>
+<li>saved registers for the CPU scheduler thread</li>
+<li>count of nested spinlocks needed to manage interrupt disabling</li>
+</ul>
+<p>RISC-V giving each CPU a <em>hartid</em>: stored in that CPU’s <code>tp</code> register while in the kernel:</p>
+<ul>
+<li><code>mstart</code> sets <code>tp</code> in CPU’s boot (machine mode)</li>
+<li><code>usertrapret</code> saves <code>tp</code> in the trampiline page (user might modify tp)</li>
+<li><code>uservec</code> restores saved <code>tp</code> when entering the kernel.</li>
+</ul>
+<p><code>mycpu</code> (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/077323a8f0b3440fcc3d082096a2d83fe5461d70/kernel/proc.c#L72">kernel/proc.c</a>):</p>
+<ul>
+<li>returns a pointer to the current CPU’s <code>sturct cpu</code></li>
+<li>use <code>tp</code> to index an array of <code>struct cpu</code> =&gt; find the right one.</li>
+<li>interrupts must be disabled to run <code>mycpu</code>: if the thread yield and then move to a different CPU, a previously read <code>cpuid</code> value would no longer be correct.</li>
+</ul>
+<p><code>myproc</code> (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/077323a8f0b3440fcc3d082096a2d83fe5461d70/kernel/proc.c#L80">kernel/proc.c</a>):</p>
+<ul>
+<li>disables interrupts</li>
+<li>invokes <code>mycpu</code></li>
+<li>fetches current process: <code>c-&gt;proc</code></li>
+<li>enables interrupts</li>
+<li>return a pointer to a <code>struct proc</code></li>
+</ul>
+<h2 id="sleep-and-wakeup"><a href="#sleep-and-wakeup" class="headerlink" title="sleep and wakeup"></a>sleep and wakeup</h2><p>sleep &amp; wakeup:  <em>sequence coordination</em> or <em>conditional synchronization</em> mechanisms:</p>
+<ul>
+<li>one process to sleep waiting for an event</li>
+<li>another process to wake it up once the event has happened.</li>
+</ul>
+<h3 id="busy-waiting"><a href="#busy-waiting" class="headerlink" title="busy waiting"></a>busy waiting</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">semaphore</span> &#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">spinlock</span> <span class="title">lock</span>;</span></span><br><span class="line">  <span class="keyword">int</span> count;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">V(struct semaphore *s)  <span class="comment">// producer</span></span><br><span class="line">&#123;</span><br><span class="line">   acquire(&amp;s-&gt;lock);</span><br><span class="line">   s-&gt;count += <span class="number">1</span>;</span><br><span class="line">   release(&amp;s-&gt;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">P(struct semaphore *s)  <span class="comment">// consumer</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">while</span>(s-&gt;count == <span class="number">0</span>)</span><br><span class="line">     ;  <span class="comment">// repeatedly polling: busy waiting</span></span><br><span class="line">   acquire(&amp;s-&gt;lock);</span><br><span class="line">   s-&gt;count -= <span class="number">1</span>;</span><br><span class="line">   release(&amp;s-&gt;lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>expensive!</p>
+<h3 id="sleep-wakeup"><a href="#sleep-wakeup" class="headerlink" title="sleep/wakeup"></a>sleep/wakeup</h3><h4 id="intro-sleep-wakeup"><a href="#intro-sleep-wakeup" class="headerlink" title="intro sleep/wakeup"></a>intro sleep/wakeup</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">V(struct semaphore *s)  <span class="comment">// producer</span></span><br><span class="line">&#123;</span><br><span class="line">   acquire(&amp;s-&gt;lock);</span><br><span class="line">   s-&gt;count += <span class="number">1</span>;</span><br><span class="line">   wakeup(s);</span><br><span class="line">   release(&amp;s-&gt;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">P(struct semaphore *s)  <span class="comment">// consumer</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">while</span>(s-&gt;count == <span class="number">0</span>)</span><br><span class="line">     sleep(s);</span><br><span class="line">   acquire(&amp;s-&gt;lock);</span><br><span class="line">   s-&gt;count -= <span class="number">1</span>;</span><br><span class="line">   release(&amp;s-&gt;lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>sleep(chan)</code>: sleep on a <em>wait channel</em>: releasing CPU.</li>
+<li><code>wakeup(chan)</code>: wakes all processes sleeping on chan: <code>sleep</code> return.</li>
+</ul>
+<h4 id="lost-wake-up-problem"><a href="#lost-wake-up-problem" class="headerlink" title="lost wake-up problem"></a><em>lost wake-up</em> problem</h4><ol>
+<li>P found <code>s-&gt;count == 0</code></li>
+<li>V runs on another CPU: changes <code>s-&gt;count</code> to be nonzero</li>
+<li>V calls wakeup: no processes sleeping -&gt; wakeup do nothing</li>
+<li>P continues: calles <code>sleep</code>: asleep waiting for a V</li>
+<li>but one V has lost: unless luckly producer calls V again, the consumer will wait forever</li>
+</ol>
+<p>To avoid this problem: move the lock acquisition in P: check count and calls sleep atomically:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">P(struct semaphore *s)  <span class="comment">// consumer</span></span><br><span class="line">&#123;</span><br><span class="line">   acquire(&amp;s-&gt;lock);</span><br><span class="line">   <span class="keyword">while</span>(s-&gt;count == <span class="number">0</span>)</span><br><span class="line">     sleep(s);</span><br><span class="line">   s-&gt;count -= <span class="number">1</span>;</span><br><span class="line">   release(&amp;s-&gt;lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="deadlocks"><a href="#deadlocks" class="headerlink" title="deadlocks"></a>deadlocks</h4><p>However, this version also deadlocks: P holds the lock while sleeps, v will block forever waiting for the lock.</p>
+<p>To fix this: change the interface of <code>sleep</code>:</p>
+<ul>
+<li>pass a <em>condition lock</em> to <code>sleep</code></li>
+<li><code>sleep</code> release this lock after process is asleep and waiting on the sleep channel.</li>
+<li>a concurrent V will be forced to wait until P is asleep:<br>wakeup will find the sleeping consumer.</li>
+<li>once the consumer awake: sleep reacquires the lock before returning.</li>
+</ul>
+<p>final code:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">V(struct semaphore *s)  <span class="comment">// producer</span></span><br><span class="line">&#123;</span><br><span class="line">   acquire(&amp;s-&gt;lock);</span><br><span class="line">   s-&gt;count += <span class="number">1</span>;</span><br><span class="line">   wakeup(s);</span><br><span class="line">   release(&amp;s-&gt;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">P(struct semaphore *s)  <span class="comment">// consumer</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">while</span>(s-&gt;count == <span class="number">0</span>)</span><br><span class="line">     sleep(s, &amp;s-&gt;lock);</span><br><span class="line">   acquire(&amp;s-&gt;lock);</span><br><span class="line">   s-&gt;count -= <span class="number">1</span>;</span><br><span class="line">   release(&amp;s-&gt;lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="sleep-and-wakeup-implement"><a href="#sleep-and-wakeup-implement" class="headerlink" title="sleep and wakeup implement"></a>sleep and wakeup implement</h2><p>（感觉写英文好多是抄书，学习效果不佳，下面还是写中文，用自己的话来说吧。。）</p>
+<p>直接看源码吧，这个挺直接的。</p>
+<ul>
+<li><code>sleep</code>: <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/077323a8f0b3440fcc3d082096a2d83fe5461d70/kernel/proc.c#L529">kernel/proc.c:529</a></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Atomically release lock and sleep on chan.</span></span><br><span class="line"><span class="comment">// Reacquires lock when awakened.</span></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">sleep(<span class="keyword">void</span> *chan, struct spinlock *lk)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span> =</span> myproc();</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Must acquire p-&gt;lock in order to</span></span><br><span class="line">  <span class="comment">// change p-&gt;state and then call sched.</span></span><br><span class="line">  <span class="comment">// Once we hold p-&gt;lock, we can be</span></span><br><span class="line">  <span class="comment">// guaranteed that we won&#x27;t miss any wakeup</span></span><br><span class="line">  <span class="comment">// (wakeup locks p-&gt;lock),</span></span><br><span class="line">  <span class="comment">// so it&#x27;s okay to release lk.</span></span><br><span class="line"></span><br><span class="line">  acquire(&amp;p-&gt;lock);  <span class="comment">//DOC: sleeplock1</span></span><br><span class="line">  release(lk);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Go to sleep.</span></span><br><span class="line">  p-&gt;chan = chan;</span><br><span class="line">  p-&gt;state = SLEEPING;</span><br><span class="line"></span><br><span class="line">  sched();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Tidy up.</span></span><br><span class="line">  p-&gt;chan = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Reacquire original lock.</span></span><br><span class="line">  release(&amp;p-&gt;lock);</span><br><span class="line">  acquire(lk);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>wakeup</code>: <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/077323a8f0b3440fcc3d082096a2d83fe5461d70/kernel/proc.c#L560">kernel/proc.c:560</a> (这个好暴力)</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Wake up all processes sleeping on chan.</span></span><br><span class="line"><span class="comment">// Must be called without any p-&gt;lock.</span></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">wakeup(<span class="keyword">void</span> *chan)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(p = proc; p &lt; &amp;proc[NPROC]; p++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(p != myproc())&#123;</span><br><span class="line">      acquire(&amp;p-&gt;lock);</span><br><span class="line">      <span class="keyword">if</span>(p-&gt;state == SLEEPING &amp;&amp; p-&gt;chan == chan) &#123;</span><br><span class="line">        p-&gt;state = RUNNABLE;</span><br><span class="line">      &#125;</span><br><span class="line">      release(&amp;p-&gt;lock);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Pipes-实现"><a href="#Pipes-实现" class="headerlink" title="Pipes 实现"></a>Pipes 实现</h2><p>Pipe 是用 <code>struct pipe</code> 来表示的:</p>
+<ul>
+<li>一个 lock</li>
+<li>data: 环形 buffer</li>
+<li>nread/nwrite: 已读/写的总字节数<ul>
+<li>buffer 为空：<code>nwrite == nread</code></li>
+<li>buffer 为满：<code>nwrite == nread + PIPESIZE</code></li>
+</ul>
+</li>
+<li>读取 buf：<code>data[nread % PIPESIZE]</code></li>
+</ul>
+<p>调用接口：</p>
+<ul>
+<li><code>pipewrite</code></li>
+<li><code>piperead</code></li>
+</ul>
+<h2 id="wait-exit-kill"><a href="#wait-exit-kill" class="headerlink" title="wait, exit, kill"></a>wait, exit, kill</h2><ul>
+<li>wait：父进程等待任一子进程退出</li>
+<li>exit：（子）进程退出</li>
+<li>kill：杀进程</li>
+</ul>
+<p><code>exit</code> 会把进程状态改为 <code>ZOMBIE</code>。</p>
+<p><code>wait</code> 取得 ZOMBIE 的子进程后将其状态改成 <code>UNUSED</code>，读取其退出状态，返回其 pid。</p>
+<p>若父在子之前退出，父会把子转让给 <code>init</code>。<code>init</code> 漫无止境地调用 wait，所以所有就成都可以执行完后被清除。</p>
+<hr>
+<p>CDFMLR 2021.04.22</p>
+<p>顶部图片来自于<a target="_blank" rel="noopener" href="https://api.ixiaowai.cn/">小歪API</a>，系随机选取的图片，仅用于检测屏幕显示的机械、光电性能，与文章的任何内容及观点无关，也并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。如有侵权，联系删除。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xv6-Scheduling"><span class="toc-number">1.</span> <span class="toc-text">Xv6 Scheduling</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiplexing"><span class="toc-number">1.1.</span> <span class="toc-text">Multiplexing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Context-switching"><span class="toc-number">1.2.</span> <span class="toc-text">Context switching</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scheduling"><span class="toc-number">1.3.</span> <span class="toc-text">Scheduling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mycpu-and-myproc"><span class="toc-number">1.4.</span> <span class="toc-text">mycpu and myproc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sleep-and-wakeup"><span class="toc-number">1.5.</span> <span class="toc-text">sleep and wakeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#busy-waiting"><span class="toc-number">1.5.1.</span> <span class="toc-text">busy waiting</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep-wakeup"><span class="toc-number">1.5.2.</span> <span class="toc-text">sleep&#x2F;wakeup</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#intro-sleep-wakeup"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">intro sleep&#x2F;wakeup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lost-wake-up-problem"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">lost wake-up problem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#deadlocks"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">deadlocks</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sleep-and-wakeup-implement"><span class="toc-number">1.6.</span> <span class="toc-text">sleep and wakeup implement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pipes-%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.7.</span> <span class="toc-text">Pipes 实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wait-exit-kill"><span class="toc-number">1.8.</span> <span class="toc-text">wait, exit, kill</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&text=Xv6 Scheduling"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&is_video=false&description=Xv6 Scheduling"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xv6 Scheduling&body=Check out this article: https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&title=Xv6 Scheduling"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/04/20/xv6/Xv6-Scheduling/&name=Xv6 Scheduling&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
