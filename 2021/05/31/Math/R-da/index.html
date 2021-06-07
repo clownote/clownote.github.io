@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="用 R 做数据分析 Vol_0：数据的数字特征及相关分析  导入数据导入文本表格数据12345678910Year  Nationwide  Rural  Urban1978  184         138    4051979  207         158    4341980  236         178    4961981  262         199    5621982">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 R 做数据分析">
+<meta property="og:url" content="https://clownote.github.io/2021/05/31/Math/R-da/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="用 R 做数据分析 Vol_0：数据的数字特征及相关分析  导入数据导入文本表格数据12345678910Year  Nationwide  Rural  Urban1978  184         138    4051979  207         158    4341980  236         178    4961981  262         199    5621982">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/read_table.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/read_csv.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/apply.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/apply_result.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/psych_describe.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/fivenum.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/stem.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/hist.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/ecdf.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/qqnorm.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/pearson.png">
+<meta property="og:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/spearman.png">
+<meta property="article:published_time" content="2021-05-31T12:21:08.429Z">
+<meta property="article:modified_time" content="2021-06-07T01:28:34.636Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Math">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://clownote.github.io/2021/05/31/Math/R-da/R-da/read_table.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>用 R 做数据分析</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/05/04/xv6/Xv6-file-system-implement/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/05/31/Math/R-da/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/05/31/Math/R-da/&text=用 R 做数据分析"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/05/31/Math/R-da/&is_video=false&description=用 R 做数据分析"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=用 R 做数据分析&body=Check out this article: https://clownote.github.io/2021/05/31/Math/R-da/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/05/31/Math/R-da/&name=用 R 做数据分析&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8-R-%E5%81%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">用 R 做数据分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.</span> <span class="toc-text">导入数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E6%96%87%E6%9C%AC%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text">导入文本表格数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5-CSV-%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.2.</span> <span class="toc-text">导入 CSV 数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attach"><span class="toc-number">1.1.3.</span> <span class="toc-text">attach</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%87%E5%80%BC%E3%80%81%E6%96%B9%E5%B7%AE%E3%80%81%E6%A0%87%E5%87%86%E5%B7%AE%E3%80%81%E5%8F%98%E5%BC%82%E7%B3%BB%E6%95%B0%E3%80%81%E5%81%8F%E5%BA%A6%E3%80%81%E5%B3%B0%E5%BA%A6"><span class="toc-number">1.2.</span> <span class="toc-text">均值、方差、标准差、变异系数、偏度、峰度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">单变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E4%BA%8E-data-frame"><span class="toc-number">1.2.2.</span> <span class="toc-text">作用于 data.frame</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#all-in-one"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">all in one</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E5%8C%85"><span class="toc-number">1.2.3.</span> <span class="toc-text">调包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E4%BD%8D%E6%95%B0%E3%80%81%E4%B8%8A%E4%B8%8B%E5%9B%9B%E5%88%86%E4%BD%8D%E6%95%B0%E3%80%81%E5%9B%9B%E5%88%86%E4%BD%8D%E6%9E%81%E5%B7%AE"><span class="toc-number">1.3.</span> <span class="toc-text">中位数、上下四分位数、四分位极差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E5%9B%BE"><span class="toc-number">1.4.</span> <span class="toc-text">数据分布图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8C%8E%E5%8F%B6%E5%9B%BE"><span class="toc-number">1.4.1.</span> <span class="toc-text">茎叶图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE"><span class="toc-number">1.4.2.</span> <span class="toc-text">直方图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0%E5%9B%BE"><span class="toc-number">1.4.3.</span> <span class="toc-text">经验分布函数图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E6%80%81-Q-Q-%E5%9B%BE"><span class="toc-number">1.4.4.</span> <span class="toc-text">正态 Q-Q 图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pearson-%E4%B8%8E-Spearman-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0"><span class="toc-number">1.5.</span> <span class="toc-text">Pearson 与 Spearman 相关系数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pearson-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0"><span class="toc-number">1.5.1.</span> <span class="toc-text">Pearson 相关系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spearman-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0"><span class="toc-number">1.5.2.</span> <span class="toc-text">Spearman 相关系数</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        用 R 做数据分析
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-05-31T12:21:08.429Z" itemprop="datePublished">2021-05-31</time>
+        
+        (Updated: <time datetime="2021-06-07T01:28:34.636Z" itemprop="dateModified">2021-06-07</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Math/" rel="tag">Math</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="用-R-做数据分析"><a href="#用-R-做数据分析" class="headerlink" title="用 R 做数据分析"></a>用 R 做数据分析</h1><blockquote>
+<p>Vol_0：数据的数字特征及相关分析</p>
+</blockquote>
+<h2 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h2><h3 id="导入文本表格数据"><a href="#导入文本表格数据" class="headerlink" title="导入文本表格数据"></a>导入文本表格数据</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Year  Nationwide  Rural  Urban</span><br><span class="line">1978  184         138    405</span><br><span class="line">1979  207         158    434</span><br><span class="line">1980  236         178    496</span><br><span class="line">1981  262         199    562</span><br><span class="line">1982  284         221    576</span><br><span class="line">1983  311         246    603</span><br><span class="line">1984  354         283    662</span><br><span class="line">1985  437         347    802</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>R 代码：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data &lt;- read.table(<span class="string">&quot;./data.txt&quot;</span>, header=<span class="literal">TRUE</span>)</span><br><span class="line">data</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="R-da/read_table.png" alt="read_table"></p>
+<h3 id="导入-CSV-数据"><a href="#导入-CSV-数据" class="headerlink" title="导入 CSV 数据"></a>导入 CSV 数据</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> 序号,省市区,11月,1～11月</span><br><span class="line"> 1,北京,35.22,499.8</span><br><span class="line"> 2,天津,10.41,161.37</span><br><span class="line"> 3,河北,17.22,273.29</span><br><span class="line"> 4,山西,10.7,134.79</span><br><span class="line"> 5,内蒙古,10.29,90.92</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>R 代码：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data &lt;- read.csv(<span class="string">&quot;./data.csv&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>注：这个数据里表头标题有中文、有特殊符号，会被 R 自动处理成：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; cat(<span class="built_in">names</span>(data))</span><br><span class="line">X.序号 省市区 X11月 X1.11月</span><br></pre></td></tr></table></figure>
+<p>可以手动改一下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data &lt;- data[-<span class="number">1</span>]  <span class="comment"># remove &quot;序号&quot; col</span></span><br><span class="line"><span class="built_in">names</span>(data) &lt;- <span class="built_in">c</span>(<span class="string">&quot;Province&quot;</span>, <span class="string">&quot;X1&quot;</span>, <span class="string">&quot;X2&quot;</span>)</span><br><span class="line">data</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="R-da/read_csv.png" alt="read_csv"></p>
+<p>注：后文里会随机使用这两个导入的数据中的一个作示例。</p>
+<h3 id="attach"><a href="#attach" class="headerlink" title="attach"></a>attach</h3><p>为了方便调用 data.frame 里的各列数据，我们可以：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">attach(data)</span><br></pre></td></tr></table></figure>
+<p>然后就可以直接用列名引用一列数据了，比如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(X1)</span><br></pre></td></tr></table></figure>
+<p>不必再通过 data 取索引：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(data[<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<p>用完之后，记得 detach：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">detach(data)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="均值、方差、标准差、变异系数、偏度、峰度"><a href="#均值、方差、标准差、变异系数、偏度、峰度" class="headerlink" title="均值、方差、标准差、变异系数、偏度、峰度"></a>均值、方差、标准差、变异系数、偏度、峰度</h2><h3 id="单变量"><a href="#单变量" class="headerlink" title="单变量"></a>单变量</h3><p>数据：一个变量，一“列”数据</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- <span class="built_in">c</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<p>均值：</p>
+<p>$$<br>\overline x = \frac{1}{n}\sum_{i=1}^nx_i<br>$$</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mean(x)</span><br></pre></td></tr></table></figure>
+<p>方差：<br>$$<br>s^2=\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline x)^2<br>$$</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var(x)</span><br></pre></td></tr></table></figure>
+<p>标准差：<br>$$<br>s = \sqrt{s^2}=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline x)^2}<br>$$</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sd(x)</span><br></pre></td></tr></table></figure>
+<p>变异系数：<br>$$<br>CV = \frac{s}{\overline x}<br>$$</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cv &lt;- <span class="keyword">function</span>(x) sd(x)/mean(x)</span><br><span class="line"></span><br><span class="line">cv(x)</span><br></pre></td></tr></table></figure>
+<p>注：书上是百分数的 $CV = 100 \times \frac{s}{\overline x} (%)$.</p>
+<p>偏度：<br>$$<br>g_1=\frac{1}{(n-1)(n-2)}\frac{1}{s^3}\sum_{i=1}^n(x_i-\overline x)^3<br>$$</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">g1 &lt;- <span class="keyword">function</span>(x) &#123;</span><br><span class="line">    n &lt;- <span class="built_in">length</span>(x)</span><br><span class="line">    A &lt;- n / ((n-<span class="number">1</span>) * (n-<span class="number">2</span>))</span><br><span class="line">    B &lt;- 1 / sd(x)^<span class="number">3</span></span><br><span class="line">    S &lt;- <span class="built_in">sum</span>((x - mean(x))^<span class="number">3</span>)</span><br><span class="line">    A * B * S</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">g1(x)</span><br></pre></td></tr></table></figure>
+<p>峰度：<br>$$<br>g_2 = \frac{n(n+1)}{(n-1)(n-2)(n-3)}\frac{1}{s^4}\sum_{i=1}^n(x_i-\overline x)^4\-\frac{3(n-1)^2}{(n-2)(n-3)}<br>$$</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">g2 &lt;- <span class="keyword">function</span>(x) &#123;  <span class="comment"># 峰度</span></span><br><span class="line">    n &lt;- <span class="built_in">length</span>(x)</span><br><span class="line">    A &lt;- (n * (n+<span class="number">1</span>)) / ((n-<span class="number">1</span>) * (n-<span class="number">2</span>) * (n-<span class="number">3</span>))</span><br><span class="line">    B &lt;- 1 / sd(x)^<span class="number">4</span></span><br><span class="line">    S &lt;- <span class="built_in">sum</span>((x - mean(x))^<span class="number">4</span>)</span><br><span class="line">    C &lt;- (<span class="number">3</span> * (n-<span class="number">1</span>)^<span class="number">2</span>) / ((n-<span class="number">2</span>) * (n-<span class="number">3</span>))</span><br><span class="line">    A * B * S - C</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">g2(x)</span><br></pre></td></tr></table></figure>
+<h3 id="作用于-data-frame"><a href="#作用于-data-frame" class="headerlink" title="作用于 data.frame"></a>作用于 data.frame</h3><p>我们导入的数据都是 data.frame，可以单独取出一列来，就和上面的 <code>x</code> 一样了：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- data[[<span class="number">2</span>]]  <span class="comment"># 取出 data 的第二列数据</span></span><br><span class="line"></span><br><span class="line">mean(x)</span><br></pre></td></tr></table></figure>
+<p>但每一列都都调用一次也很烦，所以这里还有一种方法，一次性把 mean 或者其他函数作用于 data.frame 的各列（这里用前文第一个表格导入进来的 data 做例子）：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply(data[-<span class="number">1</span>], MARGIN=<span class="number">2</span>, FUN=mean)</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="R-da/apply.png" alt="apply"></p>
+<p>说明：</p>
+<ul>
+<li>这里 data 的第一列是字符的，求均值没有意义: 用 <code>data[-N]</code> 去掉第 N 列（R 从 <code>1</code> 开始索引）</li>
+<li>第二个参数 <code>MARGIN=2</code> 就是逐列处理</li>
+<li>第三个 FUN 是要作用的函数，这里是求均值。方差什么的也是一样的，把这个参数换成 <code>FUN=var</code> 啥的就行了。</li>
+</ul>
+<h4 id="all-in-one"><a href="#all-in-one" class="headerlink" title="all in one"></a>all in one</h4><p>为了方便，我们可以把算这几个东西的过程封装在一起：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">describes &lt;- <span class="keyword">function</span>(df) &#123;</span><br><span class="line">    <span class="comment"># TODO(CDFMLR): 优化重复计算</span></span><br><span class="line">    cv &lt;- <span class="keyword">function</span>(x) sd(x)/mean(x)  <span class="comment"># 变异系数</span></span><br><span class="line"></span><br><span class="line">    g1 &lt;- <span class="keyword">function</span>(x) &#123;  <span class="comment"># 偏度</span></span><br><span class="line">        n &lt;- <span class="built_in">length</span>(x)</span><br><span class="line">        A &lt;- n / ((n-<span class="number">1</span>) * (n-<span class="number">2</span>))</span><br><span class="line">        B &lt;- 1 / sd(x)^<span class="number">3</span></span><br><span class="line">        S &lt;- <span class="built_in">sum</span>((x - mean(x))^<span class="number">3</span>)</span><br><span class="line">        A * B * S</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    g2 &lt;- <span class="keyword">function</span>(x) &#123;  <span class="comment"># 峰度</span></span><br><span class="line">        n &lt;- <span class="built_in">length</span>(x)</span><br><span class="line">        A &lt;- (n * (n+<span class="number">1</span>)) / ((n-<span class="number">1</span>) * (n-<span class="number">2</span>) * (n-<span class="number">3</span>))</span><br><span class="line">        B &lt;- 1 / sd(x)^<span class="number">4</span></span><br><span class="line">        S &lt;- <span class="built_in">sum</span>((x - mean(x))^<span class="number">4</span>)</span><br><span class="line">        C &lt;- (<span class="number">3</span> * (n-<span class="number">1</span>)^<span class="number">2</span>) / ((n-<span class="number">2</span>) * (n-<span class="number">3</span>))</span><br><span class="line">        A * B * S - C</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    itm &lt;- matrix(<span class="built_in">c</span>(<span class="string">&quot;均值&quot;</span>, <span class="string">&quot;方差&quot;</span>, <span class="string">&quot;标准差&quot;</span>, <span class="string">&quot;变异系数&quot;</span>, <span class="string">&quot;偏度&quot;</span>, <span class="string">&quot;峰度&quot;</span>), <span class="number">6</span>, <span class="number">1</span>)</span><br><span class="line">    res &lt;- apply(df, <span class="number">2</span>, </span><br><span class="line">                 <span class="keyword">function</span>(x) <span class="built_in">c</span>(mean(x), var(x), sd(x), cv(x), g1(x), g2(x)))</span><br><span class="line">    </span><br><span class="line">    cbind(itm, res)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>传入参数是一个 data.frame，这个函数会求出各列的均值、方差等，（例如作用于前文导入的 csv 数据）：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">describes(data[-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="R-da/apply_result.png" alt="apply_result"></p>
+<p>一次性全出来了，这样就很方便。</p>
+<h3 id="调包"><a href="#调包" class="headerlink" title="调包"></a>调包</h3><p>当然，这些操作都有第三方包有封装实现，比如这个：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cran.r-project.org/web/packages/psych/index.html">psych</a></li>
+</ul>
+<p>安装这个包（直接在 R 里面写）：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">install.packages(<span class="string">&quot;psych&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>导包：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">library(psych)</span><br></pre></td></tr></table></figure>
+<p>然后就可以用这个包里的东西了。</p>
+<p>这个包提供了前面最难写的峰度偏度：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># g1、g2 是用 type=2: see help(skew)</span></span><br><span class="line">g1 &lt;- <span class="keyword">function</span>(x) skew(x, type=<span class="number">2</span>)</span><br><span class="line">g2 &lt;- <span class="keyword">function</span>(x) kurtosi(x, type=<span class="number">2</span>)  <span class="comment"># help(kurtosi)</span></span><br></pre></td></tr></table></figure>
+<p>这个包还提供了一个 <code>describe</code> 函数可以一次性求出前面大多数值（类似于我们手写的 <code>describes</code>）：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">describe(data[-<span class="number">1</span>], type=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="R-da/psych_describe.png" alt="psych_describe"></p>
+<h2 id="中位数、上下四分位数、四分位极差"><a href="#中位数、上下四分位数、四分位极差" class="headerlink" title="中位数、上下四分位数、四分位极差"></a>中位数、上下四分位数、四分位极差</h2><p>可以先求<strong>五数</strong>：最小值、下四分位数、中位数、上四分位数、最大值</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fn &lt;- apply(data[-<span class="number">1</span>], <span class="number">2</span>, fivenum)</span><br><span class="line">fn</span><br></pre></td></tr></table></figure>
+<p><img src="R-da/fivenum.png" alt="fivenum"></p>
+<p>四分位极差：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">R1 &lt;- <span class="keyword">function</span>(Q3, Q1) Q3 - Q1</span><br><span class="line"></span><br><span class="line">R1(Q3=fn[<span class="number">4</span>,], Q1=fn[<span class="number">2</span>,])</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[Math Time]</p>
+<p>p 分位数：</p>
+<p>$$<br>M_p=\left{\begin{array}<br>    x_{([np]+1)} ,&amp;  np \textrm{ 不是整数}\<br>    \frac{1}{2}(x_{(np)}+x_{(np+1)}) ,&amp;  np \textrm{ 是整数}\<br>\end{array}\right.<br>$$<br>上下四分位数：<br>$$<br>Q_3=M_{0.75}, \qquad Q_1=M_{0.25}<br>$$<br>四分位极差：<br>$$<br>R_1=Q_3-Q_1<br>$$</p>
+</blockquote>
+<p>注：R 求分位数用 <code>quantile</code>，详见 <code>help(quantile)</code>。</p>
+<p>有了上下四分位数、四分位极差，可以求个异常数据：</p>
+<p>定义：下、上截断点：</p>
+<p>$$<br>Q_1-1.5R_1,\qquad Q_3+1.5R_1<br>$$</p>
+<p>大于「上截断」、小于「下阶段」的数据视为<em>异常值</em>：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">abnormal &lt;- <span class="keyword">function</span>(x) &#123;</span><br><span class="line">    fn &lt;- fivenum(x);</span><br><span class="line">    Q1 &lt;- fn[<span class="number">2</span>];  Q3 &lt;- fn[<span class="number">4</span>];</span><br><span class="line">    </span><br><span class="line">    R1 &lt;- Q3 - Q1</span><br><span class="line">    </span><br><span class="line">    QD &lt;- Q1 - <span class="number">1.5</span> * R1</span><br><span class="line">    QU &lt;- Q3 + <span class="number">1.5</span> * R1</span><br><span class="line">    </span><br><span class="line">    x[(x &lt; QD) | (x &gt; QU)]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apply(data[-<span class="number">1</span>], <span class="number">2</span>, abnormal)</span><br><span class="line"><span class="comment"># 若结果为空则没有异常值</span></span><br></pre></td></tr></table></figure>
+<h2 id="数据分布图"><a href="#数据分布图" class="headerlink" title="数据分布图"></a>数据分布图</h2><h3 id="茎叶图"><a href="#茎叶图" class="headerlink" title="茎叶图"></a>茎叶图</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stem(Nationwide)</span><br></pre></td></tr></table></figure>
+<p><img src="R-da/stem.png" alt="stem"></p>
+<h3 id="直方图"><a href="#直方图" class="headerlink" title="直方图"></a>直方图</h3><p>最简单的是直接用 <code>hist(x)</code>，但我们可以画的好看一点。</p>
+<p>封装：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">histogram &lt;- <span class="keyword">function</span>(x, xname=<span class="string">&quot;x&quot;</span>) &#123;</span><br><span class="line">    hist(x, prob=<span class="literal">TRUE</span>, main=paste(<span class="string">&quot;Histogram of&quot;</span> , xname))</span><br><span class="line">    lines(density(x))</span><br><span class="line">    rug(x) <span class="comment"># show the actual data points</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">histogram(X1, <span class="string">&quot;X1&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="R-da/hist.png" alt="hist"></p>
+<h3 id="经验分布函数图"><a href="#经验分布函数图" class="headerlink" title="经验分布函数图"></a>经验分布函数图</h3><p>封装：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plot_ecdf &lt;- <span class="keyword">function</span>(x, xname=<span class="string">&quot;x&quot;</span>) &#123;</span><br><span class="line">    plot(ecdf(x), do.points=<span class="literal">FALSE</span>, verticals=<span class="literal">TRUE</span>, main=paste(<span class="string">&quot;ecdf(&quot;</span> , xname, <span class="string">&quot;)&quot;</span>))</span><br><span class="line">    </span><br><span class="line">    xs &lt;- seq(<span class="built_in">min</span>(x), <span class="built_in">max</span>(x), <span class="number">1</span>/<span class="built_in">sqrt</span>(<span class="built_in">length</span>(x)))</span><br><span class="line">    lines(xs, pnorm(xs, mean=mean(x), sd=sd(x)), lty=<span class="number">3</span>, col=<span class="string">&quot;red&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意 <code>xs</code> 这里我选择用 $\frac{1}{\sqrt{n}}$ 的密度，这个值比较适合我的数据（画出来不过稀也不太密），这个可以随便改。</p>
+<p>调用：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot_ecdf(X1, <span class="string">&quot;X1&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="R-da/ecdf.png" alt="ecdf"></p>
+<h3 id="正态-Q-Q-图"><a href="#正态-Q-Q-图" class="headerlink" title="正态 Q-Q 图"></a>正态 Q-Q 图</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qqnorm(X1)</span><br></pre></td></tr></table></figure>
+<p><img src="R-da/qqnorm.png" alt="qqnorm"></p>
+<h2 id="Pearson-与-Spearman-相关系数"><a href="#Pearson-与-Spearman-相关系数" class="headerlink" title="Pearson 与 Spearman 相关系数"></a>Pearson 与 Spearman 相关系数</h2><h3 id="Pearson-相关系数"><a href="#Pearson-相关系数" class="headerlink" title="Pearson 相关系数"></a>Pearson 相关系数</h3><p>二维总体： $(X,Y)^T$</p>
+<p>观测数据：$(x_1,y_1)^T,(x_2,y_2)^T,\cdots,(x_n,y_n)^T$</p>
+<p>记：$\overline x=\frac{1}{n}\sum_{i=1}^nx_i,\quad \overline y=\frac{1}{n}\sum_{i=1}^ny_i$</p>
+<p>则 $X, Y$ 的观测数据的方差：<br>$$<br>s_{xx}=\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline x)^2<br>\quad<br>s_{yy}=\frac{1}{n-1}\sum_{i=1}^n(y_i-\overline y)^2<br>$$<br>$X,Y$ 的观测数据的协方差：<br>$$<br>s_{xy}=\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline x)^2(y_i-\overline y)^2<br>$$<br>（注：协方差矩阵 $S=\left[\begin{matrix}s_{xx} &amp; s_{xy} \ s_{yx} &amp; s_{yy}\end{matrix}\right]$，其中 $s_{yx}=s_{xy}$）</p>
+<p>Pearson 相关系数：<br>$$<br>r_{xy}=\frac{s_{xy}}{\sqrt{s_{xx}}\sqrt{s_{yy}}}<br>$$</p>
+<p>这个值 $|r_{xy}|\le1$，衡量 X 和 Y 的线性相关程度:</p>
+<ul>
+<li>$r_{xy}\rightarrow 1$ 正相关</li>
+<li>$r_{xy}\rightarrow 0$ 不线性相关</li>
+<li>$r_{xy}\rightarrow -1$ 负相关</li>
+</ul>
+<p>用 R 来算相关系数，用 <code>cor(x, y, method=&quot;pearson&quot;)</code> 这个函数会直接求出 $r_{xy}$ 值。也可以用下面这个函数，会输出更多的信息：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cor.test(X1, X2, method=<span class="string">&quot;pearson&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>输出：($\textrm{cor}=r_{xy}$)</p>
+<p><img src="R-da/pearson.png" alt="pearson"></p>
+<p>【Math Time】关于上面输出的假设检验：</p>
+<p>设二维总体  $(X,Y)^T$ 的分布函数为 $F(x,y)$</p>
+<p>总体的相关系数 $\rho_{_{XY}}=\frac{\mathrm{Cov}(X,Y)}{\sqrt{\mathrm{Var}(X)}\sqrt{\mathrm{Var}(Y)}}$</p>
+<p>$n$ 充分大时，有 $\rho_{<em>{XY}} \approx r</em>{xy}$</p>
+<p>现在的问题是：</p>
+<ul>
+<li>对任意观测数据总可以求到 $r_{xy}$，而且求出来一般不为0</li>
+<li>而如果总体的 $X$、$Y$ 是不相关的（$\rho_{XY}=0$）：这时用 $r_{xy}$ 来度量 $X$、$Y$ 的关联性就没有意义了。</li>
+</ul>
+<p>所以要做个假设检验：<br>$$<br>H_0:\rho_{<em>{XY}}=0 \quad \leftrightarrow \quad H_1:\rho_{</em>{XY}}\ne0<br>$$<br>若总体时二维正态的，则 $H_0$ 为真时，统计量<br>$$<br>t=\frac{T_{xy}\sqrt{n-2}}{\sqrt{1-r_{xy}^2}}<br>\sim<br>t(n-2)<br>$$<br>将观测数据算得的 $t$ 值记为 $t_0$ 则检验 $p$ 值：<br>$$<br>p=P_{H_0}(|t|&gt;|t_0|)=P(|t(n-2)|\ge|t_0|)<br>$$<br>给定显著水平 $\alpha$ ，$p&lt;\alpha$ 时拒绝 $H_0$，认为 $X,Y$ 相关，可以用 $r_{xy}$ 衡量相关程度。 </p>
+<h3 id="Spearman-相关系数"><a href="#Spearman-相关系数" class="headerlink" title="Spearman 相关系数"></a>Spearman 相关系数</h3><p>Spearman 是<strong>秩相关系数</strong>。</p>
+<p>样本秩：把观测值 $x_1,x_2,\cdots,x_n$ 从小到大排序，$x_i$ 排在第几个则其秩 $R_i$ 就是多少。</p>
+<p>e.g.<br>$$<br>\begin{array}{r}<br>x_i: &amp; 7 &amp; -3 &amp; -1 &amp; 5 \<br>R_i: &amp; 4 &amp; 1 &amp; 2 &amp; 3<br>\end{array}<br>$$</p>
+<p>记：</p>
+<ul>
+<li>$x_1,x_2,\cdots,x_n$ 的秩分别为：$R_1,R_2,\cdots,R_n$</li>
+<li>$\overline R=\frac{1}{n}\sum_{i=1}^nR_i=\frac{1}{n}\sum_{i=1}^n i=\frac{n+1}{2}$</li>
+<li>$y_1,y_2,\cdots,y_n$ 的秩分别为：$S_1,S_2,\cdots,S_n$</li>
+<li>$\overline S=\frac{1}{n}\sum_{i=1}^nS_i=\frac{n+1}{2}$</li>
+</ul>
+<p>则定义 Spearman 相关系数：<br>$$<br>\begin{array}{l}<br>q_{xy} &amp;=&amp; \frac{\sum_{i=1}^n(R_i-\overline R)(S_i-\overline S)}{\sqrt{\sum_{i=1}^n(R_i-\overline R)^2}\sqrt{\sum_{i=1}^n(S_i-\overline S)^2}}<br>\<br>&amp;=&amp; 1-\frac{6}{n(n^2-1)}\sum_{i=1}^n(R_i-S_i)<br>\end{array}<br>$$<br>用 R 来计算(输出里 $\textrm{rho}=q_{xy}$)：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cor.test(X1, X2, method=<span class="string">&quot;spearman&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="R-da/spearman.png" alt="spearman"></p>
+<p>还是一样的，有一个假设检验：<br>$$<br>H_0:\rho_{<em>{XY}}=0<br>\quad \leftrightarrow \quad<br>H_1:\rho_{</em>{XY}}\ne0<br>$$</p>
+<hr>
+<p>【EOF】</p>
+<p>暂时就这些了。最近忙，后面如果有时间可能还会写回归分析、方差分析…这些完整一套的。</p>
+<p>CDFMLR 2021.06.07</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8-R-%E5%81%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">用 R 做数据分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.</span> <span class="toc-text">导入数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E6%96%87%E6%9C%AC%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text">导入文本表格数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5-CSV-%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.2.</span> <span class="toc-text">导入 CSV 数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attach"><span class="toc-number">1.1.3.</span> <span class="toc-text">attach</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%87%E5%80%BC%E3%80%81%E6%96%B9%E5%B7%AE%E3%80%81%E6%A0%87%E5%87%86%E5%B7%AE%E3%80%81%E5%8F%98%E5%BC%82%E7%B3%BB%E6%95%B0%E3%80%81%E5%81%8F%E5%BA%A6%E3%80%81%E5%B3%B0%E5%BA%A6"><span class="toc-number">1.2.</span> <span class="toc-text">均值、方差、标准差、变异系数、偏度、峰度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">单变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E4%BA%8E-data-frame"><span class="toc-number">1.2.2.</span> <span class="toc-text">作用于 data.frame</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#all-in-one"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">all in one</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E5%8C%85"><span class="toc-number">1.2.3.</span> <span class="toc-text">调包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E4%BD%8D%E6%95%B0%E3%80%81%E4%B8%8A%E4%B8%8B%E5%9B%9B%E5%88%86%E4%BD%8D%E6%95%B0%E3%80%81%E5%9B%9B%E5%88%86%E4%BD%8D%E6%9E%81%E5%B7%AE"><span class="toc-number">1.3.</span> <span class="toc-text">中位数、上下四分位数、四分位极差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E5%9B%BE"><span class="toc-number">1.4.</span> <span class="toc-text">数据分布图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8C%8E%E5%8F%B6%E5%9B%BE"><span class="toc-number">1.4.1.</span> <span class="toc-text">茎叶图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE"><span class="toc-number">1.4.2.</span> <span class="toc-text">直方图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0%E5%9B%BE"><span class="toc-number">1.4.3.</span> <span class="toc-text">经验分布函数图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E6%80%81-Q-Q-%E5%9B%BE"><span class="toc-number">1.4.4.</span> <span class="toc-text">正态 Q-Q 图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pearson-%E4%B8%8E-Spearman-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0"><span class="toc-number">1.5.</span> <span class="toc-text">Pearson 与 Spearman 相关系数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pearson-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0"><span class="toc-number">1.5.1.</span> <span class="toc-text">Pearson 相关系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spearman-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0"><span class="toc-number">1.5.2.</span> <span class="toc-text">Spearman 相关系数</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/05/31/Math/R-da/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/05/31/Math/R-da/&text=用 R 做数据分析"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/05/31/Math/R-da/&is_video=false&description=用 R 做数据分析"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=用 R 做数据分析&body=Check out this article: https://clownote.github.io/2021/05/31/Math/R-da/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/05/31/Math/R-da/&title=用 R 做数据分析"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/05/31/Math/R-da/&name=用 R 做数据分析&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
