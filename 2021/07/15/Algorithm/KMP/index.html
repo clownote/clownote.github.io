@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="KMP暴力算法是在失配时，回溯子串指针，从头开始匹配。而 KMP 失配时尝试更有进取心地往前走，掠过那些不可能匹配的情况。往前移动的长度由一个「部分匹配表」来确定。  （图片来自 CLRS《Introduction to Algorithms, 3rd Ed》[^1]） 部分匹配表其实就是失配那个位置前面（匹配上的）里面最长的公共前后缀长度，移动就是要把前缀直接对上后缀那个位置，就略过了中间不可能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KMP 算法注解">
+<meta property="og:url" content="https://clownote.github.io/2021/07/15/Algorithm/KMP/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="KMP暴力算法是在失配时，回溯子串指针，从头开始匹配。而 KMP 失配时尝试更有进取心地往前走，掠过那些不可能匹配的情况。往前移动的长度由一个「部分匹配表」来确定。  （图片来自 CLRS《Introduction to Algorithms, 3rd Ed》[^1]） 部分匹配表其实就是失配那个位置前面（匹配上的）里面最长的公共前后缀长度，移动就是要把前缀直接对上后缀那个位置，就略过了中间不可能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://clownote.github.io/2021/07/15/Algorithm/KMP/KMP/kmp.png">
+<meta property="og:image" content="https://clownote.github.io/2021/07/15/Algorithm/KMP/KMP/pmt.png">
+<meta property="article:published_time" content="2021-07-15T00:16:30.071Z">
+<meta property="article:modified_time" content="2021-07-15T09:11:22.494Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://clownote.github.io/2021/07/15/Algorithm/KMP/KMP/kmp.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>KMP 算法注解</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/05/31/Math/R-da/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/07/15/Algorithm/KMP/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&text=KMP 算法注解"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&is_video=false&description=KMP 算法注解"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=KMP 算法注解&body=Check out this article: https://clownote.github.io/2021/07/15/Algorithm/KMP/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&name=KMP 算法注解&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#KMP"><span class="toc-number">1.</span> <span class="toc-text">KMP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E5%88%86%E5%8C%B9%E9%85%8D%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">部分匹配表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D"><span class="toc-number">1.2.</span> <span class="toc-text">匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#next-%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">next 数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A5%BD%E7%90%86%E8%A7%A3%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-number">1.4.</span> <span class="toc-text">更好理解的代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B-KMP"><span class="toc-number">2.</span> <span class="toc-text">改进 KMP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="toc-number">3.</span> <span class="toc-text">推荐阅读</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">4.</span> <span class="toc-text">参考文献</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        KMP 算法注解
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-07-15T00:16:30.071Z" itemprop="datePublished">2021-07-15</time>
+        
+        (Updated: <time datetime="2021-07-15T09:11:22.494Z" itemprop="dateModified">2021-07-15</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Algorithm/" rel="tag">Algorithm</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h1><p>暴力算法是在失配时，回溯子串指针，从头开始匹配。而 KMP 失配时尝试更有进取心地往前走，掠过那些不可能匹配的情况。往前移动的长度由一个「部分匹配表」来确定。</p>
+<p><img src="KMP/kmp.png" alt="KMP"></p>
+<p>（图片来自 CLRS《Introduction to Algorithms, 3rd Ed》[^1]）</p>
+<p>部分匹配表其实就是失配那个位置前面（匹配上的）里面最长的公共前后缀长度，移动就是要把前缀直接对上后缀那个位置，就略过了中间不可能匹配（已经扫过了，后面不匹配，再重复扫也还是不匹配）的那一段，直接开始尝试下一个可能的匹配。</p>
+<h2 id="部分匹配表"><a href="#部分匹配表" class="headerlink" title="部分匹配表"></a>部分匹配表</h2><p>参考 Wikipedia 的算法 [^2]（看英文页，中文页没写全，有些段落缺失）。</p>
+<p><strong>手算</strong>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetNext</span><span class="params">(substr: <span class="keyword">string</span>)</span> []<span class="title">int</span></span> &#123;  <span class="comment">// substr: [0…M-1]</span></span><br><span class="line">    M := <span class="built_in">len</span>(substr)</span><br><span class="line">    next := <span class="built_in">make</span>([]<span class="keyword">int</span>, M)</span><br><span class="line"></span><br><span class="line">    next[<span class="number">0</span>] = <span class="number">-1</span></span><br><span class="line">    <span class="keyword">for</span> j := <span class="number">1</span>; j &lt;= M; j++ &#123;</span><br><span class="line">        next[j] = <span class="built_in">len</span>(</span><br><span class="line">            最长公共前后缀(substr[<span class="number">0</span>:j])  <span class="comment">// 就是 j 那个字符之前的</span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中「最长公共前后缀」就是例如：</p>
+<p><img src="KMP/pmt.png" alt="最长公共前后缀"></p>
+<p>（图片来自 阮一峰《字符串匹配的KMP算法》[^3]）</p>
+<p><strong>编程</strong>快速计算：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetNext</span><span class="params">(substr <span class="keyword">string</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">	next := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="built_in">len</span>(substr))</span><br><span class="line">	next[<span class="number">0</span>] = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">	i, j := <span class="number">0</span>, <span class="number">-1</span></span><br><span class="line">	<span class="keyword">for</span> i &lt; <span class="built_in">len</span>(substr)<span class="number">-1</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> j == <span class="number">-1</span> || substr[i] == substr[j] &#123;</span><br><span class="line">			i++</span><br><span class="line">			j++</span><br><span class="line">			next[i] = j</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			j = next[j]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h2><p>KMP：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">KMP</span><span class="params">(s <span class="keyword">string</span>, substr <span class="keyword">string</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	next := GetNext(substr)</span><br><span class="line"></span><br><span class="line">	i, j := <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i &lt; <span class="built_in">len</span>(s) &amp;&amp; j &lt; <span class="built_in">len</span>(substr) &#123;</span><br><span class="line">		<span class="keyword">if</span> j == <span class="number">-1</span> || s[i] == substr[j] &#123;</span><br><span class="line">			i++</span><br><span class="line">			j++</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">// miss matching</span></span><br><span class="line">			j = next[j]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> j &gt;= <span class="built_in">len</span>(substr) &#123; <span class="comment">// matched</span></span><br><span class="line">		<span class="keyword">return</span> i - <span class="built_in">len</span>(substr)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span> <span class="comment">// not matched</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个程序是真的可以运行的：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := <span class="string">&quot;BBC ABCDAB ABCDABCDABDE&quot;</span></span><br><span class="line">	sub := <span class="string">&quot;ABCDABD&quot;</span></span><br><span class="line"></span><br><span class="line">	res := KMP(s, sub)</span><br><span class="line">	<span class="built_in">println</span>(res)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="next-数组"><a href="#next-数组" class="headerlink" title="next 数组"></a>next 数组</h2><p>补充一点：部分匹配表，还有几种不同的版本，比如《算法导论》[^1]  上的，再比如我们的考研书（天勤王道）[^4]$^,$[^5]上的。</p>
+<p>（考研书上把部分匹配表亲切地称为 “<strong>next 数组</strong>”。。。）</p>
+<p>这几种的区别看下面这个例子：</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>char</td>
+<td>a</td>
+<td>b</td>
+<td>a</td>
+<td>b</td>
+<td>a</td>
+<td>c</td>
+<td>a</td>
+<td></td>
+</tr>
+<tr>
+<td>CLRS</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>Wikipedia</td>
+<td>-1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>= CLRS 右移一个，左边补<code>-1</code></td>
+</tr>
+<tr>
+<td>天勤王道</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>1</td>
+<td>= Wikipedia + 1</td>
+</tr>
+</tbody></table>
+<p>若在原串（大的）索引 <code>i</code> 处、模式（子串）索引 <code>j</code> 处失配：</p>
+<ul>
+<li>CLRS 移动到 <code>T[j-1]</code> 上（特殊情况：<code>j=0</code> 则 <code>i+=1</code>）</li>
+<li>Wikipedia 移到 <code>T[j]</code> 上（特殊情况：<code>j=-1</code> 则 <code>j+=1</code>）。</li>
+</ul>
+<h2 id="更好理解的代码"><a href="#更好理解的代码" class="headerlink" title="更好理解的代码"></a>更好理解的代码</h2><p>说实话，我看不懂上面给的代码。主要是这段 <code>if (j==-1 || s[i] == substr[j]) &#123;...&#125;</code> WTF？？</p>
+<p>研究了好久才看懂明明就是两种不同的情况，只是凑巧处理方式一样就合并在一起，，搁这儿写汇编呢。。吐了。</p>
+<p>参考 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21923021/answer/1032665486">知乎上的回答</a> [^6] 把这两种情况分开写就容易理解多了：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetNext</span><span class="params">(substr <span class="keyword">string</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">	next := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="built_in">len</span>(substr))</span><br><span class="line">	next[<span class="number">0</span>] = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">	i, j := <span class="number">0</span>, <span class="number">-1</span></span><br><span class="line">	<span class="keyword">for</span> i &lt; <span class="built_in">len</span>(substr)<span class="number">-1</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> j == <span class="number">-1</span> &#123; <span class="comment">// 特殊: 到头了: 最小了，无可再缩</span></span><br><span class="line">			i++</span><br><span class="line">			j = <span class="number">0</span></span><br><span class="line">			next[i] = j</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> substr[i] == substr[j] &#123; <span class="comment">// 配上了：扩大一位</span></span><br><span class="line">			i++</span><br><span class="line">			j++</span><br><span class="line">			next[i] = j</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">// 失配：缩小，重新匹配</span></span><br><span class="line">			j = next[j]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> next</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">KMP</span><span class="params">(s <span class="keyword">string</span>, substr <span class="keyword">string</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	next := GetNext(substr)</span><br><span class="line"></span><br><span class="line">	i, j := <span class="number">0</span>, <span class="number">0</span> <span class="comment">// i 是 s 的，j 是 substr 的</span></span><br><span class="line">	<span class="keyword">for</span> i &lt; <span class="built_in">len</span>(s) &amp;&amp; j &lt; <span class="built_in">len</span>(substr) &#123;</span><br><span class="line">        <span class="keyword">if</span> j == <span class="number">-1</span> &#123; <span class="comment">// 特殊: 回到头了: i 移一个，j 从头比较</span></span><br><span class="line">			i++</span><br><span class="line">			j = <span class="number">0</span></span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s[i] == substr[j] &#123; <span class="comment">// 配上了: 下一个字符</span></span><br><span class="line">			i++</span><br><span class="line">			j++</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">// 失配: j 移到下一个可能匹配的位置</span></span><br><span class="line">			j = next[j]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> j &gt;= <span class="built_in">len</span>(substr) &#123; <span class="comment">// matched</span></span><br><span class="line">		<span class="keyword">return</span> i - <span class="built_in">len</span>(substr)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span> <span class="comment">// not matched</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="改进-KMP"><a href="#改进-KMP" class="headerlink" title="改进 KMP"></a>改进 KMP</h1><p>考研书上的，用个 <code>nextval</code> 替代 <code>next</code> 数组。</p>
+<p><code>nextval</code> 构造规则如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">nextval[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; len(substr); j++) &#123;</span><br><span class="line">    nextval[j] = (substr[j] != substr[next[j]] ? </span><br><span class="line">        next[j] :</span><br><span class="line">        nextval[next[j]]</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就是构建部分匹配表，回溯（缩小）的时候，如果回到的上一步 <code>next[j]</code> 的字符和当前字符相同，就不必一步步回溯了（之前已经走过了），直接借用之前的结果，快速回溯到头。</p>
+<p>e.g.</p>
+<table>
+<thead>
+<tr>
+<th>substr</th>
+<th>A</th>
+<th>B</th>
+<th>A</th>
+<th>B</th>
+<th>A</th>
+<th>A</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>j</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>next</td>
+<td>-1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>nextval</td>
+<td>-1</td>
+<td>0</td>
+<td>-1</td>
+<td>0</td>
+<td>-1</td>
+<td>3</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>（记得考验书上索引从 1 开始，next、nextval 的值都要加一）</p>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p>还有下面参考文献的阮一峰，通俗易懂，看这篇手算就够了。Wikipedia 的也还行（一定要看英文页）。</p>
+<p>有时间再啃 CLRS。</p>
+<p>死背代码的话，天勤王道。</p>
+<p>还有 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/solution/kmp-suan-fa-xiang-jie-by-labuladong/">https://leetcode-cn.com/problems/implement-strstr/solution/kmp-suan-fa-xiang-jie-by-labuladong/</a> 这篇写的也屌（这个大佬的公众号我关注了数年了），用动规（其实是 DFA）解释了 KMP，推荐阅读。</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[^1]: Cormen T H , Leiserson C E , Rivest R L , et al. Introduction to Algorithms, 3rd Ed.</p>
+<p>[^2]: Wikipedia. Knuth–Morris–Pratt algorithm. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm">https://en.wikipedia.org/wiki/Knuth–Morris–Pratt_algorithm</a></p>
+<p>[^3]: 阮一峰. 字符串匹配的KMP算法. <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html">http://www.ruanyifeng.com/blog/2013/05/Knuth–Morris–Pratt_algorithm.html</a> </p>
+<p>[^4]: 率辉主编. 数据结构高分笔记（2022版 天勤第10版）.  机械工业出版社, 2020.<br>[^5]: 王道论坛组编. 2022年数据结构考验复习指导. 电子工业出版社, 2021<br>[^6]: 阮行止. 如何更好地理解和掌握 KMP 算法?. <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21923021/answer/1032665486">https://www.zhihu.com/question/21923021/answer/1032665486</a></p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#KMP"><span class="toc-number">1.</span> <span class="toc-text">KMP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E5%88%86%E5%8C%B9%E9%85%8D%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">部分匹配表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D"><span class="toc-number">1.2.</span> <span class="toc-text">匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#next-%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">next 数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A5%BD%E7%90%86%E8%A7%A3%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-number">1.4.</span> <span class="toc-text">更好理解的代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B-KMP"><span class="toc-number">2.</span> <span class="toc-text">改进 KMP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="toc-number">3.</span> <span class="toc-text">推荐阅读</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">4.</span> <span class="toc-text">参考文献</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/07/15/Algorithm/KMP/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&text=KMP 算法注解"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&is_video=false&description=KMP 算法注解"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=KMP 算法注解&body=Check out this article: https://clownote.github.io/2021/07/15/Algorithm/KMP/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&title=KMP 算法注解"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/07/15/Algorithm/KMP/&name=KMP 算法注解&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
