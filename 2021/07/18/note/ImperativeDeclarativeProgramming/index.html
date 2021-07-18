@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="命令式编程 V.S. 声明式编程 Programming: Imperative &amp; Declarative   Q：检查 students 里的学生的平均分，并输出平均分的第一名。 12345678910111213141516171819202122232425struct Student &amp;#123;    let name: String    let scores: [Subje">
+    <meta name="description" content="命令式编程 V.S. 声明式编程 Programming: Imperative &amp; Declarative    命令式编程：“怎么做” —— 写给计算机的语言 运算语句 条件语句 循环语句   声明式编程：“做什么” —— 写给人看的语言 函数式编程 DSL：领域特定语言     思考下述问题： 检查 students 里的学生的平均分，并输出平均分的第一名。 先给定一些定义代码： 1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="命令式编程 V.S. 声明式编程">
-<meta property="og:url" content="https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/index.html">
+<meta property="og:title" content="ImperativeDeclarativeProgramming">
+<meta property="og:url" content="https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="命令式编程 V.S. 声明式编程 Programming: Imperative &amp; Declarative   Q：检查 students 里的学生的平均分，并输出平均分的第一名。 12345678910111213141516171819202122232425struct Student &amp;#123;    let name: String    let scores: [Subje">
+<meta property="og:description" content="命令式编程 V.S. 声明式编程 Programming: Imperative &amp; Declarative    命令式编程：“怎么做” —— 写给计算机的语言 运算语句 条件语句 循环语句   声明式编程：“做什么” —— 写给人看的语言 函数式编程 DSL：领域特定语言     思考下述问题： 检查 students 里的学生的平均分，并输出平均分的第一名。 先给定一些定义代码： 1">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming.png">
-<meta property="article:published_time" content="2021-01-09T22:43:12.990Z">
-<meta property="article:modified_time" content="2021-07-15T09:11:22.542Z">
+<meta property="og:image" content="https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming.png">
+<meta property="article:published_time" content="2021-07-18T12:07:17.149Z">
+<meta property="article:modified_time" content="2021-07-18T04:07:53.706Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="CDFMLR, blogs">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming.png">
+<meta name="twitter:image" content="https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming.png">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>命令式编程 V.S. 声明式编程</title>
+    <title>ImperativeDeclarativeProgramming</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -85,10 +85,8 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2021/01/14/SwiftUI/SwiftUIDataStateAndBinding/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-        
-        <li><a class="icon" href="/2020/11/28/Math/NumericalAnalysisAlogrithm/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2021/07/15/Algorithm/KMP/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -101,21 +99,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&text=命令式编程 V.S. 声明式编程"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&is_video=false&description=命令式编程 V.S. 声明式编程"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=命令式编程 V.S. 声明式编程&body=Check out this article: https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&name=命令式编程 V.S. 声明式编程&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&text=ImperativeDeclarativeProgramming"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&is_video=false&description=ImperativeDeclarativeProgramming"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ImperativeDeclarativeProgramming&body=Check out this article: https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&name=ImperativeDeclarativeProgramming&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B-V-S-%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">命令式编程 V.S. 声明式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">命令式编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">声明式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">函数式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DSL"><span class="toc-number">1.2.2.</span> <span class="toc-text">DSL</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B-V-S-%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">命令式编程 V.S. 声明式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">命令式编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">声明式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">函数式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DSL"><span class="toc-number">1.2.2.</span> <span class="toc-text">DSL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.3.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -127,7 +125,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        命令式编程 V.S. 声明式编程
+        ImperativeDeclarativeProgramming
     </h1>
 
 
@@ -139,9 +137,9 @@
       
     <div class="postdate">
       
-        <time datetime="2021-01-09T22:43:12.990Z" itemprop="datePublished">2021-01-09</time>
+        <time datetime="2021-07-18T12:07:17.149Z" itemprop="datePublished">2021-07-18</time>
         
-        (Updated: <time datetime="2021-07-15T09:11:22.542Z" itemprop="dateModified">2021-07-15</time>)
+        (Updated: <time datetime="2021-07-18T04:07:53.706Z" itemprop="dateModified">2021-07-18</time>)
         
       
     </div>
@@ -160,17 +158,36 @@
 <p>Programming: Imperative &amp; Declarative</p>
 </blockquote>
 <p><img src="ImperativeDeclarativeProgramming/ImperativeDeclarativeProgramming.png" alt="ImperativeDeclarativeProgramming"></p>
-<p>Q：检查 students 里的学生的平均分，并输出平均分的第一名。</p>
+<ul>
+<li>命令式编程：“怎么做” —— 写给计算机的语言<ul>
+<li>运算语句</li>
+<li>条件语句</li>
+<li>循环语句</li>
+</ul>
+</li>
+<li>声明式编程：“做什么” —— 写给人看的语言<ul>
+<li>函数式编程</li>
+<li>DSL：领域特定语言</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>思考下述问题：</p>
+<p><strong>检查 students 里的学生的平均分，并输出平均分的第一名。</strong></p>
+<p>先给定一些定义代码：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> name: <span class="type">String</span></span><br><span class="line">    <span class="keyword">let</span> scores: [<span class="type">Subject</span>: <span class="type">Int</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Subject</span>: <span class="title">String</span>, <span class="title">CaseIterable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">Chinese</span>, <span class="type">Math</span>, <span class="type">English</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s1 <span class="operator">=</span> <span class="type">Student</span>(</span><br><span class="line">    name: <span class="string">&quot;Foo&quot;</span>,</span><br><span class="line">    scores: [.<span class="type">Chinese</span>: <span class="number">86</span>, .<span class="type">Math</span>: <span class="number">92</span>, .<span class="type">English</span>: <span class="number">73</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s2 <span class="operator">=</span> <span class="type">Student</span>(</span><br><span class="line">    name: <span class="string">&quot;Bar&quot;</span>,</span><br><span class="line">    scores: [.<span class="type">Chinese</span>: <span class="number">99</span>, .<span class="type">Math</span>: <span class="number">52</span>, .<span class="type">English</span>: <span class="number">97</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s3 <span class="operator">=</span> <span class="type">Student</span>(</span><br><span class="line">    name: <span class="string">&quot;Joe&quot;</span>,</span><br><span class="line">    scores: [.<span class="type">Chinese</span>: <span class="number">91</span>, .<span class="type">Math</span>: <span class="number">92</span>, .<span class="type">English</span>: <span class="number">100</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> students <span class="operator">=</span> [s1, s2, s3]</span><br></pre></td></tr></table></figure>
-
+<p>下面尝试分别用命令式编程和函数式编程解决：</p>
 <h2 id="命令式编程"><a href="#命令式编程" class="headerlink" title="命令式编程"></a>命令式编程</h2><p>一步步告诉计算机怎么做。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 命令式.swift</span></span><br><span class="line"><span class="keyword">var</span> best: (<span class="type">Student</span>, <span class="type">Double</span>)<span class="operator">?</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> students &#123;</span><br><span class="line">    <span class="keyword">var</span> totalScore <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> <span class="type">Subject</span>.allCases &#123;</span><br><span class="line">        totalScore <span class="operator">+=</span> s.scores[key] <span class="operator">??</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> averageScore <span class="operator">=</span> <span class="type">Double</span>(totalScore) <span class="operator">/</span></span><br><span class="line">    	<span class="type">Double</span>(<span class="type">Subject</span>.allCases.count)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> temp <span class="operator">=</span> best &#123;</span><br><span class="line">        <span class="keyword">if</span> averageScore <span class="operator">&gt;</span> temp.<span class="number">1</span> &#123;</span><br><span class="line">            best <span class="operator">=</span> (s, averageScore)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        best <span class="operator">=</span> (s, averageScore)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(best<span class="operator">?</span>.<span class="number">0</span>.name <span class="operator">??</span> <span class="string">&quot;no students&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这应该就是大多数同学所熟知的编程方式。</p>
 <h2 id="声明式编程"><a href="#声明式编程" class="headerlink" title="声明式编程"></a>声明式编程</h2><p>告诉计算机要做什么，具体实现由计算机决定。</p>
 <h3 id="函数式"><a href="#函数式" class="headerlink" title="函数式"></a>函数式</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数式.swift</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">average</span><span class="params">(<span class="keyword">_</span> scores: [Subject: Int])</span></span> -&gt; <span class="type">Double</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">Double</span>(scores.values.reduce(<span class="number">0</span>, <span class="operator">+</span>)) <span class="operator">/</span> <span class="type">Double</span>(<span class="type">Subject</span>.allCases.count)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bestStudent <span class="operator">=</span> students</span><br><span class="line">    .map &#123; (<span class="variable">$0</span>, average(<span class="variable">$0</span>.scores)) &#125;</span><br><span class="line">    .sorted &#123; <span class="variable">$0</span>.<span class="number">1</span> <span class="operator">&gt;</span> <span class="variable">$1</span>.<span class="number">1</span> &#125;</span><br><span class="line">    .first</span><br></pre></td></tr></table></figure>
-<p>（我是有点喜欢函数式啦，但 SICP 至今没看完。。）</p>
+<p><del>（写在2021年1月：我是有点喜欢函数式啦，但 SICP 至今没看完。。）</del><br><del>Update(2021.07.18): 现在看完啦！！</del></p>
+<p>我一直都很喜欢函数式，推荐大家去看 SICP（一定要把里面的代码自己写一遍，不然到后面就基本看不懂了）👀。</p>
 <h3 id="DSL"><a href="#DSL" class="headerlink" title="DSL"></a>DSL</h3><p>例如 SQL：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name, <span class="built_in">avg</span>(score) <span class="keyword">as</span> avs_score </span><br><span class="line"><span class="keyword">from</span> scores <span class="keyword">group</span> <span class="keyword">by</span> name <span class="keyword">order</span> <span class="keyword">by</span> avg_score;</span><br></pre></td></tr></table></figure>
-<p>（不喜欢 SQL，我非常讨厌 <code>group by</code> 这种超过一个词的关键字，所以天天用 ORM。。）</p>
+<p>（不喜欢 SQL，我非常讨厌 <code>group by</code> 这种超过一个词的关键字，所以自己的项目天天用 ORM。。）</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>王巍 (@onevcat)《SwiftUI 与 Combine 编程》Chapter 1</p>
 
   </div>
 </article>
@@ -208,21 +225,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B-V-S-%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">命令式编程 V.S. 声明式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">命令式编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">声明式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">函数式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DSL"><span class="toc-number">1.2.2.</span> <span class="toc-text">DSL</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B-V-S-%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">命令式编程 V.S. 声明式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">命令式编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">声明式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">函数式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DSL"><span class="toc-number">1.2.2.</span> <span class="toc-text">DSL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.3.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&text=命令式编程 V.S. 声明式编程"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&is_video=false&description=命令式编程 V.S. 声明式编程"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=命令式编程 V.S. 声明式编程&body=Check out this article: https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&title=命令式编程 V.S. 声明式编程"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/01/09/note/ImperativeDeclarativeProgramming/&name=命令式编程 V.S. 声明式编程&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&text=ImperativeDeclarativeProgramming"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&is_video=false&description=ImperativeDeclarativeProgramming"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ImperativeDeclarativeProgramming&body=Check out this article: https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&title=ImperativeDeclarativeProgramming"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/07/18/note/ImperativeDeclarativeProgramming/&name=ImperativeDeclarativeProgramming&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
