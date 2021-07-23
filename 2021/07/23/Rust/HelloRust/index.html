@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Hello, Rust!久违的学习笔记系列！！ 天天复习考研，吐了。划一天水放松一下吧，学学 Rust。  本文是学习以下（主要）内容的笔记：  Rust 官网 get started： https:&#x2F;&#x2F;www.rust-lang.org&#x2F;zh-CN&#x2F;learn&#x2F;get-started  Rust By Example (中文译本) 1. Hello World: http:&#x2F;&#x2F;rustwiki.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hello, Rust!">
+<meta property="og:url" content="https://clownote.github.io/2021/07/23/Rust/HelloRust/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Hello, Rust!久违的学习笔记系列！！ 天天复习考研，吐了。划一天水放松一下吧，学学 Rust。  本文是学习以下（主要）内容的笔记：  Rust 官网 get started： https:&#x2F;&#x2F;www.rust-lang.org&#x2F;zh-CN&#x2F;learn&#x2F;get-started  Rust By Example (中文译本) 1. Hello World: http:&#x2F;&#x2F;rustwiki.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-23T11:55:33.804Z">
+<meta property="article:modified_time" content="2021-07-23T03:59:26.975Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Rust">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Hello, Rust!</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/07/15/Algorithm/KMP/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/07/23/Rust/HelloRust/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&text=Hello, Rust!"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&is_video=false&description=Hello, Rust!"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Hello, Rust!&body=Check out this article: https://clownote.github.io/2021/07/23/Rust/HelloRust/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&name=Hello, Rust!&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hello-Rust"><span class="toc-number">1.</span> <span class="toc-text">Hello, Rust!</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hello-World"><span class="toc-number">3.</span> <span class="toc-text">Hello World</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E6%BA%90%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">单一源文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cargo-%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.2.</span> <span class="toc-text">Cargo 项目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-number">4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">5.</span> <span class="toc-text">格式化输出</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Debug"><span class="toc-number">5.1.</span> <span class="toc-text">Debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Display"><span class="toc-number">5.2.</span> <span class="toc-text">Display</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">5.3.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">5.4.</span> <span class="toc-text">格式化</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Hello, Rust!
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-07-23T11:55:33.804Z" itemprop="datePublished">2021-07-23</time>
+        
+        (Updated: <time datetime="2021-07-23T03:59:26.975Z" itemprop="dateModified">2021-07-23</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Rust/">Rust</a> › <a class="category-link" href="/categories/Rust/Beginning/">Beginning</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Rust/" rel="tag">Rust</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Hello-Rust"><a href="#Hello-Rust" class="headerlink" title="Hello, Rust!"></a>Hello, Rust!</h1><p>久违的学习笔记系列！！</p>
+<p>天天复习考研，吐了。划一天水放松一下吧，学学 Rust。</p>
+<blockquote>
+<p>本文是学习以下（主要）内容的笔记：</p>
+<ul>
+<li><p>Rust 官网 get started： <a target="_blank" rel="noopener" href="https://www.rust-lang.org/zh-CN/learn/get-started">https://www.rust-lang.org/zh-CN/learn/get-started</a></p>
+</li>
+<li><p>Rust By Example (中文译本) 1. Hello World: <a target="_blank" rel="noopener" href="http://rustwiki.org/zh-CN/rust-by-example/hello.html">http://rustwiki.org/zh-CN/rust-by-example/hello.html</a></p>
+<ul>
+<li>Rust 文档 <code>std::fmt</code>： <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/">https://doc.rust-lang.org/std/fmt/</a></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>以 <code>*nix</code>系统为例，用 <code>rustup</code>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proto <span class="string">&#x27;=https&#x27;</span> --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
+<p>安装检查：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo --version</span><br></pre></td></tr></table></figure>
+<p>（<code>cargo</code> 是构建、包管理的工具，Rust 的编译器是 <code>rustc</code>）</p>
+<p>更新：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup update</span><br></pre></td></tr></table></figure>
+<h1 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h1><p>可以只写一个文件，也可以做成一个项目。</p>
+<h2 id="单一源文件"><a href="#单一源文件" class="headerlink" title="单一源文件"></a>单一源文件</h2><p>新建一个 <code>hello.rs</code>：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Hello, world!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译、运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rustc hello.rs</span><br><span class="line">$ ./hello</span><br></pre></td></tr></table></figure>
+<p>在我的电脑上（Intel macBook Pro 2017，macOS 11.4）编译出来的二进制文件（<code>./hello</code>）有 <code>408K</code>。同样功能的 C 程序只有 <code>48K</code>，Swift 为 <code>49K</code>，而 Go 程序要 <code>1.2M</code> 。</p>
+<h2 id="Cargo-项目"><a href="#Cargo-项目" class="headerlink" title="Cargo 项目"></a>Cargo 项目</h2><p>新建项目：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo new hello-rust</span><br></pre></td></tr></table></figure>
+<p>生成一个项目目录 <code>./hello-rust/</code>，其内容如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hello-rust</span><br><span class="line">|- Cargo.toml  <span class="comment"># Rust 的清单文件: 包含项目的元数据和依赖库</span></span><br><span class="line">|- src</span><br><span class="line">  |- main.rs   <span class="comment"># 写代码的地方</span></span><br></pre></td></tr></table></figure>
+<p>（它甚至给 <code>git init</code> 了，还写了 <code>.gitignore</code>）</p>
+<p><code>main.rs</code> 里面已经写好了一个 hello world：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Hello, world!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo run</span><br></pre></td></tr></table></figure>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单行注释</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 注释块 */</span></span><br></pre></td></tr></table></figure>
+<p>文档注释：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 文档注释</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">hello</span></span>() &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<p>用 <code>rustdoc hello.rs</code> 来编译文档，结果是个网站，放在 <code>./doc</code> 里。随便开个服务就可以看了：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server -d doc</span><br></pre></td></tr></table></figure>
+<h1 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h1><p>由 std 里的一堆宏实现格式化输出（这些 <code>!</code> 就说明是<strong>宏</strong>）：</p>
+<ul>
+<li>格式化字符串：<code>format!</code></li>
+<li>标准输出：<code>print!</code>， <code>println!</code></li>
+<li>标准错误：<code>eprint!</code>，<code>eprintln!</code></li>
+</ul>
+<p>这些东西的语法和 C 的 <code>printf</code> 类似，都是 <code>format!(&quot;a string literal&quot;, ...)</code>，具体的用法见 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/index.html%E3%80%82%E4%B8%8B%E9%9D%A2%E5%8F%AA%E7%AE%80%E8%A6%81%E4%BB%8B%E7%BB%8D%EF%BC%9A">https://doc.rust-lang.org/std/fmt/index.html。下面只简要介绍：</a></p>
+<p><code>format!</code> 是返回格式化后的字符串， 而四种 <code>print</code> 就是把 <code>format!</code> 的结果写到 <code>io::stdout</code> 或 <code>io::stderr</code>。</p>
+<p>在格式字符串字面值常量中用 <code>&#123;name_or_index:formatting&#125;</code> 来指定替换内容。</p>
+<p>替换也就要把一个特定类型的对象格式化（<code>toString</code>）。格式化一个对象的方式在 Rust 中叫做 <em>traits</em>。Rust 有好几个不同的 traits，所以同一个数据可以有好几种显示的方式，例如一个数字可以写成二进制、十进制、十六进制等等。每个 traits 对应有一种 <code>&#123;:口&#125;</code> （<code>口</code> 是某种字符）。</p>
+<p>最常用的两种 traits 是 Display 和 Debug，二者在格式字符串中分别写作 <code>&#123;&#125;</code> （也就是<code>&#123;:口&#125;</code> 的 <code>口</code> 为空的情形） 和 <code>&#123;:?&#125;</code> 。二者分别和 Go 语言 fmt 包的 <code>%v</code> 和 <code>%#v</code> 类似。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// `&#123;&#125;` 是 `fmt::Display`，用来显示任意内容，优雅格式</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;Hello, &#123;&#125;, &#123;&#125;, &#123;&#125;&quot;</span>, <span class="number">233</span>, <span class="number">1.2</span>, <span class="string">&quot;world&quot;</span>);</span><br><span class="line"><span class="comment">// Hello, 233, 1.2, world</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// `&#123;:?&#125;` 叫做 `fmt::Debug` 用来输出调试风格的文本</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;Hello, &#123;:?&#125;, &#123;:?&#125;, &#123;:?&#125;&quot;</span>, <span class="number">233</span>, <span class="number">1.2</span>, <span class="string">&quot;world&quot;</span>);</span><br><span class="line"><span class="comment">// Hello, 233, 1.2, &quot;world&quot;</span></span><br></pre></td></tr></table></figure>
+<p><code>&#123;:&#125;</code> 的冒号前面可以给替换字符串命名，或者指定位置：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;Hello, &#123;name&#125; with number &#123;a&#125;!&quot;</span>, name=<span class="string">&quot;foo&quot;</span>, a=<span class="string">&quot;666&quot;</span>);</span><br><span class="line"><span class="comment">// Hello, foo with number 666!</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;Hello, &#123;0&#125; with number &#123;1&#125; + &#123;1&#125;!&quot;</span>, <span class="string">&quot;foo&quot;</span>, a=<span class="string">&quot;666&quot;</span>);</span><br><span class="line"><span class="comment">// Hello, foo with number 666 + 666!</span></span><br></pre></td></tr></table></figure>
+<p><code>&#123;:&#125;</code> 的冒号后面是格式：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;dec: &#123;0&#125;, bin: &#123;0:b&#125;, hex: &#123;0:X&#125;&quot;</span>, <span class="number">66</span>);</span><br><span class="line"><span class="comment">// dec: 66, bin: 1000010, hex: 42</span></span><br></pre></td></tr></table></figure>
+<p>具体格式的写法参考 <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/">https://doc.rust-lang.org/std/fmt/</a> 。大概的写法为 <code>FA+#?0W.PT</code>：</p>
+<ul>
+<li><code>F</code> 是填充用的字符</li>
+<li><code>A</code> 是 <code>&lt;</code> 或 <code>^</code> 或 <code>&gt;</code>，对齐的方向（不满用 F 填充）</li>
+<li><code>+</code>：正数显示加号</li>
+<li><code>#?</code> ：pretty-print 的 Debug<ul>
+<li><code>#b</code>，<code>#o</code>，<code>#x</code>：显示二、八、十六进制的前缀</li>
+</ul>
+</li>
+<li><code>0</code> 数字前面补零至宽度</li>
+<li><code>W</code> 宽度</li>
+<li><code>.P</code> 小数位数<ul>
+<li><code>.N$</code>：用参数 N 做精度（就是 <code>format!(&quot;&#123;&#125;&quot;, ...)</code> 的 <code>...</code>，从 0 开始）<ul>
+<li>如果是整数，<code>&#123;:N$&#125;</code> ，就是那参数 N 作宽度。</li>
+</ul>
+</li>
+<li><code>.*</code>：读两个二个参数，后一个参数是要格式化的小数，以前一个参数为精度，<code>format!(&quot;&#123;:.*&#125;&quot;, 5, 0.01)</code>  结果为 <code>0.01000</code></li>
+</ul>
+</li>
+<li><code>T</code> 是显示的方式，即 traits（可以让自定义类型自己定制各种显示效果）：<ul>
+<li><em>nothing</em> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.Display.html"><code>Display</code></a></li>
+<li><code>?</code> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.Debug.html"><code>Debug</code></a><ul>
+<li><code>x?</code> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.Debug.html"><code>Debug</code></a> with lower-case hexadecimal integers （对应 <code>X?</code> 是大写的十六进制）</li>
+</ul>
+</li>
+<li><code>o</code> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.Octal.html"><code>Octal</code></a></li>
+<li><code>x</code> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.LowerHex.html"><code>LowerHex</code></a></li>
+<li><code>X</code> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.UpperHex.html"><code>UpperHex</code></a></li>
+<li><code>p</code> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.Pointer.html"><code>Pointer</code></a></li>
+<li><code>b</code> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.Binary.html"><code>Binary</code></a></li>
+<li><code>e</code> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.LowerExp.html"><code>LowerExp</code></a></li>
+<li><code>E</code> ⇒ <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.UpperExp.html"><code>UpperExp</code></a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;:_&lt;9&#125; &#123;:09&#125; &#123;:`^9&#125; &#123;:9.6&#125; &#123;:09.6&#125; &#123;:)&gt;9&#125; &#123;:#?&#125;&quot;</span>, <span class="string">&quot;left&quot;</span>, <span class="number">123</span>, <span class="string">&quot;center&quot;</span>, <span class="number">3.14</span>, <span class="number">3.14</span>, <span class="string">&quot;right&quot;</span>, <span class="number">2.17e5</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// left_____ 000000123 `center``  3.140000 03.140000 ))))right 217000.0</span></span><br></pre></td></tr></table></figure>
+<p>所有的类型，若想用 <code>std::fmt</code> 的格式化打印，都要求实现至少一个可打印的 <code>traits</code>。 自动的实现只为一些类型提供，比如 <code>std</code> 库中的类型。所有其他类型 都<strong>必须</strong>手动实现。下面介绍如何输出自定义类型：</p>
+<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><p><code>fmt::Debug</code> ，就是 <code>&#123;:?&#125;</code>， 比较容易实现，一般直接用推导（<code>derive</code>）来自动创建：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个自定义的结构体</span></span><br><span class="line"><span class="meta">#[derive(Debug)]</span>  <span class="comment">// 加了这个才能打印</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point2D</span></span> &#123;</span><br><span class="line">    x: <span class="built_in">f64</span>,</span><br><span class="line">    y: <span class="built_in">f64</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> p = Point2D &#123; x:<span class="number">66.0</span>, y:<span class="number">77.0</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, peter);</span><br><span class="line">    <span class="comment">// Point2D &#123; x: 66.0, y: 77.0 &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:#?&#125;&quot;</span>, peter);  <span class="comment">// 更好看一点</span></span><br><span class="line">    <span class="comment">// Point2D &#123;</span></span><br><span class="line">    <span class="comment">//     x: 66.0,</span></span><br><span class="line">    <span class="comment">//     y: 77.0,</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Display"><a href="#Display" class="headerlink" title="Display"></a>Display</h2><p><code>fmt::Display</code> ，就是 <code>&#123;&#125;</code>， 须手动实现。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Complex</span></span> &#123;</span><br><span class="line">    real: <span class="built_in">f64</span>,</span><br><span class="line">    imag: <span class="built_in">f64</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> fmt::Display <span class="keyword">for</span> Complex &#123;</span><br><span class="line">    <span class="comment">// `f` 是个 buffer，此方法必须将格式化后的字符串写入其中</span></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">fmt</span></span>(&amp;<span class="keyword">self</span>, f: &amp;<span class="keyword">mut</span> fmt::Formatter) -&gt; fmt::<span class="built_in">Result</span> &#123;</span><br><span class="line">        <span class="comment">// `write!` 和 `format!` 类似，但是将格式化后的字符串写入 buffer</span></span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;&#123;&#125; + &#123;&#125;i&quot;</span>, <span class="keyword">self</span>.real, <span class="keyword">self</span>.imag)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Display: &#123;0&#125;\nDebug: &#123;0:?&#125;&quot;</span>, Complex&#123; real: <span class="number">3.3</span>, imag: <span class="number">7.2</span>&#125;);</span><br><span class="line">    <span class="comment">// Display: 3.3 + 7.2i</span></span><br><span class="line">    <span class="comment">// Debug: Complex &#123; real: 3.3, imag: 7.2 &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意上面这个例子中 <code>write!(...)</code> 后面不加 <code>;</code>。这个语法是 <code>return write!(...);</code> 的简写，以最后的表达式作为函数返回值。如果不写 <code>return</code> 又加了 <code>;</code> 就变成返回空 <code>()</code> 了。</p>
+<p>用类似的方法，还可以实现其他的 traits，比如：<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.Octal.html"><code>Octal</code></a>，<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.LowerHex.html"><code>LowerHex</code></a>， <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.UpperHex.html"><code>UpperHex</code></a>， <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.Pointer.html"><code>Pointer</code></a>，<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.Binary.html"><code>Binary</code></a>，<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.LowerExp.html"><code>LowerExp</code></a>， <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/fmt/trait.UpperExp.html"><code>UpperExp</code></a>。</p>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>对于一个集合，要 fmt 输出的话，需要迭代写每个值：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt; <span class="comment">// 导入 `fmt` 模块。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个包含单个 `Vec` 的结构体 `List`。</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">List</span></span>(<span class="built_in">Vec</span>&lt;<span class="built_in">i32</span>&gt;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> fmt::Display <span class="keyword">for</span> List &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">fmt</span></span>(&amp;<span class="keyword">self</span>, f: &amp;<span class="keyword">mut</span> fmt::Formatter) -&gt; fmt::<span class="built_in">Result</span> &#123;</span><br><span class="line">        <span class="comment">// 使用元组的下标获取值，并创建一个 `vec` 的引用。</span></span><br><span class="line">        <span class="keyword">let</span> vec = &amp;<span class="keyword">self</span>.<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;[&quot;</span>)?;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 `v` 对 `vec` 进行迭代，并用 `count` 记录迭代次数。</span></span><br><span class="line">        <span class="keyword">for</span> (count, v) <span class="keyword">in</span> vec.iter().enumerate() &#123;</span><br><span class="line">            <span class="comment">// 对每个元素（第一个元素除外）加上逗号。</span></span><br><span class="line">            <span class="comment">// 使用 `?` 或 `try!` 来返回错误。</span></span><br><span class="line">            <span class="keyword">if</span> count != <span class="number">0</span> &#123; <span class="built_in">write!</span>(f, <span class="string">&quot;, &quot;</span>)?; &#125;</span><br><span class="line">            <span class="built_in">write!</span>(f, <span class="string">&quot;&#123;&#125;&quot;</span>, v)?;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 加上配对中括号，并返回一个 fmt::Result 值。</span></span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;]&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> v = List(<span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里就需要多次调用 <code>write!</code>，<code>write!</code> 是可能返回错误的哦。一旦错误了就不该继续写了，所以在调用末尾用了 <code>?</code> 语法：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">write!</span>(f, <span class="string">&quot;&#123;&#125;&quot;</span>, value)?;</span><br><span class="line"><span class="comment">// 等同于：</span></span><br><span class="line"><span class="built_in">try!</span>(<span class="built_in">write!</span>(f, <span class="string">&quot;&#123;&#125;&quot;</span>, value));</span><br></pre></td></tr></table></figure>
+<p>这个语法是尝试 <code>write!</code> ，若发生错误，则直接返回相应的错误，结束函数；否则继续执行后面的语句。也就是类似于 Go 中的：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_, err := DoSomething()</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果不加这个 <code>?</code> 默认会编译时 warning，提醒你可能没处理错误。</p>
+<h2 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h2><p>再看一个例子：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt::&#123;<span class="keyword">self</span>, Formatter, Display&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Color</span></span> &#123;</span><br><span class="line">    red: <span class="built_in">u8</span>,</span><br><span class="line">    green: <span class="built_in">u8</span>,</span><br><span class="line">    blue: <span class="built_in">u8</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Display <span class="keyword">for</span> Color &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">fmt</span></span>(&amp;<span class="keyword">self</span>, f: &amp;<span class="keyword">mut</span> Formatter) -&gt; fmt::<span class="built_in">Result</span> &#123;</span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;RGB(&#123;R&#125;, &#123;G&#125;, &#123;B&#125;) &#123;R:#02X&#125;&#123;G:02X&#125;&#123;B:02X&#125;&quot;</span>, </span><br><span class="line">            R=<span class="keyword">self</span>.red, G=<span class="keyword">self</span>.green, B=<span class="keyword">self</span>.blue)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">for</span> color <span class="keyword">in</span> [</span><br><span class="line">        Color &#123; red: <span class="number">128</span>, green: <span class="number">255</span>, blue: <span class="number">90</span> &#125;,</span><br><span class="line">        Color &#123; red: <span class="number">0</span>, green: <span class="number">3</span>, blue: <span class="number">254</span> &#125;,</span><br><span class="line">        Color &#123; red: <span class="number">0</span>, green: <span class="number">0</span>, blue: <span class="number">0</span> &#125;,</span><br><span class="line">    ].iter() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, *color)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RGB(<span class="number">128</span>, <span class="number">255</span>, <span class="number">90</span>) <span class="number">0x80FF5A</span></span><br><span class="line">RGB(<span class="number">0</span>, <span class="number">3</span>, <span class="number">254</span>) <span class="number">0x003FE</span></span><br><span class="line">RGB(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>) <span class="number">0x00000</span></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hello-Rust"><span class="toc-number">1.</span> <span class="toc-text">Hello, Rust!</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hello-World"><span class="toc-number">3.</span> <span class="toc-text">Hello World</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E6%BA%90%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">单一源文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cargo-%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.2.</span> <span class="toc-text">Cargo 项目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-number">4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">5.</span> <span class="toc-text">格式化输出</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Debug"><span class="toc-number">5.1.</span> <span class="toc-text">Debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Display"><span class="toc-number">5.2.</span> <span class="toc-text">Display</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">5.3.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">5.4.</span> <span class="toc-text">格式化</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/07/23/Rust/HelloRust/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&text=Hello, Rust!"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&is_video=false&description=Hello, Rust!"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Hello, Rust!&body=Check out this article: https://clownote.github.io/2021/07/23/Rust/HelloRust/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&title=Hello, Rust!"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/07/23/Rust/HelloRust/&name=Hello, Rust!&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
