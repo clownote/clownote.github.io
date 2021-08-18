@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="刚发布的八月份的 TIOBE 排行榜前 20，赫然出现了上古人工智能语言 Prolog！ TIOBE 说到：“And, even more astonishing, we see Prolog re-entering the top 20 after 15 years… making an unexpected comeback.”  （图片来自 TIOBE Index for August 20">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不一样的“人工智能语言”Prolog">
+<meta property="og:url" content="https://clownote.github.io/2021/08/07/Prolog/Prolog-0/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="刚发布的八月份的 TIOBE 排行榜前 20，赫然出现了上古人工智能语言 Prolog！ TIOBE 说到：“And, even more astonishing, we see Prolog re-entering the top 20 after 15 years… making an unexpected comeback.”  （图片来自 TIOBE Index for August 20">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gt9psjnjf7j31gm0emgml.jpg">
+<meta property="article:published_time" content="2021-08-07T09:22:32.141Z">
+<meta property="article:modified_time" content="2021-08-18T11:07:02.442Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gt9psjnjf7j31gm0emgml.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>不一样的“人工智能语言”Prolog</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/07/23/Rust/HelloRust/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&text=不一样的“人工智能语言”Prolog"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&is_video=false&description=不一样的“人工智能语言”Prolog"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=不一样的“人工智能语言”Prolog&body=Check out this article: https://clownote.github.io/2021/08/07/Prolog/Prolog-0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&name=不一样的“人工智能语言”Prolog&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Prolog"><span class="toc-number">1.</span> <span class="toc-text">Prolog</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog-1"><span class="toc-number">1.1.</span> <span class="toc-text">Prolog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SWI-Prolog"><span class="toc-number">1.2.</span> <span class="toc-text">SWI-Prolog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">Prolog 基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%AE%9E"><span class="toc-number">1.3.1.</span> <span class="toc-text">事实</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%99"><span class="toc-number">1.3.2.</span> <span class="toc-text">规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.3.3.</span> <span class="toc-text">查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%EF%BC%9A%E8%8B%8F%E6%A0%BC%E6%8B%89%E5%BA%95%E4%BC%9A%E4%B8%8D%E4%BC%9A%E6%AD%BB%EF%BC%9F"><span class="toc-number">1.3.4.</span> <span class="toc-text">例：苏格拉底会不会死？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        不一样的“人工智能语言”Prolog
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-08-07T09:22:32.141Z" itemprop="datePublished">2021-08-07</time>
+        
+        (Updated: <time datetime="2021-08-18T11:07:02.442Z" itemprop="dateModified">2021-08-18</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>刚发布的八月份的 TIOBE 排行榜前 20，赫然出现了上古人工智能语言 Prolog！</p>
+<p>TIOBE 说到：“And, even more astonishing, we see Prolog re-entering the top 20 after 15 years… making an unexpected comeback.”</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gt9psjnjf7j31gm0emgml.jpg" alt="TIOBE Index for August 2021"></p>
+<p>（图片来自 TIOBE Index for August 2021）</p>
+<p>时隔十余年，这个独特的语言居然又出现在了大家眼前，排名仅次于 Go！还不快学起来！</p>
+<p>如果你学不动了，就请跟上我的脚步，今天，我们从一个清新脱俗的例子出发，领略这门不一样的“人工智能语言”。</p>
+<p>另外，我们还做了一个和本文配套的 Prolog 入门视频，欢迎大家观看。如果视频对你有所帮助，别忘了一键三连哦：）</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14A411P7Vq/">https://www.bilibili.com/video/BV14A411P7Vq/</a></li>
+</ul>
+<p>（从脚本到音乐到剪辑全是自己做的，大家支持一下吧：）</p>
+<h1 id="Prolog"><a href="#Prolog" class="headerlink" title="Prolog"></a>Prolog</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">like(mercury, kathy).        % mercury 喜欢 kathy。</span><br><span class="line">like(kathy, mercury).        % kathy 喜欢 mercury。</span><br><span class="line"></span><br><span class="line">lover(X, Y) :- like(X, Y), like(Y, X).        % 如果X喜欢Y，且Y也喜欢X，则X与Y是恋人。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">询问mercury和谁是恋人：lover(mercury, Who).</span><br><span class="line">电脑告诉我 Who &#x3D; kathy，</span><br><span class="line"></span><br><span class="line">这就是Prolog！</span><br></pre></td></tr></table></figure>
+<p>（这段文字取自一个如今犹在的上古网站 <a target="_blank" rel="noopener" href="https://prolog.longluntan.com/">Prolog 人工智能语言中文论坛</a> 首页的一个醒目位置）</p>
+<p>这是一首发人深思的好诗！但你可能很难想象这居然是一种「编程语言」。</p>
+<p>回顾编程语言的发展，有可以分为几个时期。</p>
+<ul>
+<li>第一代编程语言：机器语言，用 0 和 1 写代码（焊武帝同学为我们展现的失传已久的神技）。</li>
+<li>第二代编程语言：汇编语言</li>
+<li>第三代编程语言：高级语言，代表作 C，Java，C++，C#<ul>
+<li>3.5 GL：晚期的第三代，如 Python、Lisp[^1]，抽象程度更高，已经有了第四代的影子。</li>
+</ul>
+</li>
+<li>第四代编程语言：抽象程度更高，更不用处理和硬件相关的细节，专注描述问题、解决问题，如 SQL，MATLAB</li>
+</ul>
+<p>可能小伙伴们对编程语言的了解就止步这里了。但其实我们在几十年前就已经有了——</p>
+<ul>
+<li><strong>第五代编程语言</strong>：人工智能语言，这一代编程语言期望计算机能自动求解问题，基于问题所给定的某些限制，交由程序来处理而不需以程序员再投入人力开发程序。</li>
+</ul>
+<p>今天说「人工智能」你肯定想到 Python，但 Python 并不是第五代的人工智能语言。而 Prolog 就是这种没落十余年的第五代编程语言之一。</p>
+<p>今天我们的重点不是谈为什么第五代编程语言集体没落，而是来学习这种上古语言 Prolog。</p>
+<p>[^1]: Lisp：也有的资料说 Lisp 是第五代编程语言，但以我自己学习到的 Lisp 来看，Lisp 并不呼和第五代的定义，而是第五代语言可以用 Lisp 来实现。</p>
+<h2 id="Prolog-1"><a href="#Prolog-1" class="headerlink" title="Prolog"></a>Prolog</h2><p>Prolog 这个词来自 PROgramming of LOGic，也就是逻辑编程的意思。Prolog 不需要你编写程序运行过程，你只要给出事实和规则，它会自动分析其中的逻辑关系。然后你就可以通过查询，让 Prolog 完成复杂的逻辑运算。</p>
+<h2 id="SWI-Prolog"><a href="#SWI-Prolog" class="headerlink" title="SWI-Prolog"></a>SWI-Prolog</h2><p>Prolog 有非常多的实现，维基百科甚至专门有个词条比较不同的 Prolog 实现：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Comparison_of_Prolog_implementations">Wikipedia: Comparison of Prolog implementations</a></li>
+</ul>
+<p>这里我们采用 <a target="_blank" rel="noopener" href="https://www.swi-prolog.org/">SWI-Prolog</a>——一个十分完善、仍在开发、维护的开源实现。在 macOS 中，可以用 <code>brew</code> 安装 SWI Prolog：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install swi-prolog</span><br></pre></td></tr></table></figure>
+<p>Debian 系 Linux 也可以用 <code>apt-get</code> 来轻松完成安装。其他系统可以去 <a target="_blank" rel="noopener" href="https://www.swi-prolog.org/download/stable">官网下载页</a> 寻找对应的二进制文件或者从源码构建。</p>
+<p>如果你不想或难以完成安装，SWI-Prolog 还为你准备了 <a target="_blank" rel="noopener" href="https://swish.swi-prolog.org/">在线版本</a>。</p>
+<p>安装完成之后，通过 <code>swipl</code> 命令进入一个和 Python 类似的 SWI-Prolog REPL 环境（SWI-Prolog 的提示符是 <code>?-</code>）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ swipl</span><br><span class="line">?- </span><br></pre></td></tr></table></figure>
+<p>国际惯例，先写 Hello World：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?- write(&#x27;Hello, World!&#x27;).</span><br><span class="line">Hello, World!    % write 打印的结果</span><br><span class="line"><span class="literal">true</span>.            % 返回值</span><br></pre></td></tr></table></figure>
+<p>注意 Prolog 的语句最后以 <code>.</code> 结尾。</p>
+<p>要退出 SWI-Prolog，可以摁 <code>Control-D</code> 或输入 <code>halt.</code>。（你可以通过键入 <code>apropos(quit).</code> 来找到关于“退出”的主题 halt，然后用 <code>help(halt).</code> 查看如何退出）</p>
+<h2 id="Prolog-基础语法"><a href="#Prolog-基础语法" class="headerlink" title="Prolog 基础语法"></a>Prolog 基础语法</h2><p>与我们平时接触的其他基于变量的编程语言不同，Prolog 的基础是</p>
+<ul>
+<li>Facts：事实</li>
+<li>Rules：规则</li>
+<li>Queries：查询</li>
+</ul>
+<p>这几个概念就是字面意思，如</p>
+<ul>
+<li>事实：<code>11 不能被 2 整除。</code></li>
+<li>规则：<code>不能被 2 整除的数是奇数。</code></li>
+<li>查询：<code>11 是奇数吗？</code><ul>
+<li>结果（答案）：<code>11 是奇数。</code></li>
+</ul>
+</li>
+</ul>
+<p>在 Prolog 中<strong>事实</strong>和<strong>规则</strong>和在一起组成了知识库（Knowledge base），我们把这两者写在后缀名为 <code>.pl</code> 的文件里。</p>
+<p><strong>查询</strong>写在 REPL 中，基于已知知识库，对某个问题进行逻辑推理，给出答案。</p>
+<h3 id="事实"><a href="#事实" class="headerlink" title="事实"></a>事实</h3><p>例如，假定我们知道一些事实（字面意思）是：</p>
+<ul>
+<li>Yomogi 和 Yume 相互喜欢；</li>
+<li>Kaneishi 也喜欢 Yomogi。</li>
+</ul>
+<p>在 Prolog 中，这些个事实表示为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">like(yomogi, yume).</span><br><span class="line">like(yume, yomogi).</span><br><span class="line">like(kaneishi, yomogi).</span><br></pre></td></tr></table></figure>
+<p>我们可以把这个写到一个 <code>./ssss.pl</code> 文件中，但不能写在 REPL 里。</p>
+<p>在 Prolog 中，<strong>小写</strong>字母开头的单词是<strong>常量</strong>，表示一个对象，如 <code>like</code> 、<code>mercury</code>、<code>kathy</code> 都不需要预先定义，不需要赋值，直接写即可。</p>
+<p>注意，喜欢这种事情是单向的。A 喜欢 B 不代表 B 喜欢 A（如 kaneishi 与 yomogi），所以这里为了表示 yomogi 与 yume 相互喜欢，必须写两句。</p>
+<p>我们把 <code>like</code> 称为一种<em>关系</em>，即代表两个或多个对象之间某种相互联系，我们还可一定义只与一个对象有关的事实，这种事实称为<em>属性</em>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">male(yomogi).</span><br><span class="line">female(yume).</span><br><span class="line">female(kaneishi).</span><br></pre></td></tr></table></figure>
+<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><p>现在我们制订一个规则：</p>
+<ul>
+<li>如果 X 喜欢 Y，且 Y 也喜欢 X，则 X 与 Y 就是恋人。</li>
+</ul>
+<p>规则在 Prolog 表示为 <code>head :- goals</code>，即 goals 成立时，head 也就成立。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lover(X, Y) :- like(X, Y), like(Y, X).</span><br></pre></td></tr></table></figure>
+<p>（这行代码也写到 <code>./ssss.pl</code> 中）</p>
+<p>这行代码表示，如果 <code>like(X, Y)</code> 和 <code>like(Y, X)</code> 都成立，则有 <code>lover(X, Y)</code> 成立。用 Python 语言表示就是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lover</span>(<span class="params">X, Y</span>):</span></span><br><span class="line">    <span class="keyword">return</span> like(X, Y) <span class="keyword">and</span> like(Y, X)</span><br></pre></td></tr></table></figure>
+<p>在 Prolog 中的或与非：</p>
+<ul>
+<li><code>A, B</code> 表示「A <strong>与</strong> B」</li>
+<li><code>A; B</code> 表示「A <strong>或</strong> B」</li>
+<li><code>\+ A</code> 表示「<strong>非</strong> A」</li>
+</ul>
+<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><p>前面的事实和规则都是定义，就是我们告诉 Prolog 一些已知信息。查询才是重头戏，就是让 Prolog 帮我们做逻辑题目。</p>
+<p>使用 <code>swipl</code> 命令进入 Prolog 环境，然后使用 <code>consult(&quot;path/to/xxx.pl&quot;)</code> 加载写在 <code>.pl</code> 文件中的代码，来读取已知条件：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ swipl</span><br><span class="line">Welcome to SWI-Prolog (threaded, <span class="number">64</span> bits, version <span class="number">8.2</span><span class="number">.4</span>)</span><br><span class="line">?- consult(&#x27;ssss.pl&#x27;).</span><br><span class="line"><span class="literal">true</span>.</span><br></pre></td></tr></table></figure>
+<p>或者，也可以用 <code>[xxx].</code>  这个语法来加载 <code>xxx.pl</code>。</p>
+<p>然后，如果我们想知道 yomogi 是否喜欢 yume，就可以问 Prolog：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">like(yomogi, yume).</span><br><span class="line"><span class="literal">true</span>.</span><br></pre></td></tr></table></figure>
+<p>结果 <code>true</code> 表示 <code>like(yomogi, yume)</code> 即  yomogi 喜欢 yume 成立。而：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?- like(yomogi, kaneishi).</span><br><span class="line"><span class="literal">false</span>.</span><br><span class="line"></span><br><span class="line">?- like(yomogi, gauma).</span><br><span class="line"><span class="literal">false</span>.</span><br></pre></td></tr></table></figure>
+<p><code>false</code> 就说明 yomogi 不喜欢 kaneishi，当然纯情的 yomogi 更不可能喜欢我们没定义过的陌生人 gauma。</p>
+<p>前面这几次查询都是询问某个关系是否成立，也就是看看某个「事实」是否存在。而结合已定义 <code>lover</code> 的规则，Prolog 还可以：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">?- lover(yomogi, yume).</span><br><span class="line"><span class="literal">true</span>.</span><br><span class="line"></span><br><span class="line">?- lover(yume, yomogi).</span><br><span class="line"><span class="literal">true</span>.</span><br><span class="line"></span><br><span class="line">?- lover(yomogi, kaneishi).</span><br><span class="line"><span class="literal">false</span>.</span><br><span class="line"></span><br><span class="line">?- lover(kaneishi, yume).</span><br><span class="line"><span class="literal">false</span>.</span><br></pre></td></tr></table></figure>
+<p>通过已知的 like 关系（事实），结合我们给的 lover 定义（规则），Prolog 可以推理：</p>
+<ul>
+<li>yomogi 和 yume 是恋人。当然，反过来说“yume 和 yomogi 是恋人”同样成立。</li>
+<li>因为 yomogi 不喜欢 kaneishi，所以 yomogi 和 kaneishi 不是恋人！</li>
+<li>yume 和 kaneishi 之间没有任何一方喜欢的关系，所以两人也不是恋人。</li>
+</ul>
+<p>如果只是这样，只会判断个对错，那 Prolog 就太弱了。在 Prolog 查询中还可以使用<strong>变量</strong>。</p>
+<p>例如，我们想要知道<del>蓬</del> yomogi 喜欢谁（Who）？就可以问 Prolog：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- like(yomogi, Who).</span><br><span class="line">Who = yume.</span><br></pre></td></tr></table></figure>
+<p>这里 <code>Who</code> 是一个变量，Prolog 会求解查询中的变量，这里得到的结果是 <code>Who = yume</code>，也就是说 yomogi 喜欢 yume。</p>
+<p>这里 Prolog 所做的操作其实就是解个方程，得到使查询结果为真的变量值：<code>like(yomogi, Who) = true</code> 得到 <code>Who=?</code>。</p>
+<p>Prolog 中<strong>大写</strong>字母开头的单词是变量。（注意，Prolog 中变量大写、常量小写，和我们通常的 C 语言编程习惯是反的。）如果写错了大小写，意思就不对了，尝试查询：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?- like(yomogi, who).</span><br><span class="line"><span class="literal">false</span>.    % yomogi 不喜欢 who 这个人，咱也不知道 who 是谁</span><br></pre></td></tr></table></figure>
+<p>如果我们要查询 「yume 是否喜欢 yomogi」，而把 yume 写成了大写的 Yume，就变成了查询「喜欢 yomogi 的人是谁」：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?- like(Yume, yomogi).    % Yume 是个变量，不是 yume 这个人</span><br><span class="line">Yume = yume ;             % 摁 tab 键或摁 ; 键显示下一个结果</span><br><span class="line">Yume = kaneishi.</span><br></pre></td></tr></table></figure>
+<p>这里 Yume 等于 Who，只是个变量，表示喜欢 yomogi 的人，而不是<del>南同学</del>前面定义中的 yume 这个人。根据我们一开始定义的事实，yume 和 kaneishi 都喜欢 yomogi，所以这里 Yume （Who）就可以是 yume 或 kaneishi。</p>
+<p>对于这种有多个结果的查询。SWI-Prolog 默认每次只显示一个结果，然后等待，我们需要摁下 <code>;</code> （表示「或」，还记得吗）然后再显示下一个结果。（这里也可以摁 <code>tab</code> 键）</p>
+<p>这里还想补充一点，Prolog 中有一个很有用的谓词 <code>listing</code>，可以列出某种关系的全部事实，或查看规则的定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">?- listing(like).</span><br><span class="line">like(yomogi, yume).</span><br><span class="line">like(yume, yomogi).</span><br><span class="line">like(kaneishi, yomogi).</span><br><span class="line">    </span><br><span class="line">?- listing(lover).</span><br><span class="line">lover(X, Y) :-</span><br><span class="line">    like(X, Y),</span><br><span class="line">    like(Y, X).</span><br></pre></td></tr></table></figure>
+<h3 id="例：苏格拉底会不会死？"><a href="#例：苏格拉底会不会死？" class="headerlink" title="例：苏格拉底会不会死？"></a>例：苏格拉底会不会死？</h3><p>利用前面这些知识，就可以解决很多逻辑问题了，例如，已知：</p>
+<ul>
+<li>苏格拉底是人</li>
+<li>人都会死</li>
+</ul>
+<p>所以可以退出结论：苏格拉底会死。</p>
+<p>用 Prolog 来解决这个问题：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">person(socrates).       % 事实</span><br><span class="line">mortal(X) :- person(X). % 规则</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">% 查询</span><br><span class="line"></span><br><span class="line">?- mortal(socrates).    % 苏格拉底会死吗</span><br><span class="line"><span class="literal">true</span>.</span><br><span class="line">    </span><br><span class="line">?- mortal(X).           % 谁会死</span><br><span class="line">X = socrates</span><br></pre></td></tr></table></figure>
+<p>如果你觉得一个完整的程序不能只包括逻辑运算部分，还必须拥有输入输出，那么，结合 hello world 中的 write，我们可以实现：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">person(socrates).</span><br><span class="line">person(plato).</span><br><span class="line">person(aristotle).</span><br><span class="line"></span><br><span class="line">mortal(X) :- person(X).</span><br><span class="line"></span><br><span class="line">mortal_report :- </span><br><span class="line">    write(&#x27;Known mortals are:&#x27;), nl, mortal(X), write(X), nl.  % nl 是换行</span><br></pre></td></tr></table></figure>
+<p>然后再解释器中调用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">?- mortal_report.</span><br><span class="line">socrates</span><br><span class="line">plato</span><br><span class="line">aristotle</span><br></pre></td></tr></table></figure>
+<p>这就得到了一些生命有限的凡人。</p>
+<p>利用这种「逻辑编程」你还可以写成更多有趣的例子。如果你觉得这个例子已经理解不能了，那我推荐你重新学习一下基础的《数理逻辑》（很多《离散数学》书的第一章）。</p>
+<hr>
+<p>到这里，我们其实只是看到了 Prolog 的最简单的用法，但完全没有接触到 Prolog 中真正强大的地方，例如递归，这些就写另一篇更深入的文章来进一步学习了，——不过我们现在这篇文章到此就结束了。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>[1] Blackburn, Patrick and Bos, Johan and Striegnitz, Kristina. <a target="_blank" rel="noopener" href="http://lpn.swi-prolog.org/index.php">Learn Prolog Now!</a>. College Publications. 2006</p>
+<p>[2] 阮一峰. <a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2019/01/prolog.html">Prolog 语言入门教程</a>. 阮一峰的网络日志. 2019</p>
+<p>[3] SWI Prolog. <a target="_blank" rel="noopener" href="https://www.swi-prolog.org/GetStarted.html">Getting Started</a>.</p>
+<p>[4] Draveness. <a target="_blank" rel="noopener" href="https://draveness.me/prolog-ji-chu-1/">Prolog 基础 &lt;1&gt;</a>. draveness.me, 2015</p>
+<p>[5] 作者未知. Prolog 入门教程. 垂钓听竹轩. 2004</p>
+<p>（最后这篇是我近10年前学习 Prolog 时看的文章，写的非常易懂。但如今网络上只有这篇的多手转载，以及其翻译的英文原文了，很难找到这份珍贵的中文译本，目前我只是找到了它最早可能是来自一个叫垂钓听竹轩的网站，但这个网站关了， archive.org 里的备份全是 3xx 错误，，有空我再考古一下了）</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Prolog"><span class="toc-number">1.</span> <span class="toc-text">Prolog</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog-1"><span class="toc-number">1.1.</span> <span class="toc-text">Prolog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SWI-Prolog"><span class="toc-number">1.2.</span> <span class="toc-text">SWI-Prolog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prolog-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">Prolog 基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%AE%9E"><span class="toc-number">1.3.1.</span> <span class="toc-text">事实</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%99"><span class="toc-number">1.3.2.</span> <span class="toc-text">规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.3.3.</span> <span class="toc-text">查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%EF%BC%9A%E8%8B%8F%E6%A0%BC%E6%8B%89%E5%BA%95%E4%BC%9A%E4%B8%8D%E4%BC%9A%E6%AD%BB%EF%BC%9F"><span class="toc-number">1.3.4.</span> <span class="toc-text">例：苏格拉底会不会死？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&text=不一样的“人工智能语言”Prolog"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&is_video=false&description=不一样的“人工智能语言”Prolog"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=不一样的“人工智能语言”Prolog&body=Check out this article: https://clownote.github.io/2021/08/07/Prolog/Prolog-0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&title=不一样的“人工智能语言”Prolog"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/08/07/Prolog/Prolog-0/&name=不一样的“人工智能语言”Prolog&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
