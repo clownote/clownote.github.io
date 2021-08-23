@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Sort Algorithms你心爱的各种排序算法，用 C 语言实现。 我们下面将要实现的算法，全部准循这个接口： 12&#x2F;&#x2F; sort 对数组 A 的前 n 个元素进行原址排序typedef void (*sort)(int A[], int n); 直接插入排序遍历，往前找到合适的位置，逐个元素后移腾出空间，插入进去。 复杂度：  时间 $O(n^2)$ 空间 $O(1)$  123456789">
+<meta property="og:type" content="article">
+<meta property="og:title" content="各种排序算法，用C语言实现">
+<meta property="og:url" content="https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Sort Algorithms你心爱的各种排序算法，用 C 语言实现。 我们下面将要实现的算法，全部准循这个接口： 12&#x2F;&#x2F; sort 对数组 A 的前 n 个元素进行原址排序typedef void (*sort)(int A[], int n); 直接插入排序遍历，往前找到合适的位置，逐个元素后移腾出空间，插入进去。 复杂度：  时间 $O(n^2)$ 空间 $O(1)$  123456789">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-23T12:10:33.418Z">
+<meta property="article:modified_time" content="2021-08-23T04:12:21.496Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>各种排序算法，用C语言实现</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/08/18/blog/mac-quick-open-terminal/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&text=各种排序算法，用C语言实现"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&is_video=false&description=各种排序算法，用C语言实现"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=各种排序算法，用C语言实现&body=Check out this article: https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&name=各种排序算法，用C语言实现&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sort-Algorithms"><span class="toc-number">1.</span> <span class="toc-text">Sort Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">直接插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">二分插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell-%E6%8E%92%E5%BA%8F"><span class="toc-number">1.3.</span> <span class="toc-text">Shell 排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-number">1.4.</span> <span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-number">1.5.</span> <span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="toc-number">1.6.</span> <span class="toc-text">堆排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-number">1.7.</span> <span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">1.8.</span> <span class="toc-text">完整代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        各种排序算法，用C语言实现
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-08-23T12:10:33.418Z" itemprop="datePublished">2021-08-23</time>
+        
+        (Updated: <time datetime="2021-08-23T04:12:21.496Z" itemprop="dateModified">2021-08-23</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Sort-Algorithms"><a href="#Sort-Algorithms" class="headerlink" title="Sort Algorithms"></a>Sort Algorithms</h1><p>你心爱的各种排序算法，用 C 语言实现。</p>
+<p>我们下面将要实现的算法，全部准循这个接口：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sort 对数组 A 的前 n 个元素进行原址排序</span></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*sort)</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><p>遍历，往前找到合适的位置，逐个元素后移腾出空间，插入进去。</p>
+<p>复杂度：</p>
+<ul>
+<li>时间 $O(n^2)$</li>
+<li>空间 $O(1)$</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">insert_sort(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        <span class="keyword">int</span> curr = A[i];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> j = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &gt;= <span class="number">0</span> &amp;&amp; curr &lt; A[j]) &#123;</span><br><span class="line">            A[j + <span class="number">1</span>] = A[j];</span><br><span class="line">            --j;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        A[j + <span class="number">1</span>] = curr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二分插入排序"><a href="#二分插入排序" class="headerlink" title="二分插入排序"></a>二分插入排序</h2><p>就是直接插入里往前找合适位置那里用个二分查找。</p>
+<p>复杂度：</p>
+<ul>
+<li>时间：较好 $O(n \log(n))$，较坏 $O(n^2)$，平均 $O(n^2)$</li>
+<li>空间 $O(1)$</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">binary_insert_sort(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        <span class="keyword">int</span> curr = A[i];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 二分查找</span></span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>, r = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (r &gt;= <span class="number">0</span> &amp;&amp; l &lt; i &amp;&amp; l &lt;= r) &#123;</span><br><span class="line">            <span class="keyword">int</span> m = (l + r) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (curr &lt; A[m]) &#123;</span><br><span class="line">                r = m - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                l = m + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 后移</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= l; --j) &#123;</span><br><span class="line">            A[j + <span class="number">1</span>] = A[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 插入</span></span><br><span class="line">        A[l] = curr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Shell-排序"><a href="#Shell-排序" class="headerlink" title="Shell 排序"></a>Shell 排序</h2><p>递减增量(gap)的排序算法（非稳定）。就是分好几轮排序，每轮里在隔 gap 个的序列里调整插入。</p>
+<p>空间复杂度是 $O(1)$，时间复杂度依赖于步长序列。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">shell_sort(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> gap;</span><br><span class="line">    foreach_gaps(gap, n, &#123;</span><br><span class="line">        <span class="comment">// 里面就是个插入排序:</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = gap; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> curr = A[i];</span><br><span class="line">            <span class="keyword">int</span> j = i - gap;</span><br><span class="line">            <span class="keyword">for</span> (; j &gt;= <span class="number">0</span> &amp;&amp; A[j] &gt; curr; j -= gap) &#123;</span><br><span class="line">                A[j + gap] = A[j];</span><br><span class="line">            &#125;</span><br><span class="line">            A[j + gap] = curr;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>foreach_gaps</code> 遍历增量序列，将步长值放到 gap 中。可以选用多种步长序列（注意步长最后一步务必为 1）：</p>
+<ul>
+<li><p>Shell 步长序列: $n/2^i$，最坏情况下时间复杂度 $O(n^2)$</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> for_shell_gap(gap, n, f)                                               \</span></span><br><span class="line">    <span class="keyword">for</span> (gap = n &gt;&gt; <span class="number">1</span>; gap &gt; <span class="number">0</span>; gap &gt;&gt;= <span class="number">1</span>)                                     \</span><br><span class="line">        f</span><br></pre></td></tr></table></figure></li>
+<li><p>Papernov-Stasevich 步长序列：$2^k-1$，最坏情况下时间复杂度 $O(n^{\frac{3}{2}})$</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// papernov_stasevich_start find the max n s.t. (2^k+1) &lt; n</span></span><br><span class="line">    <span class="comment">// return 2^k+1</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span></span><br><span class="line">    ps_start(<span class="keyword">int</span> n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">1</span>, nn = n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (nn &gt; <span class="number">0</span> &amp;&amp; nn != <span class="number">1</span>) &#123;</span><br><span class="line">            nn &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">            k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> k + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2^k+1, ..., 65, 33, 17, 9, 5, 3, 1</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span></span><br><span class="line">    ps_next(<span class="keyword">int</span> gap)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">switch</span> (gap) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// to stop</span></span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">return</span> ((gap - <span class="number">1</span>) &gt;&gt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> for_papernov_stasevich_gap(gap, n, f)                                  \</span></span><br><span class="line">        <span class="keyword">for</span> (gap = ps_start(n); gap &gt; <span class="number">0</span>; gap = ps_next(gap))                       \</span><br><span class="line">            f;</span><br><span class="line"></span><br><span class="line">还有很多种步长，这个 Papernov-Stasevich 也不是最好的。具体维基百科有介绍。</span><br><span class="line"></span><br><span class="line">## 冒泡排序</span><br><span class="line"></span><br><span class="line">从后向前形成序列（`i=n<span class="number">-1.</span>.<span class="number">.1</span>`）：每次从 <span class="number">0</span> 检查至 i<span class="number">-1</span>，后一个比前一个大的就交换一下：冒泡。</span><br><span class="line"></span><br><span class="line">- 时间复杂度：最坏 $O(n^<span class="number">2</span>)$，最好 $O(n)$</span><br><span class="line">- 空间复杂度：$O(<span class="number">1</span>)$</span><br><span class="line"></span><br><span class="line">```c</span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">bubble_sort(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">int</span> swap_flag = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (A[j] &gt; A[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                swap(A, j, j + <span class="number">1</span>);</span><br><span class="line">                swap_flag = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!swap_flag) &#123; <span class="comment">// 这一轮都没交换，已经有序了，提前结束</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中的 swap 容易实现：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// swap 原址交换数组 A 中下标 i 与 j 的值</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">swap(<span class="keyword">int</span> A[], <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (i != j) &#123;</span><br><span class="line">        <span class="comment">// 左 iji，右 jij</span></span><br><span class="line">        A[i] ^= A[j];</span><br><span class="line">        A[j] ^= A[i];</span><br><span class="line">        A[i] ^= A[j];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 注意一定要 判断 i != j 再执行，</span></span><br><span class="line">    <span class="comment">// 同一个内存地址用 xor swap 就会爆炸（结果全变成 0 ）：</span></span><br><span class="line">    <span class="comment">//   x = x ^ x   -&gt;  x = 0</span></span><br><span class="line">    <span class="comment">//   x = x ^ x   -&gt;  x = 0</span></span><br><span class="line">    <span class="comment">//   x = x ^ x   -&gt;  x = 0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>对 <code>A[l...r]</code> (闭区间) 快速排序:</p>
+<ul>
+<li>选个轴，序列中比轴小的放轴左边，比轴大的在其右边</li>
+<li>然后把轴左右分别做两个子序列，递归。</li>
+</ul>
+<p>复杂度：</p>
+<ul>
+<li> 时间复杂度：最好 $O(n\log(n))$，最坏 $O(n^2)$，平均 $O(n \log(n))$</li>
+<li>空间复杂度 $O(log(n))$</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">quick_sort(<span class="keyword">int</span> A[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &lt; r) &#123;</span><br><span class="line">        <span class="keyword">int</span> p = partition(A, l, r);</span><br><span class="line">        quick_sort(A, l, p - <span class="number">1</span>);</span><br><span class="line">        quick_sort(A, p + <span class="number">1</span>, r);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// quick_sort_all 对整个长度为 n 的序列 A 执行快速排序</span></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">quick_sort_all(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> quick_sort(A, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>partition</code> 做快排的交换工作：</p>
+<ul>
+<li>以第一个元素 <code>A[l]</code> 为轴</li>
+<li>序列中比轴小的放轴左边，比轴大的在其右边</li>
+<li>返回轴的索引</li>
+</ul>
+<p>这个写了两种实现，一种是 partition_place，一种是 partition_swap，无论是从好理解还是从方便记，我都喜欢后者：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span></span><br><span class="line">partition_place(<span class="keyword">int</span> A[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> pv = A[l];</span><br><span class="line">    <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">        <span class="keyword">while</span> (r &gt; l &amp;&amp; A[r] &gt; pv)</span><br><span class="line">            --r;</span><br><span class="line">        <span class="keyword">if</span> (l &lt; r)</span><br><span class="line">            A[l++] = A[r];</span><br><span class="line">        <span class="keyword">while</span> (l &lt; r &amp;&amp; A[l] &lt; pv)</span><br><span class="line">            ++l;</span><br><span class="line">        <span class="keyword">if</span> (l &lt; r)</span><br><span class="line">            A[r--] = A[l];</span><br><span class="line">    &#125;</span><br><span class="line">    A[l] = pv;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> l;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span></span><br><span class="line">partition_swap(<span class="keyword">int</span> A[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> p = l;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = l; i &lt; r; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (A[i] &lt;= A[r]) &#123;</span><br><span class="line">            swap(A, p, i);</span><br><span class="line">            p++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(A, p, r);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>从下标 0 到 n，每个位置 <code>i</code> 选择 <code>A[i...n]</code> （闭区间）里最小的一个放上去。</p>
+<ul>
+<li>时间复杂度 $O(n^2)$</li>
+<li>空间复杂度 $O(1)$</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">select_sort(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> smallest = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (A[j] &lt; A[smallest]) &#123;</span><br><span class="line">                smallest = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(A, i, smallest);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>把序列搞成个大根堆（根结点比页大的那种），然后依次出根节点，重新调整堆。</p>
+<ul>
+<li>时间复杂度 $O(n \log(n))$</li>
+<li>空间复杂度 $O(1)$</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">heap_sort(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 建立堆</span></span><br><span class="line">    <span class="keyword">int</span> heap_size = n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n / <span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        sift(A, i, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 调整堆，依次出根节点</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        swap(A, <span class="number">0</span>, i);</span><br><span class="line">        sift(A, <span class="number">0</span>, i - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// sift 调整，建堆</span></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">sift(<span class="keyword">int</span> A[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> i = l, j = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> root = A[l];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r) &#123;</span><br><span class="line">        <span class="keyword">if</span> (j + <span class="number">1</span> &lt;= r &amp;&amp; A[j] &lt; A[j + <span class="number">1</span>])</span><br><span class="line">            ++j;</span><br><span class="line">        <span class="keyword">if</span> (A[j] &gt; root) &#123;</span><br><span class="line">            A[i] = A[j];</span><br><span class="line">            i = j;</span><br><span class="line">            j = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A[i] = root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用 CLRS 里面的 maxHeapify，更容易理解：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">heap_sort(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 建立堆</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n / <span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        max_heapify(A, i, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 依次出根节点，调整堆</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        swap(A, <span class="number">0</span>, i);</span><br><span class="line">        max_heapify(A, <span class="number">0</span>, i - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// max_heapify 建立大根堆的调整函数</span></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">max_heapify(<span class="keyword">int</span> A[], <span class="keyword">int</span> i, <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// l, r are the children of root i</span></span><br><span class="line">    <span class="keyword">int</span> l = (i &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> r = l + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// max = max_idx(A[root], A[l], A[r])</span></span><br><span class="line">    <span class="keyword">int</span> max = i;</span><br><span class="line">    <span class="keyword">if</span> (l &lt;= n &amp;&amp; A[l] &gt; A[max])</span><br><span class="line">        max = l;</span><br><span class="line">    <span class="keyword">if</span> (r &lt;= n &amp;&amp; A[r] &gt; A[max])</span><br><span class="line">        max = r;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更改根，继续向后调整</span></span><br><span class="line">    <span class="keyword">if</span> (max != i) &#123;</span><br><span class="line">        swap(A, i, max);</span><br><span class="line">        max_heapify(A, max, n);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>递归完成左右两半的排序，然后归并</p>
+<ul>
+<li>时间复杂度 $O(n \log(n))$</li>
+<li>空间复杂度 $O(n)$</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">merge_sort(<span class="keyword">int</span> A[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> m = (l + r) / <span class="number">2</span>;</span><br><span class="line">    merge_sort(A, l, m);</span><br><span class="line">    merge_sort(A, m + <span class="number">1</span>, r);</span><br><span class="line">    merge(A, l, m, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge_sort_all 对整个长度为 n 的序列 A 执行归并排序</span></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">merge_sort_all(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    merge_sort(A, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>归并：把数组的 <code>A[l: m+1]</code> 和 <code>A[m: r+1]</code> 两个已排序部分按升序合并：</p>
+<ul>
+<li>先备份数组</li>
+<li>顺序从左右两半中选出较小者，放入原数组</li>
+<li>完成归并</li>
+</ul>
+<p>需要辅助数组，空间复杂度 $O(n)$</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">merge(<span class="keyword">int</span> A[], <span class="keyword">int</span> l, <span class="keyword">int</span> m, <span class="keyword">int</span> r)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 先备份左右两半切片：</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// b = A[l: m+1] + [INF]</span></span><br><span class="line">    <span class="keyword">int</span> n1 = (m - l + <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span>* b = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * n1);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = l; j &lt;= m; i++, j++) &#123;</span><br><span class="line">        b[i] = A[j];</span><br><span class="line">    &#125;</span><br><span class="line">    b[n1 - <span class="number">1</span>] = INF;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// c = A[m: r+1] + [INF]</span></span><br><span class="line">    <span class="keyword">int</span> n2 = (r - m) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span>* c = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * n2);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = m + <span class="number">1</span>; j &lt;= r; i++, j++) &#123;</span><br><span class="line">        c[i] = A[j];</span><br><span class="line">    &#125;</span><br><span class="line">    c[n2 - <span class="number">1</span>] = INF;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从左右切片里逐个取小的出来，凑成排序数组：</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = l; k &lt;= r; k++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (b[i] &lt;= c[j]) &#123;</span><br><span class="line">            A[k] = b[i++];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// c[i] &lt; b[i]</span></span><br><span class="line">            A[k] = c[j++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p>完整代码整合在这个 gist 中：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/cdfmlr/07b9b4880de4f3a457f1aa90eacb55ad">https://gist.github.com/cdfmlr/07b9b4880de4f3a457f1aa90eacb55ad</a></li>
+</ul>
+<script src="https://gist.github.com/cdfmlr/07b9b4880de4f3a457f1aa90eacb55ad.js"></script>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li>CLRS, 3e</li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6997172275787071518">https://juejin.cn/post/6997172275787071518</a></li>
+<li>天勤</li>
+<li>王道</li>
+<li>还有其他好多，忘了。。</li>
+</ul>
+<hr>
+<p>大概就这样吧，我对排序算法什么的，没有多少热情，并不想写这篇文章的。算法测试用例写的也单一，所以并不保证正确，如有谬误，还望海涵。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sort-Algorithms"><span class="toc-number">1.</span> <span class="toc-text">Sort Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">直接插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">二分插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell-%E6%8E%92%E5%BA%8F"><span class="toc-number">1.3.</span> <span class="toc-text">Shell 排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-number">1.4.</span> <span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-number">1.5.</span> <span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="toc-number">1.6.</span> <span class="toc-text">堆排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-number">1.7.</span> <span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">1.8.</span> <span class="toc-text">完整代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&text=各种排序算法，用C语言实现"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&is_video=false&description=各种排序算法，用C语言实现"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=各种排序算法，用C语言实现&body=Check out this article: https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&title=各种排序算法，用C语言实现"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2021/08/23/Algorithm/sort-algorithms/&name=各种排序算法，用C语言实现&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
