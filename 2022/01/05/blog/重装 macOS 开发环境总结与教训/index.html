@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="重装 macOS 开发环境总结与教训整理工具：OmniDiskSweeper、OnyX 不要的垃圾先删掉。 备份 Time Machine 完整备份 重要文件 个人文件：打包加密，放移动硬盘：各种文档、收藏的书籍、图片、视频 工作文件：打包压缩，放移动硬盘：各种文档、密钥（~&#x2F;.ssh、~&#x2F;.bashrc、~&#x2F;.zshrc、~&#x2F;.vimrc…）、证书、配置文件（v2啥的 config） 各种项目源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重装 macOS 开发环境总结与教训">
+<meta property="og:url" content="https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="重装 macOS 开发环境总结与教训整理工具：OmniDiskSweeper、OnyX 不要的垃圾先删掉。 备份 Time Machine 完整备份 重要文件 个人文件：打包加密，放移动硬盘：各种文档、收藏的书籍、图片、视频 工作文件：打包压缩，放移动硬盘：各种文档、密钥（~&#x2F;.ssh、~&#x2F;.bashrc、~&#x2F;.zshrc、~&#x2F;.vimrc…）、证书、配置文件（v2啥的 config） 各种项目源">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-05T17:33:41.007Z">
+<meta property="article:modified_time" content="2022-01-05T14:29:34.862Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>重装 macOS 开发环境总结与教训</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/12/31/blog/%E5%B0%86%20Homebrew%20%E5%AE%89%E8%A3%85%E7%9A%84%20Python%20%E5%8A%A0%E5%85%A5%20pyenv%20%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&text=重装 macOS 开发环境总结与教训"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&is_video=false&description=重装 macOS 开发环境总结与教训"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=重装 macOS 开发环境总结与教训&body=Check out this article: https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&name=重装 macOS 开发环境总结与教训&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%87%8D%E8%A3%85-macOS-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD"><span class="toc-number">1.</span> <span class="toc-text">重装 macOS 开发环境总结与教训</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">整理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD"><span class="toc-number">1.2.</span> <span class="toc-text">备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%B9%E6%8E%89%E9%87%8D%E8%A3%85"><span class="toc-number">1.3.</span> <span class="toc-text">抹掉重装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0-macOS-%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.4.</span> <span class="toc-text">新 macOS 设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A3%85%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83"><span class="toc-number">1.5.</span> <span class="toc-text">重装基本环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E3%80%81%E6%96%87%E6%A1%A3%E5%BD%92%E4%BD%8D"><span class="toc-number">1.6.</span> <span class="toc-text">配置、文档归位</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        重装 macOS 开发环境总结与教训
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-05T17:33:41.007Z" itemprop="datePublished">2022-01-05</time>
+        
+        (Updated: <time datetime="2022-01-05T14:29:34.862Z" itemprop="dateModified">2022-01-05</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="重装-macOS-开发环境总结与教训"><a href="#重装-macOS-开发环境总结与教训" class="headerlink" title="重装 macOS 开发环境总结与教训"></a>重装 macOS 开发环境总结与教训</h1><h2 id="整理"><a href="#整理" class="headerlink" title="整理"></a>整理</h2><p>工具：OmniDiskSweeper、OnyX</p>
+<p>不要的垃圾先删掉。</p>
+<h2 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h2><ol>
+<li>Time Machine 完整备份</li>
+<li>重要文件<ul>
+<li>个人文件：打包加密，放移动硬盘：各种文档、收藏的书籍、图片、视频</li>
+<li>工作文件：打包压缩，放移动硬盘：各种文档、<strong>密钥</strong>（<code>~/.ssh</code>、<code>~/.bashrc</code>、<code>~/.zshrc</code>、<code>~/.vimrc</code>…）、<strong>证书</strong>、<strong>配置文件</strong>（v2啥的 config）</li>
+<li>各种项目源码： git 和远端同步一下</li>
+<li>艺术作品：分类整理放移动硬盘（<code>src</code> 目录归档压缩）：音乐、视频、游戏、画作</li>
+<li><code>brew list &gt; brew.list.txt</code></li>
+<li><code>ls /Applications &gt; app.list.txt</code></li>
+<li><code>pip3 list &gt; pip3.list.txt</code></li>
+<li>Learning、Working、Desktop 目录：直接复制一份到移动硬盘</li>
+</ul>
+</li>
+<li>其他：<ul>
+<li>Chrome 保存密码导出一下、插件列表</li>
+<li>Safari 插件列表</li>
+<li>Terminal 配置文件</li>
+<li>VS Code 配置</li>
+<li>JetBrains 家各种 IDE 配置（可以直接把 <code>~/Library/Application Support/JetBrains</code> 移到移动硬盘）</li>
+<li>Garageband、Logic 的音源移到移动硬盘</li>
+</ul>
+</li>
+</ol>
+<h2 id="抹掉重装"><a href="#抹掉重装" class="headerlink" title="抹掉重装"></a>抹掉重装</h2><p>使用“磁盘工具”抹掉基于 Intel 的 Mac: <a target="_blank" rel="noopener" href="https://support.apple.com/zh-cn/HT208496">https://support.apple.com/zh-cn/HT208496</a></p>
+<p>注意：</p>
+<blockquote>
+<ol start="8">
+<li>抹掉操作完成后，选择边栏中的任何其他内部宗卷，然后点按工具栏中的删除宗卷 (–) 按钮以删除对应宗卷。</li>
+</ol>
+</blockquote>
+<p><strong>在这一步骤中，请忽略名为“Macintosh HD”或“Macintosh HD - Data”的任何内置宗卷，以及边栏中“外置”和“磁盘映像”部分的任何宗卷。</strong></p>
+<p>抹掉之后只有 macOS Base System，要从网上重新下完整的 macOS，10 多 GiB，要等一下。</p>
+<h2 id="新-macOS-设置"><a href="#新-macOS-设置" class="headerlink" title="新 macOS 设置"></a>新 macOS 设置</h2><p>注意开防火墙、隐身。 </p>
+<h2 id="重装基本环境"><a href="#重装基本环境" class="headerlink" title="重装基本环境"></a>重装基本环境</h2><ol start="0">
+<li><del>V2什么U</del></li>
+<li>Apple 命令行工具 Command Line Tools：<code>xcode-select --install</code></li>
+<li>brew（先把脚本下下来，配成国内源，再安装）</li>
+<li>Pyenv、Pipenv</li>
+<li>GCC、Golang、Java、Rust、Node.js</li>
+<li>ffmpeg、wget、aria2、tldr，（可以把 V 某也用 brew 重装方便管理）</li>
+<li>Docker、Chrome、VS Code</li>
+<li>Typora</li>
+<li>QQ、微信、网易云、阿里云盘、百度网盘、WPS</li>
+<li>Pages、Numbers、Keynotes、Garageband、iMovie</li>
+<li>Tiles、AppCleaner、OmniDiskSweeper、OnyX、AdGuard</li>
+</ol>
+<p>（我的 JetBrains 全家桶是直接用 Toolbox 装在移动硬盘的，不用重装，其他重型软件也是）</p>
+<p>安装过程中，brew 自己依赖出来的新版本 <a href="mailto:&#80;&#121;&#x74;&#104;&#x6f;&#110;&#x40;&#x33;&#46;&#x39;">&#80;&#121;&#x74;&#104;&#x6f;&#110;&#x40;&#x33;&#46;&#x39;</a>、Python@3.10 用上一篇文章<strong>《将 Homebrew 安装的 Python 加入 pyenv 版本管理》</strong>的方法加到 Pyenv 里，方便以后就不用下载了。</p>
+<p>（都是固定操作，应该写个 shell 脚本记一下的 LOL）</p>
+<h2 id="配置、文档归位"><a href="#配置、文档归位" class="headerlink" title="配置、文档归位"></a>配置、文档归位</h2><p>各种配置文件（<code>~/.xxx</code>）拉回来。</p>
+<p>各种软链接，按照移动硬盘上的 README 来重建。</p>
+<p>各种项目目录、文档放回来。</p>
+<p>关于 GitHub，<code>~/.gitconfig</code> 里面设置了用户名，第一次访问 remote 还是要输入用户名，注意然后密码——去 GitHub -&gt; Settings -&gt; Developer Settings -&gt; Personal access tokens，Regenerate 以前的或者开个新的，复制 token，贴到密码里。</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%87%8D%E8%A3%85-macOS-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD"><span class="toc-number">1.</span> <span class="toc-text">重装 macOS 开发环境总结与教训</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">整理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD"><span class="toc-number">1.2.</span> <span class="toc-text">备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%B9%E6%8E%89%E9%87%8D%E8%A3%85"><span class="toc-number">1.3.</span> <span class="toc-text">抹掉重装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0-macOS-%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.4.</span> <span class="toc-text">新 macOS 设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A3%85%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83"><span class="toc-number">1.5.</span> <span class="toc-text">重装基本环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E3%80%81%E6%96%87%E6%A1%A3%E5%BD%92%E4%BD%8D"><span class="toc-number">1.6.</span> <span class="toc-text">配置、文档归位</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&text=重装 macOS 开发环境总结与教训"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&is_video=false&description=重装 macOS 开发环境总结与教训"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=重装 macOS 开发环境总结与教训&body=Check out this article: https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&title=重装 macOS 开发环境总结与教训"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/&name=重装 macOS 开发环境总结与教训&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
