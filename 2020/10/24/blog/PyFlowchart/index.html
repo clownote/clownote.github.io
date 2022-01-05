@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gk0b5o486pj31hz0u042n.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gk09oeitndj33xl0u0wx7.jpg">
 <meta property="article:published_time" content="2020-10-24T12:42:44.471Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.418Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.498Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -61,7 +61,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -145,7 +145,7 @@
       
         <time datetime="2020-10-24T12:42:44.471Z" itemprop="datePublished">2020-10-24</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.418Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.498Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -175,25 +175,32 @@
 <h2 id="flowchart-js"><a href="#flowchart-js" class="headerlink" title="flowchart.js"></a>flowchart.js</h2><p>如果你使用 Typora，可能知道在 Typora 中用  ```flow 可以用一种简单的文本语言来写流程图，根据 <a target="_blank" rel="noopener" href="https://support.typora.io/Draw-Diagrams-With-Markdown/#flowcharts">Typora 的文档</a>，这个功能来自开源的 <a target="_blank" rel="noopener" href="https://github.com/adrai/flowchart.js">flowchart.js</a>。</p>
 <p>我的方案就是把 Python 代码转化成这种 flowchart 语言，然后你就可以借助  <a target="_blank" rel="noopener" href="http://flowchart.js.org/">flowchart.js.org</a>、<a target="_blank" rel="noopener" href="https://www.typora.io/">Typora</a>、 <a target="_blank" rel="noopener" href="https://github.com/francoislaberge/diagrams/#flowchart">francoislaberge/diagrams</a> 等等工具来生成流程图了。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">st&#x3D;&gt;start: Start</span><br><span class="line">op&#x3D;&gt;operation: Your Operation</span><br><span class="line">cond&#x3D;&gt;condition: Yes or No?</span><br><span class="line">e&#x3D;&gt;end</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk07vvnullj30uo0luaa3.jpg" alt="flowchart"></p>
 <h2 id="PyFlowchart"><a href="#PyFlowchart" class="headerlink" title="PyFlowchart"></a>PyFlowchart</h2><p>下面简要介绍如何使用我实现的 PyFlowchart，更详细的说明请看项目的 <a target="_blank" rel="noopener" href="https://github.com/cdfmlr/pyflowchart/blob/master/README.md">README</a>。</p>
 <p>安装 PyFlowchart：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install pyflowchart</span><br></pre></td></tr></table></figure>
+
 <p>写一个 <code>simple.py</code> 文件：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> a:</span><br><span class="line">        print(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">            print(<span class="string">&quot;b&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> a + b</span><br></pre></td></tr></table></figure>
+
 <p>运行 PyFlowchart：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python3 -m pyflowchart simple.py</span><br></pre></td></tr></table></figure>
+
 <p>它会输出 flowchart 代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">st4439920016&#x3D;&gt;start: start foo</span><br><span class="line">io4439920208&#x3D;&gt;inputoutput: input: a, b</span><br><span class="line">cond4439920592&#x3D;&gt;condition: if a</span><br><span class="line">sub4439974736&#x3D;&gt;subroutine: print(&#39;a&#39;)</span><br><span class="line">io4439974672&#x3D;&gt;inputoutput: output:  (a + b)</span><br><span class="line">e4439974352&#x3D;&gt;end: end function return</span><br><span class="line">cond4439974224&#x3D;&gt;operation: print(&#39;b&#39;) while  i in range(3)</span><br><span class="line"></span><br><span class="line">st4439920016-&gt;io4439920208</span><br><span class="line">io4439920208-&gt;cond4439920592</span><br><span class="line">cond4439920592(yes)-&gt;sub4439974736</span><br><span class="line">sub4439974736-&gt;io4439974672</span><br><span class="line">io4439974672-&gt;e4439974352</span><br><span class="line">cond4439920592(no)-&gt;cond4439974224</span><br><span class="line">cond4439974224-&gt;io4439974672</span><br></pre></td></tr></table></figure>
+
 <p>访问 <a target="_blank" rel="noopener" href="http://flowchart.js.org/">flowchart.js.org</a>，把上面生成的代码粘贴到文本框里，右边就会自动生成流程图了：</p>
 <p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk083edrrgj312j0sc4d2.jpg" alt="flowchart.js.org 截图，左边的输入框里粘贴了生成的代码，右边是画出的流程图"></p>
 <p>当然，你也可以直接把这些代码放到 Typora 的 flow 代码块里，也会自动生成流程图。如果你喜欢使用命令行，也可以用 <a target="_blank" rel="noopener" href="https://github.com/francoislaberge/diagrams/#flowchart">francoislaberge/diagrams</a> 来生成流程图。</p>
 <p>如果生成的流程图有让人不满意的地方（比如，线条重叠）或者你喜欢指定样式，参考 <a target="_blank" rel="noopener" href="http://flowchart.js.org/">flowchart.js.org</a>，手动修改一下生成的 flowchart 就可以了，非常方便。</p>
 <h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">st&#x3D;&gt;start: start PyFlowchart</span><br><span class="line">in&#x3D;&gt;inputoutput: input python source code</span><br><span class="line">sub1&#x3D;&gt;subroutine: code to ast</span><br><span class="line">sub2&#x3D;&gt;subroutine: ast to node graph</span><br><span class="line">sub3&#x3D;&gt;subroutine: node graph to flowchart</span><br><span class="line">out&#x3D;&gt;inputoutput: output flowchart</span><br><span class="line">e&#x3D;&gt;end: end</span><br><span class="line"></span><br><span class="line">st-&gt;in-&gt;sub1(right)-&gt;sub2(right)-&gt;sub3-&gt;out-&gt;e</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk0bxkyis0j31k00u0tb8.jpg" alt="实现原理流程图"></p>
 <p>PyFlowchart 利用 Python 内置的 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/ast.html">ast</a> 包，把代码转化成 AST（抽象语法树），然后把 AST 转化成自己定义的 Node 组成的图，每个 Node 对应一个 flowchart 中的 node，遍历这个图就可以得到流程图了。</p>
 <p>关于 ast 包，可以看看这篇文章：<a target="_blank" rel="noopener" href="https://pycoders-weekly-chinese.readthedocs.io/en/latest/issue3/static-modification-of-python-with-python-the-ast-module.html">AST 模块：用 Python 修改 Python 代码</a>，虽然很老，但十分简单易懂。总而言之，利用 ast 包，我们可以把一段 Python 代码转化为一个数据结构：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> ast</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>expr = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"><span class="meta">... </span>def add(a, b):</span></span><br><span class="line"><span class="string"><span class="meta">... </span>    return a + b</span></span><br><span class="line"><span class="string"><span class="meta">... </span>&quot;&quot;&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>expr_ast = ast.parse(expr)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>expr_ast</span><br><span class="line">&lt;_ast.Module <span class="built_in">object</span> at <span class="number">0x10c773e10</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ast.dump(expr_ast)</span><br><span class="line"><span class="comment"># p.s. 这里手动做了格式化</span></span><br><span class="line">Module(body=[FunctionDef(name=<span class="string">&#x27;add&#x27;</span>,</span><br><span class="line">  args=arguments(</span><br><span class="line">    args=[</span><br><span class="line">      arg(arg=<span class="string">&#x27;a&#x27;</span>, annotation=<span class="literal">None</span>),</span><br><span class="line">      arg(arg=<span class="string">&#x27;b&#x27;</span>, annotation=<span class="literal">None</span>)],</span><br><span class="line">    vararg=<span class="literal">None</span>, kwonlyargs=[], kw_defaults=[], kwarg=<span class="literal">None</span>, defaults=[]),</span><br><span class="line">  body=[Return(value=BinOp(</span><br><span class="line">    left=Name(<span class="built_in">id</span>=<span class="string">&#x27;a&#x27;</span>, ctx=Load()),</span><br><span class="line">    op=Add(),</span><br><span class="line">    right=Name(<span class="built_in">id</span>=<span class="string">&#x27;b&#x27;</span>, ctx=Load())))],</span><br><span class="line">  decorator_list=[],</span><br><span class="line">  returns=<span class="literal">None</span>)])</span><br></pre></td></tr></table></figure>
+
 <p>学会了这个东西，接下来的工作就是把这个 expr_ast (_ast.Module 对象) 翻译成流程图了。我们用面向对象来的方法来实现：</p>
 <p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk0b5o486pj31hz0u042n.jpg" alt="pyflowchart.node"></p>
 <p><code>Node</code> 是最最基础的类，表示流程图中的一个节点，其他一切都继承自它。Node 有节点类型、名称、内容等属性，提供的 <code>fc_definition()</code>、<code>fc_connection()</code> 方法可以把自己转化为 flowchart 语言的字符串。另外的 <code>__visited</code> 和 <code>_traverse()</code> 是用来遍历图的。与 flowchart 中的 node types 对应，我们实现了各种 Node 的子类：StartNode、EndNode、OperationNode……</p>
@@ -212,6 +219,7 @@
 </ul>
 <p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1gk09oeitndj33xl0u0wx7.jpg" alt="pyflowchart"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">by(<span class="string">&#x27;CDFMLR&#x27;</span>, <span class="string">&#x27;2020.10.24&#x27;</span>)</span><br><span class="line"><span class="comment"># 🎉</span></span><br></pre></td></tr></table></figure>
+
   </div>
 </article>
 <!--Disqus-->
@@ -280,7 +288,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

@@ -14,7 +14,7 @@
 <meta property="og:description" content="爬虫基本库的使用之RE 本文主要介绍 正则表达式 及 RE 库。  正则表达式正则表达式是一种处理字符串的强大的工具，它有自己特定的语法结构，可以高效地实现字符串的检索、替换、匹配验证等操作。 我们可以利用正则表达式来提取 HTML 中我们感兴趣的信息，正如我们在使用 requests 库爬取知乎发现中的问题时那样。 下表为 正则表达式 的常用匹配规则：    模式 描述    \w 匹配字母数字">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-02-13T22:49:55.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.394Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.474Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Crawler">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2019-02-13T22:49:55.000Z" itemprop="datePublished">2019-02-13</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.394Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.474Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -277,8 +277,10 @@
 <p>⚠️【注意】贪婪匹配下，<code>.*</code> 会匹配尽可能多的字符；非贪婪匹配则尽可能匹配少的字符。<br>⚠️【注意】转义：如果在正则中想表现表中有的那些符号，我们需要转义，即使用 <code>\</code>+ 符号。例如要表现括号<code>(</code>，我们需要写 <code>\(</code></p>
 <p>例如，之前我们抓取「知乎-发现」中的问题时，使用的是如下正则表达式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explore-feed.*?question_link.*?&gt;(.*?)&lt;&#x2F;</span><br></pre></td></tr></table></figure>
+
 <p>它就可以匹配请求到的 html 中的：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;explore-feed feed-item&quot;</span> <span class="attr">data-offset</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;question_link&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/question/311635229/answer/...&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">data-id</span>=<span class="string">&quot;...&quot;</span> <span class="attr">data-za-element-name</span>=<span class="string">&quot;Title&quot;</span>&gt;</span></span><br><span class="line">......</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="RE-库"><a href="#RE-库" class="headerlink" title="RE 库"></a>RE 库</h2><p>Python 内置的 <code>re</code> 库提供了对正则表达式的支持。</p>
 <p>下面我们来了解 re 库的使用：</p>
 <h4 id="match"><a href="#match" class="headerlink" title="match()"></a><code>match()</code></h4><p>match() 方法，需要我们传入<em>要匹配的字符串</em>以及<em>正则表达式</em>，来检测这个字符串是否符合该正则表达式。</p>
@@ -286,8 +288,10 @@
 <p>match() 会从一开始匹配，也就是说，如果第一个字符就匹配不上去，则就不匹配。</p>
 <p>我们常可以这样用：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test = <span class="string">&#x27;待测字符串&#x27;</span></span><br><span class="line"><span class="keyword">if</span> re.match(<span class="string">r&#x27;正则表达式&#x27;</span>, test):</span><br><span class="line">    print(<span class="string">&#x27;Match&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">&#x27;Failed&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
 <p>提取分组：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>text = <span class="string">&#x27;abc 123&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(re.match(<span class="string">r&#x27;\s+\w\d&#x27;</span>, text))</span><br><span class="line"><span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r = re.match(<span class="string">r&#x27;\w*? (\d&#123;3&#125;)&#x27;</span>, text)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r</span><br><span class="line">&lt;re.Match <span class="built_in">object</span>; span=(<span class="number">0</span>, <span class="number">7</span>), match=<span class="string">&#x27;abc 123&#x27;</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.group()</span><br><span class="line"><span class="string">&#x27;abc 123&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.group(<span class="number">0</span>)</span><br><span class="line"><span class="string">&#x27;abc 123&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.group(<span class="number">1</span>)</span><br><span class="line"><span class="string">&#x27;123&#x27;</span></span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>group()、group(0) 会输出完整的匹配结果。</li>
 <li>group(1)，以及此例中没有的group(2)，group(3)… 则会输出第一、二、三…个被 <code>()</code> 包围的匹配结果。</li>
@@ -326,10 +330,13 @@
 </tbody></table>
 <p>这些修饰符可以作为 re.match 的第三个参数传入，产生上面描述中的效果。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = re.match(<span class="string">&#x27;^He.*?(\d+).*?Demo$&#x27;</span>, content, re.S)</span><br></pre></td></tr></table></figure>
+
 <h4 id="search"><a href="#search" class="headerlink" title="search()"></a><code>search()</code></h4><p>与 match() 不同，search() 在匹配时会扫描整个字符串，然后返回第一个成功匹配的结果，如果一处都没有，则返回 None.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>p = <span class="string">&#x27;\d+&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = <span class="string">&#x27;asd123sss&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r = re.search(p, c)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r</span><br><span class="line">&lt;re.Match <span class="built_in">object</span>; span=(<span class="number">3</span>, <span class="number">6</span>), match=<span class="string">&#x27;123&#x27;</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.group()</span><br><span class="line"><span class="string">&#x27;123&#x27;</span></span><br></pre></td></tr></table></figure>
+
 <h4 id="findall"><a href="#findall" class="headerlink" title="findall()"></a><code>findall()</code></h4><p><code>findall()</code> 会搜索整个字符串然后返回匹配正则表达式的所有内容，返回的结果为一个list。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>p = <span class="string">&#x27;\d+&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = <span class="string">&#x27;asd123dfg456;;;789&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>re.findall(p, c)</span><br><span class="line">[<span class="string">&#x27;123&#x27;</span>, <span class="string">&#x27;456&#x27;</span>, <span class="string">&#x27;789&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
 
   </div>
 </article>
@@ -399,7 +406,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

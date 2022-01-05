@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g84m3eabzfj30fb07qjsk.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g84ozcnlokj30eu08aq5g.jpg">
 <meta property="article:published_time" content="2019-10-21T17:05:22.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.382Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.462Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
@@ -62,7 +62,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -146,7 +146,7 @@
       
         <time datetime="2019-10-21T17:05:22.000Z" itemprop="datePublished">2019-10-21</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.382Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.462Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -254,14 +254,17 @@
 <p>In the image above, to calculate $\delta_2^{(2)}$ , we multiply the weights $\Theta_{12}^{(2)}$ and $\Theta_{22}^{(2)}$ by their respective $\delta$ values found to the right of each edge. So we get $\delta_2^{(2)}=\Theta_{12}^{(2)}\times\delta_1^{(3)}+\Theta_{22}^{(2)}\times\delta_2^{(3)}$. To calculate every single possible $\delta_j^{(l)}$, we could start from the right of our diagram. We can think of our edges as our $\Theta_{ij}$. Going from right to left, to calculate the value of $\delta_j^{(l)}$, you can just take the over all sum of each weight times the $\delta$ it is coming from. Hence, another example would be $\delta_2^{(3)}=\Theta_{12}^{(3)}\times\delta_1^{(4)}$.</p>
 <h2 id="Backpropagation-in-Practice"><a href="#Backpropagation-in-Practice" class="headerlink" title="Backpropagation in Practice"></a>Backpropagation in Practice</h2><h3 id="Unrolling-Parameters"><a href="#Unrolling-Parameters" class="headerlink" title="Unrolling Parameters"></a>Unrolling Parameters</h3><p>With neural networks, we are working with sets of matrices:<br>$$<br>\begin{array}{lll} \Theta^{(1)}, \Theta^{(2)}, \Theta^{(3)}, \dots \newline D^{(1)}, D^{(2)}, D^{(3)}, \dots \end{array}<br>$$<br>In order to use optimizing function such as <code>fminunc()</code>, we will want to <em>unroll</em> all the elements and put them into one long vector:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">thetaVector &#x3D; [ Theta1(:); Theta2(:); Theta3(:) ];</span><br><span class="line">deltaVector &#x3D; [ D1(:); D2(:); D3(:) ];</span><br></pre></td></tr></table></figure>
+
 <p>If the dimensions of Theta1 is 10x11, Theta2 is 10x11 and Theta3 is 1x11, then we can get back our original matrices from the “unrolled” versions as follows:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Theta1 &#x3D; reshape(thetaVector(1:110),10,11)</span><br><span class="line">Theta2 &#x3D; reshape(thetaVector(111:220),10,11)</span><br><span class="line">Theta3 &#x3D; reshape(thetaVector(221:231),1,11)</span><br></pre></td></tr></table></figure>
+
 <p>To summarize:</p>
 <p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g80ervs2l4j30ey06aq57.jpg" alt="img"></p>
 <h3 id="Gradient-Checking"><a href="#Gradient-Checking" class="headerlink" title="Gradient Checking"></a>Gradient Checking</h3><p>Gradient checking will assure that our backpropagation works as intended. We can approximate the derivative of our cost function with:<br>$$<br>\frac{\partial}{\partial\Theta}J(\Theta) \approx \frac{J(\Theta+\epsilon)-J(\Theta-\epsilon)}{2\epsilon}<br>$$<br>A small value for $\epsilon$ such as $\epsilon=10^{-4}$, guarantees that the math works out properly. If the value for $\epsilon$, we can end up with numerical problems.</p>
 <p>With multiple theta matrices, we can approximate the derivative with respect to $\Theta_j$ (where we get $j$ from 1 to n, for each one) as follows:<br>$$<br>\frac{\partial}{\partial\Theta_j}J(\Theta) \approx \frac{J(\Theta_1,…,\Theta_j+\epsilon,…,\Theta_n)-J(\Theta_1,…,\Theta_j-\epsilon,…,\Theta_n)}{2\epsilon}<br>$$<br>Hence, we are only adding or subtracting epsilon to the $\Theta_j$ matrix.</p>
 <p>In octave we can do it as follows:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">epsilon &#x3D; 1e-4;</span><br><span class="line">for i &#x3D; 1 : n</span><br><span class="line">	thetaPlus &#x3D; theta;</span><br><span class="line">	thetaPlus(i) +&#x3D; epsilon;</span><br><span class="line">	thetaMinus &#x3D; theta;</span><br><span class="line">	thetaMinus(i) +&#x3D; epsilon;</span><br><span class="line">	gradApprox(i) &#x3D; (J(thetaPlus) - J(thetaMinus)) &#x2F; (2*epsilon);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
 <p>We previously saw how to calculate the deltaVector. So once we compute our <code>gradApprox</code> vector, we can check that <code>gradApprox ≈ deltaVector</code>. </p>
 <p>Once we have verified <strong>once</strong> that your backpropagation algorithm is correct, we don’t need to compute gradApprox again. The code to compute gradApprox can be very slow. So we guess it’s better to turn off or disable the codes for gradient checking.</p>
 <h3 id="Randoom-Initialization"><a href="#Randoom-Initialization" class="headerlink" title="Randoom Initialization"></a>Randoom Initialization</h3><p>Initializing all theta weights to zero does not work with neural networks. When we backpropagate, all nodes will update to the same value repeatedly. Instead we can randomly initialize our weights for our $\Theta$  matrices using the following method:</p>
@@ -269,6 +272,7 @@
 <p>Hence, we initialize each $\Theta_{ij}^{(l)}$ to a random value between $[-\epsilon,\epsilon]$.  Using the above formula guarantees that we get the desired bound. The same procedure applies to all the $\Theta$’s. </p>
 <p>Below is some working code implement.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># If the dimensions of Theta1 is 10x11, Theta2 is 10x11 and Theta3 is 1x11.</span><br><span class="line"></span><br><span class="line">Theta1 &#x3D; rand(10,11) * (2 * INIT_EPSILON) - INIT_EPSILON;</span><br><span class="line">Theta2 &#x3D; rand(10,11) * (2 * INIT_EPSILON) - INIT_EPSILON;</span><br><span class="line">Theta3 &#x3D; rand(1,11) * (2 * INIT_EPSILON) - INIT_EPSILON;</span><br></pre></td></tr></table></figure>
+
 <p><code>rand(x,y)</code> is just a function in octave that will initialize a matrix of random real numbers between 0 and 1. </p>
 <p>(Note: the epsilon used above is unrelated to the epsilon from Gradient Checking)</p>
 <h3 id="Putting-It-Together"><a href="#Putting-It-Together" class="headerlink" title="Putting It Together"></a>Putting It Together</h3><p>First, pick a network architecture; choose the layout of your neural network, including how many hidden units in each layer and how many layers in total you want to have.</p>
@@ -289,6 +293,7 @@
 </ol>
 <p>When we perform forward and back propagation, we loop on every training example:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i &#x3D; 1:m,</span><br><span class="line">   Perform forward propagation and backpropagation using example (x(i),y(i))</span><br><span class="line">   (Get activations a(l) and delta terms d(l) for l &#x3D; 2,...,L</span><br></pre></td></tr></table></figure>
+
 <p>The following image gives us an intuition of what is happening as we are implementing our neural network: </p>
 <p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g84ozcnlokj30eu08aq5g.jpg" alt="img"></p>
 <p>Ideally, we want $h_\Theta(x^{(i)})\approx y^{(i)}$. This will minimize our cost function. However, keep in mind that $J(\Theta)$  is not convex and thus we can end up in a local minimum instead. </p>
@@ -361,7 +366,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

@@ -14,7 +14,7 @@
 <meta property="og:description" content="正文文本操作tr：字符转换12$ tr &#39;A-Z&#39; &#39;a-z&#39; &lt; w.txt &gt; u.txt        # 将w中的大写-&gt;小写，放入u中$ tr -d &quot;\r&quot; &lt; dept.data &gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符结束一行）转换成">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-01-02T12:51:52.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.390Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.470Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2017-01-02T12:51:52.000Z" itemprop="datePublished">2017-01-02</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.390Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.470Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -165,11 +165,17 @@
 
   <div class="content" itemprop="articleBody">
     <h1 id="正文文本操作"><a href="#正文文本操作" class="headerlink" title="正文文本操作"></a>正文文本操作</h1><h3 id="tr：字符转换"><a href="#tr：字符转换" class="headerlink" title="tr：字符转换"></a><code>tr</code>：字符转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tr &#39;A-Z&#39; &#39;a-z&#39; &lt; w.txt &gt; u.txt        # 将w中的大写-&gt;小写，放入u中</span><br><span class="line">$ tr -d &quot;\r&quot; &lt; dept.data &gt; dept.data.unix        # 将DOS格式的正文文件（以回车“\r”符和换行“\n”符结束一行）转换成Linux格式的文件（只用换行符“\n”来结束一行）</span><br></pre></td></tr></table></figure>
+
 <h3 id="cut：从文件中剪出一个字段-列-至1-stdout"><a href="#cut：从文件中剪出一个字段-列-至1-stdout" class="headerlink" title="cut：从文件中剪出一个字段(列)至1(stdout)"></a><code>cut</code>：从文件中剪出一个字段(列)至1(stdout)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cut [options] [file]</span><br><span class="line">        -f：说明(定义)字段(列)</span><br><span class="line">        -c：要剪切的字符：</span><br><span class="line">                「-c4-7」：剪下每行4～7的字符</span><br><span class="line">        -d：说明(定义)字段的分隔符(默认为Tab)</span><br><span class="line">                「-d,」：以“,”为分隔符</span><br><span class="line">$ cut -f2 emp.data</span><br><span class="line">        显示emp.data中的第二列至stdout</span><br></pre></td></tr></table></figure>
+
 <h3 id="paste：粘贴"><a href="#paste：粘贴" class="headerlink" title="paste：粘贴"></a><code>paste</code>：粘贴</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ paste  -d,  name.txt  score.txt  &gt;  student.txt</span><br><span class="line">        -d：说明(定义)字段的分隔符(默认为Tab)</span><br><span class="line">                「-d,」：以“,”为分隔符</span><br><span class="line">        &gt; ：横向合并文件：</span><br><span class="line">            |Mike|         |99|          |Mike,99|</span><br><span class="line">            |Jake|    +    |98|    -&gt;    |Jake,98|</span><br><span class="line">            |Anny|         |97|          |Anny,97|</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h3 id="uniq：去掉文件中相邻的重复行"><a href="#uniq：去掉文件中相邻的重复行" class="headerlink" title="uniq：去掉文件中相邻的重复行"></a><code>uniq</code>：去掉文件中相邻的重复行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ uniq [opts] [file]</span><br><span class="line">        -c：在显示的行前冠以该行出现的次数</span><br><span class="line">        -d：只显示重复行</span><br><span class="line">        -i：忽略字符的大小写</span><br><span class="line">        -u：只显示唯一的行</span><br></pre></td></tr></table></figure>
+
 <h3 id="sort：排序"><a href="#sort：排序" class="headerlink" title="sort：排序"></a><code>sort</code>：排序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sort [opt] [file]</span><br><span class="line">         -r：反向排序</span><br><span class="line">         -f：忽略大小写</span><br><span class="line">         -n：按数字顺序排序</span><br><span class="line">          -u：去掉重复行</span><br><span class="line">          -t c：以字符c为分割符</span><br><span class="line">          -k N1,[N2]：按N1-&gt;N2字段排序</span><br></pre></td></tr></table></figure>
+
 <h3 id="col-Tab转空格："><a href="#col-Tab转空格：" class="headerlink" title="col: Tab转空格："></a><code>col</code>: Tab转空格：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ col -x &lt; e.tabs &gt;e.spaces</span><br><span class="line">        将e.tabs中的Tab字符(^I)化为空格存在e.spaces中</span><br></pre></td></tr></table></figure>
+
   </div>
 </article>
 <!--Disqus-->
@@ -238,7 +244,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

@@ -15,7 +15,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
 <meta property="article:published_time" content="2021-02-20T14:13:57.605Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.442Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.522Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="xv6">
 <meta name="twitter:card" content="summary">
@@ -57,7 +57,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -141,7 +141,7 @@
       
         <time datetime="2021-02-20T14:13:57.605Z" itemprop="datePublished">2021-02-20</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.442Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.522Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -168,12 +168,16 @@
 <p>[TOC]</p>
 <h2 id="pipe"><a href="#pipe" class="headerlink" title="pipe"></a>pipe</h2><p>Xv6 系统调用 <code>pipe()</code> 来创建管道。管道类似于 Go 语言中的 chan。在 Shell 里我们用 <code>|</code> 表示管道，对于命令： <code>echo &quot;hello world&quot; | wc</code>，可以用如下代码实现：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// upipe.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Runs the program wc with standard input connected to the read end of a pipe.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;kernel/stat.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;user/user.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p[<span class="number">2</span>];  <span class="comment">// file descriptors for the pipe</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">char</span> *argv[<span class="number">2</span>];</span><br><span class="line">	argv[<span class="number">0</span>] = <span class="string">&quot;wc&quot;</span>;</span><br><span class="line">	argv[<span class="number">1</span>] = <span class="number">0</span>;  <span class="comment">// NULL</span></span><br><span class="line"></span><br><span class="line">	pipe(p);  <span class="comment">// creates a new pipe: records the read and write file descriptors in the array p</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (fork() == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="comment">// redirection</span></span><br><span class="line">		close(<span class="number">0</span>);</span><br><span class="line">		dup(p[<span class="number">0</span>]);  <span class="comment">// stdin = &lt;- pipe</span></span><br><span class="line"></span><br><span class="line">		close(p[<span class="number">0</span>]);</span><br><span class="line">		close(p[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">		exec(<span class="string">&quot;wc&quot;</span>, argv);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		close(p[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">		write(p[<span class="number">1</span>], <span class="string">&quot;hello world\n&quot;</span>, <span class="number">12</span>);  <span class="comment">// pipe &lt;- str</span></span><br><span class="line"></span><br><span class="line">		close(p[<span class="number">1</span>]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>编译运行：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ upipe</span><br><span class="line">1 2 12</span><br></pre></td></tr></table></figure>
+
 <p>Xv6 sh 里的管道处理实现其实就和这段代码类似：fork 两个进程，分别重定向标准输出 or 输入、运行管道左右两边的命令。详见 <a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//user/sh.c#L100">user/sh.c:100</a>。</p>
 <h2 id="管道-V-S-临时文件"><a href="#管道-V-S-临时文件" class="headerlink" title="管道 V.S. 临时文件"></a>管道 V.S. 临时文件</h2><p>用管道与用临时文件，使用上似乎区别不大：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 管道</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello world&quot;</span> | wc</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时文件</span></span><br><span class="line"><span class="built_in">echo</span> hello world &gt;/tmp/xyz; wc &lt;/tmp/xyz</span><br></pre></td></tr></table></figure>
+
 <p>但管道更好：</p>
 <ul>
 <li>管道会自动清理（临时文件要手动删除）</li>
@@ -185,6 +189,7 @@
 <p>EOF</p>
 <hr>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># By CDFMLR 2021-02-20</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;See you. 🪐&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p>顶部图片来自于<a target="_blank" rel="noopener" href="https://api.ixiaowai.cn/">小歪API</a>，系随机选取的图片，仅用于检测屏幕显示的机械、光电性能，与文章的任何内容及观点无关，也并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。如有侵权，联系删除。</p>
 
   </div>
@@ -255,7 +260,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

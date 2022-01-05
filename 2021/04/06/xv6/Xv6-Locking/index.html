@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
 <meta property="og:image" content="https://clownote.github.io/2021/04/06/xv6/Xv6-Locking/Xv6-Locking/race.JPEG">
 <meta property="article:published_time" content="2021-04-06T16:29:00.060Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.426Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.506Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="CDFMLR, blogs">
 <meta name="twitter:card" content="summary">
@@ -58,7 +58,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -142,7 +142,7 @@
       
         <time datetime="2021-04-06T16:29:00.060Z" itemprop="datePublished">2021-04-06</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.426Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.506Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -173,6 +173,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">element</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">element</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">element</span> *<span class="title">list</span> =</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">push(<span class="keyword">int</span> data) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">element</span> *<span class="title">l</span>;</span></span><br><span class="line">    </span><br><span class="line">    l = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span> *l);</span><br><span class="line">    l-&gt;data = data;</span><br><span class="line">    l-&gt;next = <span class="built_in">list</span>;  <span class="comment">// race</span></span><br><span class="line">    <span class="built_in">list</span> = l;        <span class="comment">// race</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
+
 <p><img src="Xv6-Locking/race.JPEG" alt="race"></p>
 <p> race condition -&gt; offen bug:</p>
 <ul>
@@ -181,6 +182,7 @@
 </ul>
 <p>To avoid races -&gt; use a <em>lock</em>:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">lock</span> <span class="title">listlock</span>;</span>  <span class="comment">// (+)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span></span><br><span class="line">push(<span class="keyword">int</span> data) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">element</span> *<span class="title">l</span>;</span></span><br><span class="line">    </span><br><span class="line">    l = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span> *l);</span><br><span class="line">    l-&gt;data = data;</span><br><span class="line">    </span><br><span class="line">    acquire(&amp;listlock);  <span class="comment">// (+)</span></span><br><span class="line">    l-&gt;next = <span class="built_in">list</span>;</span><br><span class="line">    <span class="built_in">list</span> = l;</span><br><span class="line">    release(&amp;listlock);  <span class="comment">// (+)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>between <code>acquire</code> and <code>release</code>: <em>critical section</em>.</p>
 <ul>
 <li>only one CPU at a time can operate on the data structure in the critical section.</li>
@@ -198,6 +200,7 @@
 </ul>
 <h3 id="spinlocks"><a href="#spinlocks" class="headerlink" title="spinlocks"></a>spinlocks</h3><p><a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//kernel/spinlock.h">kernel/spinlock.h</a>:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">spinlock</span> &#123;</span></span><br><span class="line">  uint locked;       <span class="comment">// Is the lock held?</span></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>acquire</strong>: </p>
 <p>use <code>__sync_lock_test_and_set</code>:</p>
 <ul>
@@ -205,12 +208,14 @@
 <li>return: old(swapped) contents of <code>lk-&gt;locked</code></li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">acquire(struct spinlock *lk)</span><br><span class="line">&#123;   </span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(__sync_lock_test_and_set(&amp;lk-&gt;locked, <span class="number">1</span>) != <span class="number">0</span>)</span><br><span class="line">    ;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>release</strong>:</p>
 <p>use <code>__sync_lock_release</code>:</p>
 <ul>
 <li>atomic <code>lk-&gt;locked = 0</code></li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">release(struct spinlock *lk)</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  __sync_lock_release(&amp;lk-&gt;locked);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="Using-locks"><a href="#Using-locks" class="headerlink" title="Using locks"></a>Using locks</h2><ul>
 <li>any time a variable can be written by one CPU at the same time that another CPU can read or write it, a lock should be used</li>
 <li>locks protect invariants: if an invariant involves multiple memory locations, typically all of them need to be protected by a single lock to ensure the invariant is maintained</li>
@@ -317,7 +322,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

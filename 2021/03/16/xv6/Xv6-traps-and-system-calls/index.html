@@ -15,7 +15,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://api.ixiaowai.cn/api/api.php">
 <meta property="article:published_time" content="2021-03-16T21:59:28.476Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.442Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.522Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="xv6">
 <meta name="twitter:card" content="summary">
@@ -57,7 +57,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -141,7 +141,7 @@
       
         <time datetime="2021-03-16T21:59:28.476Z" itemprop="datePublished">2021-03-16</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.442Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.522Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -240,6 +240,7 @@
 <p><strong>Machine mode</strong> has an equivalent set of these regs: only for <strong>timer interrupts</strong></p>
 <p>Each CPU has its own set: can handling traps at a same time</p>
 <h3 id="hardware-trap-handling-sequence"><a href="#hardware-trap-handling-sequence" class="headerlink" title="hardware trap handling sequence"></a>hardware trap handling sequence</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">trap_occurs:</span><br><span class="line">	<span class="keyword">if</span> trap <span class="keyword">is</span> DeviceInterrupt:</span><br><span class="line">        sstatus.SIE = <span class="number">0</span></span><br><span class="line">        goto end</span><br><span class="line">    sstatus.SIE = <span class="number">0</span>  <span class="comment"># disable interrupts</span></span><br><span class="line">    sepc = pc</span><br><span class="line">    sstatus.SPP = current_mode()</span><br><span class="line">    scause = trap.cause</span><br><span class="line">    set_mode(.supervisor)</span><br><span class="line">    pc = stvec(trap)</span><br><span class="line">    execute(pc)</span><br><span class="line">end:</span><br></pre></td></tr></table></figure>
+
 <p>note: CPU does minimal work: </p>
 <ul>
 <li>kernel page table / stack are not switched</li>
@@ -298,6 +299,7 @@
 <li>calls <code>userret</code></li>
 </ul>
 <h3 id="userret"><a href="#userret" class="headerlink" title="userret"></a>userret</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">userret(TRAPFRAME, userpagetable);</span><br><span class="line">          (a0)         (a1)</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>switches <code>satp</code> to user page table.</li>
 <li>restores saved registers from trapframe.</li>
@@ -305,6 +307,7 @@
 </ul>
 <h2 id="Calling-system-calls"><a href="#Calling-system-calls" class="headerlink" title="Calling system calls"></a>Calling system calls</h2><p>e.g. (<a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-riscv/blob/riscv//user/initcode.S#L11">user/initcode.S:11</a>) calling <code>exec</code>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># exec(init, argv)</span><br><span class="line">.globl start</span><br><span class="line">start:</span><br><span class="line">        la a0, init</span><br><span class="line">        la a1, argv</span><br><span class="line">        li a7, SYS_exec</span><br><span class="line">        ecall</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><code>a0</code>, <code>a1</code> &lt;- arguments</li>
 <li><code>a7</code> &lt;- system call number</li>
@@ -409,6 +412,7 @@
 <p>EOF</p>
 <hr>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># By CDFMLR 2021-03-18</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;See you.&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p>顶部图片来自于<a target="_blank" rel="noopener" href="https://api.ixiaowai.cn/">小歪API</a>，系随机选取的图片，仅用于检测屏幕显示的机械、光电性能，与文章的任何内容及观点无关，也并不代表本人局部或全部同意、支持或者反对其中的任何内容及观点。如有侵权，联系删除。</p>
 
   </div>
@@ -479,7 +483,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

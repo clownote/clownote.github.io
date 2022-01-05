@@ -15,7 +15,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://java.quanke.name/1-2.gif">
 <meta property="article:published_time" content="2019-04-13T16:37:53.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.386Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.466Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -57,7 +57,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -141,7 +141,7 @@
       
         <time datetime="2019-04-13T16:37:53.000Z" itemprop="datePublished">2019-04-13</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.386Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.466Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -224,8 +224,10 @@
 <p>举个例子，我们构建一个 <code>Shape</code> 类，<code>Shape</code> 类拥有 <code>draw()</code>, <code>erase()</code>, <code>move()</code> 等方法；<br>然后我们在构建几个 <code>Shape</code> 的子类（继承自 <code>Shape</code>）的类：<code>Circle</code>, <code>Line</code>, <code>Triangle</code>；<br>对每个子类，我们都会根据实际情况重载对应的方法。</p>
 <p>这时，如果我们构建一个 doStuff 函数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void doStuff(Shape s) &#123;</span><br><span class="line">    s.erase();</span><br><span class="line">    &#x2F;&#x2F; ...</span><br><span class="line">    s.draw();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>它可以接收任何 Shape 包括其子类进行操作：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Circle c &#x3D; new Circle();</span><br><span class="line">Triangle t &#x3D; new Triangle();</span><br><span class="line">Line  l &#x3D; new Line();</span><br><span class="line">doStuff(c);</span><br><span class="line">doStuff(t);</span><br><span class="line">doStuff(l);</span><br></pre></td></tr></table></figure>
+
 <p>在这里，我们把 Shape 的子类，当作 Shape 使用，这称为“<strong>上溯造型</strong>”，这样做常常可以避免检查一个对象到底是何种具体类型。</p>
 <p>值得注意的是，即使 Circle、Line、Triangle 用不同的 erase、draw 的具体实现方式，doStuff 还是可以很好得完成工作。我们可以理解为 doStuff 只是在告诉 Shape ：“你是一种几何形状，我知道你能将自己删掉，即erase()；请自己采取那个行动，并自己去控制所有的细节吧”，而不是对 Circle 做某种操作，对 Triangle 做某种操作…</p>
 <h4 id="动态绑定"><a href="#动态绑定" class="headerlink" title="动态绑定"></a>动态绑定</h4><p>我们在使用上述代码时，不论我们传给 doStuff 的是那种具体类型，它总能调用我们想要的函数。</p>
@@ -310,7 +312,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

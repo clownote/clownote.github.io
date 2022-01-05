@@ -14,7 +14,7 @@
 <meta property="og:description" content="Mac 本地快照占用空间问题问题描述 在使用 Mac 的过程中，可能遇到如下问题：  当我们在 App Store 中下载一个比较大的软件时（如 Xcode，&gt;6GB），弹出对话框提示说：“可用的磁盘空间不足，无法安装此产品”。 这时，我们点击菜单栏左上角”🍎”图标-&gt;“关于本机”-&gt;“储存空间”，或查看 Finder(访达)底部，发现显示的可用空间还有50GB，怎么可能“空间">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-18T20:45:01.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.422Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.498Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Mac">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2019-11-18T20:45:01.000Z" itemprop="datePublished">2019-11-18</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.422Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.498Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -167,6 +167,7 @@
 <p>带着疑问，我们又尝试使用其他方法查看磁盘剩余空间：如果你稍微了解 Unix/Linux，我想这时你的一个可能选择一定会是 “<code>$ df -h</code>”，而如果你对前面这句话不甚了解或一无所知对话，你可以打开 macOS 系统自带的“<strong>磁盘工具</strong>”。</p>
 <p>通过前者的做法你可能看到类似下面这样的结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Foo@Bar-MacBook:] 00:00  ~ !502 $ df -h</span><br><span class="line">Filesystem      Size   Used  Avail Capacity iused               ifree %iused  Mounted on</span><br><span class="line">&#x2F;dev&#x2F;disk1s1   113Gi   96Gi   13Gi    84% 1225588 9223372036853550219    0%   &#x2F;</span><br><span class="line">devfs          331Ki  331Ki    0Bi   100%    1146                   0  100%   &#x2F;dev</span><br><span class="line">&#x2F;dev&#x2F;disk1s4   113Gi  3.0Gi   13Gi     9%       3 9223372036854775804    0%   &#x2F;private&#x2F;var&#x2F;vm</span><br><span class="line">map -hosts       0Bi    0Bi    0Bi   100%       0                   0  100%   &#x2F;net</span><br><span class="line">map auto_home    0Bi    0Bi    0Bi   100%       0                   0  100%   &#x2F;home</span><br></pre></td></tr></table></figure>
+
 <p>不用解释（如果你真的是我说的前者，否则，请看下一段），你吃惊地发现系统可用空间只有13GB了😱！</p>
 <p>而在“<strong>磁盘工具</strong>”中你可以看见图条展示的可用“实际可用”只有13.34G，下面还写有一条”可用: 50GB（36.66GB<em>可清除</em>）”。🤔</p>
 <p>“可清除”? 什么意思? 怎么清除? 到头来还是不能用嘛！</p>
@@ -177,12 +178,15 @@
 <li>打开终端（如果不知道可以 <code>command+空格</code> 聚焦搜索 “终端.app”），输入如下指令，回车:</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmutil listlocalsnapshotdates</span><br></pre></td></tr></table></figure>
+
 <p>然后，你会看到输出这样的东西:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Snapshot dates for all disks:</span><br><span class="line">2066-06-05-223724</span><br><span class="line">2066-06-05-230056</span><br><span class="line">2066-06-06-053724</span><br><span class="line">2066-06-06-060056</span><br></pre></td></tr></table></figure>
+
 <ol start="2">
 <li>然后，再分别键入指令 <code>tmutil deletelocalsnapshots &lt;snapshot_date&gt;</code>，把里面的 ”<code>&lt;snapshot_date&gt;</code>“ 换成你在上面看到的某一行日期，回车后稍等，看到:</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Deleted local snapshot &#39;2066-06-05-223724&#39;</span><br></pre></td></tr></table></figure>
+
 <p>嗯，删了一个某种东西，不管他是什么，反正可用可用磁盘空间会增大吧，故如法炮制，继续<code>tmutil deletelocalsnapshots</code> 干掉刚才 <code>tmutil listlocalsnapshotdates</code> 出来的所有日期。</p>
 <ol start="3">
 <li><p>完成后，稍等几分钟，再 <code>df -h</code> 或打开”磁盘工具”，你会发现，实际可用空间大了几十G，之前的可清除，被我们清除了😊！</p>
@@ -193,6 +197,7 @@
 <p>问题解决💪！</p>
 <p>P.S. 参考”文本式截图”😜：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[foo@His-MacBook:] 06:06  ~ !501 $ tmutil listlocalsnapshotdates</span><br><span class="line">Snapshot dates for all disks:</span><br><span class="line">2066-06-20-133724</span><br><span class="line">2066-06-20-140056</span><br><span class="line">[foo@His-MacBook:] 06:06  ~ !502 $ tmutil deletelocalsnapshots 2066-06-20-133724</span><br><span class="line">Deleted local snapshot &#39;2066-06-20-133724&#39;</span><br><span class="line">[foo@His-MacBook:] 06:06  ~ !503 $</span><br></pre></td></tr></table></figure>
+
 <p>【注】我也经历过在上述操作后完全没解决问题的情况。而在我做完上述所有操作并且重启，再重复一遍这些操作后，It works.</p>
 <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>好的，问题解决了，但为什么可以这样操作呢？答案就藏在我们解决的办法里。</p>
 <p>首先，“<code>tmutil</code>” 是什么东西，通过 <code>$ whatis tmutil</code>，我们可以知道，它的学名叫做“时间机器实用工具（Time Machine utility）”，又通过 <code>$ man tmutil</code>，我们会明白，我们刚才是列出(listlocalsnapshotdates)并逐个删除(deletelocalsnapshots)了磁盘中储存的“<strong>时间机器本地快照</strong>（local Time Machine snapshots）”。</p>
@@ -273,7 +278,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

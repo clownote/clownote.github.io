@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggl4f43cguj31iy0dc77b.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglyp8zx9jj31jc0iiq75.jpg">
 <meta property="article:published_time" content="2020-07-10T16:59:15.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.382Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.462Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Deep Learning">
@@ -62,7 +62,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -146,7 +146,7 @@
       
         <time datetime="2020-07-10T16:59:15.000Z" itemprop="datePublished">2020-07-10</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.382Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.462Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -205,6 +205,7 @@
 <p>可用的数据多的时候才能用这个。不然数据少了，分出来的验证集就太小，不够一般，效果不好。</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggkhlemz7cj31io0k0n02.jpg" alt="简单留出验证的示意图"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hold-out validation</span></span><br><span class="line"></span><br><span class="line">num_validation_samples = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line">np.random.shuffle(data)    <span class="comment"># 洗牌，打乱数据</span></span><br><span class="line"></span><br><span class="line">validation_data = data[:num_validation_samples]    <span class="comment">#定义验证集</span></span><br><span class="line">data = data[num_validation_samples:]</span><br><span class="line"></span><br><span class="line">training_data = data[:]    <span class="comment"># 定义训练集</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在训练集训练模型，在验证集评估</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(training_data)</span><br><span class="line">validation_score = model.evaluate(validation_data)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 然后这里可以根据结果调整模型，</span></span><br><span class="line"><span class="comment">## 然后重新训练、评估，然后再次调整...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在调整好超参数之后，用除了测试集的所有数据来训练最终模型</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(np.concatenate([training_data, validation_data]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用测试集来评估最终模型</span></span><br><span class="line">test_score = model.evaluate(test_data)</span><br></pre></td></tr></table></figure>
+
 <h4 id="K折验证"><a href="#K折验证" class="headerlink" title="K折验证"></a>K折验证</h4><blockquote>
 <p>K-FOLD VALIDATION</p>
 </blockquote>
@@ -213,6 +214,7 @@
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggki8sc8x0j31os0u0q90.jpg" alt="K折验证示意图"></p>
 <p>emmm，我觉得这个图有点问题，应该除了那些灰色的是 Validation，白的应该都是 Training。（中文译本上就是这种）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># K-fold cross-validation</span></span><br><span class="line"></span><br><span class="line">k = <span class="number">4</span></span><br><span class="line">num_validation_samples = <span class="built_in">len</span>(data) // k</span><br><span class="line"></span><br><span class="line">np.random.shuffle(data)</span><br><span class="line"></span><br><span class="line">validation_scores = []</span><br><span class="line"><span class="keyword">for</span> fold <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">    <span class="comment"># 选择验证集</span></span><br><span class="line">    validation_data = data[num_validation_samples * fold:</span><br><span class="line">                           num_validation_samples * (fold + <span class="number">1</span>)]</span><br><span class="line">    <span class="comment"># 用剩下的做训练集</span></span><br><span class="line">    training_data = data[:num_validation_samples * fold] + </span><br><span class="line">                    data[num_validation_samples * (fold + <span class="number">1</span>):]</span><br><span class="line">    </span><br><span class="line">    model = get_model()    <span class="comment"># 注意是用个全新的模型</span></span><br><span class="line">    </span><br><span class="line">    model.train(training_data)</span><br><span class="line">    </span><br><span class="line">    validation_score = model.evaluate(validation_data)</span><br><span class="line">    validation_scores.append(validation_score)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 总的验证值是所有的平均</span></span><br><span class="line">validation_score = np.average(validation_scores)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后根据结果做各种超参数调整啦</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后在除了测试集的所有数据上训练</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(data)</span><br><span class="line">test_score = model.evaluate(test_data)</span><br></pre></td></tr></table></figure>
+
 <h4 id="带有打乱数据的重复K折验证"><a href="#带有打乱数据的重复K折验证" class="headerlink" title="带有打乱数据的重复K折验证"></a>带有打乱数据的重复K折验证</h4><blockquote>
 <p>ITERATED K-FOLD VALIDATION WITH SHUFFLING</p>
 </blockquote>
@@ -220,6 +222,7 @@
 <p>这个是数据比较少，又要求尽可能精确的时候用的。要跑 P*K 次，所以比较耗时。</p>
 <p>书上没给这个的代码，就是在 K折 的基础上再加一层循环：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ITERATED K-FOLD VALIDATION WITH SHUFFLING</span></span><br><span class="line"></span><br><span class="line">p = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">k = <span class="number">4</span></span><br><span class="line">num_validation_samples = <span class="built_in">len</span>(data) // k</span><br><span class="line"></span><br><span class="line">total_validation_scores = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(p):</span><br><span class="line">    np.random.shuffle(data)</span><br><span class="line">    </span><br><span class="line">    validation_scores = []</span><br><span class="line">    <span class="keyword">for</span> fold <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">        <span class="comment"># <span class="doctag">TODO:</span> K折验证的那堆代码</span></span><br><span class="line">    </span><br><span class="line">    validation_score = np.average(validation_scores)</span><br><span class="line">    total_validation_scores.append(validation_score)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 总的验证值是所有的平均</span></span><br><span class="line">validation_score = np.average(total_validation_scores)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后根据结果做各种超参数调整啦</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后在除了测试集的所有数据上训练</span></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(data)</span><br><span class="line">test_score = model.evaluate(test_data)</span><br></pre></td></tr></table></figure>
+
 <h3 id="划分时的注意事项"><a href="#划分时的注意事项" class="headerlink" title="划分时的注意事项"></a>划分时的注意事项</h3><ul>
 <li><strong>数据代表性</strong>：训练集和测试集都要可以代表所有数据。比如做数字识别，不能训练集里只有 0～7，测试集里全是 8～9。做这种之前要把所有数据随机洗牌打乱，然后再分训练集和测试集。</li>
 <li><strong>时间箭头</strong>：如果是那种做跟时间有关的预测（给过去的，预测未来的），开始之前<strong>不要打乱数据</strong>，要保持数据的时间顺序（打乱了会时间泄露，就是模型从“未来”学习了），并且测试集的数据要晚于训练集。</li>
@@ -240,6 +243,7 @@
 </ol>
 <p>如果严格一点（但不是必须的），我们可以把数据里的特征分别处理成平均值为 0，标准差为 1 的。用 Numpy 搞这个很简单：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># x 是二维的：(samples, features)</span></span><br><span class="line">x -= x.mean(axis=<span class="number">0</span>)</span><br><span class="line">x /= x.std(axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
 <ol start="3">
 <li>HANDLING MISSING VALUES 缺失值处理：一般来说，只要 0 不是有意义的值，就可以用 0 来代替缺失值。网络可以学会 0 是缺失的这种意思的。还有如果你的测试集是有缺失情况的，但训练集没有，就要手动加些人工数据去让网络学会缺失情况。</li>
 </ol>
@@ -248,6 +252,7 @@
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggkzvwdlyaj30vc0u0jwu.jpg" alt="特征工程示意图"></p>
 <p>特征工程在深度学习之前都至关重要，浅层的学习一般都没有足够的假设空间去自己学习出关键的特征。但现在我们用深度学习可以免去大多数的特征工程了，深度学习可以自己从数据里学出有用的特征来，但是利用特征工程，我们的深度学习过程可以更加优雅、高效。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Clown0te(<span class="string">&quot;防盗文爬:)虫的追踪标签，读者不必在意&quot;</span>).by(CDFMLR)</span><br></pre></td></tr></table></figure>
+
 <h2 id="过拟合和欠拟合"><a href="#过拟合和欠拟合" class="headerlink" title="过拟合和欠拟合"></a>过拟合和欠拟合</h2><blockquote>
 <p>4.4 Overfitting and underfitting</p>
 </blockquote>
@@ -267,6 +272,7 @@
 </ul>
 <p>在 Keras 里，添加权重正则化可以通过在层里传一个权重正则化实例来实现：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> regularizers</span><br><span class="line"></span><br><span class="line">model = models.Sequential()</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, kernel_regularizer=regularizers.l2(<span class="number">0.001</span>), </span><br><span class="line">                       activation=<span class="string">&#x27;relu&#x27;</span>, input_shape=(<span class="number">10000</span>,)))</span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, kernel_regularizer=regularizers.l2(<span class="number">0.001</span>),</span><br><span class="line">                       activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">&#x27;sigmoid&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
 <p><code>regularizers.l2(0.001)</code> 的意思是在损失函数中添加一项惩罚 <code>0.001 * weight_coefficient_value</code>。这个东西只在训练的时候被添加，在用测试集评估的时候不会生效，所以你看到的训练时的损失值要远大于测试时的。</p>
 <p>这里也可以把 L2 换成用 L1：<code>regularizers.l1(0.001)</code>，或者 L1、L2 同时上：<code>regularizers.l1_l2(l1=0.001, l2=0.001)</code>。</p>
 <h3 id="添加-dropout"><a href="#添加-dropout" class="headerlink" title="添加 dropout"></a>添加 dropout</h3><p>对于神经网络的正则化，Dropout 其实才是是最常用、有效的方法。</p>
@@ -275,15 +281,20 @@
 <p>这里有一个 dropout rate，表示把多少比例的特征置为0，这个比例通常取 0.2~0.5。还有，在测试的时候不 dropout 啊，但测试时的输出要按照 dropout rate 来缩小，以平衡测试和训练时的结果。</p>
 <p>也就是说，比如我们搞一个 dropout rate 为 0.5 的，即在训练的时候扔一半：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># training case</span></span><br><span class="line">layer_output *= np.random.randint(<span class="number">0</span>, high=<span class="number">2</span>, size=layer_output.shape)</span><br></pre></td></tr></table></figure>
+
 <p>然后测试的时候，相应的缩小50%：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># testing case</span></span><br><span class="line">layer_output *= <span class="number">0.5</span></span><br></pre></td></tr></table></figure>
+
 <p>但通常，我们不是在测试的时候缩小；而是在训练的时候扩大，然后测试的时候就不用动了：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># training case</span></span><br><span class="line">layer_output *= np.random.randint(<span class="number">0</span>, high=<span class="number">2</span>, size=layer_output.shape)</span><br><span class="line">layer_output /= <span class="number">0.5</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggl4f43cguj31iy0dc77b.jpg" alt="训练时对激活矩阵使用 dropout，并在训练时成比例增大。测试时激活矩阵保持不变"></p>
 <p>在 Keras 里，我们可以通过添加 Dropout 层来实现这个东西：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.add(layers.Dropout(<span class="number">0.5</span>))</span><br></pre></td></tr></table></figure>
+
 <p>例如，我们在我们 IMDB 的网络里面加上 Dropout：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = models.Sequential()</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, activation=<span class="string">&#x27;relu&#x27;</span>, input_shape=(<span class="number">10000</span>,)))</span><br><span class="line">model.add(layers.Dropout(<span class="number">0.5</span>))</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model.add(layers.Dropout(<span class="number">0.5</span>))</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">&#x27;sigmoid&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
 
 <h2 id="机器学习的通用工作流程"><a href="#机器学习的通用工作流程" class="headerlink" title="机器学习的通用工作流程"></a>机器学习的通用工作流程</h2><blockquote>
 <p>4.5 The universal workflow of machine learning</p>
@@ -376,7 +387,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

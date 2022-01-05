@@ -14,7 +14,7 @@
 <meta property="og:description" content="Leetcode 239. 滑动窗口最大值题目给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。 返回滑动窗口中的最大值。 进阶： 你能在线性时间复杂度内解决此题吗？ 示例: 123456789101112输入: nums &#x3D; [1,3,-1,-3,5,3,6,7], 和 k &amp;#x3">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-26T15:29:53.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.398Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.478Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="School">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2020-03-26T15:29:53.000Z" itemprop="datePublished">2020-03-26</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.398Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.478Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -165,6 +165,7 @@
 <p>你能在线性时间复杂度内解决此题吗？</p>
 <p><strong>示例:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入: nums &#x3D; [1,3,-1,-3,5,3,6,7], 和 k &#x3D; 3</span><br><span class="line">输出: [3,3,5,5,6,7] </span><br><span class="line">解释: </span><br><span class="line"></span><br><span class="line">  滑动窗口的位置                最大值</span><br><span class="line">---------------               -----</span><br><span class="line">[1  3  -1] -3  5  3  6  7       3</span><br><span class="line"> 1 [3  -1  -3] 5  3  6  7       3</span><br><span class="line"> 1  3 [-1  -3  5] 3  6  7       5</span><br><span class="line"> 1  3  -1 [-3  5  3] 6  7       5</span><br><span class="line"> 1  3  -1  -3 [5  3  6] 7       6</span><br><span class="line"> 1  3  -1  -3  5 [3  6  7]      7</span><br></pre></td></tr></table></figure>
+
 <p><strong>提示：</strong></p>
 <ul>
 <li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
@@ -173,6 +174,7 @@
 </ul>
 <h2 id="双向队列法"><a href="#双向队列法" class="headerlink" title="双向队列法"></a>双向队列法</h2><p>我们可以维护一个一个<strong>双向队列</strong>，在里面维护存在于<strong>当前窗口中的</strong>逐步最大值索引 ，每一步右端压入当前索引、清除比当前小的值的索引。从 k 处开始，每次取左端值即当前滑窗的最大值。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maxSlidingWindow</span><span class="params">(nums []<span class="keyword">int</span>, k <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) &lt; k || k &lt;= <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> nums</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    memo := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span> e <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">    swMax := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">1</span>)</span><br><span class="line">    swMax[<span class="number">0</span>] = nums[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; k; i++ &#123;</span><br><span class="line">        <span class="keyword">for</span> e = <span class="built_in">len</span>(memo); e &gt; <span class="number">0</span> &amp;&amp; nums[i] &gt; nums[memo[e<span class="number">-1</span>]]; e-- &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        memo = memo[:e]</span><br><span class="line">        memo = <span class="built_in">append</span>(memo, i)</span><br><span class="line">        <span class="keyword">if</span> nums[i] &gt; swMax[<span class="number">0</span>] &#123;</span><br><span class="line">            swMax[<span class="number">0</span>] = nums[i]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// fmt.Println(memo)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := k; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        <span class="comment">// leaving</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(memo) != <span class="number">0</span> &amp;&amp; memo[<span class="number">0</span>] == i - k &#123;</span><br><span class="line">            memo = memo[<span class="number">1</span>:]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// entering</span></span><br><span class="line">        <span class="keyword">for</span> e = <span class="built_in">len</span>(memo); e &gt; <span class="number">0</span> &amp;&amp; nums[i] &gt; nums[memo[e<span class="number">-1</span>]]; e-- &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        memo = memo[:e]</span><br><span class="line">        memo = <span class="built_in">append</span>(memo, i)</span><br><span class="line">        <span class="comment">// ans</span></span><br><span class="line">        swMax = <span class="built_in">append</span>(swMax, nums[memo[<span class="number">0</span>]])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> swMax</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
   </div>
 </article>
@@ -242,7 +244,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8plgct2i6j31iy0oywjp.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6gy1g8ta88gafkj30oz0djaeo.jpg">
 <meta property="article:published_time" content="2019-11-13T16:50:27.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.382Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.458Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
@@ -64,7 +64,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -148,7 +148,7 @@
       
         <time datetime="2019-11-13T16:50:27.000Z" itemprop="datePublished">2019-11-13</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.382Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.458Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -215,7 +215,8 @@
 <li><p>Compute <code>convariance matrix</code> (notated a big Sigma, notice that it’s different from a sum notation):<br>$$<br>\Sigma = \frac{1}{m}\sum_{i=1}^n(x^{(i)})(x^{(i)})^T<br>$$</p>
 </li>
 <li><p>Compute <code>eigenvectors</code> of matrix $\Sigma$:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[U, S, V] &#x3D; svd(Sigma);</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[U, S, V] &#x3D; svd(Sigma);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>Get from <code>svd</code>:<br>$$<br>U = \left[\begin{array}{cccc}<br>| &amp; | &amp;  &amp; |\<br>u^{(1)} &amp; u^{(2)} &amp; \cdots &amp; u^{(n)}\<br>| &amp; | &amp;  &amp; |<br>\end{array}\right]<br>\in \R^{n\times n}<br>\Rightarrow<br>U_{reduce}=\left[\begin{array}{cccc}<br>| &amp; | &amp;  &amp; |\<br>u^{(1)} &amp; u^{(2)} &amp; \cdots &amp; u^{(k)}\<br>| &amp; | &amp;  &amp; |<br>\end{array}\right]<br>$$</p>
 </li>
 <li><p>Make $x\in\R^n\to z\in\R^k$:<br>$$<br>z = U_{reduce}^Tx<br>=\left[\begin{array}{ccc}<br>– &amp; (u^{(1)})^T &amp; –\<br> &amp; \vdots &amp; \<br>– &amp; (u^{(k)})^T &amp; –\<br>\end{array}\right]x<br>$$</p>
@@ -225,6 +226,7 @@
 <p>Summary:</p>
 <p>After mean normalization (ensure every feature has zero mean) and optionally feature scaling:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Sigma &#x3D; 1&#x2F;m * X&#39; * X;</span><br><span class="line">[U, S, V] &#x3D; svd(Sigma);</span><br><span class="line"></span><br><span class="line">Ureduce &#x3D; U(:, 1:K);</span><br><span class="line">Z &#x3D; X * Ureduce;</span><br></pre></td></tr></table></figure>
+
 <h2 id="Applying-PCA"><a href="#Applying-PCA" class="headerlink" title="Applying PCA"></a>Applying PCA</h2><h3 id="Reconstruction-from-Compressed-Representation"><a href="#Reconstruction-from-Compressed-Representation" class="headerlink" title="Reconstruction from Compressed Representation"></a>Reconstruction from Compressed Representation</h3><p>With PCA, we compressed data from n-dimension to a lower k-dimension. There should be a way to go back from the compressed representation to an approximation of our original high-dimensional data. We call this way <em>reconstruction</em>.</p>
 <p>Recall that our PCA is working as $z= U_{reduce}^Tx$.</p>
 <p>To reconstruction, what we will do is:<br>$$<br>x_{approx}=U_{reduce}z<br>$$<br>It makes $z\in\R^k \to x_{approx}\in\R^n$. The $x_{approx}$ will be close to $x$, but we can hardly expect $x=x_{approx}$.</p>
@@ -354,7 +356,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

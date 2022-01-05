@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g60fl18enfj30go0730tl.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79gy1g60oehim96j30go00v0sr.jpg">
 <meta property="article:published_time" content="2016-12-27T16:13:00.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.390Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.466Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -58,7 +58,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -142,7 +142,7 @@
       
         <time datetime="2016-12-27T16:13:00.000Z" itemprop="datePublished">2016-12-27</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.390Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.466Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -189,11 +189,13 @@
 <p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g60fl18enfj30go0730tl.jpg" alt="IMG_1066"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">（1）inode-no ：i节点号。</span><br><span class="line">		在一个文件系统中，每一个i节点都有一个唯一的编号。</span><br><span class="line">（2）File type ：文件的类型。</span><br><span class="line">		&#39;-&#39;为  普通文件，</span><br><span class="line">		&#39;d&#39;为 目录。</span><br><span class="line">（3）permission ：权限。</span><br><span class="line">		在i节点中使用数字表示法来表示文件的权限。</span><br><span class="line">（4）Link count ：硬连接（hard link）数。</span><br><span class="line">（5）UID ：文件所有者的UID。</span><br><span class="line">（6）GID ：owner所属群组的GID。</span><br><span class="line">（7）size ：文件的大小。</span><br><span class="line">（8）Time stamp：时间戳。</span><br><span class="line">		时间戳包含了3个时间：</span><br><span class="line">				①Access time（A time） ：最后一次存取的时间。</span><br><span class="line">				②Modify time（M time） ：最后一次编辑的时间。</span><br><span class="line">				③Change time（C time）：该文件inode中任一元数据发生变化的时间。</span><br><span class="line">		如果M time被更新时，通常A time和C time也会跟着一起被更新：</span><br><span class="line">				在更新一个文件之前必须先打开这个文件，所以要先更新A time；</span><br><span class="line">				编辑完之后一般文件的大小要发生变化，所以C time也会被更新。</span><br><span class="line">（9）Other information</span><br><span class="line">（10）pointer：指向保存文件的blocks的指针。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+
 <h3 id="查看文件的-inode-number："><a href="#查看文件的-inode-number：" class="headerlink" title="查看文件的 inode number："></a>查看文件的 inode number：</h3><p>可以使用带有-i选项的ls命令，在每一行记录的开始显示这个文件的i节点号码。</p>
 <h3 id="普通文件-与-目录"><a href="#普通文件-与-目录" class="headerlink" title="普通文件 与 目录"></a><em>普通文件</em> 与 <em>目录</em></h3><p>1.普通文件（Regular File）：只存放数据，</p>
 <p>可以存放多种不同类型的数据。</p>
 <p>2.目录：“特殊”的文件，目录中存储的是文件名和与文件名相关的i节点号码的信息。目录中只能存放一类数据。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct file_list&#123;</span><br><span class="line">    char name[MAX];</span><br><span class="line">    unsign inode;</span><br><span class="line">    struct file_list next;</span><br><span class="line">&#125; * pBarFiles;</span><br><span class="line">char * make_the_list(struct file_list *);</span><br><span class="line">fooDirectoty.content &#x3D; make_the_list(pBarFiles);</span><br></pre></td></tr></table></figure>
+
 
 <h3 id="cp、rm、mv-的-operate-inode"><a href="#cp、rm、mv-的-operate-inode" class="headerlink" title="cp、rm、mv 的 operate(inode)"></a>cp、rm、mv 的 operate(inode)</h3><ol>
 <li><code>cp</code>：</li>
@@ -222,6 +224,7 @@
 /* 这是&lt;u&gt;逻辑移动&lt;/u&gt;：除了更新时间戳外，移动文件行为对原本在inode表中的数据不会有任何影响，也**不会将数据移动**到其他的文件中去，即**没有发生真正的数据移动**。\*/</code></pre>
 <p>若 <em>源位置</em> 与 <em>目的位置</em> 是在 <strong>不同文件系统</strong>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp(source, destination)；</span><br><span class="line">rm(source)；</span><br></pre></td></tr></table></figure>
+
 <p>必要情况下：为确保数据确实发生移动，应使用cp，rm而非mv</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
 <li><p>关于文件的几个术语：</p>
@@ -305,7 +308,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

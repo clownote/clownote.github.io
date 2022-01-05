@@ -14,7 +14,7 @@
 <meta property="og:description" content="文件归档与压缩归档归档（archiving）就是将许多文件（或目录）打包成一个文件。 归档的目的就是方便备份、还原及文件的传输操作。 Linux操作系统的标准归档命令是tar（tape archive）。 tar命令的功能是将多个文件（也可有目录）放在一起存放到一个磁带或磁盘归档文件中， 并且将来可以根据需要只还原归档文件中的某些指定的文件。 tar命令默认并不进行文件的压缩。 123456789">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-12-30T22:46:15.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.390Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.470Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2016-12-30T22:46:15.000Z" itemprop="datePublished">2016-12-30</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.390Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.470Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -171,13 +171,17 @@
 <p>并且将来可以根据需要只还原归档文件中的某些指定的文件。</p>
 <p>tar命令默认并不进行文件的压缩。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">tar [选项]... [归档文件名]...</span><br><span class="line">    必须至少使用如下选项中的一个：</span><br><span class="line">        c：创建一个新的tar文件。</span><br><span class="line">        t：列出tar文件中内容的目录。</span><br><span class="line">        x：从tar文件中抽取文件。</span><br><span class="line">        f：指定归档文件或磁带（也可能是软盘）设备（一般都要选）</span><br><span class="line">            （在RHEL 4之前的版本中规定在f选项之后必须紧跟着文件名而不能再加其他参数，</span><br><span class="line">                但是从RHEL 4开始已经取消了这一限制。）</span><br><span class="line">以下为可选的选项：</span><br><span class="line">        v：显示所打包的文件的详细信息（v是verbose）</span><br><span class="line">                (执行过程中会显示所有打包的文件和目录)</span><br><span class="line">        z：使用gzip压缩算法来压缩打包后的文件。</span><br><span class="line">                「$ tar cvfz arch.tar.gz dir2arch」</span><br><span class="line">        j：使用bzip2压缩算法来压缩打包后的文件。</span><br><span class="line">                「$ tar cvfj arch.tar.bz2 dirarch」</span><br><span class="line">【注意】在tar命令中，所有的选项之前都不能使用前导的“-”。</span><br></pre></td></tr></table></figure>
+
 <p>创建新的归档文件：<code>c\[v\]f</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ tar  cvf  arch.tar  dir2arch    # File to be archived should be a RELATIVE path</span><br><span class="line">dir2arch&#x2F;</span><br><span class="line">dir2arch&#x2F;learning.txt</span><br><span class="line">dir2arch&#x2F;name.txt</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+
 <p>查看归档文件内容：<code>t\[v\]f</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ tar tf arch.tar</span><br><span class="line">dir2arch&#x2F;</span><br><span class="line">dir2arch&#x2F;learning.txt</span><br><span class="line">dir2arch&#x2F;name.txt </span><br><span class="line">……</span><br><span class="line"># 可以在tar命令中再加入v命令来显示文件更加详细的信息(like 「ls -l」):</span><br><span class="line">$ tar tvf arch.tar</span><br><span class="line">drwxrwxr-x User&#x2F;User           0 2010-02-04 05:09:43 dir2arch&#x2F;</span><br><span class="line">-rw-r--r--   User&#x2F;User        4720 2010-02-04 05:07:22 dir2arch&#x2F;learning.txt</span><br><span class="line">-rw-rw-r--   User&#x2F;User          84 2010-02-04 05:07:22 dir2arch&#x2F;name.txt </span><br><span class="line">……</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>解开打包好的文件：<code>x\[v\]f</code></p>
 <p>[⚠️]<span style="color: #fd0404;">解开前要将工作目录切换到打包时所在的目录，才能保证抽取的文件放回到原来的位置。</span></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ tar xvf arch.tar</span><br><span class="line">dir2arch&#x2F;</span><br><span class="line">dir2arch&#x2F;learning.txt</span><br><span class="line">dir2arch&#x2F;name.txt</span><br><span class="line">dir2arch&#x2F;flowers.JPG</span><br><span class="line">dir2arch&#x2F;dog.JPG  ……</span><br></pre></td></tr></table></figure>
+
 <h2 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h2><p>进行文件压缩的主要目的是缩小文件的大小。</p>
 <p>一般对正文文件进行压缩之后，文件的大小可以被压缩大约75%。</p>
 <p>但是二进制的文件，如图像文件通常不会被压缩多少。</p>
@@ -266,7 +270,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

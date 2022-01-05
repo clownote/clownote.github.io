@@ -14,7 +14,7 @@
 <meta property="og:description" content="Java 集合 大多数真实应用程序都会处理像文件、变量、来自文件的记录或数据库结果集这样的集合。  最常见的集合就是数组，我们之前已经单独讨论过它，现在我们主要研究其他的集合类型。 列表 ListList 是一种有序集合，也称为序列。 List 集合只能包含对象（不能包含像 int 这样的原语类型）。 要使用 List，我们需要先把它 import 到程序中： 1import java.util.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-04-22T16:37:53.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.386Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.466Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2019-04-22T16:37:53.000Z" itemprop="datePublished">2019-04-22</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.386Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.466Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -172,10 +172,13 @@
 <p><code>List</code> 集合只能包含对象（不能包含像 <code>int</code> 这样的原语类型）。</p>
 <p>要使用 List，我们需要先把它 import 到程序中：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br></pre></td></tr></table></figure>
+
 <p><code>List</code> 是一个接口，所以不能直接实例化它（即，不可以 <code>new List&lt;E&gt;</code> ！），要声明一个 <code>List</code> ，使用如下语法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; listOfStrings = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br></pre></td></tr></table></figure>
+
 <p>或</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; listOfStrings = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
 <p>这样，我们声明了一个种比较常用的 List —— <code>ArrayList</code>。</p>
 <blockquote>
 <p>【注】</p>
@@ -207,16 +210,20 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Logger l = Logger.getLogger(<span class="string">&quot;Test&quot;</span>)</span><br><span class="line"><span class="comment">// 声明 List</span></span><br><span class="line">List&lt;Integer&gt; listOfIntegers = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="comment">// 插入数据</span></span><br><span class="line">listOfIntegers.add(Integer.valueOf(<span class="number">238</span>));</span><br><span class="line">listOfIntegers.add(<span class="number">0</span>, Integer.valueOf(<span class="number">987</span>));</span><br><span class="line"><span class="comment">// 查看大小</span></span><br><span class="line">l.info(<span class="string">&quot;Current List size: &quot;</span> + listOfIntegers.size());</span><br><span class="line"><span class="comment">// 获取元素</span></span><br><span class="line">l.info(<span class="string">&quot;Item at index 0 is: &quot;</span> listOfIntegers.get(<span class="number">0</span>));</span><br><span class="line"><span class="comment">// 删除元素</span></span><br><span class="line">listOfIntegers.remove(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
 <p>相关代码: <a href="./src/UsrList.java">UsrList.java</a></p>
 <p>关于 List 的更多说明，详见 <a target="_blank" rel="noopener" href="https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/List.html">JDK文档</a>。</p>
 <h2 id="迭代变量-Iterable"><a href="#迭代变量-Iterable" class="headerlink" title="迭代变量 Iterable"></a>迭代变量 <code>Iterable</code></h2><p>如果一个集合实现了 <code>java.lang.Iterable</code>，那么该集合被称为<em>迭代变量集合</em>。</p>
 <p> <code>Iterable</code> 可从一端开始，逐项地处理集合，直到处理完所有项。</p>
 <p>它的使用形式就是在 循环 中提及过的 for-echo 循环：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (objectType varName : collectionReference) &#123;</span><br><span class="line">    <span class="comment">// Start using objectType (via varName) right away...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>因为 <code>List</code> 扩展了 <code>java.util.Collection</code>（它实现 <code>Iterable</code>），所以可以使用简写语法来迭代任何 <code>List</code> :</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; listOfIntegers = obtainSomehow();</span><br><span class="line">Logger l = Logger.getLogger(<span class="string">&quot;Test&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (Integer i : listOfIntegers) &#123;</span><br><span class="line">    l.info(<span class="string">&quot;Integer value is : &quot;</span> + i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这段代码实现的效果和如下的 for 循环处理等效：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; listOfIntegers = obtainSomehow();</span><br><span class="line">Logger l = Logger.getLogger(<span class="string">&quot;Test&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> aa = <span class="number">0</span>; aa &lt; listOfIntegers.size(); aa++) &#123;</span><br><span class="line">    Integer I = listOfIntegers.get(aa);</span><br><span class="line">    l.info(<span class="string">&quot;Integer value is : &quot;</span> + i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="集-Set"><a href="#集-Set" class="headerlink" title="集 Set"></a>集 <code>Set</code></h2><p><code>Set</code> 是一种没有重复元素的集合结构。它可保证其元素中的唯一性，但不关心元素的顺序。</p>
 <p><code>List</code> 可包含同一个对象数百次，而 <code>Set</code> 仅可包含某个特定实例一次。</p>
 <p><code>Set</code> 也仅可包含对象，不能直接包含内置类型。</p>
@@ -240,8 +247,10 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrySet</span> </span>&#123;	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] arg)</span> </span>&#123;</span><br><span class="line">		Logger l = Logger.getLogger(<span class="string">&quot;Tset&quot;</span>);</span><br><span class="line"></span><br><span class="line">		Set&lt;Integer&gt; setOfIntegers = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">		setOfIntegers.add(Integer.valueOf(<span class="number">12</span>));</span><br><span class="line">		setOfIntegers.add(Integer.valueOf(<span class="number">20</span>));</span><br><span class="line">		setOfIntegers.add(Integer.valueOf(<span class="number">5</span>));</span><br><span class="line">		</span><br><span class="line">		setOfIntegers.add(Integer.valueOf(<span class="number">5</span>));</span><br><span class="line"></span><br><span class="line">		l.info(setOfIntegers.toString());</span><br><span class="line"></span><br><span class="line">		setOfIntegers.remove(Integer.valueOf(<span class="number">20</span>));</span><br><span class="line"></span><br><span class="line">		l.info(<span class="string">&quot;&quot;</span> + setOfIntegers.size());</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (Integer i : setOfIntegers) &#123;</span><br><span class="line">			i += <span class="number">100</span>;</span><br><span class="line">			System.out.println(i);</span><br><span class="line">		&#125;</span><br><span class="line">		l.info(setOfIntegers.toString());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>输出结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">... TrySet main</span><br><span class="line">信息: [20, 5, 12]</span><br><span class="line">... TrySet main</span><br><span class="line">信息: 2</span><br><span class="line">105</span><br><span class="line">112</span><br><span class="line">... TrySet main</span><br><span class="line">信息: [5, 12]</span><br></pre></td></tr></table></figure>
+
 <h2 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射 Map"></a>映射 <code>Map</code></h2><p><code>Map</code> 是一种方便的集合构造，可以使用它将一个对象（<em>键</em>）与另一个对象（<em>值</em>）相关联。</p>
 <p><code>Map</code> 的键必须是唯一的，而且可在以后用于检索值。</p>
 <p>和 List、Set 一样，<code>Map</code> 集合仅可包含对象，且 <code>Map</code> 是一个接口，所以不能直接实例化它，我们常用 <code>HashMap</code> 来实现一个 <code>Map</code>。</p>
@@ -253,7 +262,9 @@
 <li>获取一个 Key 的 <code>Set</code>：<code>keySet()</code>，可以利用这个方法，结合使用 Set 和 Map，实现遍历 <code>Map</code>。</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明</span></span><br><span class="line">Map&lt;String, Integer&gt; mapOfIntegers = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="comment">// 添加</span></span><br><span class="line">mapOfIntegers.put(<span class="string">&quot;168&quot;</span>, Integer.valueOf(<span class="number">168</span>));</span><br><span class="line"><span class="comment">// 取值</span></span><br><span class="line">Integer oneHundred68 = mapOfIntegers.get(<span class="string">&quot;168&quot;</span>);</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;String&gt; keys = mapOfIntegers.keySet();</span><br><span class="line">Logger l = Logger.getLogger(<span class="string">&quot;Test&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (String key : keys) &#123;</span><br><span class="line">    Integer  value = mapOfIntegers.get(key);</span><br><span class="line">    l.info(<span class="string">&quot;Value keyed by &#x27;&quot;</span> + key + <span class="string">&quot;&#x27; is &#x27;&quot;</span> + value + <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>相关代码：<a href="./src/TryMap.java">TryMap.java</a></p>
 <hr>
 <p>相关代码：</p>
@@ -329,7 +340,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

@@ -14,7 +14,7 @@
 <meta property="og:description" content="Python基础手册P1 启动、注释和运算符[TOC] 开始之前我很长时间之前就打算写一个系列的文章，以一个非初学者的视角讨论 Python 基础。 从入门到进阶的初学者指南很多，有的写的也相当出色，比如我自己入门学习的廖雪峰老师的Python教程。说实话，要在这些入门教程中再添一笔，不是件容易的事，我也无心研究编程入门教学。 我希望的是，整理一下 Python 基础，并少量对照源码，通过自己的研">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-23T14:55:09.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.422Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.502Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2020-03-23T14:55:09.000Z" itemprop="datePublished">2020-03-23</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.422Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.502Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -193,8 +193,10 @@
 <p>取用 <code>sys.argv</code> 前要 <code>import sys</code>。</p>
 <p>关于 argv 的行为，我们借用C/C++的 switch-case 语句的形式来讨论：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (输入命令) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;$ python&quot;</span>: </span><br><span class="line">        <span class="comment">// sys.argv 有一个元素：sys.argv[0] 此时为空字符串</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;$ python -&quot;</span>:</span><br><span class="line">        <span class="comment">// sys.argv[0] 被设定为 &#x27;-&#x27;</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;$ python -c command [arg] ...&quot;</span>:</span><br><span class="line">        <span class="comment">// sys.argv[0] 被设定为 &#x27;-c&#x27;</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;$ python -m module [arg] ...&quot;</span>:</span><br><span class="line">        <span class="comment">// sys.argv[0] 被设定为指定模块的全名</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">注意C/C++的这个语句switch后面括号内的“表达式”必须是整数类型！</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
 <p>⚠️【注意】：<code>-c</code> 指令 或者 <code>-m</code> 模块 之后的参数不会被 Python 解释器的选项处理机制所截获，而是留在 <code>sys.argv</code> 中，供脚本命令操作。<br>例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ python3 -i -c &#39;import sys&#39; 1 2 3</span><br><span class="line">&gt;&gt;&gt; sys.argv</span><br><span class="line">[&#39;-c&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;]</span><br></pre></td></tr></table></figure>
+
 <h3 id="指定源程序编码"><a href="#指定源程序编码" class="headerlink" title="指定源程序编码"></a>指定源程序编码</h3><p>默认情况下，Python 源文件是 UTF-8 编码。<br>在 <code>#!</code> 行（首行）后插入至少一行特殊的注释行来定义源文件的编码:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: encoding -*-</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/codecs.html#module-codecs">可用的 encoding 列表</a></p>
@@ -202,8 +204,10 @@
 <h2 id="Python注释"><a href="#Python注释" class="headerlink" title="Python注释"></a>Python注释</h2><p>没有人会否认注释的重要性。在开始讨论其他语法之前，我们有必要看一看注释怎么写。</p>
 <p>Python 中的注释以 <code>#</code> 字符起始，直至实际的行尾(physical line, 表示实际的换行而非编辑器的自动换行)。<br>注释可以从行首开始，也可以在空白或代码之后，但是不出现在字符串中。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是一个注释</span></span><br></pre></td></tr></table></figure>
+
 <p>写文档注释的时候，我们常借用多行字符串：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">a</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;函数func是用来干什么的</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    详细行为描述...</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">    	a: 参数a是什么</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    	返回值是什么</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cls</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;类的总结</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    详细行为描述...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Attributes:</span></span><br><span class="line"><span class="string">        a: 属性a的说明</span></span><br><span class="line"><span class="string">        b: 属性b的说明</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p>【注】关于文档注释，我们会在本系列后面的【Python代码风格】一文中详细介绍。</p>
 <h2 id="Python基本运算符"><a href="#Python基本运算符" class="headerlink" title="Python基本运算符"></a>Python基本运算符</h2><p>计算机，如其名，是计算的好手！既然编程语言是人类和计算机沟通的语言，那这些语言就应该可以方便简介地让计算机算起来——从加减乘除开始。Python 的加减乘除运算我们都很熟悉，基本就是我们在小学数学中看到的那些写法：</p>
 <table>
@@ -253,6 +257,7 @@
 <li>浮点数有完整的支持；整数和浮点数的混合计算中，整数会被转换为浮点数。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = <span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">NameError: name <span class="string">&#x27;c&#x27;</span> <span class="keyword">is</span> <span class="keyword">not</span> defined</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a + b</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>_ + <span class="number">3</span>    <span class="comment"># (3) + 3</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = _ * <span class="number">2</span>    <span class="comment"># c = (6) * 2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = <span class="number">0.3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a + d</span><br><span class="line"><span class="number">1.3</span></span><br></pre></td></tr></table></figure>
+
 <p>对于整数类型，你还可以像 C 一样，做位运算：</p>
 <table>
 <thead>
@@ -358,7 +363,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

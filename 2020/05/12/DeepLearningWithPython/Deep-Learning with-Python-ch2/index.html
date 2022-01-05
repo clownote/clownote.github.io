@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gepeimx6pwj3073070a9v.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gepeiqkaq6j3073070jr7.jpg">
 <meta property="article:published_time" content="2020-05-12T09:09:44.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.382Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.462Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Deep Learning">
@@ -60,7 +60,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -144,7 +144,7 @@
       
         <time datetime="2020-05-12T09:09:44.000Z" itemprop="datePublished">2020-05-12</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.382Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.462Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -179,6 +179,7 @@
 <h2 id="初窥神经网络"><a href="#初窥神经网络" class="headerlink" title="初窥神经网络"></a>初窥神经网络</h2><p>学编程语言从 “Hello World” 开始，学 Deep learning 从 <code>MINST</code> 开始。</p>
 <p>MNIST 用来训练手写数字识别， 它包含 28x28 的灰度手写图片，以及每张图片对应的标签(0~9的值)。</p>
 <h3 id="导入MNIST数据集"><a href="#导入MNIST数据集" class="headerlink" title="导入MNIST数据集"></a>导入MNIST数据集</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Loading the MNIST dataset in Keras</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line">(train_images, train_labels), (test_images, test_labels) = mnist.load_data()</span><br></pre></td></tr></table></figure>
+
 <p>看一下训练集：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(train_images.shape)</span><br><span class="line">print(train_labels.shape)</span><br><span class="line">train_labels</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
@@ -195,6 +196,7 @@ array([5, 0, 4, ..., 5, 6, 8], dtype=uint8)</code></pre>
 array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)</code></pre>
 <h3 id="网络构建"><a href="#网络构建" class="headerlink" title="网络构建"></a>网络构建</h3><p>我们来构建一个用来学习 MNIST 集的神经网络：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"></span><br><span class="line">network = models.Sequential()</span><br><span class="line">network.add(layers.Dense(<span class="number">512</span>, activation=<span class="string">&#x27;relu&#x27;</span>, input_shape=(<span class="number">28</span> * <span class="number">28</span>, )))</span><br><span class="line">network.add(layers.Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
 <p>神经网络是一个个「层」组成的。<br>一个「层」就像是一个“蒸馏过滤器”，它会“过滤”处理输入的数据，从里面“精炼”出需要的信息，然后传到下一层。</p>
 <p>这样一系列的「层」组合起来，像流水线一样对数据进行处理。<br>层层扬弃，让被处理的数据，或者说“数据的表示”对我们最终希望的结果越来越“有用”。</p>
 <p>我们刚才这段代码构建的网络包含两个「Dense 层」，这么叫是因为它们是密集连接（densely connected）或者说是 <em>全连接</em> 的。</p>
@@ -206,11 +208,14 @@ array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)</code></pre>
 <li>训练和测试过程中需要监控的指标，比如这个例子里，我们只关心一个指标 —— 预测的精度</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">network.<span class="built_in">compile</span>(loss=<span class="string">&quot;categorical_crossentropy&quot;</span>,</span><br><span class="line">                optimizer=<span class="string">&#x27;rmsprop&#x27;</span>,</span><br><span class="line">                metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
 <h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><h4 id="图形处理"><a href="#图形处理" class="headerlink" title="图形处理"></a>图形处理</h4><p>我们还需要处理一下图形数据，把它变成我们的网络认识的样子。</p>
 <p>MNIST 数据集里的图片是 28x28 的，每个值是属于 [0, 255] 的 uint8。<br>而我们的神经网络想要的是 28x28 的在 [0, 1] 中的 float32。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">train_images = train_images.reshape((<span class="number">60000</span>, <span class="number">28</span> * <span class="number">28</span>))</span><br><span class="line">train_images = train_images.astype(<span class="string">&#x27;float32&#x27;</span>) / <span class="number">255</span></span><br><span class="line"></span><br><span class="line">test_images = test_images.reshape((<span class="number">10000</span>, <span class="number">28</span> * <span class="number">28</span>))</span><br><span class="line">test_images = test_images.astype(<span class="string">&#x27;float32&#x27;</span>) / <span class="number">255</span></span><br></pre></td></tr></table></figure>
+
 <h4 id="标签处理"><a href="#标签处理" class="headerlink" title="标签处理"></a>标签处理</h4><p>同样，标签也是需要处理一下的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.utils <span class="keyword">import</span> to_categorical</span><br><span class="line"></span><br><span class="line">train_labels = to_categorical(train_labels)</span><br><span class="line">test_labels = to_categorical(test_labels)</span><br></pre></td></tr></table></figure>
+
 <h3 id="训练网络"><a href="#训练网络" class="headerlink" title="训练网络"></a>训练网络</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">network.fit(train_images, train_labels, epochs=<span class="number">5</span>, batch_size=<span class="number">128</span>)</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
 <pre><code>Train on 60000 samples
@@ -238,16 +243,20 @@ test_acc: 0.9789</code></pre>
 <h3 id="认识张量"><a href="#认识张量" class="headerlink" title="认识张量"></a>认识张量</h3><h4 id="标量-0D-Tensors"><a href="#标量-0D-Tensors" class="headerlink" title="标量 (0D Tensors)"></a>标量 (0D Tensors)</h4><p>Scalars，标量是 0 维的张量（0个轴），包含一个数。</p>
 <p>标量在 numpy 中可以用 float32 或 float64 表示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array(<span class="number">12</span>)</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
+
 <p>输出：</p>
 <pre><code>array(12)</code></pre>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.ndim    <span class="comment"># 轴数（维数）</span></span><br></pre></td></tr></table></figure>
+
 <p>输出：</p>
 <pre><code>1</code></pre>
 <h4 id="向量-1D-Tensors"><a href="#向量-1D-Tensors" class="headerlink" title="向量 (1D Tensors)"></a>向量 (1D Tensors)</h4><p>Vectors，向量是 1 维张量（有1个轴），包含一列标量（就是搞个array装标量）。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
+
 <p>输出：</p>
 <pre><code>array([1, 2, 3, 4, 5])</code></pre>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.ndim</span><br></pre></td></tr></table></figure>
+
 <p>输出：</p>
 <pre><code>1</code></pre>
 <p>我们把这样有5个元素的向量叫做“5维向量”。<br>但注意<strong>5D向量</strong>可不是<strong>5D张量</strong>！</p>
@@ -259,16 +268,19 @@ test_acc: 0.9789</code></pre>
 <p>所以，我们最好换种说法，用「阶」来表示轴数，说 <strong>5阶张量</strong>。</p>
 <h4 id="矩阵-2D-Tensors"><a href="#矩阵-2D-Tensors" class="headerlink" title="矩阵 (2D Tensors)"></a>矩阵 (2D Tensors)</h4><p>Matrices，矩阵是 2 阶张量（2个轴，就是我们说的「行」和「列」），包含一列向量（就是搞个array装向量）。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([[<span class="number">5</span>, <span class="number">78</span>, <span class="number">2</span>, <span class="number">34</span>, <span class="number">0</span>],</span><br><span class="line">              [<span class="number">6</span>, <span class="number">79</span>, <span class="number">3</span>, <span class="number">35</span>, <span class="number">1</span>],</span><br><span class="line">              [<span class="number">7</span>, <span class="number">80</span>, <span class="number">4</span>, <span class="number">36</span>, <span class="number">2</span>]])</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
+
 <p>输出：</p>
 <pre><code>array([[ 5, 78,  2, 34,  0],
        [ 6, 79,  3, 35,  1],
        [ 7, 80,  4, 36,  2]])</code></pre>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.ndim</span><br></pre></td></tr></table></figure>
+
 <p>输出：</p>
 <pre><code>2</code></pre>
 <h4 id="高阶张量"><a href="#高阶张量" class="headerlink" title="高阶张量"></a>高阶张量</h4><p>你搞个装矩阵的 array 就得到了3阶张量。</p>
 <p>再搞个装3阶张量的 array 就得到了4阶张量，依次类推，就有高阶张量了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([[[<span class="number">5</span>, <span class="number">78</span>, <span class="number">2</span>, <span class="number">34</span>, <span class="number">0</span>],</span><br><span class="line">               [<span class="number">6</span>, <span class="number">79</span>, <span class="number">3</span>, <span class="number">35</span>, <span class="number">1</span>],</span><br><span class="line">               [<span class="number">7</span>, <span class="number">80</span>, <span class="number">4</span>, <span class="number">36</span>, <span class="number">2</span>]],</span><br><span class="line">              [[<span class="number">5</span>, <span class="number">78</span>, <span class="number">2</span>, <span class="number">34</span>, <span class="number">0</span>],</span><br><span class="line">               [<span class="number">6</span>, <span class="number">79</span>, <span class="number">3</span>, <span class="number">35</span>, <span class="number">1</span>],</span><br><span class="line">               [<span class="number">7</span>, <span class="number">80</span>, <span class="number">4</span>, <span class="number">36</span>, <span class="number">2</span>]],</span><br><span class="line">              [[<span class="number">5</span>, <span class="number">78</span>, <span class="number">2</span>, <span class="number">34</span>, <span class="number">0</span>],</span><br><span class="line">               [<span class="number">6</span>, <span class="number">79</span>, <span class="number">3</span>, <span class="number">35</span>, <span class="number">1</span>],</span><br><span class="line">               [<span class="number">7</span>, <span class="number">80</span>, <span class="number">4</span>, <span class="number">36</span>, <span class="number">2</span>]]])</span><br><span class="line">x.ndim</span><br></pre></td></tr></table></figure>
+
 <p>输出：</p>
 <pre><code>3</code></pre>
 <p>深度学习里，我们一般就用0～4阶的张量。</p>
@@ -286,6 +298,7 @@ uint8</code></pre>
 <p>所以 train_images 是个8位无符号整数的3阶张量。</p>
 <p>打印个里面的图片看看：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">digit = train_images[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;image:&quot;</span>)</span><br><span class="line">plt.imshow(digit, cmap=plt.cm.binary)</span><br><span class="line">plt.show()</span><br><span class="line">print(<span class="string">&quot;label: &quot;</span>, train_labels[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
 <p>输出：</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gepeqfrnx9j3073070747.jpg" alt="一张图片，显示了一个位于图像中央的数字5"></p>
 <pre><code>label:  5</code></pre>
@@ -312,6 +325,7 @@ uint8</code></pre>
 <p>深度学习里，我们一般不会一次性处理整个数据集，我们一批一批地处理。</p>
 <p>在 MNIST 中，我们的一个批量是 128 个数据：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一批</span></span><br><span class="line">batch = train_images[:<span class="number">128</span>]</span><br><span class="line"><span class="comment"># 第二批</span></span><br><span class="line">batch = train_images[<span class="number">128</span>:<span class="number">256</span>]</span><br><span class="line"><span class="comment"># 第n批</span></span><br><span class="line">n = <span class="number">12</span></span><br><span class="line">batch = train_images[<span class="number">128</span> * n : <span class="number">128</span> * (n+<span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
+
 <p>所以，在使用 batch 的时候，我们也把第一个轴叫做「批量轴」。</p>
 <h3 id="常见数据张量表示"><a href="#常见数据张量表示" class="headerlink" title="常见数据张量表示"></a>常见数据张量表示</h3><table>
 <thead>
@@ -344,12 +358,15 @@ uint8</code></pre>
 </tbody></table>
 <h2 id="神经网络的“齿轮”-张量运算"><a href="#神经网络的“齿轮”-张量运算" class="headerlink" title="神经网络的“齿轮”: 张量运算"></a>神经网络的“齿轮”: 张量运算</h2><p>在我们的第一个神经网络例子中(MNIST)，我们的每一层其实都是对输入数据做了类似如下的运算：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output &#x3D; relu(dot(W, input) + b)</span><br></pre></td></tr></table></figure>
+
 <p>input 是输入，<br>W 和 b 是层的属性，<br>output 是输出。</p>
 <p>这些东西之间做了 relu、dot、add 运算，<br>接下来我们会解释这些运算。</p>
 <h3 id="逐元素操作-Element-wise"><a href="#逐元素操作-Element-wise" class="headerlink" title="逐元素操作(Element-wise)"></a>逐元素操作(Element-wise)</h3><p>Element-wise 的操作，就是分别对张量中的每一个元素作用。<br>比如，我们实现一个简单的 <code>relu</code> （<code>relu(x) = max(x, 0)</code>）:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_relu</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(x.shape) == <span class="number">2</span>    <span class="comment"># x is a 2D Numpy tensor.</span></span><br><span class="line">    x = x.copy()    <span class="comment"># Avoid overwriting the input tensor.</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">1</span>]):</span><br><span class="line">            x[i, j] = <span class="built_in">max</span>(x[i, j], <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+
 <p>加法也是逐元素操作：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_add</span>(<span class="params">x, y</span>):</span></span><br><span class="line">    <span class="comment"># assert x and y are 2D Numpy tensors and have the same shape.</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(x.shape) == <span class="number">2</span></span><br><span class="line">    <span class="keyword">assert</span> x.shape == y.shape</span><br><span class="line">    </span><br><span class="line">    x = x.copy()    <span class="comment"># Avoid overwriting the input tensor.</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">1</span>]):</span><br><span class="line">            x[i, j] += y[i, j]</span><br><span class="line">    <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+
 <p>在 Numpy 里，这些都写好了。 具体的运算是交给 C 或 Fortran 写的 BLAS 进行的，速度很高。</p>
 <p>你可以这样查看有没有装 BLAS：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">np.show_config()</span><br></pre></td></tr></table></figure>
@@ -393,6 +410,7 @@ lapack_opt_info:
 <p>具体来说，可以通过广播，对形状为 <code>(a, b, ..., n, n+1, ..., m)</code> 和 <code>(n, n+1, ..., m)</code> 的两个张量进行逐元素运算。</p>
 <p>比如：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = np.random.random((<span class="number">64</span>, <span class="number">3</span>, <span class="number">32</span>, <span class="number">10</span>))    <span class="comment"># x is a random tensor with shape (64, 3, 32, 10).</span></span><br><span class="line">y = np.random.random((<span class="number">32</span>, <span class="number">10</span>))    <span class="comment"># y is a random tensor with shape (32, 10).</span></span><br><span class="line">z = np.maximum(x, y)    <span class="comment"># The output z has shape (64, 3, 32, 10) like x.</span></span><br></pre></td></tr></table></figure>
+
 <p>广播的操作如下：</p>
 <ol>
 <li>小张量增加轴（广播轴），加到和大的一样（ndim）</li>
@@ -413,6 +431,7 @@ Step 2: repeat y 32 times alongside this new axis: Y -&gt; (32, 10)</code></pre>
 <p>点积的操作可以从如下的简单程序中看出：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 向量点积</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_vector_dot</span>(<span class="params">x, y</span>):</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(x.shape) == <span class="number">1</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(y.shape) == <span class="number">1</span></span><br><span class="line">    <span class="keyword">assert</span> x.shape[<span class="number">0</span>] == y.shape[<span class="number">0</span>]</span><br><span class="line">    </span><br><span class="line">    z = <span class="number">0.</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">0</span>]):</span><br><span class="line">        z += x[i] * y[i]</span><br><span class="line">    <span class="keyword">return</span> z</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 矩阵与向量点积</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_matrix_vector_dot</span>(<span class="params">x, y</span>):</span></span><br><span class="line">    z = np.zeros(x.shape[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">0</span>]):</span><br><span class="line">        z[i] = naive_vector_dot(x[i, :], y)</span><br><span class="line">    <span class="keyword">return</span> z</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 矩阵点积</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_matrix_dot</span>(<span class="params">x, y</span>):</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(x.shape) == <span class="number">2</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(y.shape) == <span class="number">2</span></span><br><span class="line">    <span class="keyword">assert</span> x.shape[<span class="number">1</span>] == y.shape[<span class="number">0</span>]</span><br><span class="line">    </span><br><span class="line">    z = np.zeros((x.shape[<span class="number">0</span>], y.shape[<span class="number">1</span>]))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(y.shape[<span class="number">1</span>]):</span><br><span class="line">            row_x = x[i, :]</span><br><span class="line">            column_y = y[:, j]</span><br><span class="line">            z[i, j] = naive_vector_dot(row_x, column_y)</span><br><span class="line">    <span class="keyword">return</span> z</span><br></pre></td></tr></table></figure>
 
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">              [-<span class="number">1</span>, <span class="number">2</span>, -<span class="number">3</span>],</span><br><span class="line">              [<span class="number">3</span>, -<span class="number">1</span>, <span class="number">4</span>]])</span><br><span class="line">b = np.array([[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>], </span><br><span class="line">              [-<span class="number">2</span>, -<span class="number">3</span>, <span class="number">1</span>], </span><br><span class="line">              [<span class="number">1</span>, <span class="number">0</span>, <span class="number">4</span>]])</span><br><span class="line">naive_matrix_dot(a, b)</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
 <pre><code>array([[  5.,   1.,  22.],
@@ -420,6 +439,7 @@ Step 2: repeat y 32 times alongside this new axis: Y -&gt; (32, 10)</code></pre>
        [ 24.,  24.,  39.]])</code></pre>
 <p>对于高维的张量点积，其实也是一样的。<br>例如，(这说的是shape哈)：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(a, b, c, d) . (d,) -&gt; (a, b, c)</span><br><span class="line">(a, b, c, d) . (d, e) -&gt; (a, b, c, e)</span><br></pre></td></tr></table></figure>
+
 <h3 id="张量变形-reshaping"><a href="#张量变形-reshaping" class="headerlink" title="张量变形(reshaping)"></a>张量变形(reshaping)</h3><p>这个操作，简言之就是，，，还是那些元素，只是排列的方式变了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([[<span class="number">0.</span>, <span class="number">1.</span>],</span><br><span class="line">              [<span class="number">2.</span>, <span class="number">3.</span>],</span><br><span class="line">              [<span class="number">4.</span>, <span class="number">5.</span>]])</span><br><span class="line">print(x.shape)</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
@@ -443,6 +463,7 @@ Step 2: repeat y 32 times alongside this new axis: Y -&gt; (32, 10)</code></pre>
 <pre><code>(20, 300)</code></pre>
 <h2 id="神经网络的“引擎”-基于梯度的优化"><a href="#神经网络的“引擎”-基于梯度的优化" class="headerlink" title="神经网络的“引擎”: 基于梯度的优化"></a>神经网络的“引擎”: 基于梯度的优化</h2><p>再看一次我们的第一个神经网络例子中(MNIST)，每一层对输入数据做的运算：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output &#x3D; relu(dot(W, input) + b)</span><br></pre></td></tr></table></figure>
+
 <p>这个式子里：W 和 b 是层的属性（权重，或着说可训练参数）。<br>具体来说，</p>
 <ul>
 <li><code>W</code> 是 kernel 属性；</li>
@@ -464,11 +485,14 @@ Step 2: repeat y 32 times alongside this new axis: Y -&gt; (32, 10)</code></pre>
 <h3 id="梯度-gradient"><a href="#梯度-gradient" class="headerlink" title="梯度(gradient)"></a>梯度(gradient)</h3><p>「梯度」是张量运算的导数。或者说「梯度」是「导数」在多元函数上的推广。<br>某点的梯度代表的是该点的曲率。</p>
 <p>考虑:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">y_pred &#x3D; dot(W, x)</span><br><span class="line">loss_value &#x3D; loss(y_pred, y)</span><br></pre></td></tr></table></figure>
+
 <p>若固定 x 和 y，则 loss_value 将是一个 W 的函数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss_value &#x3D; f(W)</span><br></pre></td></tr></table></figure>
+
 <p>设当前点为 <code>W0</code>，<br>则 f 在 W0 的导数(梯度)记为 <code>gradient(f)(W0)</code>，<br>这个梯度值与 W 同型。<br>其中每个元素 <code>gradient(f) (W0)[i, j]</code> 代表改变 <code>W0[i, j]</code> 时，f 的变化方向及大小。</p>
 <p>所以，要改变 W 的值来实现 <code>min f</code>，就可以向梯度的反方向（即<strong>梯度下降</strong>的方向）移动：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">W1 &#x3D; W0 - step * gradient(f)(W0)</span><br></pre></td></tr></table></figure>
+
 
 <h3 id="随机梯度下降-Stochastic-gradient-descent"><a href="#随机梯度下降-Stochastic-gradient-descent" class="headerlink" title="随机梯度下降(Stochastic gradient descent)"></a>随机梯度下降(Stochastic gradient descent)</h3><p>理论上，给定一个可微函数，其最小值一定在导数为0的点中取到。所以我们只有求出所有导数为0的点，比较其函数值，就可以得到最小值。</p>
 <p>这个方法放到神经网络中，就需要解一个关于 <code>W</code> 的方程 <code>gradient(f)(W) = 0</code>，这是个 N 元方程（N=神经网络中参数个数），而实际上N一般不会少于1k，这使得解这个方程变得几乎不可行。</p>
@@ -489,8 +513,10 @@ Step 2: repeat y 32 times alongside this new axis: Y -&gt; (32, 10)</code></pre>
 <p>这里的动量就是来自物理的那个动量概念。我们可以想象，一个小球在损失曲面上往下(梯度下降的方向)滚，如果有足够的动量，它就可以“冲过”局部最小值，不被困在那里。<br>在这个例子中，小球的运动不但被当前位置的坡度（当前的加速度）决定，还受当前的速度（这取决于之前的加速度）的影响。</p>
 <p>这个思想放到神经网络中，也就是，一次权重值的更新，不但看当前的梯度，还要看上一次权重更新：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># naive implementation of Optimization with momentum</span></span><br><span class="line">past_velocity = <span class="number">0.</span></span><br><span class="line">momentum = <span class="number">0.1</span>    <span class="comment"># Constant momentum factor</span></span><br><span class="line"><span class="keyword">while</span> loss &gt; <span class="number">0.01</span>:    <span class="comment"># Optimization loop</span></span><br><span class="line">    w, loss, gradient = get_current_parameters()</span><br><span class="line">    velocity = past_velocity * momentum + learning_rate * gradient</span><br><span class="line">    w = w + momentum * velocity - learning_rate * gradient</span><br><span class="line">    past_velocity = velocity</span><br><span class="line">    update_parameter(w)</span><br></pre></td></tr></table></figure>
+
 <h3 id="反向传播算法：链式求导"><a href="#反向传播算法：链式求导" class="headerlink" title="反向传播算法：链式求导"></a>反向传播算法：链式求导</h3><p>神经网络是一大堆张量操作链式和在一起的，比如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(W1, W2, W3) &#x3D; a(W1, b(W2, c(W3)))    # 其中 W1, W2, W3 是权重</span><br></pre></td></tr></table></figure>
+
 <p>微积分里有个「链式法则(chain rule)」可以给这种复合函数求导：<code>f(g(x)) = f&#39;(g(x)) * g&#39;(x)</code></p>
 <p>把这个链式法则用到神经网络就搞出了一个叫「反向传播(Backpropagation)」的算法，<br>这个算法也叫「反式微分(reverse-mode differentiation)」。</p>
 <p>反向传播从最终算出的损失出发，从神经网络的最顶层反向作用至最底层，用这个链式法则算出每层里每个参数对于损失的贡献大小。</p>
@@ -564,7 +590,7 @@ Step 2: repeat y 32 times alongside this new axis: Y -&gt; (32, 10)</code></pre>
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

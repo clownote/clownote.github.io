@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Leetcode 78. 子集题目给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。 说明：解集不能包含重复的子集。 示例: 123456789101112输入: nums &#x3D; [1,2,3]输出:[  [3],  [1],  [2],  [1,2,3],  [1,3],  [2,3],  [1,2],  []] 来源：力扣（LeetCode）链接：https:">
+    <meta name="description" content="Leetcode 78. 子集题目给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。 说明：解集不能包含重复的子集。 示例: 123456789101112输入: nums &#x3D; [1,2,3]输出:[  [3],  [1],  [2],  [1,2,3],  [1,3],  [2,3],  [1,2],  []]  来源：力扣（LeetCode）链接：https">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 78. 子集">
 <meta property="og:url" content="https://clownote.github.io/2020/04/14/School/Leetcode_P78_subsets/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode 78. 子集题目给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。 说明：解集不能包含重复的子集。 示例: 123456789101112输入: nums &#x3D; [1,2,3]输出:[  [3],  [1],  [2],  [1,2,3],  [1,3],  [2,3],  [1,2],  []] 来源：力扣（LeetCode）链接：https:">
+<meta property="og:description" content="Leetcode 78. 子集题目给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。 说明：解集不能包含重复的子集。 示例: 123456789101112输入: nums &#x3D; [1,2,3]输出:[  [3],  [1],  [2],  [1,2,3],  [1,3],  [2,3],  [1,2],  []]  来源：力扣（LeetCode）链接：https">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gdt1clsxr0j31c60u0not.jpg">
 <meta property="article:published_time" content="2020-04-14T09:34:39.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.398Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.478Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="School">
 <meta name="twitter:card" content="summary">
@@ -57,7 +57,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -141,7 +141,7 @@
       
         <time datetime="2020-04-14T09:34:39.000Z" itemprop="datePublished">2020-04-14</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.398Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.478Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -165,15 +165,20 @@
 <p>说明：解集不能包含重复的子集。</p>
 <p>示例:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入: nums &#x3D; [1,2,3]</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [3],</span><br><span class="line">  [1],</span><br><span class="line">  [2],</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3],</span><br><span class="line">  [2,3],</span><br><span class="line">  [1,2],</span><br><span class="line">  []</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
 <p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/subsets">https://leetcode-cn.com/problems/subsets</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><p>其实嘛，取子集这件事情，对每一个元素就两种状态，取和不取，共有 $2^{len(nums)}$种可能。这可以直接用一个二进制 bit （boolean）位向量表示:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">幂集 = [</span><br><span class="line">    [],</span><br><span class="line">    [<span class="number">1</span>],</span><br><span class="line">    [<span class="number">2</span>],</span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>],</span><br><span class="line">    [<span class="number">3</span>],</span><br><span class="line">    [<span class="number">1</span>,<span class="number">3</span>],</span><br><span class="line">    [<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 0 表示不取</span></span><br><span class="line"><span class="comment"># 1 表示取</span></span><br><span class="line">对应取的状态 = [</span><br><span class="line">    [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">    [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">    [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">    [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
 <p>可以看到，所有对应取的状态合在一起，其实就是遍历了 <code>len(nums)</code> 位的二进制位向量所有可能的取值。如果用整数表示二进制位向量，即遍历 <code>[0, 1 &lt;&lt; len(nums) - 1]</code> 。这样实现起来很简单了，跑一个循环就行：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1</span> &lt;&lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在这个遍历里，把二进制位向量映射到原数组的索引，就能取出一个子集了：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">s := []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line"><span class="keyword">for</span> j, ii := <span class="number">0</span>, i; j &lt; <span class="built_in">len</span>(nums); j, ii = j+<span class="number">1</span>, ii&gt;&gt;<span class="number">1</span> &#123;</span><br><span class="line">    <span class="comment">// 这个 for 其实就是每次从低位端 pop 一个位出来，这个位对应一个索引嘛</span></span><br><span class="line">    <span class="comment">// pop 出的是 1 就取这个索引处的元素进子集</span></span><br><span class="line">    <span class="keyword">if</span> ii &amp; <span class="number">1</span> == <span class="number">1</span> &#123;</span><br><span class="line">        s = <span class="built_in">append</span>(s, nums[j])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>合在一起，就有了完整的 Golang 实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">subsets</span><span class="params">(nums []<span class="keyword">int</span>)</span> [][]<span class="title">int</span></span> &#123;</span><br><span class="line">    subs := [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1</span> &lt;&lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        s := []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> j, ii := <span class="number">0</span>, i; j &lt; <span class="built_in">len</span>(nums); j, ii = j+<span class="number">1</span>, ii&gt;&gt;<span class="number">1</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> ii &amp; <span class="number">1</span> == <span class="number">1</span> &#123;</span><br><span class="line">                s = <span class="built_in">append</span>(s, nums[j])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        subs = <span class="built_in">append</span>(subs, s)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> subs</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>啊，我写不清这个，，，我觉得二进制、位运算这种东西相当自然，就像我们算 1 + 1 很自然就得到了 2，用二进制位向量是一种很自然的事，它就该这么用，所有反倒难以解释了😂</p>
 <p>也许这不是一个很好的思路，但从结果上来看，这个算法还是比较快的：</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gdt1clsxr0j31c60u0not.jpg" alt="屏幕快照 2020-04-14 08.50.13"></p>
@@ -246,7 +251,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

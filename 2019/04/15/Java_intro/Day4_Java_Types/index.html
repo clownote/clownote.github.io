@@ -14,7 +14,7 @@
 <meta property="og:description" content="Java 基本数据类型Java 的两大数据类型:  内置数据类型 引用数据类型  内置数据类型对于每一种 数据类型 都有一个 包装类，如：void类型的包装类是 java.lang.Void。 对于数值类型的包装类，我们都可以从中获取对应类型的二进制位数、取值范围。    原语 对应的 JDK 类    boolean java.lang.Boolean   byte java.lang.Byte">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-04-15T16:37:53.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.386Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.466Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2019-04-15T16:37:53.000Z" itemprop="datePublished">2019-04-15</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.386Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.466Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -255,6 +255,7 @@
 </tbody></table>
 <p>整型字面值常量都可以用十(正常书写)、八(以<code>0</code>开头)、十六(以<code>0x</code>开头)进制表示：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int decimal &#x3D; 100;</span><br><span class="line">int octal &#x3D; 0114;</span><br><span class="line">int hexadecimal &#x3D; 0x64;</span><br></pre></td></tr></table></figure>
+
 <h3 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h3><blockquote>
 <p>浮点数不能用来表示精确的值。</p>
 </blockquote>
@@ -322,8 +323,10 @@
 <p>引用变量一旦声明后，类型就不能被改变了，但一个引用变量可以用来引用任何与之兼容的类型。</p>
 <h2 id="Java-变量"><a href="#Java-变量" class="headerlink" title="Java 变量"></a>Java 变量</h2><p>声明一个变量，需要使用如下的格式的语句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type varName;</span><br></pre></td></tr></table></figure>
+
 <p>也可以在声明的同时，对它初始化：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type varName &#x3D; initialValue;</span><br></pre></td></tr></table></figure>
+
 <p>【注】初始化一个对象时，使用：<code>ClassName instanceName = new ClassName();</code></p>
 <h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>常量在程序运行时是不能被修改的。</p>
 <h4 id="字面值常量"><a href="#字面值常量" class="headerlink" title="字面值常量"></a>字面值常量</h4><p>字面值常量，就是直接在程序里写一个值，比如 <code>100</code>, <code>-100.0</code>, <code>&#39;A&#39;</code>…<br>这个东西很好理解，特殊的已经在上面的内置类型表格中有说明了。</p>
@@ -331,9 +334,11 @@
 <h4 id="声明常量"><a href="#声明常量" class="headerlink" title="声明常量"></a>声明常量</h4><p>我们也可以像声明变量一样声明一个常量。</p>
 <p>在 Java 中，使用 <code>final</code> 关键字来修饰常量，声明方式和变量类似：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final double PI &#x3D; 3.1415927;</span><br></pre></td></tr></table></figure>
+
 <p>按照惯例，常量名应该用<strong>全部大写</strong>的名称表示。</p>
 <h4 id="字符串常量"><a href="#字符串常量" class="headerlink" title="字符串常量"></a>字符串常量</h4><p>和其他语言一样，Java的字符串常量也是包含在两个引号之间的字符序列，其中可以使用转义字符，也可以含有Unicode字符：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;Hello World&quot;</span><br><span class="line">&quot;two\nlines&quot;</span><br><span class="line">&quot;\&quot;This is in quotes\&quot;&quot;</span><br><span class="line">&quot;\u0001&quot;</span><br></pre></td></tr></table></figure>
+
 <p>常用的转义字符如下：</p>
 <table>
 <thead>
@@ -397,14 +402,17 @@
 </ol>
 <h4 id="自动类型转换"><a href="#自动类型转换" class="headerlink" title="自动类型转换"></a>自动类型转换</h4><p>在自动类型转换中，类型总是从<strong>低级</strong>到<strong>高级</strong>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">低  ----------------------------------------&gt;  高</span><br><span class="line"></span><br><span class="line">byte, short, char —&gt; int —&gt; long —&gt; float —&gt; double </span><br></pre></td></tr></table></figure>
+
 <p>⚠️【注意】在进行整数运算时，如果是两个比int类型小的类型做运算，java在编译的时候就会将它们统一强转成int类型。当有比int类型大的类型运算时，会自动转换成它们中最大类型那个。</p>
 <h4 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h4><p>通过下面这种语句可以强制类型转化：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(type)value</span><br></pre></td></tr></table></figure>
+
 <p>⚠️【注意】转换的数据类型必须是兼容的。</p>
 <h4 id="数据类型转换的补充"><a href="#数据类型转换的补充" class="headerlink" title="数据类型转换的补充"></a>数据类型转换的补充</h4><h5 id="1、包装类过渡类型转换"><a href="#1、包装类过渡类型转换" class="headerlink" title="1、包装类过渡类型转换"></a>1、包装类过渡类型转换</h5><p>一般情况下，我们首先声明一个变量，然后生成一个对应的包装类，就可以利用包装类的各种方法进行类型转换了。</p>
 <p>例如：</p>
 <p>当希望把float型转换为double型时：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span> f1 = <span class="number">100.00f</span>;</span><br><span class="line">Float F1 = <span class="keyword">new</span> Float(f1);</span><br><span class="line"><span class="keyword">double</span> d1 = F1.doubleValue();     <span class="comment">//F1.doubleValue()为Float类的返回double值型的方法</span></span><br></pre></td></tr></table></figure>
+
 <p>简单类型的变量转换为相应的包装类，可以利用包装类的构造函数。<br>即：<code>Boolean(boolean value)、Character(char value)</code>、<code>Integer(int value)</code>、<code>Long(long value)</code>、<code>Float(float value)</code>、<code>Double(double value)</code>。</p>
 <p>而在各个包装类中，总有形为 <code>××Value()</code> 的方法，来得到其对应的简单类型数据。<br>利用这种方法，也可以实现不同数值型变量间的转换。<br>例如，对于一个双精度实型类，<code>intValue()</code> 可以得到其对应的整型变量，而 <code>doubleValue()</code> 可以得到其对应的双精度实型变量。</p>
 <h5 id="2、字符串与其它类型间的转换"><a href="#2、字符串与其它类型间的转换" class="headerlink" title="2、字符串与其它类型间的转换"></a>2、字符串与其它类型间的转换</h5><h6 id="其它类型向字符串的转换"><a href="#其它类型向字符串的转换" class="headerlink" title="其它类型向字符串的转换"></a>其它类型向字符串的转换</h6><ol>
@@ -414,6 +422,7 @@
 </ol>
 <p>⚠️【注意】在使用 <code>2</code> 时需要注意：<strong>任何字符类型与字符串相加，结果都是拼接。</strong><br>例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="keyword">null</span>;</span><br><span class="line">s += <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">System.out.println(s);  <span class="comment">// 输出 nullhello</span></span><br></pre></td></tr></table></figure>
+
 <h6 id="字符串作为值-向其它类型的转换"><a href="#字符串作为值-向其它类型的转换" class="headerlink" title="字符串作为值,向其它类型的转换"></a>字符串作为值,向其它类型的转换</h6><ol>
 <li>先转换成相应的封装器实例,再调用对应的方法转换成其它类型</li>
 </ol>
@@ -423,6 +432,7 @@
 <li>静态parseXXX方法</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">&quot;1&quot;</span>;</span><br><span class="line"><span class="keyword">byte</span> b = Byte.parseByte( s );</span><br><span class="line"><span class="keyword">short</span> t = Short.parseShort( s );</span><br><span class="line"><span class="keyword">int</span> i = Integer.parseInt( s );</span><br><span class="line"><span class="keyword">long</span> l = Long.parseLong( s );</span><br><span class="line">Float f = Float.parseFloat( s );</span><br><span class="line">Double d = Double.parseDouble( s );</span><br></pre></td></tr></table></figure>
+
 <h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ol>
 <li>只有 boolean 不参与数据类型的转换</li>
 <li>自动类型的转换：<ul>
@@ -504,7 +514,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

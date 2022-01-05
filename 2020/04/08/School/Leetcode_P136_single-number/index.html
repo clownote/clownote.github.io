@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4 来源：力扣（LeetCode）链接：https:&#x2F;&#x2F;leetco">
+    <meta name="description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1   示例 2: 12输入: [4,1,2,1,2]输出: 4  来源：力扣（LeetCode）链接：https:&#x2F;&#x2F;leet">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 136. 只出现一次的数字">
 <meta property="og:url" content="https://clownote.github.io/2020/04/08/School/Leetcode_P136_single-number/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1  示例 2: 12输入: [4,1,2,1,2]输出: 4 来源：力扣（LeetCode）链接：https:&#x2F;&#x2F;leetco">
+<meta property="og:description" content="Leetcode 136. 只出现一次的数字题目给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。 说明： 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？ 示例 1: 12输入: [2,2,1]输出: 1   示例 2: 12输入: [4,1,2,1,2]输出: 4  来源：力扣（LeetCode）链接：https:&#x2F;&#x2F;leet">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gdmdhgx8xwj317x0u04qd.jpg">
 <meta property="article:published_time" content="2020-04-08T14:57:55.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.398Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.478Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="School">
 <meta name="twitter:card" content="summary">
@@ -57,7 +57,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -141,7 +141,7 @@
       
         <time datetime="2020-04-08T14:57:55.000Z" itemprop="datePublished">2020-04-08</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.398Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.478Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -167,11 +167,14 @@
 <p>示例 1:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [2,2,1]</span><br><span class="line">输出: 1</span><br></pre></td></tr></table></figure>
 
+
 <p>示例 2:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [4,1,2,1,2]</span><br><span class="line">输出: 4</span><br></pre></td></tr></table></figure>
+
 <p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/single-number">https://leetcode-cn.com/problems/single-number</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p>这道题最简单的方法，哈希表暴力存一下出现次数就好了。由于题目保证最多有出现两次，所以用个bool去存出现次数就行了，Golang 实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">singleNumber</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    memo := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">bool</span>)</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        memo[v] = !memo[v]</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">for</span> k, v := <span class="keyword">range</span> memo &#123;</span><br><span class="line">        <span class="keyword">if</span> v &#123;</span><br><span class="line">            <span class="keyword">return</span> k</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="异或"><a href="#异或" class="headerlink" title="异或"></a>异或</h2><p>按位异或（C风格写做 <code>^</code>）有很多有趣的性质，这道题可以用其中的一两个：</p>
 <ol>
 <li><code>x ^ x = 0</code></li>
@@ -179,11 +182,14 @@
 </ol>
 <p>其实这两个性质还是很显然的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  100110</span><br><span class="line">^ 100110</span><br><span class="line">--------</span><br><span class="line">  000000</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  000000</span><br><span class="line">^ 100110</span><br><span class="line">--------</span><br><span class="line">  100110</span><br></pre></td></tr></table></figure>
+
 <p>这两个性质合在一起就有：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a ^ a ^ b ^ b ^ ... ^ z &#x3D; z</span><br><span class="line">&#x2F;&#x2F; 省略的那里也是一对一对的，只有z是单独一个</span><br></pre></td></tr></table></figure>
+
 <p>这道题就解决了。</p>
 <p>Golang 实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">singleNumber</span><span class="params">(nums []<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    x := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        x ^= v</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gdmdhgx8xwj317x0u04qd.jpg" alt="image-20200408150554908"></p>
 
   </div>
@@ -254,7 +260,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

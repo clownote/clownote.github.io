@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gl041kzke7j30n50ai0u3.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwly1gl043el96rj30k303c3yq.jpg">
 <meta property="article:published_time" content="2020-11-24T12:32:38.584Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.422Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.498Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -58,7 +58,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -142,7 +142,7 @@
       
         <time datetime="2020-11-24T12:32:38.584Z" itemprop="datePublished">2020-11-24</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.422Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.498Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -171,11 +171,14 @@
 <p><code>changed files: Intro_sha</code> 莫名缺了一个 <code>m</code>。。。</p>
 <h2 id="问题定位"><a href="#问题定位" class="headerlink" title="问题定位"></a>问题定位</h2><p>打开工具脚本，找到写 Git 提交 message 的代码在这里：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">push</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    ...</span><br><span class="line">    names = <span class="built_in">map</span>(<span class="keyword">lambda</span> f: os.path.basename(f).rstrip(<span class="string">&#x27;.md&#x27;</span>), changed)</span><br><span class="line">    commit_msg = <span class="string">&#x27;changed files: &#x27;</span> + <span class="string">&#x27;, &#x27;</span>.join(names)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+
 <p><code>changed files</code> 的名字是通过一个作用于所有改变了的文件的 map 方法得到的。这个 map 做的工作是把文件的路径和 <code>.md</code> 后缀去掉（只是为了好看）。</p>
 <p>问题呼之欲出 —— <code>rstrip</code> 的错误使用。</p>
 <h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = <span class="string">&quot;emmm.md&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.rstrip(<span class="string">&#x27;.md&#x27;</span>)</span><br><span class="line"><span class="string">&#x27;e&#x27;</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="RTFM"><a href="#RTFM" class="headerlink" title="RTFM"></a>RTFM</h2><p>看一看 rstrip 的文档：<a target="_blank" rel="noopener" href="https://docs.python.org/3.7/library/stdtypes.html#str.rstrip">https://docs.python.org/3.7/library/stdtypes.html#str.rstrip</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.rstrip([chars])</span><br></pre></td></tr></table></figure>
+
 <p>里面写了：</p>
 <blockquote>
 <p>Return a copy of the string with trailing characters removed.<br>The chars argument is a string specifying the set of charactersto be removed.<br>The chars argument is not a suffix; rather, all combinations of its values are stripped.</p>
@@ -184,15 +187,19 @@
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>这个问题其实是个长期以来的痛点，StackOverflow 相关问题阅读量破万，问题活跃时长超过 7 年。以前我就碰到过，当时写这里的时候就有点感觉，似乎用 rstrip 好像不太妥当，但随便测试了几个例子没问题也就这么用了。</p>
 <h3 id="正则"><a href="#正则" class="headerlink" title="正则"></a>正则</h3><p>解决这种问题的一个方法是用正则：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">re.sub(<span class="string">&#x27;^&#x27;</span> + re.escape(prefix), <span class="string">&#x27;&#x27;</span>, s)  <span class="comment"># 删前缀</span></span><br><span class="line">re.sub(re.escape(suffix) + <span class="string">&#x27;$&#x27;</span>, <span class="string">&#x27;&#x27;</span>, s)  <span class="comment"># 删后缀</span></span><br></pre></td></tr></table></figure>
+
 <p>要导个包，麻烦。代码可读性也低，效率….估计也不怎么样。</p>
 <h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><p>另一种方法是用切片解决，代码可以封装地好看一点：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reference https://www.python.org/dev/peps/pep-0616/</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeprefix</span>(<span class="params">self: <span class="built_in">str</span>, prefix: <span class="built_in">str</span>, /</span>) -&gt; str:</span></span><br><span class="line">    <span class="keyword">if</span> self.startswith(prefix):</span><br><span class="line">        <span class="keyword">return</span> self[<span class="built_in">len</span>(prefix):]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> self[:]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">removesuffix</span>(<span class="params">self: <span class="built_in">str</span>, suffix: <span class="built_in">str</span>, /</span>) -&gt; str:</span></span><br><span class="line">    <span class="comment"># suffix=&#x27;&#x27; should not call self[:-0].</span></span><br><span class="line">    <span class="keyword">if</span> suffix <span class="keyword">and</span> self.endswith(suffix):</span><br><span class="line">        <span class="keyword">return</span> self[:-<span class="built_in">len</span>(suffix)]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> self[:]</span><br></pre></td></tr></table></figure>
+
 <h3 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h3><p>实际上，为了解决这种问题，<a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0616/">PEP 616 – String methods to remove prefixes and suffixes</a> 提出了专门用来删前缀/后缀的方法，这是 Python 3.9 的新特性：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s.removeprefix(<span class="string">&#x27;prefix&#x27;</span>)</span><br><span class="line">s.removesuffix(<span class="string">&#x27;suffix&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
 <p>P.S. 官方的 C 实现还是很有意思的，可以去看看：<a target="_blank" rel="noopener" href="https://github.com/python/cpython/pull/18939/files">cpython/pull/18939</a> 。</p>
 <p>但这里我的环境是 Python 3.7，所以只能用前两种方法手撸一个啦。</p>
 <h2 id="TL-DR-太长不看"><a href="#TL-DR-太长不看" class="headerlink" title="TL;DR 太长不看"></a>TL;DR 太长不看</h2><p>用 <code>str.rstrip</code> 来删除字符串后缀是错误的，这个方法会删除参数中各字符的任意组合。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = <span class="string">&quot;emmm.md&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.rstrip(<span class="string">&#x27;.md&#x27;</span>)</span><br><span class="line"><span class="string">&#x27;e&#x27;</span></span><br></pre></td></tr></table></figure>
+
 <p>解决方法：</p>
 <ol>
 <li>用 Python 3.9：<code>s.removesuffix(&#39;suffix&#39;)</code></li>
@@ -200,9 +207,11 @@
 <li>endswith + 切片：</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">removesuffix</span>(<span class="params">s: <span class="built_in">str</span>, suffix: <span class="built_in">str</span></span>) -&gt; str:</span></span><br><span class="line">    <span class="keyword">if</span> suffix <span class="keyword">and</span> self.endswith(suffix):</span><br><span class="line">        <span class="keyword">return</span> self[:-<span class="built_in">len</span>(suffix)]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> self[:]</span><br></pre></td></tr></table></figure>
+
 <hr>
 <p>好了，这节课我们不往下讲了，剩下的时间来做个小练习，看看今天的知识大家学废了吗。。。（**’蠢’.capitalize()**）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># See you!</span></span><br><span class="line"><span class="string">&#x27;CDFMLR 2020-11-24 11:22&#x27;</span>.rstrip(<span class="string">&#x27;:2333&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
 
   </div>
 </article>
@@ -272,7 +281,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

@@ -14,7 +14,7 @@
 <meta property="og:description" content="GitHub + Hexo &#x3D;&gt; 个人博客 打造一个个人博客其实很简单，我们不需要拥有一台服务器、甚至可以对 Web 开发不甚了解。  这篇文章记录我如何在 Mac 上通过 GitHub、Hexo 打造一个个人博客 —— clownote 起因我一直不喜欢 CSDN 和博客园等博客平台，但确实有写东西的习惯。写了东西就要发表，所以在之前，我把我学习计算机知识的笔记都放到了一个自己初学 Web">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-08-15T14:54:34.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.418Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.498Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Web">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2019-08-15T14:54:34.000Z" itemprop="datePublished">2019-08-15</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.418Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.498Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -174,6 +174,7 @@
 <h4 id="创建-GitHub-Pages"><a href="#创建-GitHub-Pages" class="headerlink" title="创建 GitHub Pages"></a>创建 GitHub Pages</h4><p>在您的 GitHub 中，<code>New</code> 一个 <code>Repository</code>，名字为 <code>&lt;userName&gt;.github.io</code>，其中的 <code>&lt;userName&gt;</code> 与您的 GitHub 用户名相同。</p>
 <p>注意，在这个新建的 Repository 的 <code>Settings</code> 中，您应该可以找到，有关 <code>GitHub Pages</code> 的设置里写了:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Your site is published at https:&#x2F;&#x2F;&lt;userName&gt;.github.io</span><br></pre></td></tr></table></figure>
+
 <p>这样就成了，否则请检查之前的步骤是否正确。</p>
 <h4 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h4><p>在安装 <code>Hexo</code> 前，需要确定电脑中是否已安装了：</p>
 <ul>
@@ -181,14 +182,19 @@
 <li><a target="_blank" rel="noopener" href="http://git-scm.com/">Git</a></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git --version</span><br><span class="line">$ node --version</span><br></pre></td></tr></table></figure>
+
 <p>如果没有，要先安装他们。接下来只需要使用 <code>npm</code> 即可完成 Hexo 的安装：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
 <h3 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>安装 Hexo 完成后，执行下列命令，Hexo 将会在指定文件夹中新建您的博客：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init &lt;folder&gt;</span><br><span class="line">$ cd &lt;folder&gt;</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
 <p>然后，可以看到指定文件夹的目录如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
+
 <h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>目录中的 <code>_config.yml</code> 是网站的配置信息，我们需要在此配置一些参数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat _config.yml</span><br><span class="line"># Hexo Configuration</span><br><span class="line">## Docs: https:&#x2F;&#x2F;hexo.io&#x2F;docs&#x2F;configuration.html</span><br><span class="line">## Source: https:&#x2F;&#x2F;github.com&#x2F;hexojs&#x2F;hexo&#x2F;</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
 <p>需要配置的项目有：</p>
 <table>
 <thead>
@@ -236,8 +242,10 @@
 </tbody></table>
 <p>需要说明的是，<code>deploy</code> 项的配置就可以把Hexo与GitHub关联起来，即将我们的博客<strong>推送</strong>到 GitHub，打开站点的配置文件_config.yml，<code>deploy</code> 项配置为：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span> </span><br><span class="line">	<span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">	<span class="attr">repo:</span> <span class="string">https://github.com/&lt;userName&gt;/&lt;userName&gt;.github.io</span></span><br><span class="line">	<span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
 <p>然后，我们需要让 Hexo 连接上我们的 GitHub：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br><span class="line"></span><br><span class="line">$ hexo clean</span><br><span class="line">$ hexo generate</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
 <p>每一条命令的作用都很直观。操作完之后你就会发现你的博客已经上线了，可以在网络上被访问了！</p>
 <h4 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h4><p>如果你像我一样，觉得 <code>Hexo</code> 自带的 <code>landscape</code> 主题不太好看，我们可以跟换一个主题。</p>
 <p>我们可以在 Hexo 官网上找到很丰富的 <a target="_blank" rel="noopener" href="https://hexo.io/themes/">主题资源</a>，具体的使用方法主题项目的 README 里会写明，照着做就行。</p>
@@ -246,12 +254,15 @@
 <li>下载、安装：</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd &lt;folder&gt;		# hexo init 的目录</span><br><span class="line">$ git clone https:&#x2F;&#x2F;github.com&#x2F;probberechts&#x2F;hexo-theme-cactus.git themes&#x2F;cactus		# 拷贝一份主题</span><br></pre></td></tr></table></figure>
+
 <ol start="2">
 <li>修改Hexo主题：</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim .&#x2F;config.yml</span><br></pre></td></tr></table></figure>
+
 <p>修改其中的 <code>theme</code> 属性：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># theme: landscape</span><br><span class="line">theme: cactus</span><br></pre></td></tr></table></figure>
+
 <ol start="3">
 <li>主题配置</li>
 </ol>
@@ -259,6 +270,7 @@
 <h3 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h3><p>其实到这里，我们的博客就已经构建完成了。接下来我们就可以用新建的博客系统写作了😊。</p>
 <h4 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h4><p>你可以执行下列命令来创建一篇新文章。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+
 <p>您可以在命令中指定文章的布局（layout），默认为 <code>post</code>，可以通过修改 <code>_config.yml</code> 中的 <code>default_layout</code> 参数来指定默认布局。</p>
 <p>可选的布局有：</p>
 <table>
@@ -287,11 +299,14 @@
 </tbody></table>
 <p><code>hexo new</code> 成功后，Hexo 会告诉你新建的文件路径，利用 markdown 编辑器打开它，就可以开始书写了，在我的 Mac 里，默认的 markdown 编辑器是 <code>Typora</code>，可以直接用 <code>open</code> 命令来用默认程序打开并编辑文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ open ~&#x2F;&lt;blogFolder&gt;&#x2F;source&#x2F;_drafts&lt;title&gt;.md</span><br></pre></td></tr></table></figure>
+
 <h4 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h4><p>我们在写文章时，可以先写草稿(draft)。草稿默认不会显示在页面中，您可在执行时加上 <code>--draft</code> 参数，或是把 <code>render_drafts</code> 参数设为 <code>true</code> 来预览草稿。</p>
 <p>文章写好后，通过 <code>publish</code> 命令将草稿移动到 <code>source/_posts</code> 文件夹：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo publish [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+
 <h4 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h4><p>Front-matter 是文件最上方以 <code>---</code> 分隔的区域，在里面写 YAML 配置，用于指定个别文件的变量，例如：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hello</span> <span class="string">World</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2013</span><span class="string">/7/13</span> <span class="number">20</span><span class="string">:46:25</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
 <p>以下是一些常用的参数：</p>
 <table>
 <thead>
@@ -351,12 +366,15 @@
 <p>分类和标签听起来很接近，但是在 Hexo 中两者有着明显的差别：<strong>分类(<code>categories</code>)</strong> 具有<em>顺序性</em>和<em>层次性</em>，也就是说 <code>Foo, Bar</code> 不等于 <code>Bar, Foo</code>；而 <strong>标签(<code>tags</code>)</strong> 没有顺序和层次。</p>
 <p>在 <code>Front-matter</code> 中，分类和标签的设置方法如下：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Diary</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">PS3</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Games</span></span><br></pre></td></tr></table></figure>
+
 <p>在使用 <code>categories</code> 时，请注意：</p>
 <p>Hexo不支持指定多个同级分类！下面的指定方法：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Diary</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Life</span></span><br></pre></td></tr></table></figure>
+
 <p>会使分类 <code>Life</code> 成为 <code>Diary</code> 的子分类，而不是 <em>并列分类</em>。因此，有必要为您的文章选择尽可能准确的分类。</p>
 <h4 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h4><p>在完成写作后，我们先保存编辑好的 markdown 文件，然后执行如下操作：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo publish post &lt;title&gt;.md		# 如果新建时 layout 为 draft</span><br><span class="line"></span><br><span class="line">$ hexo deploy --generate		# 生成文件完成后部署</span><br><span class="line">		# 可以简写为 &#96;$ hexo d -g&#96;</span><br></pre></td></tr></table></figure>
+
 <h4 id="操作总结"><a href="#操作总结" class="headerlink" title="操作总结"></a>操作总结</h4><p>现在，回顾一下我们用 Hexo 写作的过程:</p>
 <ol>
 <li><code>$ hexo new draft &lt;title&gt;</code></li>
@@ -372,16 +390,21 @@
 <p>其实，我们使用的 <code>Cactus</code> 主题中，已经包含了对搜索、评论的支持，直接使用即可。</p>
 <h4 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h4><p>安装 hexo 的搜索插件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
+
 <p>创建一个新页面，用来承载搜索功能：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page search</span><br></pre></td></tr></table></figure>
+
 <p>在 Front-matter 里加上 <code>type: search</code>：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Search</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">search</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
 <p>在 <code>themes/cactus/_config.yml</code> 里配置：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">/search/</span></span><br></pre></td></tr></table></figure>
+
 <h4 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h4><p> <code>Cactus</code> 主题为我们提供的评论工具是 <code>Disqus</code>，这是一个各方面都很好的评论系统，但有一点问题是，这个评论系统<strong>在国内无法使用</strong>，所以我们只是简单翻译一下官方的介绍：</p>
 <p>首先，在 Disqus 注册我们的站点: <a target="_blank" rel="noopener" href="http://disqus.com/admin/create/">https://disqus.com/admin/create/</a>.</p>
 <p>然后, 修改 <code>themes/cactus/_config.yml</code>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">disqus:</span><br><span class="line">  enabled: true</span><br><span class="line">  shortname: SITENAME</span><br></pre></td></tr></table></figure>
+
 <p>这里的 <code>SITENAME</code> 是在注册 Disqus 时，你给你的站点填写的名字。</p>
 <h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>好了，我们的博客网站建好了。由于我最迫切的需求就是快速的完成博客建站，所以多余的东西我都没有研究，但其实 Hexo 还可以有很多拓展，GitHub Pages 也还有一些东西可以配置，这些都需要大家自己去研究。</p>
 <p>后期我还会持续优化这个网站，比如我计划修改一下源码，把 Cactus 中的 <code>Disqus</code> 评论换成墙内能用的如 <code>livere</code> 之类的东西 ，如果可以，我会另外发文记录。</p>
@@ -460,7 +483,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

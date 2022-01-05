@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Leetcode P141 环形链表题目给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。  示例 1： 123输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。  示例 2： 12">
+    <meta name="description" content="Leetcode P141 环形链表题目给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。  示例 1： 123输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。   示例 2： 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode P141 环形链表">
 <meta property="og:url" content="https://clownote.github.io/2020/03/12/School/Leetcode_P141_linked-list-cycle/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="Leetcode P141 环形链表题目给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。  示例 1： 123输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。  示例 2： 12">
+<meta property="og:description" content="Leetcode P141 环形链表题目给定一个链表，判断链表中是否有环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。  示例 1： 123输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1输出：true解释：链表中有一个环，其尾部连接到第二个节点。   示例 2： 1">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcr749hdvdj31d60u01kx.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTgy1gcr730im9jj31d60u01kx.jpg">
 <meta property="article:published_time" content="2020-03-12T15:54:46.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.398Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.478Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="School">
 <meta name="twitter:card" content="summary">
@@ -58,7 +58,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -142,7 +142,7 @@
       
         <time datetime="2020-03-12T15:54:46.000Z" itemprop="datePublished">2020-03-12</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.398Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.478Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -167,22 +167,27 @@
 <p>示例 1：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1</span><br><span class="line">输出：true</span><br><span class="line">解释：链表中有一个环，其尾部连接到第二个节点。</span><br></pre></td></tr></table></figure>
 
+
 <p>示例 2：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head &#x3D; [1,2], pos &#x3D; 0</span><br><span class="line">输出：true</span><br><span class="line">解释：链表中有一个环，其尾部连接到第一个节点。</span><br></pre></td></tr></table></figure>
 
+
 <p>示例 3：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：head &#x3D; [1], pos &#x3D; -1</span><br><span class="line">输出：false</span><br><span class="line">解释：链表中没有环。</span><br></pre></td></tr></table></figure>
+
 
 <p>进阶：</p>
 <p>你能用 O(1)（即，常量）内存解决此问题吗？</p>
 <p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle">https://leetcode-cn.com/problems/linked-list-cycle</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h2 id="哈希表法"><a href="#哈希表法" class="headerlink" title="哈希表法"></a>哈希表法</h2><p>首先，最简单直接的想法，用哈希表，遍历一个存一个，每次都检查当前节点是否已经存过，存过就说明有环：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hasCycle</span><span class="params">(head *ListNode)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> nodes := <span class="keyword">map</span>[*ListNode]<span class="keyword">bool</span>&#123;&#125;; head != <span class="literal">nil</span>; head = head.Next &#123;</span><br><span class="line">        <span class="keyword">if</span> (nodes[head] == <span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            nodes[head] = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcr749hdvdj31d60u01kx.jpg" alt="屏幕快照 2020-03-12 15.33.08"></p>
 <h2 id="快慢指针法"><a href="#快慢指针法" class="headerlink" title="快慢指针法"></a>快慢指针法</h2><p>还可以用快慢指针法。</p>
 <p>想象这样的情景：两人比赛跑步，甲快，乙慢。如果赛道无环，相当于就一条直线，肯定是甲先到终点；如果赛道有环，在环上跑，速度不一样的甲乙必然在某一时刻相遇。</p>
 <p>利用这个思路，赛道是链表，甲乙化身快慢指针，就得到了空间消耗 $O(1)$ 的解法：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hasCycle</span><span class="params">(head *ListNode)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">nil</span>) || (head.Next == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    slow, fast := head, head.Next</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> slow != fast &#123;</span><br><span class="line">        <span class="keyword">if</span> fast == <span class="literal">nil</span> || fast.Next == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        fast, slow = fast.Next.Next, slow.Next</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcr730im9jj31d60u01kx.jpg" alt="image-20200312155153189"></p>
 <hr>
 <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>总有人问我每天写代码快乐吗？图个啥呀？</p>
@@ -265,7 +270,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

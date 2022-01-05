@@ -14,7 +14,7 @@
 <meta property="og:description" content="这（可能）是你能找到的最简单的讲图的文章。  这篇文章是我以前学习「图」数据结构的时候写的。今天上课讲图，我翻了好久才翻到这个😂 注：文中代码均为伪代码，其语法比较类似于 Python + BASIC，你可以用你喜欢的任何语言去做具体实现。在最后，我会附上我的 Python 实现源码。  网络的表示 邻接矩阵 （略，这个是数学，我不懂）  把链路作为引用储存在类里（连带其他数据）：   1234">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-07T22:52:57.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.374Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.454Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Algorithm">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2019-05-07T22:52:57.000Z" itemprop="datePublished">2019-05-07</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.374Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.454Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -172,10 +172,12 @@
 </li>
 </ol>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Class Node</span><br><span class="line">	String: name</span><br><span class="line">	List&lt;Node&gt;: neighbors</span><br><span class="line">	List&lt;Integer&gt;: costs</span><br><span class="line">End Node</span><br></pre></td></tr></table></figure>
+
 <ol start="2">
 <li>链路和节点单独（更常用）：</li>
 </ol>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Class Node:</span><br><span class="line">	String: name</span><br><span class="line">	List&lt;Link&gt;: links</span><br><span class="line">End Node</span><br><span class="line"></span><br><span class="line">Class Link:</span><br><span class="line">	Integer: cost</span><br><span class="line">	Node: nodes[2]		// 无向</span><br><span class="line">	/* Node: toNode		// 有向 */</span><br><span class="line">ENd Link</span><br></pre></td></tr></table></figure>
+
 <p>无向，链路包含两个 Node，顺序任意。</p>
 <p>有向，只包含一个 Node，指向目标节点，也可以用两个，一个指向来源，另一个指向目标。</p>
 <h2 id="网络的遍历"><a href="#网络的遍历" class="headerlink" title="网络的遍历"></a>网络的遍历</h2><h3 id="深度优先"><a href="#深度优先" class="headerlink" title="深度优先"></a>深度优先</h3><blockquote>
@@ -183,12 +185,15 @@
 </blockquote>
 <p>直接像树一样遍历，在图中是不行的：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">badTraverse():</span><br><span class="line">	&lt;处理节点&gt;</span><br><span class="line">	For Each link In links:</span><br><span class="line">		link.nodes[1].Traverse()</span><br><span class="line">	Next link</span><br><span class="line">End badTraverse</span><br></pre></td></tr></table></figure>
+
 <p>如果图包含了回路，这个算法会死循环。</p>
 <p>解决的方法是让算法知道自己访问过的节点，可以给类中加一个 <code>visited</code> 属性来纪录自己有没有被访问：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">slowTraverse():</span><br><span class="line">	&lt;处理节点&gt;</span><br><span class="line">	Self.visited = True</span><br><span class="line">	</span><br><span class="line">	For Each link In links:</span><br><span class="line">		If Not link.nodes[1].visited:</span><br><span class="line">			link.nodes[1].Traverse()</span><br><span class="line">		End If</span><br><span class="line">	Next link</span><br><span class="line">End slowTraverse</span><br></pre></td></tr></table></figure>
+
 <p>这个算法理论上可行，但消耗太大，容易爆栈。</p>
 <p>要解决这个问题，可以用栈来替换递归：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">depthFirstTraverse(Node: startNode):</span><br><span class="line">	// 访问当前节点</span><br><span class="line">	startNode.visited = True</span><br><span class="line">	</span><br><span class="line">	// 创建栈，把初始节点压入栈</span><br><span class="line">	Stack&lt;Node&gt;: stack</span><br><span class="line">	stack.push(stareNode)</span><br><span class="line">	</span><br><span class="line">	// 循环处理直到栈为空</span><br><span class="line">	While Not stack.isEmpty():</span><br><span class="line">		Node node = stack.pop()		// 从栈中获取下一节点</span><br><span class="line">		// 循环处理节点中的链路</span><br><span class="line">		For Each link In node.links:</span><br><span class="line">			If Not link.nodes[1].visited:</span><br><span class="line">				link.nodes[1].visited = True</span><br><span class="line">				stack.push(link.node[1])</span><br><span class="line">			End If</span><br><span class="line">		Next link</span><br><span class="line">	Loop		// 继续处理直到栈为空</span><br><span class="line">End depthFirstTraverse</span><br></pre></td></tr></table></figure>
+
 <h3 id="广度优先"><a href="#广度优先" class="headerlink" title="广度优先"></a>广度优先</h3><blockquote>
 <p>在一次广度优先遍历中，离初始节点较近的节点首先被访问，然后才是离初始节点较远的节点。</p>
 </blockquote>
@@ -196,14 +201,18 @@
 <p>如果使用<strong>队列</strong>（<em>Queues</em>，FIFO）代替<strong>栈</strong>（<em>Stacks</em>，FILO），则节点会按先进先出的顺序被处理，离初始节点较近的节点就首先被处理了，即<strong>广度优先遍历</strong>。</p>
 <h3 id="遍历的应用"><a href="#遍历的应用" class="headerlink" title="遍历的应用"></a>遍历的应用</h3><h4 id="无向图连通性测试"><a href="#无向图连通性测试" class="headerlink" title="无向图连通性测试"></a>无向图连通性测试</h4><p>对于一个无向图，如果连通，一个遍历算法从初识节点出发，可达所有节点。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Boolean: isConnected(Node: startNode):</span><br><span class="line">	// 从初识节点开始遍历网络</span><br><span class="line">	Traverse(start_node)</span><br><span class="line">	</span><br><span class="line">	// 查看有无没被访问的</span><br><span class="line">	For Each node In &lt;所有节点&gt;</span><br><span class="line">		If Not node.visited: Return False</span><br><span class="line">	Next node</span><br><span class="line">	</span><br><span class="line">	// 所有节点都访问过了，连通</span><br><span class="line">	Return True</span><br><span class="line">End isConnected</span><br></pre></td></tr></table></figure>
+
 <h4 id="寻找所有连通分量"><a href="#寻找所有连通分量" class="headerlink" title="寻找所有连通分量"></a>寻找所有连通分量</h4><p>利用深度遍历，一直遍历直到所有连通的节点都已经访问过，就找到了所有连通分量：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;Node&gt;&gt;: getConnectedComponents:</span><br><span class="line">	// 跟踪记录已经访问过的节点数</span><br><span class="line">	Integer: numVisited = 0</span><br><span class="line">	// 创建连通分量列表</span><br><span class="line">	List&lt;Lidt&lt;Node&gt;&gt;: components</span><br><span class="line">	</span><br><span class="line">	// 循环直到所有节点都在连通分量中</span><br><span class="line">	While numVisited &lt; 节点个数:</span><br><span class="line">		// 查找一个还未访问过的节点</span><br><span class="line">		Node: startNode = 第一个未访问过的节点</span><br><span class="line">		</span><br><span class="line">		// 将初始值压入栈</span><br><span class="line">		Stack&lt;Node&gt;: stack</span><br><span class="line">		stack.push(startNode)</span><br><span class="line">		startNode.Visited = True</span><br><span class="line">		numVisited += 1</span><br><span class="line">		</span><br><span class="line">		// 将节点添加到一个新的连通分量中</span><br><span class="line">		List&lt;Node&gt;: component</span><br><span class="line">		component.add(startNode)</span><br><span class="line">		components.add(component)</span><br><span class="line">		</span><br><span class="line">		// 不断处理，直到它为空</span><br><span class="line">		While Not stack.isEmpty():</span><br><span class="line">			// 从栈中获取下一个节点</span><br><span class="line">			Node: node = stack.pop()</span><br><span class="line">			</span><br><span class="line">			// 依次处理该节点所有对应的链路</span><br><span class="line">			For Each link In node.links:</span><br><span class="line">				If Not link.nodes[1].visited:</span><br><span class="line">					link.nodes[1].visited = True</span><br><span class="line">					component.add(link.nodes[1])</span><br><span class="line">					stack.push(link.nodes[1])</span><br><span class="line">					// 将链路标记为树的一部分，生成树</span><br><span class="line">					link.visited = True</span><br><span class="line">					numVisited += 1</span><br><span class="line">				End If</span><br><span class="line">			Next link</span><br><span class="line">		Loop	// Not stack.isEmpty()</span><br><span class="line">	Loop	// numVisited &lt; 节点个数</span><br><span class="line">	</span><br><span class="line">	Return components				</span><br><span class="line">End getConnectedComponents</span><br></pre></td></tr></table></figure>
+
 <h4 id="生成树"><a href="#生成树" class="headerlink" title="生成树"></a>生成树</h4><p>如果一个无向图是连通的，就可以以一节点为根建立一棵树，表示根节点到网络中其他节点到路径。这颗树称为<strong>生成树</strong>。</p>
 <p>要实现这一点，在前面的程序里标记新节点被访问后，将链路标记为树的一部分，就行了：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">link.visited = True</span><br></pre></td></tr></table></figure>
+
 <h5 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h5><p>具有最少可能代价的生成树称为<strong>最小生成树</strong>。</p>
 <p>要得到一颗生成树，可以用如下贪心策略：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 添加根节点R以初始化生成树</span><br><span class="line">2. 对每个节点重复直到得到生成树：</span><br><span class="line">		a. 发现在生成树中节点到未在树中节点到最小代价链接</span><br><span class="line">		b. 将该链接到目标节点添加到生成树</span><br></pre></td></tr></table></figure>
+
 
 
 <h2 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h2><p>文中涉及的代码还是比较多的，我写了其中一些的 Python 实现，放到了 GitHub：</p>
@@ -279,7 +288,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

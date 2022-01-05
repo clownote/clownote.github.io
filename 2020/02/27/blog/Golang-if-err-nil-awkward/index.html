@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="关于 Golang if err !&#x3D; nil 泛滥成灾的优化方案刚才我尝试用 Golang 写一个项目，其中有一个并不复杂的方法，主要涉及到两次正则匹配和两个字符串读取，然后，我发现这个方法里我写了四段一模一样的代码： 1234if err !&#x3D; nil &amp;#123;    log.Println(err)    return false, err&amp;#125; 顺手搜了一下，发现整个工程里有 7">
+    <meta name="description" content="关于 Golang if err !&#x3D; nil 泛滥成灾的优化方案刚才我尝试用 Golang 写一个项目，其中有一个并不复杂的方法，主要涉及到两次正则匹配和两个字符串读取，然后，我发现这个方法里我写了四段一模一样的代码： 1234if err !&#x3D; nil &amp;#123;    log.Println(err)    return false, err&amp;#125;  顺手搜了一下，发现整个工程里有">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于 Golang if err !&#x3D; nil 泛滥成灾的优化方案">
 <meta property="og:url" content="https://clownote.github.io/2020/02/27/blog/Golang-if-err-nil-awkward/index.html">
 <meta property="og:site_name" content="clownote">
-<meta property="og:description" content="关于 Golang if err !&#x3D; nil 泛滥成灾的优化方案刚才我尝试用 Golang 写一个项目，其中有一个并不复杂的方法，主要涉及到两次正则匹配和两个字符串读取，然后，我发现这个方法里我写了四段一模一样的代码： 1234if err !&#x3D; nil &amp;#123;    log.Println(err)    return false, err&amp;#125; 顺手搜了一下，发现整个工程里有 7">
+<meta property="og:description" content="关于 Golang if err !&#x3D; nil 泛滥成灾的优化方案刚才我尝试用 Golang 写一个项目，其中有一个并不复杂的方法，主要涉及到两次正则匹配和两个字符串读取，然后，我发现这个方法里我写了四段一模一样的代码： 1234if err !&#x3D; nil &amp;#123;    log.Println(err)    return false, err&amp;#125;  顺手搜了一下，发现整个工程里有">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-27T20:37:08.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.418Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.498Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2020-02-27T20:37:08.000Z" itemprop="datePublished">2020-02-27</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.418Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.498Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -161,15 +161,19 @@
   <div class="content" itemprop="articleBody">
     <h1 id="关于-Golang-if-err-nil-泛滥成灾的优化方案"><a href="#关于-Golang-if-err-nil-泛滥成灾的优化方案" class="headerlink" title="关于 Golang if err != nil 泛滥成灾的优化方案"></a>关于 Golang <code>if err != nil</code> 泛滥成灾的优化方案</h1><p>刚才我尝试用 Golang 写一个项目，其中有一个并不复杂的方法，主要涉及到两次正则匹配和两个字符串读取，然后，我发现这个方法里我写了四段一模一样的代码：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Println(err)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>顺手搜了一下，发现整个工程里有 78 个 <code>if err != nil</code>，要知道，这是个刚刚起步的工程，总共才差不多2K的代码呀！差不多每二十几行代码就要来一发 <code>if err != nil</code>，，，太可怕了。</p>
 <p>但我尝试在 Google 输入 <code>if err</code> 的时候，我看到了搜索建议里的这行代码，于是尬笑着点开了它，然后发现，这是个新手常犯的尴尬，也有很多种优化方法，所以我当然是选择——抄官方的作业了！</p>
 <p>这是 <a target="_blank" rel="noopener" href="https://blog.golang.org/errors-are-values">一篇官方的blog</a> 里介绍的解决 <code>if err != nil</code> 尴尬的方法：</p>
 <p>Lament：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">_, err = fd.Write(p0[a:b])</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line">_, err = fd.Write(p1[c:d])</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line">_, err = fd.Write(p2[e:f])</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// and so on</span></span><br></pre></td></tr></table></figure>
+
 <p>Grace:</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> err error</span><br><span class="line">write := <span class="function"><span class="keyword">func</span><span class="params">(buf []<span class="keyword">byte</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    _, err = w.Write(buf)</span><br><span class="line">&#125;</span><br><span class="line">write(p0[a:b])</span><br><span class="line">write(p1[c:d])</span><br><span class="line">write(p2[e:f])</span><br><span class="line"><span class="comment">// and so on</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>More cleaner:</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> errWriter <span class="keyword">struct</span> &#123;</span><br><span class="line">    w   io.Writer</span><br><span class="line">    err error</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(ew *errWriter)</span> <span class="title">write</span><span class="params">(buf []<span class="keyword">byte</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ew.err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    _, ew.err = ew.w.Write(buf)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ew := &amp;errWriter&#123;w: fd&#125;</span><br><span class="line">ew.write(p0[a:b])</span><br><span class="line">ew.write(p1[c:d])</span><br><span class="line">ew.write(p2[e:f])</span><br><span class="line"><span class="comment">// and so on</span></span><br><span class="line"><span class="keyword">if</span> ew.err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> ew.err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
   </div>
 </article>
@@ -239,7 +243,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>

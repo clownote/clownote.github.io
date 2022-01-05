@@ -14,7 +14,7 @@
 <meta property="og:description" content="正文浏览 正文，即字符串 &#x2F; 纯文本文件的内容。  cat：浏览正文文件内容12345678$ cat [options] [files]    -A：显示内容，包括不可见的特殊字符    -s：将两个及以上的空行省略为一个空行    -b：加入行号$ cat &gt; filename    创建新文本文件，写入内容    空行&amp;#123;Ctr+d&amp;#125;，保存退出        # &amp;#">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-01-01T12:46:55.000Z">
-<meta property="article:modified_time" content="2021-10-09T08:14:25.390Z">
+<meta property="article:modified_time" content="2022-01-05T10:21:09.470Z">
 <meta property="article:author" content="CDFMLR">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -55,7 +55,7 @@
     <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
     <!--Google AdSense 关联 (PRIVATE)-->
     <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -139,7 +139,7 @@
       
         <time datetime="2017-01-01T12:46:55.000Z" itemprop="datePublished">2017-01-01</time>
         
-        (Updated: <time datetime="2021-10-09T08:14:25.390Z" itemprop="dateModified">2021-10-09</time>)
+        (Updated: <time datetime="2022-01-05T10:21:09.470Z" itemprop="dateModified">2022-01-05</time>)
         
       
     </div>
@@ -168,10 +168,14 @@
 <p>正文，即字符串 / 纯文本文件的内容。</p>
 </blockquote>
 <h3 id="cat：浏览正文文件内容"><a href="#cat：浏览正文文件内容" class="headerlink" title="cat：浏览正文文件内容"></a><code>cat</code>：浏览正文文件内容</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cat [options] [files]</span><br><span class="line">    -A：显示内容，包括不可见的特殊字符</span><br><span class="line">    -s：将两个及以上的空行省略为一个空行</span><br><span class="line">    -b：加入行号</span><br><span class="line">$ cat &gt; filename</span><br><span class="line">    创建新文本文件，写入内容</span><br><span class="line">    空行&#123;Ctr+d&#125;，保存退出        # &#123;Ctr+c&#125;:强行终止</span><br><span class="line">            [注意]：用cat打开二进制文件会造成终端停止工作，可开启一个新的终端以解决。</span><br></pre></td></tr></table></figure>
+
 <pre><code>       ⚠️ \[注意\]：用 cat 打开二进制文件可能会造成终端停止工作，可开启一个新的终端以解决。</code></pre>
 <h3 id="head：浏览文件头几行"><a href="#head：浏览文件头几行" class="headerlink" title="head：浏览文件头几行"></a><code>head</code>：浏览文件头几行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ head [-n x] file</span><br><span class="line">    浏览文件头x行</span><br><span class="line">    若省去[-n x]则显示头10行</span><br></pre></td></tr></table></figure>
+
 <h3 id="tail：浏览文件后几行"><a href="#tail：浏览文件后几行" class="headerlink" title="tail：浏览文件后几行"></a><code>tail</code>：浏览文件后几行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ tail file</span><br><span class="line">    浏览文件后10行</span><br><span class="line">$ tail -[n]x  file</span><br><span class="line">    显示从末尾算起的x行</span><br><span class="line">    有无n都一样</span><br><span class="line">$ tail +[n]x  file</span><br><span class="line">    显示从文件第x行之后的内容</span><br><span class="line">    有无n都一样</span><br><span class="line">$tail -f file</span><br><span class="line">    “-f“ &#x3D;&#x3D; ”--follow“</span><br><span class="line">    当一个正文文件内容发生变化时，把变化显示出来</span><br><span class="line">    &#123;ctrl+c&#125;退出</span><br><span class="line"># tail -f &#x2F;var&#x2F;log&#x2F;messages</span><br><span class="line">    监视日志</span><br></pre></td></tr></table></figure>
+
 <h3 id="wc：-word-count-字数统计"><a href="#wc：-word-count-字数统计" class="headerlink" title="wc：(word count)字数统计"></a><code>wc</code>：(word count)字数统计</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ wc [-options] file</span><br><span class="line">    显示文件 行、单词、字符 数</span><br><span class="line">        无选项依次显示l，w，c</span><br><span class="line">        -l：行数</span><br><span class="line">        -w：单词数</span><br><span class="line">        -c：字符数</span><br></pre></td></tr></table></figure>
+
 <h3 id="more-file-：可翻页地浏览文件"><a href="#more-file-：可翻页地浏览文件" class="headerlink" title="more [file]：可翻页地浏览文件"></a><code>more [file]</code>：可翻页地浏览文件</h3><p>在more中键入：</p>
 <ul>
 <li><p><code>&#123;空格&#125;</code>：下一页</p>
@@ -260,7 +264,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2021 CDFMLR
+    Copyright &copy; 2022 CDFMLR
   </div>
   <div class="footer-right">
     <nav>
