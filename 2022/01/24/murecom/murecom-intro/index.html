@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="简单的音乐推荐系统本文提供两种简单的传统音乐推荐系统（next-songs 方向）的思路与实现。（数学原理和机器学习方法从略） 下文仅给出思路以及关键代码，完整实现见: https:&#x2F;&#x2F;github.com&#x2F;cdfmlr&#x2F;murecom-intro 1. 基于音频特征分析音频特征，做基于内容的推荐（Content-Based Filtering，CBF)。 1.1 设计思路一个喜欢巴赫的人可能也喜">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动手写简单的音乐推荐系统">
+<meta property="og:url" content="https://clownote.github.io/2022/01/24/murecom/murecom-intro/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="简单的音乐推荐系统本文提供两种简单的传统音乐推荐系统（next-songs 方向）的思路与实现。（数学原理和机器学习方法从略） 下文仅给出思路以及关键代码，完整实现见: https:&#x2F;&#x2F;github.com&#x2F;cdfmlr&#x2F;murecom-intro 1. 基于音频特征分析音频特征，做基于内容的推荐（Content-Based Filtering，CBF)。 1.1 设计思路一个喜欢巴赫的人可能也喜">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k4hq2gj30uk0foq4e.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k3oivgj30tc0q83z9.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k5fbx4j315m0nu418.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k60g95j30p008yq3v.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k911qyj312u0p6gpn.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k7om7vj30vw0sedjf.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1kbsf0zj318y0j0jvc.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1kamvs4j31kq0mugo2.jpg">
+<meta property="article:published_time" content="2022-01-24T20:59:03.776Z">
+<meta property="article:modified_time" content="2022-01-24T13:04:40.764Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k4hq2gj30uk0foq4e.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>动手写简单的音乐推荐系统</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2022/01/05/blog/%E9%87%8D%E8%A3%85%20macOS%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E8%AE%AD/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/01/24/murecom/murecom-intro/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&text=动手写简单的音乐推荐系统"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&is_video=false&description=动手写简单的音乐推荐系统"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=动手写简单的音乐推荐系统&body=Check out this article: https://clownote.github.io/2022/01/24/murecom/murecom-intro/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&name=动手写简单的音乐推荐系统&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E9%9F%B3%E4%B9%90%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">简单的音乐推荐系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%BA%E4%BA%8E%E9%9F%B3%E9%A2%91%E7%89%B9%E5%BE%81"><span class="toc-number">1.1.</span> <span class="toc-text">1. 基于音频特征</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 设计思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A8%A1%E5%9E%8B%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 模型优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%94%B9%E8%BF%9B%E7%A9%BA%E9%97%B4"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 改进空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E4%BA%8E%E7%8E%B0%E6%9C%89%E6%92%AD%E6%94%BE%E5%88%97%E8%A1%A8%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.</span> <span class="toc-text">2. 基于现有播放列表数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 获取数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Word2vec"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 Word2vec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Surprise-KNNBaseline"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 Surprise KNNBaseline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%A8%A1%E5%9E%8B%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 模型优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%94%B9%E8%BF%9B%E7%A9%BA%E9%97%B4"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 改进空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">1.3.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        动手写简单的音乐推荐系统
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-24T20:59:03.776Z" itemprop="datePublished">2022-01-24</time>
+        
+        (Updated: <time datetime="2022-01-24T13:04:40.764Z" itemprop="dateModified">2022-01-24</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="简单的音乐推荐系统"><a href="#简单的音乐推荐系统" class="headerlink" title="简单的音乐推荐系统"></a>简单的音乐推荐系统</h1><p>本文提供两种简单的传统音乐推荐系统（next-songs 方向）的思路与实现。（数学原理和机器学习方法从略）</p>
+<p>下文仅给出思路以及关键代码，完整实现见: <a target="_blank" rel="noopener" href="https://github.com/cdfmlr/murecom-intro">https://github.com/cdfmlr/murecom-intro</a></p>
+<h2 id="1-基于音频特征"><a href="#1-基于音频特征" class="headerlink" title="1. 基于音频特征"></a>1. 基于音频特征</h2><p>分析音频特征，做基于内容的推荐（Content-Based Filtering，CBF)。</p>
+<h3 id="1-1-设计思路"><a href="#1-1-设计思路" class="headerlink" title="1.1 设计思路"></a>1.1 设计思路</h3><p>一个喜欢巴赫的人可能也喜欢肖邦，所以一种自然的想法是，我们可以把音频送给机器进行学习，试图让它分别不同种类、风格的音乐。给定一首歌，送入训练好的模型，推荐出风格上最相近的其他歌曲。</p>
+<p><code>song-classification.ipynb</code> 实现了这种模型的训练。</p>
+<p>加拿大维多利亚大学的 genres 数据集（<a target="_blank" rel="noopener" href="http://opihi.cs.uvic.ca/sound/genres.tar.gz%EF%BC%89%EF%BC%8C%E6%8F%90%E4%BE%9B%E4%BA%86%E8%89%AF%E5%A5%BD%E6%A0%87%E6%B3%A8%E7%9A%84%E4%B8%8D%E5%90%8C%E7%A7%8D%E7%B1%BB%E9%9F%B3%E4%B9%90%E7%89%87%E6%AE%B5%E3%80%82">http://opihi.cs.uvic.ca/sound/genres.tar.gz），提供了良好标注的不同种类音乐片段。</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ls genres</span><br><span class="line">blues     country   hiphop    metal     reggae</span><br><span class="line">classical disco     jazz      pop       rock</span><br></pre></td></tr></table></figure>
+
+<p>我们把这些片段利用 librosa 库转化为<strong>梅尔频谱图</strong>（mel-spectrogram）。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k4hq2gj30uk0foq4e.jpg" alt="数据集中 hiphop 风格片段的平均频谱图)"></p>
+<p>(上图为数据集中 Hip-Hop 风格片段的平均频谱图)</p>
+<p>把频谱送入一个一维卷积池化堆叠 + 全连接分类头的神经网络，训练，得到的模型即一个音乐风格检测器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cnn_model</span>(<span class="params">input_shape</span>):</span></span><br><span class="line">    inputs = Input(input_shape)</span><br><span class="line">    x = inputs</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 一维卷积池化</span></span><br><span class="line">    levels = <span class="number">64</span></span><br><span class="line">    <span class="keyword">for</span> level <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        x = Conv1D(levels, <span class="number">3</span>, activation=<span class="string">&#x27;relu&#x27;</span>)(x)</span><br><span class="line">        x = BatchNormalization()(x)</span><br><span class="line">        x = MaxPooling1D(pool_size=<span class="number">2</span>, strides=<span class="number">2</span>)(x)</span><br><span class="line">        levels *= <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># x -&gt; shape(128)</span></span><br><span class="line">    x = GlobalMaxPooling1D()(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算类型标签的全连接网络</span></span><br><span class="line">    <span class="keyword">for</span> fc <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">        x = Dense(<span class="number">256</span>, activation=<span class="string">&#x27;relu&#x27;</span>)(x)</span><br><span class="line">        x = Dropout(<span class="number">0.5</span>)(x)</span><br><span class="line"></span><br><span class="line">    labels = Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">    model = Model(inputs=[inputs], outputs=[labels])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># optimizer and compile model</span></span><br><span class="line">    sgd = SGD(learning_rate=<span class="number">0.0003</span>, momentum=<span class="number">0.9</span>, decay=<span class="number">1e-5</span>, nesterov=<span class="literal">True</span>)</span><br><span class="line">    model.<span class="built_in">compile</span>(optimizer=sgd, loss=<span class="string">&#x27;categorical_crossentropy&#x27;</span>, metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">model = cnn_model((<span class="number">128</span>, <span class="number">128</span>))</span><br></pre></td></tr></table></figure>
+
+<p>训练得出的模型 <code>song_classify.h5</code> 可以很好的分类特征明显的音乐类型（例如古典乐），但对界限相对模糊的乐种（如摇滚乐）分类效果欠佳。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k3oivgj30tc0q83z9.jpg" alt="分类结果的混淆矩阵"></p>
+<p>(分类结果的混淆矩阵)</p>
+<p>利用这个模型，在 <code>index-local-mp3s.ipynb</code> 中实现了相似音乐的推荐。</p>
+<p>具体的做法是，手动做了一个简单的数据集，选取一些个人常听的音乐，转化为同样品质的 mp3 文件。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k5fbx4j315m0nu418.jpg" alt="本地音乐数据集"></p>
+<p>(选取的音乐种类)</p>
+<p>遍历处理这些文件，提取梅尔频谱图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_mp3</span>(<span class="params">path</span>):</span></span><br><span class="line">    signal, sr = librosa.load(path,</span><br><span class="line">                              res_type=<span class="string">&quot;kaiser_fast&quot;</span>,</span><br><span class="line">                              offset=<span class="number">30</span>,</span><br><span class="line">                              duration=<span class="number">30</span>)</span><br><span class="line">    melspec = librosa.feature.melspectrogram(signal, sr=sr).T[:<span class="number">1280</span>, ]</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(melspec) != <span class="number">1280</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&#x27;path&#x27;</span>: path,</span><br><span class="line">            <span class="string">&#x27;melspecs&#x27;</span>: np.asarray(np.split(melspec, <span class="number">10</span>))&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对每个 MP3 的所有频谱进行索引</span></span><br><span class="line">songs = [process_mp3(path) <span class="keyword">for</span> path <span class="keyword">in</span> tqdm(mp3s)]</span><br><span class="line">songs = [song <span class="keyword">for</span> song <span class="keyword">in</span> songs <span class="keyword">if</span> song]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以把他们连在一起，方便一批完成</span></span><br><span class="line">inputs = []</span><br><span class="line"><span class="keyword">for</span> song <span class="keyword">in</span> songs:</span><br><span class="line">    inputs.extend(song[<span class="string">&#x27;melspecs&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>接下来将预处理好的数据集送入训练好的模型。</p>
+<p>由于我们只需要提取音频特征，而并不需要做分类，所以把模型最后基层的全连接分类头去掉，只留下前面的卷积特征提取层。输入音频频谱，输出一个 256 维的向量作为音乐的“特征向量”。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cnn_model = load_model(<span class="string">&#x27;song_classify.h5&#x27;</span>)</span><br><span class="line">vectorize_model = Model(inputs=cnn_model.<span class="built_in">input</span>,</span><br><span class="line">                        outputs=cnn_model.layers[-<span class="number">4</span>].output)</span><br><span class="line">vectors = vectorize_model.predict(inputs)</span><br></pre></td></tr></table></figure>
+
+<p>建立一个无监督的最邻近模型，计算这些特征向量的相似度，也就其代表的 mp3 歌曲的相似度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">nbrs = NearestNeighbors(</span><br><span class="line">    n_neighbors=<span class="number">10</span>, algorithm=<span class="string">&#x27;ball_tree&#x27;</span></span><br><span class="line">).fit(vectors)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">most_similar_songs</span>(<span class="params">song_idx</span>):</span></span><br><span class="line">    distances, indices = nbrs.kneighbors(</span><br><span class="line">        vectors[song_idx * <span class="number">10</span>: song_idx * <span class="number">10</span> + <span class="number">10</span>])</span><br><span class="line">    c = Counter()</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> indices:</span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> row[<span class="number">1</span>:]:</span><br><span class="line">            c[idx // <span class="number">10</span>] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> c.most_common()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_similar_songs</span>(<span class="params">song_idx, start=<span class="number">1</span>, end=<span class="number">6</span></span>):</span></span><br><span class="line">    print(<span class="string">&quot;指定歌曲:&quot;</span>, song_name(song_idx))</span><br><span class="line">    <span class="keyword">for</span> idx, score <span class="keyword">in</span> most_similar_songs(song_idx)[start:end]:</span><br><span class="line">        print(<span class="string">f&quot;[相似度<span class="subst">&#123;score&#125;</span>] <span class="subst">&#123;song_name(idx)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>最后，给定一首歌，就可以从最邻近模型中找到最接近的几首歌。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k60g95j30p008yq3v.jpg" alt="genres_result"></p>
+<p>（推荐结果示例）</p>
+<p>模型最终表现还行吧。只是和分类的结果类似，不善于处理摇滚乐。</p>
+<h3 id="1-2-模型优缺点"><a href="#1-2-模型优缺点" class="headerlink" title="1.2 模型优缺点"></a>1.2 模型优缺点</h3><p>这是我比较喜欢的一种方式，从音乐本身的特征出发，不基于以往用户数据，没有曲目列表限制。借助训练好的分类器网络，可以对任意没见过的音频进行推荐。</p>
+<p>但是，需要处理完整的音频。频谱分析的过程比较消耗算力。并且只能推荐本地拥有的曲目在另一方面也可以看作一种限制。</p>
+<p>这种模型可以用于离线的设备端音乐推荐。</p>
+<h3 id="1-3-改进空间"><a href="#1-3-改进空间" class="headerlink" title="1.3 改进空间"></a>1.3 改进空间</h3><ol>
+<li>用于训练分类器的 genres 数据集虽然质量极高，但数据量不太大。考虑用更多数据，或许能得到更好的模型；</li>
+<li>分类器网络的结构也比较粗糙，可以考虑进一步研究调整。例如考虑使用预训练的 NLP 模型进行迁移学习，或许能更加敏锐；</li>
+<li>考虑构建多输入的模型（或者使用多个模型），加上一些其他方面的数据，比如歌曲的元数据（歌名、艺人、专辑、时常等）、以及歌词等不容易从频谱中得出的方面。</li>
+</ol>
+<h2 id="2-基于现有播放列表数据"><a href="#2-基于现有播放列表数据" class="headerlink" title="2. 基于现有播放列表数据"></a>2. 基于现有播放列表数据</h2><p>基于以往的、其他用户的数据，做<strong>协同过滤</strong>（Collaborative Filtering ，CF) 。</p>
+<p>这种思路其实更常见。获取一系列的人建好的播放列表。通过某种方法建立其中曲目的距离关系。给定歌曲，推荐距离最近的。</p>
+<h3 id="2-1-获取数据"><a href="#2-1-获取数据" class="headerlink" title="2.1 获取数据"></a>2.1 获取数据</h3><p>在 <code>spotify-playlist.ipynb</code> 中，利用 Spotify 的 API，随机获取一些播放列表，及其中曲目（只是获取元数据，不下载音频）。</p>
+<p>但由于这种方法需要获取大量数据（需要数十万歌曲），而网络、数据库环境都有限制，Python 实现不甚稳定，难以完成工作，所以在 <code>spotify/</code> 子目录中，使用 Golang 重写了这个实现，提供更加鲁棒的数据获取服务，将获取的数据存放在一个 SQLite 数据库中。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k911qyj312u0p6gpn.jpg" alt="spotifyplaylist"></p>
+<p>（获取的播放列表及曲目数据）</p>
+<p>这里目前获取了数 GiB 数据，包含 17 万个播放列表中，来自 80 万个艺人的近 500 万首歌曲。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sqlite<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> playlists;</span><br><span class="line"><span class="number">177889</span></span><br><span class="line">sqlite<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> artists;</span><br><span class="line"><span class="number">801357</span></span><br><span class="line">sqlite<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> tracks;</span><br><span class="line"><span class="number">4995249</span></span><br></pre></td></tr></table></figure>
+
+<p>下面实现了两种思路来利用这些数据：</p>
+<h3 id="2-2-Word2vec"><a href="#2-2-Word2vec" class="headerlink" title="2.2 Word2vec"></a>2.2 Word2vec</h3><p>在 <code>train-a-music-recommender.ipynb</code> 中，将<strong>歌曲作为单词</strong>、将歌曲最成的<strong>播放列表作为句子</strong>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sentences = [</span><br><span class="line">    [<span class="string">&quot;track_1_id&quot;</span>, <span class="string">&quot;track_2_id&quot;</span>, ...], <span class="comment"># playlist_1</span></span><br><span class="line">    [...], <span class="comment"># playlist_2</span></span><br><span class="line">    ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>以此为语料，建立 Word2vec 模型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model = gensim.models.Word2Vec(</span><br><span class="line">    sentences=PlaylistTracksIter(DB), min_count=<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<p>训练完成后，给定曲目，可获取到最接近的推荐。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">suggest_songs</span>(<span class="params">song_id</span>):</span></span><br><span class="line">    similar = <span class="built_in">dict</span>(model.wv.most_similar([song_id]))</span><br><span class="line">    song_ids = <span class="string">&#x27;, &#x27;</span>.join((<span class="string">&quot;&#x27;%s&#x27;&quot;</span> % x) <span class="keyword">for</span> x <span class="keyword">in</span> similar.keys())</span><br><span class="line"></span><br><span class="line">    c = conn.cursor()</span><br><span class="line">    c.execute(<span class="string">&quot;SELECT * FROM tracks WHERE id in (%s)&quot;</span> % song_ids)</span><br><span class="line"></span><br><span class="line">    res = <span class="built_in">sorted</span>((rec + (similar[rec[<span class="number">4</span>]], </span><br><span class="line">                         find_artists(rec[<span class="number">4</span>])</span><br><span class="line">                        ) <span class="keyword">for</span> rec <span class="keyword">in</span> c.fetchall()),</span><br><span class="line">        key=itemgetter(-<span class="number">1</span>),</span><br><span class="line">        reverse=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> suggest_songs_result([*res])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">suggest_from</span>(<span class="params">song_name: <span class="built_in">str</span></span>):</span></span><br><span class="line">    s = find_song(song_name, limit=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> s + suggest_songs(s[<span class="number">0</span>][<span class="string">&quot;id&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>这个模型也可用，但效果不算特别理想。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1k7om7vj30vw0sedjf.jpg" alt="word2vec_result"></p>
+<p>（Word2Vec 模型推荐实例）</p>
+<h3 id="2-3-Surprise-KNNBaseline"><a href="#2-3-Surprise-KNNBaseline" class="headerlink" title="2.3 Surprise KNNBaseline"></a>2.3 Surprise KNNBaseline</h3><p>在 <code>surprise.ipynb</code> 中，将歌曲作为 item，将播放列表作为 user，播放列表包含某歌曲即看作 user 给 item 打了一分（rating=1）。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1kbsf0zj318y0j0jvc.jpg" alt="surprise_data"></p>
+<p>将这样处理好的数据集交给 Surprise 进行基本的<strong>协同过滤</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> surprise <span class="keyword">import</span> KNNBaseline</span><br><span class="line"><span class="keyword">from</span> surprise <span class="keyword">import</span> Reader, Dataset</span><br><span class="line"></span><br><span class="line"><span class="comment"># custom dataset</span></span><br><span class="line">reader = Reader(rating_scale=(<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">train_data = Dataset.load_from_df(</span><br><span class="line">    pt_train[[<span class="string">&#x27;userID&#x27;</span>, <span class="string">&#x27;itemID&#x27;</span>, <span class="string">&#x27;rating&#x27;</span>]],</span><br><span class="line">    reader)</span><br><span class="line">trainset = train_data.build_full_trainset()</span><br><span class="line"></span><br><span class="line"><span class="comment"># compute  similarities between items</span></span><br><span class="line">sim_options = &#123;</span><br><span class="line">    <span class="string">&#x27;user_based&#x27;</span>: <span class="literal">False</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 算法、训练</span></span><br><span class="line">algo = KNNBaseline(sim_options=sim_options)</span><br><span class="line">algo.fit(trainset)</span><br></pre></td></tr></table></figure>
+
+<p>同样得到 KNN 的模型，给定歌曲，从模型中获取最邻近的推荐。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_sim</span>(<span class="params">track_id, k=<span class="number">5</span></span>):</span></span><br><span class="line">    sim = algo.get_neighbors(</span><br><span class="line">        iid=algo.trainset.to_inner_iid(track_id), k=k)</span><br><span class="line"></span><br><span class="line">    track_ids = [track_id] + <span class="built_in">list</span>(</span><br><span class="line">        <span class="built_in">map</span>(algo.trainset.to_raw_iid, sim))</span><br><span class="line"></span><br><span class="line">    tracks = []</span><br><span class="line">    c = conn.cursor()</span><br><span class="line">    <span class="keyword">for</span> tid <span class="keyword">in</span> track_ids:</span><br><span class="line">        c.execute(<span class="string">f&quot;SELECT * FROM tracks WHERE id = &#x27;<span class="subst">&#123;tid&#125;</span>&#x27;&quot;</span>)</span><br><span class="line">        tk = c.fetchall()[<span class="number">0</span>]</span><br><span class="line">        tracks.append(tk + (find_artists(tid),))</span><br><span class="line">    c.close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sim_result(tracks)</span><br></pre></td></tr></table></figure>
+
+<p>这个做出来效果不错。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyp1kamvs4j31kq0mugo2.jpg" alt="surprise_result"></p>
+<p>(Surprise 模型推荐结果，Shout Baby 是输入的歌曲，下面 5 首是推荐出的，二刺螈狂喜。)</p>
+<h3 id="2-4-模型优缺点"><a href="#2-4-模型优缺点" class="headerlink" title="2.4 模型优缺点"></a>2.4 模型优缺点</h3><p>这种思路是传统的过往用户数据分析，是推荐系统比较常规的实现方式，方案较为成熟。基于海量数据，可以达到比较好的推荐效果。</p>
+<p>但是，大数据的处理速度可能较慢，并且存储器开销不是终端可以承受的。同时，对于用户，基于数据的邻近推荐会容易造成信息茧房问题，并不健康。</p>
+<p>这种方案可以用于云端的音乐推荐。</p>
+<h3 id="2-5-改进空间"><a href="#2-5-改进空间" class="headerlink" title="2.5 改进空间"></a>2.5 改进空间</h3><ol>
+<li>算法：目前实现的是最基本的基准算法，可以考虑尝试其他的算法。</li>
+<li>数据：对于这种模型更多的数据几乎一定会带来更好的结果。</li>
+<li>考虑抓取网易云音乐的数据，可能更优质：本土化音乐，评论、热度、播放列表标签分类。可以用更综合的模型进行推荐</li>
+</ol>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Douwe Osinga. Deep Learning Cookbook[M]. O’Reilly, 2018: 210-227.</p>
+<p>[2] Nicolas Hug. Surprise: A Python library for recommender systems[J]. Journal of Open Source Software, 2020, 5(52): 2174.</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E9%9F%B3%E4%B9%90%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">简单的音乐推荐系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%BA%E4%BA%8E%E9%9F%B3%E9%A2%91%E7%89%B9%E5%BE%81"><span class="toc-number">1.1.</span> <span class="toc-text">1. 基于音频特征</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 设计思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A8%A1%E5%9E%8B%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 模型优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%94%B9%E8%BF%9B%E7%A9%BA%E9%97%B4"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 改进空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E4%BA%8E%E7%8E%B0%E6%9C%89%E6%92%AD%E6%94%BE%E5%88%97%E8%A1%A8%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.</span> <span class="toc-text">2. 基于现有播放列表数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 获取数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Word2vec"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 Word2vec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Surprise-KNNBaseline"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 Surprise KNNBaseline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%A8%A1%E5%9E%8B%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 模型优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%94%B9%E8%BF%9B%E7%A9%BA%E9%97%B4"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 改进空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">1.3.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/01/24/murecom/murecom-intro/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&text=动手写简单的音乐推荐系统"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&is_video=false&description=动手写简单的音乐推荐系统"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=动手写简单的音乐推荐系统&body=Check out this article: https://clownote.github.io/2022/01/24/murecom/murecom-intro/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&title=动手写简单的音乐推荐系统"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/01/24/murecom/murecom-intro/&name=动手写简单的音乐推荐系统&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+</body>
+</html>
