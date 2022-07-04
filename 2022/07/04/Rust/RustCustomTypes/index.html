@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Rust 自定义类型Rust 自定义类型有结构体（struct）和枚举（enum）。 结构体Rust 的结构体有三种：  单元结构体：没有字段的 123456789struct Unit;fn main() &amp;#123;    let x &#x3D; Unit; &#x2F;&#x2F; 实例化单元结构体没有&amp;#123;&amp;#125;    let y &#x3D; Unit;    println!(&quot;&amp;#123;:?&amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rust 自定义类型">
+<meta property="og:url" content="https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Rust 自定义类型Rust 自定义类型有结构体（struct）和枚举（enum）。 结构体Rust 的结构体有三种：  单元结构体：没有字段的 123456789struct Unit;fn main() &amp;#123;    let x &#x3D; Unit; &#x2F;&#x2F; 实例化单元结构体没有&amp;#123;&amp;#125;    let y &#x3D; Unit;    println!(&quot;&amp;#123;:?&amp;#1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-04T22:24:23.355Z">
+<meta property="article:modified_time" content="2022-07-04T14:25:52.132Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Rust">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Rust 自定义类型</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2022/03/17/blog/Go1.18/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&text=Rust 自定义类型"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&is_video=false&description=Rust 自定义类型"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Rust 自定义类型&body=Check out this article: https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&name=Rust 自定义类型&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Rust-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">Rust 自定义类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.1.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE"><span class="toc-number">1.2.</span> <span class="toc-text">枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%95%B4%E6%95%B0%E6%9E%9A%E4%B8%BE"><span class="toc-number">1.2.1.</span> <span class="toc-text">简单整数枚举</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D"><span class="toc-number">1.2.2.</span> <span class="toc-text">类型别名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#use-%E5%A3%B0%E6%98%8E"><span class="toc-number">1.2.3.</span> <span class="toc-text">use 声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8-enum-%E6%92%B8%E9%93%BE%E8%A1%A8"><span class="toc-number">1.2.4.</span> <span class="toc-text">用 enum 撸链表</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Rust 自定义类型
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-07-04T22:24:23.355Z" itemprop="datePublished">2022-07-04</time>
+        
+        (Updated: <time datetime="2022-07-04T14:25:52.132Z" itemprop="dateModified">2022-07-04</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Rust/">Rust</a> › <a class="category-link" href="/categories/Rust/Beginning/">Beginning</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Rust/" rel="tag">Rust</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Rust-自定义类型"><a href="#Rust-自定义类型" class="headerlink" title="Rust 自定义类型"></a>Rust 自定义类型</h1><p>Rust 自定义类型有结构体（<code>struct</code>）和枚举（<code>enum</code>）。</p>
+<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>Rust 的结构体有三种：</p>
+<ul>
+<li><p>单元结构体：没有字段的</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Unit</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> x = Unit; <span class="comment">// 实例化单元结构体没有&#123;&#125;</span></span><br><span class="line">    <span class="keyword">let</span> y = Unit;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, x); <span class="comment">// ❌ 单元结构体不能打印</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, x == y); <span class="comment">// ❌ 单元结构体不能比较</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 注: 在 struct Unit; 上面加一行 #[derive(Debug)] 是可以用 &#123;:?&#125; 打印出 Unit 来的。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>元组结构体：一个有名字的元组，一个字段匿名的结构体</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Pair</span></span>(<span class="built_in">i32</span>, <span class="built_in">f32</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> pair = Pair(<span class="number">1</span>, <span class="number">0.1</span>);  <span class="comment">// 实例化元组结构体：圆括号传字段值</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, pair);   <span class="comment">// Pair(1, 0.1)</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125; &#123;:?&#125;&quot;</span>, pair.<span class="number">0</span>, pair.<span class="number">1</span>)  <span class="comment">// .下标 取字段值：1 0.1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> Pair(a, b) = pair;  <span class="comment">// 解构</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125; &#123;:?&#125;&quot;</span>, a, b);  <span class="comment">// 1 0.1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>正常的 C 语言风格的结构体</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span> &#123;</span><br><span class="line">    x: <span class="built_in">f32</span>,</span><br><span class="line">    y: <span class="built_in">f32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> p = Point&#123; x: <span class="number">3.14</span>, y: <span class="number">6.28</span> &#125;;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, p);  <span class="comment">// Point &#123; x: 3.14, y: 6.28 &#125;</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, p.x + p.y);  <span class="comment">// 9.42</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> Point&#123; x: x_edge, y: y_edge &#125; = p;  <span class="comment">// 解构</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125; &#123;:?&#125;&quot;</span>, x_edge, y_edge);  <span class="comment">// 3.14 6.28</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>注意元组结构体用圆括号 <code>()</code>，有字段命名的结构体用花括号 <code>&#123;&#125;</code>。</p>
+<p>结构体可以通过解构，把字段绑定到变量：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> Pair(a, b) = pair;  <span class="comment">// 元组结构体</span></span><br><span class="line"><span class="keyword">let</span> Point&#123; x: x_edge, y: y_edge &#125; = p;  <span class="comment">// C 结构体</span></span><br></pre></td></tr></table></figure>
+
+<p>结构体嵌套可以作为另一个的字段：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Rectangle</span></span> &#123;</span><br><span class="line">    top_left: Point,</span><br><span class="line">    bottom_right: Point,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">rect_area</span></span>(rect: Rectangle) -&gt; <span class="built_in">f32</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> Rectangle &#123;                          <span class="comment">// a ------ b</span></span><br><span class="line">        top_left:     Point &#123; x: a, y: b &#125;,  <span class="comment">// |  rect  |</span></span><br><span class="line">        bottom_right: Point &#123; x: c, y: d &#125;,  <span class="comment">// c ------ d</span></span><br><span class="line">    &#125; = rect;  <span class="comment">// 解构也可以嵌套进行</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (b - a) * (d - b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> rect = Rectangle &#123;</span><br><span class="line">        top_left: p,</span><br><span class="line">        bottom_right: Point&#123;x: <span class="number">10.0</span>, y: <span class="number">15.0</span>&#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, rect);  <span class="comment">// Rectangle &#123; top_left: Point &#123; x: 3.14, y: 6.28 &#125;, bottom_right: Point &#123; x: 10.0, y: 15.0 &#125; &#125;</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, rect.top_left.y);  <span class="comment">// 6.28</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, rect_area(rect));  <span class="comment">// 27.380798</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解构或者构造结构体的时候，如果<code>变量名</code>和<code>字段名</code>相同，则可以把 <code>name: name</code> 简写为 <code>name</code>：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">square</span></span>(top_left: Point, width: <span class="built_in">f32</span>) -&gt; Rectangle &#123;</span><br><span class="line">    <span class="keyword">let</span> Point &#123; x, y &#125; = top_left;  <span class="comment">// &#123; x: x, y: y &#125;</span></span><br><span class="line">    <span class="keyword">return</span> Rectangle &#123;</span><br><span class="line">        top_left,  <span class="comment">// top_left: top_left</span></span><br><span class="line">        bottom_right: Point &#123;</span><br><span class="line">            x: x + width,</span><br><span class="line">            y: y + width,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s = square(Point &#123; x: <span class="number">1f32</span>, y: <span class="number">1f32</span> &#125;, <span class="number">3f32</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, s);  <span class="comment">// Rectangle &#123; top_left: Point &#123; x: 1.0, y: 1.0 &#125;, bottom_right: Point &#123; x: 4.0, y: 4.0 &#125; &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>用 <code>enum</code>创建一个枚举，通过 <code>枚举名::种类</code> 访问枚举值。</p>
+<p>Rust 的枚举里面的成员是各种 struct，也就是说 Rust 的枚举和 Swift 类似，可以不止是一个值，还可以带上一些参数数据。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">WebEvent</span></span> &#123;</span><br><span class="line">    PageLoad,  <span class="comment">// 单元结构体</span></span><br><span class="line">    KeyPress(<span class="built_in">char</span>),  <span class="comment">// 元组结构体</span></span><br><span class="line">    Click &#123; x: <span class="built_in">i64</span>, y: <span class="built_in">i64</span> &#125;,  <span class="comment">// 普通的结构体</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">inspect</span></span>(event: WebEvent) &#123;</span><br><span class="line">    <span class="keyword">match</span> event &#123;  <span class="comment">// switch-case</span></span><br><span class="line">        WebEvent::PageLoad =&gt; <span class="built_in">println!</span>(<span class="string">&quot;page loaded&quot;</span>),</span><br><span class="line">        WebEvent::KeyPress(c) =&gt; <span class="built_in">println!</span>(<span class="string">&quot;pressed &#x27;&#123;&#125;&#x27;&quot;</span>, c),  <span class="comment">// 解构出 char c</span></span><br><span class="line">        WebEvent::Click &#123; x, y &#125; =&gt; &#123;  <span class="comment">// 解构出 x: i64, y: i64</span></span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;clicked at x=&#123;&#125;, y=&#123;&#125;&quot;</span>, x, y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> load = WebEvent::PageLoad;</span><br><span class="line">    <span class="keyword">let</span> pressed = WebEvent::KeyPress(<span class="string">&#x27;x&#x27;</span>);</span><br><span class="line">    <span class="keyword">let</span> click = WebEvent::Click &#123; x: <span class="number">20</span>, y: <span class="number">80</span> &#125;;</span><br><span class="line"></span><br><span class="line">    inspect(load);     <span class="comment">// page loaded</span></span><br><span class="line">    inspect(pressed);  <span class="comment">// pressed &#x27;x&#x27;</span></span><br><span class="line">    inspect(click);    <span class="comment">// clicked at x=20, y=80</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="简单整数枚举"><a href="#简单整数枚举" class="headerlink" title="简单整数枚举"></a>简单整数枚举</h3><p>也可以不用那种复杂的带参数的，而只是简单的名字对应整数值：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Numbers</span></span> &#123; <span class="comment">// 隐式值 0, 1, 2</span></span><br><span class="line">    Zero,</span><br><span class="line">    One,</span><br><span class="line">    Two,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Color</span></span> &#123; <span class="comment">// 显式值</span></span><br><span class="line">    Red = <span class="number">0xff0000</span>,</span><br><span class="line">    Green = <span class="number">0x00ff00</span>,</span><br><span class="line">    Blue = <span class="number">0x0000ff</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ❌ 只能是整形，浮点、字符串啥的都不行</span></span><br><span class="line"><span class="comment">// enum Strs &#123;</span></span><br><span class="line"><span class="comment">//     A = &quot;123&quot;,</span></span><br><span class="line"><span class="comment">//     B = &quot;456&quot;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125; is &#123;&#125;&quot;</span>, Numbers::Zero, Numbers::Zero <span class="keyword">as</span> <span class="built_in">i32</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125; is &#123;:#08x&#125;&quot;</span>, Color::Blue, Color::Blue <span class="keyword">as</span> <span class="built_in">i32</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><p>给类型取绰号，和 Go 语言类似：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">VerboseEnumOfThingsToDoWithNumbers</span></span> &#123;</span><br><span class="line">    Add,</span><br><span class="line">    Subtract,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义别名</span></span><br><span class="line"><span class="class"><span class="keyword">type</span> <span class="title">Operations</span></span> = VerboseEnumOfThingsToDoWithNumbers;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Operations &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">run</span></span>(&amp;<span class="keyword">self</span>, x: <span class="built_in">i32</span>, y: <span class="built_in">i32</span>) -&gt; <span class="built_in">i32</span> &#123;</span><br><span class="line">        <span class="keyword">match</span> <span class="keyword">self</span> &#123;</span><br><span class="line">            Self::Add =&gt; x + y,  <span class="comment">// Self 是 impl 中自动定义的一个别名</span></span><br><span class="line">            Self::Subtract =&gt; x - y,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> (x, y) = (<span class="number">10</span>, <span class="number">4</span>);</span><br><span class="line">    <span class="keyword">let</span> op = Operations::Add;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;(&#123;:?&#125;, &#123;:?&#125;) == &#123;:?&#125;&quot;</span>, op, x, y, op.run(x, y));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="use-声明"><a href="#use-声明" class="headerlink" title="use 声明"></a>use 声明</h3><p>屑 <code>EnumName::KindName</code> 就很长很麻烦，可以用 use 声明把枚举值的名字“导入”进来，然后就不用写前缀 <code>EnumName::</code> 了。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> WebEvent::&#123;KeyPress, PageLoad&#125;;  <span class="comment">// 用其中几个</span></span><br><span class="line"><span class="keyword">use</span> WebEvent::*;  <span class="comment">// 用枚举的全部值</span></span><br><span class="line"><span class="keyword">use</span> Operations::*;  <span class="comment">// ❌ 别名不行，要写原本的名字</span></span><br><span class="line"></span><br><span class="line">inspect(KeyPress(<span class="string">&#x27;e&#x27;</span>));</span><br><span class="line">inspect(PageLoad);</span><br></pre></td></tr></table></figure>
+
+<h3 id="用-enum-撸链表"><a href="#用-enum-撸链表" class="headerlink" title="用 enum 撸链表"></a>用 enum 撸链表</h3><p>这个例子有意思，不是 C 那种结构体字段做指针，在操作节点时，判断指针字段为 null 时做基准情况单独处理。这个是把 Nil 作为枚举的一种情况，然后正常的节点用 Lisp 那种 cons 嵌套穿起来，操作时用 match 分别处理有值和末尾情况。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">List</span></span> &#123;</span><br><span class="line">    Cons(<span class="built_in">u32</span>, <span class="built_in">Box</span>&lt;List&gt;), <span class="comment">// 一个 u32 元素，和一个指向下一节点的指针 (Box 是某种指针，以后学)</span></span><br><span class="line">    Nil,                  <span class="comment">// 末结点，表明链表结束</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> List::*; <span class="comment">// 可以直接用 Cons 和 Nil</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> List &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>() -&gt; List &#123;</span><br><span class="line">        Nil</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 头插</span></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">prepend</span></span>(<span class="keyword">self</span>, elem: <span class="built_in">u32</span>) -&gt; List &#123;</span><br><span class="line">        Cons(elem, <span class="built_in">Box</span>::new(<span class="keyword">self</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 长度: 递归遍历链表</span></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">len</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">u32</span> &#123;</span><br><span class="line">        <span class="keyword">match</span> *<span class="keyword">self</span> &#123;</span><br><span class="line">            Cons(_, <span class="keyword">ref</span> tail) =&gt; <span class="number">1</span> + tail.len(), <span class="comment">// 结构出当前元素 _ 和对下一节点 tail 的引用</span></span><br><span class="line">            Nil =&gt; <span class="number">0</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">stringify</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">        <span class="keyword">match</span> *<span class="keyword">self</span> &#123;</span><br><span class="line">            Cons(curr, <span class="keyword">ref</span> tail) =&gt; &#123;</span><br><span class="line">                <span class="built_in">format!</span>(<span class="string">&quot;&#123;&#125;, &#123;&#125;&quot;</span>, curr, tail.stringify())</span><br><span class="line">            &#125;</span><br><span class="line">            Nil =&gt; &#123;</span><br><span class="line">                <span class="built_in">format!</span>(<span class="string">&quot;&lt;Nil&gt;&quot;</span>) <span class="comment">// format! 返回格式化的字符串</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> list = List::new();</span><br><span class="line"></span><br><span class="line">    list = list.prepend(<span class="number">1</span>);</span><br><span class="line">    list = list.prepend(<span class="number">2</span>);</span><br><span class="line">    list = list.prepend(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;list: &#123;:?&#125;, len=&#123;&#125;&quot;</span>, list, list.len()); <span class="comment">// list: Cons(3, Cons(2, Cons(1, Nil))), len=3</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;stringify: &#123;&#125;&quot;</span>, list.stringify()); <span class="comment">// stringify: 3, 2, 1, &lt;Nil&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Rust-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">Rust 自定义类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.1.</span> <span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE"><span class="toc-number">1.2.</span> <span class="toc-text">枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%95%B4%E6%95%B0%E6%9E%9A%E4%B8%BE"><span class="toc-number">1.2.1.</span> <span class="toc-text">简单整数枚举</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D"><span class="toc-number">1.2.2.</span> <span class="toc-text">类型别名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#use-%E5%A3%B0%E6%98%8E"><span class="toc-number">1.2.3.</span> <span class="toc-text">use 声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8-enum-%E6%92%B8%E9%93%BE%E8%A1%A8"><span class="toc-number">1.2.4.</span> <span class="toc-text">用 enum 撸链表</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&text=Rust 自定义类型"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&is_video=false&description=Rust 自定义类型"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Rust 自定义类型&body=Check out this article: https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&title=Rust 自定义类型"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/07/04/Rust/RustCustomTypes/&name=Rust 自定义类型&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- New: global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146911386-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-146911386-1');
+    </script>
+    
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+
+</body>
+</html>
