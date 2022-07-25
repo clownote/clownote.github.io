@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="crud每个人都喜欢写 CRUD 代码，每个人都讨厌写 CRUD 代码，所以 CRUD 被叫做 crud （英文：污垢）。 增查改删，create、read、update 和 delete 是后端开发的基本操作。你有没有发现，自己写的每一个 CRUD 服务，以及这些服务中的各个 model 的 CRUD 实现，都差不多，整个 API 项目中充斥着大量的重复代码。加入新的模型时，往往就是把其他模型的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我用32行代码写了13个API：泛用型增查改删接口生成自动机">
+<meta property="og:url" content="https://clownote.github.io/2022/07/25/blog/crud/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="crud每个人都喜欢写 CRUD 代码，每个人都讨厌写 CRUD 代码，所以 CRUD 被叫做 crud （英文：污垢）。 增查改删，create、read、update 和 delete 是后端开发的基本操作。你有没有发现，自己写的每一个 CRUD 服务，以及这些服务中的各个 model 的 CRUD 实现，都差不多，整个 API 项目中充斥着大量的重复代码。加入新的模型时，往往就是把其他模型的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://clownote.github.io/2022/07/25/blog/crud/crud/crud.svg">
+<meta property="article:published_time" content="2022-07-25T10:31:13.574Z">
+<meta property="article:modified_time" content="2022-07-25T03:20:43.261Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="Golang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://clownote.github.io/2022/07/25/blog/crud/crud/crud.svg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>我用32行代码写了13个API：泛用型增查改删接口生成自动机</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2022/07/04/Rust/RustCustomTypes/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/07/25/blog/crud/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/07/25/blog/crud/&text=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/07/25/blog/crud/&is_video=false&description=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=我用32行代码写了13个API：泛用型增查改删接口生成自动机&body=Check out this article: https://clownote.github.io/2022/07/25/blog/crud/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/07/25/blog/crud/&name=我用32行代码写了13个API：泛用型增查改删接口生成自动机&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#crud"><span class="toc-number">1.</span> <span class="toc-text">crud</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E5%88%B0%E6%9C%80%E5%88%9D%E7%9A%84%E7%BE%8E%E5%A5%BD"><span class="toc-number">1.1.</span> <span class="toc-text">回到最初的美好</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E7%8E%B0%E5%AE%9E%E4%B8%96%E7%95%8C%E8%B4%9F%E9%87%8D%E5%89%8D%E8%A1%8C"><span class="toc-number">1.2.</span> <span class="toc-text">在现实世界负重前行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E3%80%81%E6%B3%9B%E5%8C%96"><span class="toc-number">1.3.</span> <span class="toc-text">抽象、泛化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cdfmlr-crud"><span class="toc-number">1.4.</span> <span class="toc-text">cdfmlr&#x2F;crud</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        我用32行代码写了13个API：泛用型增查改删接口生成自动机
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-07-25T10:31:13.574Z" itemprop="datePublished">2022-07-25</time>
+        
+        (Updated: <time datetime="2022-07-25T03:20:43.261Z" itemprop="dateModified">2022-07-25</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Golang/" rel="tag">Golang</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="crud"><a href="#crud" class="headerlink" title="crud"></a>crud</h1><p>每个人都喜欢写 CRUD 代码，每个人都讨厌写 CRUD 代码，所以 CRUD 被叫做 crud （英文：污垢）。</p>
+<p>增查改删，create、read、update 和 delete 是后端开发的基本操作。你有没有发现，自己写的每一个 CRUD 服务，以及这些服务中的各个 model 的 CRUD 实现，都差不多，整个 API 项目中充斥着大量的重复代码。加入新的模型时，往往就是把其他模型的 CRUD 实现复制一份，然后改一些字段名、函数名。这种工作就非常搬砖，一遍一遍地写同样的代码，还要一次一次的测试，甚至还有一样一样的文档。</p>
+<p>但我就不一样了[误]，面对整整两个模型（甚至还是有嵌套关系的两个模型），写 13 个 CRUD 接口：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># api to todos</span></span><br><span class="line">GET    /todos</span><br><span class="line">GET    /todos/:TodoID</span><br><span class="line">POST   /todos</span><br><span class="line">PUT    /todos/:TodoID</span><br><span class="line">DELETE /todos/:TodoID</span><br><span class="line"></span><br><span class="line"><span class="comment"># api to projects</span></span><br><span class="line">GET    /projects</span><br><span class="line">GET    /projects/:ProjectID</span><br><span class="line">POST   /projects</span><br><span class="line">PUT    /projects/:ProjectID</span><br><span class="line">DELETE /projects/:ProjectID</span><br><span class="line"></span><br><span class="line"><span class="comment"># api to nested todos in a project</span></span><br><span class="line">GET    /projects/:ProjectID/todos</span><br><span class="line">POST   /projects/:ProjectID/todos</span><br><span class="line">DELETE /projects/:ProjectID/todos/:TodoID</span><br></pre></td></tr></table></figure>
+
+<p>我只用 32 行代码（甚至包括 package、import 和为了凑够整数加上的空行）：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/cdfmlr/crud/orm&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/cdfmlr/crud/router&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Todo <span class="keyword">struct</span> &#123;</span><br><span class="line">	orm.BasicModel</span><br><span class="line">	Title  <span class="keyword">string</span> <span class="string">`json:&quot;title&quot;`</span></span><br><span class="line">	Detail <span class="keyword">string</span> <span class="string">`json:&quot;detail&quot;`</span></span><br><span class="line">	Done   <span class="keyword">bool</span>   <span class="string">`json:&quot;done&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Project <span class="keyword">struct</span> &#123;</span><br><span class="line">	orm.BasicModel</span><br><span class="line">	Title <span class="keyword">string</span>  <span class="string">`json:&quot;title&quot;`</span></span><br><span class="line">	Todos []*Todo <span class="string">`json:&quot;todos&quot; gorm:&quot;many2many:project_todos&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	orm.ConnectDB(orm.DBDriverSqlite, <span class="string">&quot;todolist.db&quot;</span>)</span><br><span class="line">	orm.RegisterModel(Todo&#123;&#125;, Project&#123;&#125;)</span><br><span class="line"></span><br><span class="line">	r := router.NewRouter()</span><br><span class="line">	router.Crud[Todo](r, <span class="string">&quot;/todos&quot;</span>)</span><br><span class="line">	router.Crud[Project](r, <span class="string">&quot;/projects&quot;</span>,</span><br><span class="line">		router.CrudNested[Project, Todo](<span class="string">&quot;todos&quot;</span>),</span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line">	r.Run(<span class="string">&quot;:8086&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是个可以运行的真实例子。这个程序的大头是定义了两个模型，其余部分寥寥数行，竟实现了整套 CRUD 操作的 RESTful API，宛如魔法一般。尤其是 <code>router.Crud[Model]</code> 这个麻瓜可见的强力魔法。</p>
+<p>这些魔法来自于我封装的（玩具）模块：<code>github.com/cdfmlr/crud</code>，一个帮助你极速实现简单 CRUD 项目的工（玩）具。</p>
+<p>当然，这篇文章不是推销这个花了不到 24 小时实现的玩具项目，我想分享的只是这个东西的思路。</p>
+<blockquote>
+<p>预备知识：Golang (1.18+)，Gin，GORM</p>
+</blockquote>
+<h2 id="回到最初的美好"><a href="#回到最初的美好" class="headerlink" title="回到最初的美好"></a>回到最初的美好</h2><p>当我还在学习元素与精灵魔法专业的时候，来王立瑟雷斯特利亚魔法学院支教的年轻老师总是提醒我们：“在学习大火球术这种进阶魔法之前，最好先弄明白日常使用的点火魔法背后的点点滴滴……”我想，这对于编程也是适用的。(我为什么能面不改色的写出这种句子。。。三室一厅！)</p>
+<p>所以首先，让我们考虑一个简单的个人项目，比如，放假在家，却总是忘记浇花，所以考虑开发一个“家庭植物呵护云服务”。。其实就是个纪录家里花花草草浇水时间的东西，只有一个 model：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Plant <span class="keyword">struct</span> &#123;</span><br><span class="line">    ID    <span class="keyword">uint</span> <span class="string">`gorm:&quot;primarykey&quot;`</span></span><br><span class="line">    Name  <span class="keyword">string</span></span><br><span class="line">    Water time.Time</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要写一个 Get 和一个 UpdateWaterTime 接口。（作为一种短期内的理想情况，就目前的经济情况，我们不考虑购入新植物，并且只要按时浇水，就能在一定置信水平上认为不会有植物仙逝，所以不需要 Create 和 Delete。）</p>
+<p>这个服务用任意数据库 + 任意 Web 框架（包括标准库的 net/http）都能轻松实现。比如我们用 GORM + Gin：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DB *gorm.DB</span><br><span class="line"></span><br><span class="line"><span class="comment">// GetPlants handles GET /plants</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetPlants</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> plants []Plant</span><br><span class="line">    result := DB.Find(&amp;plants)</span><br><span class="line">    <span class="keyword">if</span> result.Error != <span class="literal">nil</span> &#123;</span><br><span class="line">        c.JSON(<span class="number">500</span>, result.Error)</span><br><span class="line">    &#125;</span><br><span class="line">    c.JSON(<span class="number">200</span>, plants)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// UpdateWaterTime handles PUT /plants/:id/water</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">UpdateWaterTime</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    id := c.Param(<span class="string">&quot;id&quot;</span>)</span><br><span class="line">    result := DB.Model(&amp;Plant&#123;&#125;).Where(<span class="string">&quot;id = ?&quot;</span>, id).</span><br><span class="line">        Update(<span class="string">&quot;water&quot;</span>, time.Now())</span><br><span class="line">    <span class="keyword">if</span> result.Error != <span class="literal">nil</span> &#123;</span><br><span class="line">        c.JSON(<span class="number">500</span>, result.Error)</span><br><span class="line">    &#125;</span><br><span class="line">    c.JSON(<span class="number">200</span>, gin.H&#123;<span class="string">&quot;updated&quot;</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> err error</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> DB, err = gorm.Open(sqlite.Open(<span class="string">&quot;plant.db&quot;</span>)); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> err = DB.AutoMigrate(&amp;Plant&#123;&#125;); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	r := gin.Default()</span><br><span class="line">	r.GET(<span class="string">&quot;/plants&quot;</span>, GetPlants)</span><br><span class="line">	r.PUT(<span class="string">&quot;/plants/:id/water&quot;</span>, UpdateWaterTime)</span><br><span class="line">	r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个文件，50 行就能够完成，并且足够清晰、高效。</p>
+<p>但是，现实中的工程肯定没有这么单纯（除非你真的会因为忘记浇水，被老妈的责备驱使，写下一个“家庭植物呵护云服务”）。</p>
+<h2 id="在现实世界负重前行"><a href="#在现实世界负重前行" class="headerlink" title="在现实世界负重前行"></a>在现实世界负重前行</h2><p>面对现实世界中的工程，我们倾向于重新组织程序，把代码分层封装，每一层完成一部分工作。例如我们常采用这种受到 MVC 启发的分层架构：</p>
+<p><img src="crud/crud.svg" alt="crud"></p>
+<p>(<del>TODO: 这个是我的 crud 项目实现的结构图，之后记得重新画一个 MVC 分层的图，内容基本一样，只是 rm structured，但是高饱和彩色风格加中文</del> NOTODO：懒得画了，反正意思是一样的，又不是不能用）</p>
+<p>在这种架构下，极简如我们的“家庭植物呵护云服务“也将不再如此简洁：</p>
+<ul>
+<li>router 层：注册路径，将请求分发给 controller。Gin 可以方便的实现 REST API 的注册。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package router</span></span><br><span class="line">router.GET(<span class="string">&quot;/plants&quot;</span>, controller.GetPlantsHandler)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>controller 层：解析请求，获取请求参数，调用 service 进行业务处理，响应返回的结果。Gin 提供了很多有用的操作：比如解析请求的 <code>c.Bind</code>、响应 JSON 数据的 <code>c.JSON</code>。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package controller</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetPlantsHandler</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> options QueryOptions  <span class="comment">// 分页、排序啥的</span></span><br><span class="line">    c.Bind(&amp;options)</span><br><span class="line">    </span><br><span class="line">    plants, err := service.GetPlants(options)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        c.JSON(<span class="number">500</span>, gin.H&#123; <span class="string">&quot;error&quot;</span>: err.Error() &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    c.JSON(<span class="number">200</span>, plants)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>service 层：业务逻辑层，说白了也就是进行 CRUD 操作，再说白了就是安排一个具体的数据库查询任务（事务），然后调用 DAO 层，完成数据哭操作，将结果返回。这一层的实现基本靠手写，没有太多库可以帮我们，毕竟这是你的业务逻辑层。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package service</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetPlants</span><span class="params">(options QueryOptions)</span></span> &#123;</span><br><span class="line">    query := dao.DB.Model(&amp;Plants&#123;&#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> _, f := <span class="keyword">range</span> options.Funcs() &#123;</span><br><span class="line">        <span class="comment">// options.Funcs(): func(*gorm.DB) *gorm.DB</span></span><br><span class="line">        <span class="comment">// 将结构体中的查询需求转化为 GORM 查询的链式构造。</span></span><br><span class="line">        <span class="comment">// 当然，也可以在这里写一大堆 if，或者其他处理方式，</span></span><br><span class="line">        <span class="comment">// 总之就是不择手段地构造查询语句。</span></span><br><span class="line">        query := f(query)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> plants []Plant</span><br><span class="line">    result := query.Find(&amp;plants)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> plants, result.Error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>DAO 层，就是数据库操作。当然，我们还希望该层进行数据库查询语言（SQL）、查询结果（表）与 Go 数据结构的相互转换。如果可以使用 ORM 库，这一层就非常简单了，基本不用写什么代码。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package dao</span></span><br><span class="line"><span class="keyword">var</span> DB *gorm.DB</span><br></pre></td></tr></table></figure>
+
+<p>在这种架构下，我们需要为每一个实体的每一个增查改删操作在每一层上编写相应的代码。一般来说，一个实体至少需要四五个操作：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GET /users          获取用户列表</span><br><span class="line">        =&gt; controller.GetUserListHandler</span><br><span class="line">        =&gt; service.GetUserList</span><br><span class="line">GET /users/:UserID  获取某个用户</span><br><span class="line">        =&gt; controllers.GetUserByIDHandler</span><br><span class="line">        =&gt; service.GetUserByID</span><br><span class="line">POST /users         新建用户</span><br><span class="line">        =&gt; controllers.CreateUserHandler</span><br><span class="line">        =&gt; service.CreateUser</span><br><span class="line">PUT /users/:UserID  更新用户</span><br><span class="line">        =&gt; controllers.UpdateUserHandler</span><br><span class="line">        =&gt; service.UpdateUser</span><br><span class="line">DELETE /users/:UserID  删除用户</span><br><span class="line">        =&gt; controllers.DeleteUserHandler</span><br><span class="line">        =&gt; service.DeleteUserByID</span><br></pre></td></tr></table></figure>
+
+<p>所以写出来就是十来个函数了。一个项目至少有三五个实体，马上就 50 个函数了。</p>
+<p>这个数量倒不是问题，主要是，很多函数的具体实现思路都相同，但有有一些细节上的差异，比如日志打点，每次改几个字；又比如各种 GetXxxByID，模型的 ID 可能有的是自增整数，有的是某种什么奇怪的字符串，我们就不得不为这些细节差异便携很多套类似的代码。</p>
+<p>我们知道，像我一样平庸的程序员一天有效的代码一般是 200 行左右。但这种重重复复的 CRUD 代码，一天很容易就干出 500 到 1k 行。这也侧面说明了这些代码的机械、重复、低信息量。</p>
+<p>让我们来考虑一下解决这个问题，拒绝复制粘贴。</p>
+<h2 id="抽象、泛化"><a href="#抽象、泛化" class="headerlink" title="抽象、泛化"></a>抽象、泛化</h2><p>Go 1.18 为我们提供了泛型，而且即使是之前的 Go 版本也拥有接口、反射。那么我们是不是可以利用这些泛化工具，实现一套可复用的抽象 CRUD 实现？比如其中一个抽象的 Update：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">router    :  PUT /models/:id</span><br><span class="line">controller:  UpdateHandler[Model](id)</span><br><span class="line">service   :  Update[Model](id, updatedModel)</span><br><span class="line">orm       :  DB.Model(&amp;Model&#123;&#125;).Where(<span class="string">&quot;id = ?&quot;</span>, id).Updates(updatedModel)</span><br></pre></td></tr></table></figure>
+
+<p>最底层的 GORM，接受的参数本来就是 <code>interface&#123;&#125;</code> （a.k.a. <code>any</code> 在 Go 1.18 中），它靠反射提供了泛化能力，所以这一层的问题就不用我们解决了。</p>
+<p>关键是 service 和 controller 层（上一节的例子中，真正需要我们写大量代码的地方）。事实上，也很容易实现：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">UpdateHandler</span>[<span class="title">Model</span> <span class="title">any</span>]<span class="params">(idParam <span class="keyword">string</span>)</span> <span class="title">gin</span>.<span class="title">HandlerFunc</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		id := c.Param(idParam)</span><br><span class="line">        <span class="keyword">var</span> model Model</span><br><span class="line">        <span class="comment">// 要更新起码要先存在</span></span><br><span class="line">		<span class="keyword">if</span> err := service.GetByID[Model](id, &amp;model); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            c.JSON(<span class="number">404</span>, gin.H&#123; <span class="string">&quot;error&quot;</span>: err.Error() &#125;)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 覆盖更新字段</span></span><br><span class="line">		<span class="keyword">if</span> err := c.ShouldBindJSON(&amp;model); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            c.JSON(<span class="number">400</span>, gin.H&#123; <span class="string">&quot;error&quot;</span>: err.Error() &#125;)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用更新逻辑</span></span><br><span class="line">		err := service.Update(&amp;updatedModel)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			c.JSON(<span class="number">422</span>, gin.H&#123; <span class="string">&quot;error&quot;</span>: err.Error() &#125;)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">        c.JSON(<span class="number">200</span>, gin.H&#123; <span class="string">&quot;updated&quot;</span>: model &#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个 controller 被用闭包包的严严实实：外层函数接受一个类型参数 <code>Model</code>，告诉 handler 自己是要为什么模型处理请求的，也就是说 <code>UpdateHandler[Model]()</code> 制造一个 <code>UpdateModelHandler</code>；还有一个参数 <code>idParam</code>，告诉 handler 路由中指定的 URL 参数，例如对于 <code>PUT /users/:UserID</code>，<code>idParam = &quot;UserID&quot;</code>，这个应该被传进来，而不是在里面瞎猜一个（例如简单认为参数就是固定的 <code>id</code>，这样遇到 <code>GET /groups/:id/users/:id</code> 就寄了）。</p>
+<p>不过我有罪，在 controller 里写了一些业务逻辑（检查存在再更新），理想情况下，这整套工作应该是由业务逻辑层的 <code>service.Update</code>  独自完成的。这个函数是我从多年前的屎山里抄来的，如果让您看的不爽了请务必点名批评曾经的我（当然是技术上的批评，请不要不尊重督促我完成传奇的 “家庭植物呵护云服务” 的家人）。留下优化的空间不一定有罪，但过早的优化往往是万恶之源，所以我没有改动它，<del>即这里的重构留给读者作为练习</del>。</p>
+<p>接下来是 service 层的 <code>Update</code> 函数，注意到上面 controller 中对它的调用没有传递泛型参数，不是忘了写，也不是 Go 可以自动推测这个泛型，只是确实不需要泛型：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package service</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Update</span><span class="params">(model any)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> model == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> ErrNilModel</span><br><span class="line">	&#125;</span><br><span class="line">	result := orm.DB.Save(model)</span><br><span class="line">	<span class="keyword">return</span> result.Error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为前面的 controller 层越俎代庖，我们的 service 层实在无事可做，只好象征性地检查一下参数是否为 nil，然后调用 orm 去更新纪录。在正确的实现下，service 函数可能都像 <code>GetByID</code> 那样需要类型参数把泛型传进来的（<code>GetByID</code> 函数的实现也给读者思考）。</p>
+<p>不过切勿乱用泛型，必要的时候再加，摘一段 Go 官方 blog：</p>
+<blockquote>
+<p>Let’s start with a general guideline for programming Go: write Go programs by writing code, not by defining types. When it comes to generics, if you start writing your program by defining type parameter constraints, you are probably on the wrong path. Start by writing functions. It’s easy to add type parameters later when it’s clear that they will be useful.</p>
+<p>——<a target="_blank" rel="noopener" href="https://go.dev/blog/when-generics">The Go Blog: <strong>When To Use Generics</strong> by <em>Ian Lance Taylor</em></a></p>
+</blockquote>
+<p>不管怎样，即使是咱这种恶疾缠身的烂代码，也是侥幸实现了泛化的纪录更新功能，接下来只需要定义好模型，然后在 router 层中注册一下，它就可以工作了：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package model</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">    ID    <span class="keyword">uint</span> <span class="string">`gorm:&quot;primarykey&quot;`</span></span><br><span class="line">    Name  <span class="keyword">string</span></span><br><span class="line">    Email <span class="keyword">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package router</span></span><br><span class="line">router.PUT(<span class="string">&quot;/users/:UserID&quot;</span>, </span><br><span class="line">           controller.UpdateHandler[model.User](<span class="string">&quot;UserID&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>如法炮制，我们容易实现泛型的 Get、泛型的 Create、泛型的 Delete，这样你就拥有了一整套泛型的 CRUD 实现。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GET /models</span><br><span class="line">        =&gt; controller.GetListHandler[Model]</span><br><span class="line">        =&gt; service.GetList[Model]</span><br><span class="line">GET /models/:ModelID</span><br><span class="line">        =&gt; controllers.GetByIDHandler[Model]</span><br><span class="line">        =&gt; service.GetByID[Model]</span><br><span class="line">POST /models</span><br><span class="line">        =&gt; controllers.CreateHandler[Model]</span><br><span class="line">        =&gt; service.Create[Model]</span><br><span class="line">PUT /models/:ModelID</span><br><span class="line">        =&gt; controllers.UpdateHandler[Model]</span><br><span class="line">        =&gt; service.Update[Model]</span><br><span class="line">DELETE /models/:ModelID</span><br><span class="line">        =&gt; controllers.DeleteHandler[Model]</span><br><span class="line">        =&gt; service.Delete[Model]</span><br></pre></td></tr></table></figure>
+
+<p>在完成这一切后，如果你时间充裕，还可以进一步，把魔爪伸向 router 层，实现一个一键 CRUD API 生成：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Curd add CRUD routes for model T to the group:</span></span><br><span class="line"><span class="comment">//       GET /</span></span><br><span class="line"><span class="comment">//       GET /:idParam</span></span><br><span class="line"><span class="comment">//      POST /</span></span><br><span class="line"><span class="comment">//       PUT /:idParam</span></span><br><span class="line"><span class="comment">//    DELETE /:idParam</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Curd</span>[<span class="title">T</span> <span class="title">orm</span>.<span class="title">Model</span>]<span class="params">(group *gin.RouterGroup, idParam <span class="keyword">string</span>)</span> *<span class="title">gin</span>.<span class="title">RouterGroup</span></span> &#123;</span><br><span class="line">    group.GET(<span class="string">&quot;&quot;</span>, </span><br><span class="line">              controller.GetListHandler[T]())</span><br><span class="line">    group.GET(fmt.Sprintf(<span class="string">&quot;/:%s&quot;</span>, idParam), </span><br><span class="line">              controller.GetByIDHandler[T](idParam))</span><br><span class="line">    group.POST(<span class="string">&quot;&quot;</span>, </span><br><span class="line">               controller.CreateHandler[T]())</span><br><span class="line">    group.PUT(fmt.Sprintf(<span class="string">&quot;/:%s&quot;</span>, idParam), </span><br><span class="line">              controller.UpdateHandler[T](idParam))</span><br><span class="line">    group.DELETE(fmt.Sprintf(<span class="string">&quot;/:%s&quot;</span>, idParam), </span><br><span class="line">                 controller.DeleteHandler[T](idParam))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> group</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这大致上就是文章开头提到的强力魔法的真面目了（但有所不同，注意观察哦👀）。</p>
+<h2 id="cdfmlr-crud"><a href="#cdfmlr-crud" class="headerlink" title="cdfmlr/crud"></a>cdfmlr/crud</h2><p>时间总是匆促，DDL步步紧逼，都喜欢荫凉路，谁没事一天造轮子，。如果你想用这样的“泛用型增查改删接口生成自动机”，但又不想从头实现一个，不妨试一试我的实现：</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr/crud">https://github.com/cdfmlr/crud</a></li>
+</ul>
+<p>注：该模块名 crud 是 CRUD Robotics for Universal Deadlines 的递归缩写。</p>
+<p>除了基本的“泛用型增查改删接口自动生成”功能，该模块还封装了常用的日志、配置等功能哦，或者对于现实世界的工程，也可以把一些写好的 service、controller 单独拿出来用，总会帮你节约一些开发时间。</p>
+</blockquote>
+<p>在该项目被充分完善以前（<code>crud &lt; v1.0.0</code>），不推荐用于生产环境。因为目前为止（<code>crud v0.0.2</code>），这个项目的很多模块甚至没有单元测试。但欢迎任何人参与包括但不限于反馈、建议、讨论、PR、code review 等任何形式的贡献。如果没有大家的帮助，我们或将难以在本世纪（公元 21 世纪）内达到 <code>crud v1.0.0</code> 的里程碑。</p>
+<p>(这东西只是我探索将 CRUD 代码泛型化、通用化的一种初级产物，不喜欢欢迎批评但不要喷。我知道地球上存在只需要写更少代码，并且经历了生产考验更加鲁棒的更好的开源项目可以更优雅地实现本文所述的功能；甚至还有不用写一行代码就能做到这一切的黑魔法。但是，我只是想去写一个，just for fun :)</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#crud"><span class="toc-number">1.</span> <span class="toc-text">crud</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E5%88%B0%E6%9C%80%E5%88%9D%E7%9A%84%E7%BE%8E%E5%A5%BD"><span class="toc-number">1.1.</span> <span class="toc-text">回到最初的美好</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E7%8E%B0%E5%AE%9E%E4%B8%96%E7%95%8C%E8%B4%9F%E9%87%8D%E5%89%8D%E8%A1%8C"><span class="toc-number">1.2.</span> <span class="toc-text">在现实世界负重前行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E3%80%81%E6%B3%9B%E5%8C%96"><span class="toc-number">1.3.</span> <span class="toc-text">抽象、泛化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cdfmlr-crud"><span class="toc-number">1.4.</span> <span class="toc-text">cdfmlr&#x2F;crud</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/07/25/blog/crud/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/07/25/blog/crud/&text=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/07/25/blog/crud/&is_video=false&description=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=我用32行代码写了13个API：泛用型增查改删接口生成自动机&body=Check out this article: https://clownote.github.io/2022/07/25/blog/crud/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/07/25/blog/crud/&title=我用32行代码写了13个API：泛用型增查改删接口生成自动机"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/07/25/blog/crud/&name=我用32行代码写了13个API：泛用型增查改删接口生成自动机&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- New: global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146911386-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-146911386-1');
+    </script>
+    
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+
+</body>
+</html>
