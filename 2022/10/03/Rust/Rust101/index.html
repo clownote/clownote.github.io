@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Rust 101Rust 入门，笔记，集合：vol 1  Hello World1234&#x2F;&#x2F; hello.rsfn main() &amp;#123;    println!(&quot;Hello, world!&quot;);&amp;#125;  123$ rustc hello.rs$ .&#x2F;helloHello, world!   cargo：包管理、项目组织构建 12345678$ cargo new">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rust101">
+<meta property="og:url" content="https://clownote.github.io/2022/10/03/Rust/Rust101/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="Rust 101Rust 入门，笔记，集合：vol 1  Hello World1234&#x2F;&#x2F; hello.rsfn main() &amp;#123;    println!(&quot;Hello, world!&quot;);&amp;#125;  123$ rustc hello.rs$ .&#x2F;helloHello, world!   cargo：包管理、项目组织构建 12345678$ cargo new">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-03T15:15:55.262Z">
+<meta property="article:modified_time" content="2022-10-03T07:17:11.658Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>Rust101</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2022/07/25/blog/crud/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/10/03/Rust/Rust101/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&text=Rust101"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&is_video=false&description=Rust101"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Rust101&body=Check out this article: https://clownote.github.io/2022/10/03/Rust/Rust101/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&name=Rust101&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Rust-101"><span class="toc-number">1.</span> <span class="toc-text">Rust 101</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-World"><span class="toc-number">1.1.</span> <span class="toc-text">Hello World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">Rust 量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">Rust 静态类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Rust-%E6%A0%87%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">Rust 标量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">算术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E5%9E%8B%EF%BC%9A%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">整型：字面量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E5%9E%8B%EF%BC%9A%E6%BA%A2%E5%87%BA"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">整型：溢出</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rust-%E5%A4%8D%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">Rust 复合类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">Rust 函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E5%8F%A5-vs-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.4.1.</span> <span class="toc-text">语句 vs 表达式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">1.5.</span> <span class="toc-text">Rust 控制流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if-%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.5.1.</span> <span class="toc-text">if 条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF"><span class="toc-number">1.5.2.</span> <span class="toc-text">循环</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%89%80%E6%9C%89%E6%9D%83"><span class="toc-number">1.6.</span> <span class="toc-text">Rust 所有权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8-vs-%E5%85%8B%E9%9A%86"><span class="toc-number">1.6.1.</span> <span class="toc-text">移动 vs 克隆</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#trait-Copy-amp-Drop"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">trait: Copy &amp; Drop</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E6%9D%83-amp-%E5%87%BD%E6%95%B0"><span class="toc-number">1.6.2.</span> <span class="toc-text">所有权 &amp; 函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E3%80%81%E5%80%9F%E7%94%A8"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">引用、借用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%BC%95%E7%94%A8"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">可变引用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%82%AC%E5%9E%82%E5%BC%95%E7%94%A8"><span class="toc-number">1.6.3.</span> <span class="toc-text">悬垂引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#slice"><span class="toc-number">1.6.4.</span> <span class="toc-text">slice</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-struct"><span class="toc-number">1.7.</span> <span class="toc-text">Rust struct</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.7.1.</span> <span class="toc-text">一般结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.7.2.</span> <span class="toc-text">元组结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">1.7.3.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E5%87%BD%E6%95%B0"><span class="toc-number">1.7.4.</span> <span class="toc-text">关联函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%9E%9A%E4%B8%BE"><span class="toc-number">1.8.</span> <span class="toc-text">Rust 枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Option"><span class="toc-number">1.8.1.</span> <span class="toc-text">Option</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#match"><span class="toc-number">1.8.2.</span> <span class="toc-text">match</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#if-let"><span class="toc-number">1.8.3.</span> <span class="toc-text">if let</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.9.</span> <span class="toc-text">Rust 项目：模块系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#crate"><span class="toc-number">1.9.1.</span> <span class="toc-text">crate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mod"><span class="toc-number">1.9.2.</span> <span class="toc-text">mod</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%8D%95%E6%96%87%E4%BB%B6"><span class="toc-number">1.9.2.1.</span> <span class="toc-text">实现：单文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%9A%E6%96%87%E4%BB%B6"><span class="toc-number">1.9.2.2.</span> <span class="toc-text">实现：多文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#use"><span class="toc-number">1.9.3.</span> <span class="toc-text">use</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E5%8C%85"><span class="toc-number">1.9.4.</span> <span class="toc-text">外部包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%9B%86%E5%90%88"><span class="toc-number">1.10.</span> <span class="toc-text">Rust 集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vector"><span class="toc-number">1.10.1.</span> <span class="toc-text">vector</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#string"><span class="toc-number">1.10.2.</span> <span class="toc-text">string</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap"><span class="toc-number">1.10.3.</span> <span class="toc-text">HashMap</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.11.</span> <span class="toc-text">Rust 错误处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#panic"><span class="toc-number">1.11.1.</span> <span class="toc-text">panic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Result"><span class="toc-number">1.11.2.</span> <span class="toc-text">Result</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%BC%A0%E6%92%AD"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">错误传播</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%B3%9B%E5%9E%8B"><span class="toc-number">1.12.</span> <span class="toc-text">Rust 泛型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-trait"><span class="toc-number">1.13.</span> <span class="toc-text">Rust trait</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.14.</span> <span class="toc-text">Rust 生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A0%87%E6%B3%A8"><span class="toc-number">1.14.1.</span> <span class="toc-text">生命周期标注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A0%87%E6%B3%A8"><span class="toc-number">1.14.2.</span> <span class="toc-text">函数生命周期标注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A0%87%E6%B3%A8"><span class="toc-number">1.14.3.</span> <span class="toc-text">结构体生命周期标注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9C%81%E7%95%A5"><span class="toc-number">1.14.4.</span> <span class="toc-text">生命周期省略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.14.5.</span> <span class="toc-text">静态生命周期</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.15.</span> <span class="toc-text">Rust 测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-number">1.15.1.</span> <span class="toc-text">测试的组织</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-number">1.15.1.1.</span> <span class="toc-text">单元测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95"><span class="toc-number">1.15.1.2.</span> <span class="toc-text">集成测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%EF%BC%9Aminigrep"><span class="toc-number">1.16.</span> <span class="toc-text">实例：minigrep</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Rust101
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-10-03T15:15:55.262Z" itemprop="datePublished">2022-10-03</time>
+        
+        (Updated: <time datetime="2022-10-03T07:17:11.658Z" itemprop="dateModified">2022-10-03</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Rust-101"><a href="#Rust-101" class="headerlink" title="Rust 101"></a>Rust 101</h1><p>Rust 入门，笔记，集合：vol 1</p>
+<hr>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hello.rs</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Hello, world!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rustc hello.rs</span><br><span class="line">$ ./hello</span><br><span class="line">Hello, world!</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>cargo</code>：包管理、项目组织构建</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cargo new hello_cargo  <span class="comment"># 新建项目</span></span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> hello_cargo</span><br><span class="line">$ vim src/main.rs</span><br><span class="line"></span><br><span class="line">$ cargo run    <span class="comment"># 运行代码</span></span><br><span class="line">$ cargo build  <span class="comment"># 编译：debug</span></span><br><span class="line">$ cargo build --release  <span class="comment"># 编译：release</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-量"><a href="#Rust-量" class="headerlink" title="Rust 量"></a>Rust 量</h2><ul>
+<li>常量：<code>const</code> 始终不可变</li>
+<li>变量：<ul>
+<li><code>let</code>：默认不可变</li>
+<li><code>let mut</code>：只可变，类型不可变</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>遮蔽</strong>（shadow）：作用域内重新声明同名变量。</p>
+<ul>
+<li>名不变</li>
+<li>值/<strong>类型</strong>可变</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> foo = <span class="number">1</span>;         # <span class="built_in">i64</span>: <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> foo = <span class="number">2.0</span>;       # <span class="built_in">f64</span>: <span class="number">2.0</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> foo = <span class="string">&quot;3&quot;</span>;   # &amp;<span class="built_in">str</span>: <span class="string">&quot;3&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">                         # <span class="built_in">f64</span>: <span class="number">2.0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-静态类型"><a href="#Rust-静态类型" class="headerlink" title="Rust 静态类型"></a>Rust 静态类型</h2><blockquote>
+<p>静态类型：编译时确定所有变量的类型。</p>
+</blockquote>
+<hr>
+<h3 id="Rust-标量"><a href="#Rust-标量" class="headerlink" title="Rust 标量"></a>Rust 标量</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>整型</td>
+<td><code>i/u + size</code>：<code>i16</code>，<code>u32</code>，…</td>
+<td>* <code>isize</code>: 由机器架构决定(64 位机：<code>isize=i64</code>)<br />* <code>usize</code>: 用作索引值</td>
+</tr>
+<tr>
+<td>浮点型</td>
+<td><code>f32</code>，<code>f64</code></td>
+<td>默认 <code>f64</code>，IEEE 754 格式</td>
+</tr>
+<tr>
+<td>布尔型</td>
+<td><code>bool</code>：`true</td>
+<td>false`</td>
+</tr>
+<tr>
+<td>字符</td>
+<td><code>char</code></td>
+<td>4 byte：unicode</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="算术"><a href="#算术" class="headerlink" title="算术"></a>算术</h4><p><code>+</code>，<code>-</code>，<code>*</code>，<code>/</code>，<code>%</code>，…</p>
+<blockquote>
+<p>整数 <code>/</code>：向下取整</p>
+</blockquote>
+<hr>
+<h4 id="整型：字面量"><a href="#整型：字面量" class="headerlink" title="整型：字面量"></a>整型：字面量</h4><table>
+<thead>
+<tr>
+<th>进制</th>
+<th>字面量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>二</td>
+<td><code>0b1011</code></td>
+</tr>
+<tr>
+<td>八</td>
+<td><code>0o76</code></td>
+</tr>
+<tr>
+<td>十</td>
+<td><code>114_514</code></td>
+</tr>
+<tr>
+<td>十六</td>
+<td><code>0xfe</code></td>
+</tr>
+<tr>
+<td>字节（u8）</td>
+<td><code>b&#39;A&#39;</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="整型：溢出"><a href="#整型：溢出" class="headerlink" title="整型：溢出"></a>整型：溢出</h4><ul>
+<li>debug：panic</li>
+<li>release：二进制补（正常溢出）or 其他可选行为</li>
+</ul>
+<hr>
+<h3 id="Rust-复合类型"><a href="#Rust-复合类型" class="headerlink" title="Rust 复合类型"></a>Rust 复合类型</h3><p><strong>元组</strong> <code>()</code></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> tup: (<span class="built_in">i32</span>, <span class="built_in">f64</span>, <span class="built_in">u8</span>) = (<span class="number">500</span>, <span class="number">6.4</span>, <span class="number">1</span>);`</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>多种类型 多个值 放一起，长度固定</li>
+<li>解构：<code>let (x, y, z) = tup;</code></li>
+<li>索引：<code>let x = tup.0;</code></li>
+<li>单元类型：<code>()</code>，单元值：<code>()</code> <ul>
+<li>表达式不返回 =&gt; <code>return ();</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>数组</strong> <code>[]</code></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a: [ <span class="built_in">i32</span> ;  <span class="number">5</span> ] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line">         类型   长度</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>相同类型，长度固定</li>
+<li>Repeat：<code>let a = [3; 5];</code> =&gt; 5 个 3</li>
+<li>访问：<code>let first = a[0];</code><ul>
+<li>越界：runtime panic</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>Tips</strong>：用 <code>dbg!</code> 宏答应表达式的值到 stderr</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo = dbg!(表达式);</span><br><span class="line">           └──&gt; 打印并返回值</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-函数"><a href="#Rust-函数" class="headerlink" title="Rust 函数"></a>Rust 函数</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> 名</span>(参, 数) 〔-&gt; 返回类型〕 &#123;</span><br><span class="line">    语句</span><br><span class="line">    ...</span><br><span class="line">    〔返回值表达式〕  <span class="comment">// 可选，无则 return ()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：六角括号 <code>〔〕</code> 表示内容可选</p>
+<hr>
+<h3 id="语句-vs-表达式"><a href="#语句-vs-表达式" class="headerlink" title="语句 vs 表达式"></a>语句 vs 表达式</h3><ul>
+<li>语句：操作，不返回值</li>
+<li>表达式：计算，产生返回值<ul>
+<li>函数、宏调用，代码块 <code>&#123; ... &#125;</code> 都是表达式</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>语句 = 表达式 + <code>;</code></p>
+</blockquote>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> y = &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">3</span>;</span><br><span class="line">    x + <span class="number">1</span>         <span class="comment">// 整个代码块值为 4 所以 y = 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-控制流"><a href="#Rust-控制流" class="headerlink" title="Rust 控制流"></a>Rust 控制流</h2><h3 id="if-条件"><a href="#if-条件" class="headerlink" title="if 条件"></a>if 条件</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> 表达式 &#123;           <span class="comment">// 表达式必须返回 bool 值，不会隐式转换</span></span><br><span class="line">    ...</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> ... &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>if </code> 是表达式，有返回结果：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num = <span class="keyword">if</span> cond &#123; <span class="number">5</span> &#125; <span class="keyword">else</span> &#123; <span class="number">6</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><ul>
+<li><code>loop</code>：无限循环（可以 break 出来）</li>
+<li><code>while</code>：<code>while 条件 &#123; ... &#125;</code></li>
+<li><code>for</code>：<code>for element in array &#123; ... &#125;</code></li>
+</ul>
+<hr>
+<p><code>break</code>：退出并从循环返回值</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> result = <span class="keyword">loop</span> &#123;</span><br><span class="line">    counter += <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> counter == <span class="number">10</span> &#123;</span><br><span class="line">        <span class="keyword">break</span> counter * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Range:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> (<span class="number">1</span>..<span class="number">4</span>).rev() &#123;  <span class="comment">// .rev() 把 Range 反转</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-所有权"><a href="#Rust-所有权" class="headerlink" title="Rust 所有权"></a>Rust 所有权</h2><blockquote>
+<p>管理权（ownership）主要是管理堆数据</p>
+</blockquote>
+<p>Rust 值的存放：</p>
+<ul>
+<li>stack：编译时已知固定大小的数据</li>
+<li>heap：编译时大小未知或不定的数据</li>
+</ul>
+<hr>
+<p><strong>所有权规则</strong>：</p>
+<ol>
+<li>每个值在任一时刻都有且只有一个所有者（owner）变量</li>
+<li>owner 离开作用域，值被丢弃（调用 drop 函数进行销毁）</li>
+</ol>
+<hr>
+<h3 id="移动-vs-克隆"><a href="#移动-vs-克隆" class="headerlink" title="移动 vs 克隆"></a>移动 vs 克隆</h3><p>栈值克隆：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> y = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 栈中压入两个独立的 5 值</span></span><br><span class="line"><span class="comment">// 自动复制：一定是深拷贝</span></span><br></pre></td></tr></table></figure>
+
+<p>堆值移动：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = s1;    <span class="comment">// 值从 s1 移动到了 s2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// s1 不再可用：避免 double free</span></span><br><span class="line"><span class="comment">// Rust 没有浅拷贝：只移动，不拷贝</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>自动复制</strong>一定是运行时对性能影响小的<strong>深拷贝</strong>。</p>
+<p>要克隆堆值，必须使用显式的深拷贝：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = s1.clone();</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="trait-Copy-amp-Drop"><a href="#trait-Copy-amp-Drop" class="headerlink" title="trait: Copy &amp; Drop"></a>trait: Copy &amp; Drop</h4><p>实际上，起决定作用的并不是“栈值”、“堆值”，而是看类型实现了那种 trait（二选一）：</p>
+<ul>
+<li><p><code>Copy</code>：可克隆</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> new = old;</span><br><span class="line"><span class="comment">// 之后 old 仍可用</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Drop</code>：要移动</p>
+<p>离开作用域时，值被 drop</p>
+</li>
+</ul>
+<blockquote>
+<p>标量（整浮布字）都 impl 了 Copy；</p>
+<p>元组所有元素 Copy，则元组 Copy；</p>
+</blockquote>
+<hr>
+<h3 id="所有权-amp-函数"><a href="#所有权-amp-函数" class="headerlink" title="所有权 &amp; 函数"></a>所有权 &amp; 函数</h3><p>值传给函数：同赋值：</p>
+<ul>
+<li>Copy 的复制</li>
+<li>Drop 的移动：值移动到了 fn 里：外面（调用后面）不能用了</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">let</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line"></span><br><span class="line">function(i, s);</span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, i);  <span class="comment">// ✅</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);  <span class="comment">// ❌</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="引用、借用"><a href="#引用、借用" class="headerlink" title="引用、借用"></a>引用、借用</h4><p><strong>引用</strong>：类似于 C 的指针</p>
+<ul>
+<li>引用：<code>&amp;</code></li>
+<li>解引用：<code>*</code></li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> l = len(&amp;s);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">len</span></span>(s: &amp;<span class="built_in">String</span>) -&gt; <span class="built_in">usize</span> &#123;</span><br><span class="line">    s.len()  <span class="comment">// == (*s).len()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>借用</strong>：传 <code>&amp;s</code> 不让函数拥有 s 的所有权</p>
+<ul>
+<li>函数 end，离开作用域 =&gt; 不 drop 值</li>
+</ul>
+<hr>
+<h4 id="可变引用"><a href="#可变引用" class="headerlink" title="可变引用"></a>可变引用</h4><ul>
+<li><code>&amp;s</code> 只读引用</li>
+<li><code>&amp;mut s</code> 可用于修改 s 的值</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hello &quot;</span>);</span><br><span class="line">change(&amp;<span class="keyword">mut</span> s);    <span class="comment">// 形实都要加 mut</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">change</span></span>(s: &amp;<span class="keyword">mut</span> <span class="built_in">String</span>) &#123;</span><br><span class="line">    s.push_str(<span class="string">&quot;world&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>同一时间，一个数据只能有<strong>多个只读引用</strong>或<strong>一个可变引用</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>变 + 变</th>
+<th>不变 + 变</th>
+<th>不变 + 不变</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<p>=&gt; （在编译时）避免（并发时） data race </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#123; <span class="keyword">let</span> r0 = &amp;<span class="keyword">mut</span> s; &#125;  <span class="comment">// r0 离域，不再存在</span></span><br><span class="line"><span class="keyword">let</span> r1 = &amp;<span class="keyword">mut</span> s;      <span class="comment">// ✅ r1 一个 &amp;mut</span></span><br><span class="line"><span class="keyword">let</span> r2 = &amp;<span class="keyword">mut</span> s;      <span class="comment">// ❌ r1、r2 两个 &amp;mut</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>非词法作用域生命周期</strong>（Non-Lexical Lifetime，NLL）</p>
+<blockquote>
+<p>引用的作用域是「声明 -&gt; 最后一次使用」。</p>
+</blockquote>
+<p>∴ 可以：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ir = &amp;s;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, &amp;ir);  <span class="comment">// ir 不再使用：声明周期结束</span></span><br><span class="line"><span class="keyword">let</span> mr = &amp;<span class="keyword">mut</span> s;      <span class="comment">// ✅</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, &amp;mr);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="悬垂引用"><a href="#悬垂引用" class="headerlink" title="悬垂引用"></a>悬垂引用</h3><p>悬垂（dangling）引用：指向已释放的内存的引用。</p>
+<p>=&gt; Rust 直接编译时 Error</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">d</span></span>() -&gt; &amp;<span class="built_in">String</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> s = &amp;<span class="built_in">String</span>::from(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line">    &amp;s    <span class="comment">// ❌ s 离开作用域即被 drop，&amp;s 悬垂</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><p><strong>切片</strong>（slice）：<strong>引用</strong>集合中的一段连续的元素。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> hello= &amp;s[<span class="number">0</span>..<span class="number">5</span>];  <span class="comment">// [0, 5)</span></span><br><span class="line"><span class="comment">// hello: &amp;str =&gt; String 的 slice 是 &amp;str</span></span><br><span class="line">s.clear()  <span class="comment">// ❌ 这个方法借 &amp;mut s,</span></span><br><span class="line">           <span class="comment">//    但 hello 是借了个 immut</span></span><br><span class="line">           <span class="comment">//    immut + mut -&gt; error</span></span><br></pre></td></tr></table></figure>
+
+<p>切片是一个不可变引用，结合“不能变+不变”的引用规则</p>
+<p>=&gt; 保证 slice 始终可用、未变。</p>
+<hr>
+<p>字符串常量：</p>
+<ul>
+<li>类型： <code>&amp;str</code></li>
+<li>指向二进制程序中的某位置</li>
+</ul>
+<blockquote>
+<p>一般处理字符串的函数都用 <code>fn f(s: &amp;str)</code></p>
+<p>这样传参 <code>String</code> 对象和 <code>&amp;str</code> （包括字面量）都可。</p>
+</blockquote>
+<hr>
+<h2 id="Rust-struct"><a href="#Rust-struct" class="headerlink" title="Rust struct"></a>Rust struct</h2><h3 id="一般结构体"><a href="#一般结构体" class="headerlink" title="一般结构体"></a>一般结构体</h3><p>定义：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">User</span></span> &#123;</span><br><span class="line">    email: <span class="built_in">String</span></span><br><span class="line">    age:   <span class="built_in">u8</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实例化：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> foo = User &#123;</span><br><span class="line">    email: <span class="built_in">String</span>::from(<span class="string">&quot;foo@bar.com&quot;</span>),</span><br><span class="line">    age:   <span class="number">8</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, foo.email);</span><br><span class="line">foo.email = <span class="built_in">String</span>::from(<span class="string">&quot;changed@bar.com&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>语法糖：变量名与字段同名 =&gt; 简写</p>
+<p> <code>&#123;foo: foo, &#125; =&gt; &#123;foo, &#125;</code></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_user</span></span>(email: <span class="built_in">String</span>, age: <span class="built_in">u8</span>) -&gt; User &#123;</span><br><span class="line">    User &#123;</span><br><span class="line">        email,</span><br><span class="line">        age,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>结构体更新语法</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user2 = User &#123;</span><br><span class="line">    email: <span class="built_in">String</span>::from(<span class="string">&quot;user2@bar.com&quot;</span>),</span><br><span class="line">    ..user1,    <span class="comment">// 除了显式写的 email 字段，其余用 user1 的值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>若 <code>user1</code> 中的 Drop 值被 <code>user2</code> 使用，则等于移动到了 <code>user2</code>，<code>user1</code> 不再可用；</li>
+<li>若 <code>..user1</code> 只用了 <code>user1</code> 中的 Copy 值，则之后 <code>user1</code> 仍然可用：<ul>
+<li>User 中全是 Copy</li>
+<li>或 Drop 值全被显式给出</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="元组结构体"><a href="#元组结构体" class="headerlink" title="元组结构体"></a>元组结构体</h3><p>元组结构体：无字段名，匿名结构体。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Color</span></span>(<span class="built_in">i32</span>, <span class="built_in">i32</span>, <span class="built_in">i32</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> red = Color(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>访字段（同元组）：</p>
+<ul>
+<li>解构：<code>let (r, g, b) = red;</code></li>
+<li>索引：<code>let r = red.0;</code></li>
+</ul>
+<hr>
+<p><strong>类单元结构体</strong>（unit-like struct）</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = Foo;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Foo &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">bar</span></span>(&amp;<span class="keyword">self</span>, ...) -&gt; ... &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> foo = Foo&#123; ... &#125;;</span><br><span class="line">    foo.bar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>方法可以和字段重名</strong>：</p>
+<p>区别 -&gt; 调用时：</p>
+<ul>
+<li><code>foo.bar</code> 是字段</li>
+<li><code>foo.bar()</code> 是方法</li>
+</ul>
+<p>用于做 getter。</p>
+<hr>
+<p><strong>自动（解）引用</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo.bar()</span><br></pre></td></tr></table></figure>
+
+<p>会自动加上：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(&amp;foo).bar()</span><br><span class="line">(&amp;<span class="keyword">mut</span> foo).bar()</span><br><span class="line">(*foo).bar()</span><br></pre></td></tr></table></figure>
+
+<p>使之匹配方法的 self 参数签名。</p>
+<hr>
+<h3 id="关联函数"><a href="#关联函数" class="headerlink" title="关联函数"></a>关联函数</h3><ul>
+<li><code>impl</code> 中定义</li>
+<li>首参非 <code>self</code></li>
+<li>调用通过 <code>::</code></li>
+</ul>
+<p>常用来做构造函数：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">imple Foo &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>() -&gt; Foo &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> foo = Foo::new();</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-枚举"><a href="#Rust-枚举" class="headerlink" title="Rust 枚举"></a>Rust 枚举</h2><p>成员可带有值：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">IpAddr</span></span> &#123;</span><br><span class="line">    V4(<span class="built_in">u8</span>, <span class="built_in">u8</span>, <span class="built_in">u8</span>, <span class="built_in">u8</span>),</span><br><span class="line">    V6(<span class="built_in">String</span>),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> loopback = IpAddr::V6(<span class="built_in">String</span>::from(<span class="string">&quot;::1&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>枚举可作为参数：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">route</span></span>(ip: IpAddr) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> loopback = IpAddr::V6(<span class="built_in">String</span>::from(<span class="string">&quot;::1&quot;</span>));</span><br><span class="line">route(loopback)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>枚举可实现方法：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> IpAddr &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">call</span></span>(&amp;<span class="keyword">self</span>) &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ip.call();</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Option"><a href="#Option" class="headerlink" title="Option"></a>Option</h3><ul>
+<li>Rust 没有空值</li>
+<li>用 <code>Option&lt;T&gt;</code> 表示可能为空的东西</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Option</span></span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="literal">Some</span>(T),</span><br><span class="line">    <span class="literal">None</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该类型会 prelude，不用导入：可以忽略前缀(<code>Option::</code>)直接用 <code>Some</code>、<code>None</code>。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> some_number = <span class="literal">Some</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">let</span> absent: <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt; = <span class="literal">None</span>;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="match"><a href="#match" class="headerlink" title="match"></a>match</h3><blockquote>
+<p>match: switch-case in Rust.</p>
+</blockquote>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">match</span> ip &#123;</span><br><span class="line">    IpAddr::V4(a, b, c, d) =&gt; &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, a);</span><br><span class="line">        d</span><br><span class="line">    &#125;,</span><br><span class="line">    IpAddr::V6(addr) =&gt; addr.len(),</span><br><span class="line">    _ =&gt; <span class="number">0</span>,    <span class="comment">// default 分支</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>match 是表达式：有返回值</li>
+<li>match 需要穷举：用 <code>_ =&gt; ...</code> 加默认分支</li>
+</ul>
+<p>（没有返回值默认分支可以返回单元值：<code>_ =&gt; ()</code>）</p>
+<hr>
+<p>用 match 处理 Option：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">plus_one</span></span>(x: <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt;) -&gt; <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">match</span> x &#123;</span><br><span class="line">        <span class="literal">None</span> =&gt; <span class="literal">None</span>,</span><br><span class="line">        <span class="literal">Some</span>(i) =&gt; <span class="literal">Some</span>(i + <span class="number">1</span>),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="if-let"><a href="#if-let" class="headerlink" title="if let"></a>if let</h3><p><code>if let</code> 只匹配一个模式，忽略其他。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> some_val = <span class="literal">Some</span>(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">match</span> some_val &#123;</span><br><span class="line">    <span class="literal">Some</span>(<span class="number">3</span>) =&gt; <span class="built_in">println!</span>(<span class="string">&quot;3&quot;</span>),</span><br><span class="line">    _ =&gt; (), <span class="comment">// 繁冗</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改为：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> <span class="literal">Some</span>(<span class="number">3</span>) = some_val &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;3&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>后面还可以加 <code>else &#123; ... &#125;</code></p>
+<hr>
+<h2 id="Rust-项目：模块系统"><a href="#Rust-项目：模块系统" class="headerlink" title="Rust 项目：模块系统"></a>Rust 项目：模块系统</h2><p>一个 package 包含一或多个 crate：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">         ╭</span><br><span class="line">         │ Cargo.toml</span><br><span class="line">         │</span><br><span class="line">package ╶┤ bin <span class="keyword">crate</span>  *  ╮</span><br><span class="line">         │               ├╴ +</span><br><span class="line">         │ lib <span class="keyword">crate</span>  ?  ╯</span><br><span class="line">         ╰</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<table>
+<thead>
+<tr>
+<th><code>*</code></th>
+<th><code>?</code></th>
+<th><code>+</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一个或以上</td>
+<td>零或一个</td>
+<td>一个以上</td>
+</tr>
+</tbody></table>
+</blockquote>
+<hr>
+<h3 id="crate"><a href="#crate" class="headerlink" title="crate"></a>crate</h3><p>bin crate：</p>
+<ul>
+<li><code>src/main.rs</code>：一个与 package 同名的二进制可执行</li>
+<li><code>src/bin/*</code>：多个 bin crate</li>
+</ul>
+<p>lib crate：</p>
+<ul>
+<li><code>src/lib.rs</code>：一个与 package 同名的库</li>
+<li>可用 <code>cargo new --lib name</code> 新建库项目</li>
+</ul>
+<hr>
+<h3 id="mod"><a href="#mod" class="headerlink" title="mod"></a>mod</h3><p>模块层次：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">crate</span>    <span class="comment">// 可以看作一个 root mod</span></span><br><span class="line">   ├╴ [<span class="keyword">pub</span>] <span class="keyword">mod</span></span><br><span class="line">   │         ├╴ [<span class="keyword">pub</span>] <span class="keyword">mod</span></span><br><span class="line">   │         ├╴ [<span class="keyword">pub</span>] <span class="function"><span class="keyword">fn</span> | <span class="title">struct</span> | <span class="title">enum</span></span></span><br><span class="line"><span class="function">   │         └╴ ...</span></span><br><span class="line"><span class="function">   ├╴ [<span class="title">pub</span>] <span class="title">fn</span> | <span class="title">struct</span> | <span class="title">enum</span></span></span><br><span class="line"><span class="function">   └╴ ...</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mod、fn：无 pub 则私有</li>
+<li>struct：任一成员都需显式 pub 才公开</li>
+<li>enum pub 则所有成员都公开</li>
+</ul>
+<hr>
+<h4 id="实现：单文件"><a href="#实现：单文件" class="headerlink" title="实现：单文件"></a>实现：单文件</h4><p>e.g. <code>src/lib.rs</code></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> front_of_house &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">mod</span> hosting &#123;</span><br><span class="line">        <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">add_to_waitlist</span></span>() &#123;</span><br><span class="line">            ...  <span class="comment">// 内部路径：可用 super 进父</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">foo</span></span>() &#123;</span><br><span class="line">    <span class="comment">// 绝对路径：crate 开头</span></span><br><span class="line">    crate::front_of_house::hosting::add_to_waitlist();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 相对路径</span></span><br><span class="line">    front_of_house::hosting::add_to_waitlist();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="实现：多文件"><a href="#实现：多文件" class="headerlink" title="实现：多文件"></a>实现：多文件</h4><ul>
+<li>每个文件一个模块</li>
+<li>文件路径（<code>src/foo/bar.rs</code>）即模块路径（<code>crate::foo::bar</code>）</li>
+<li><code>mod NAME;</code> 导入其他文件模块</li>
+</ul>
+<p>就是把前面单文件中嵌套的 mod，改成同名文件、目录（注意，这样是通过文件名导入，文件中不写 <code>mod NAME &#123; ... &#125;</code>）</p>
+<hr>
+<p>e.g. 多文件多模块</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">foobar</span><br><span class="line"> ├── Cargo.toml</span><br><span class="line"> └── src</span><br><span class="line">     ├── foo</span><br><span class="line">     │   └── bar.rs</span><br><span class="line">     ├── foo.rs</span><br><span class="line">     └── main.rs</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>src/main.rs</code>:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mod</span> foo;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    foo::fuzz();</span><br><span class="line">    foo::bar::buzz();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>src/foo.rs</code>：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> bar;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">fuzz</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;fuzz from foo.rs&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>src/foo/bar.rs</code>：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">buzz</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;buzz from foo/bar.rs&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="use"><a href="#use" class="headerlink" title="use"></a>use</h3><p>相当于把东西软连接到当前模块：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> crate::front_of_house::hosting 〔<span class="keyword">as</span> front_hosting〕;</span><br><span class="line">                                          取新名</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">bar</span></span>() &#123;</span><br><span class="line">    hosting::add();</span><br><span class="line">    <span class="comment">// 相当于 crate::front_of_house::hosting::add();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>一般 use 到：</p>
+<ul>
+<li><p>fn 所在的 mod（<code>use xxx::hosting</code> 而不是 <code>use xxx::hosting::add()</code>）</p>
+</li>
+<li><p>struct、enum 导到类型：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections:HashMap;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> map = HashMap::new()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<hr>
+<p>简写 use：合并公共路径</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::&#123; cmp::Ordering, io &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use std::cmp::Ordering;</span></span><br><span class="line"><span class="comment">// use std::io;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::io::&#123;<span class="keyword">self</span>, Write&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use std::io;</span></span><br><span class="line"><span class="comment">// use std::io::Write;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::*;</span><br><span class="line">                      └&gt; glob 运算符</span><br><span class="line"><span class="comment">// 导入 std::collections 中的所有 pub 项：慎用！！</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="外部包"><a href="#外部包" class="headerlink" title="外部包"></a>外部包</h3><ol>
+<li>标准库：</li>
+</ol>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::----;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>第三方包：</p>
+ <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::Rng;  </span><br></pre></td></tr></table></figure>
+
+<p> 需要在 <code>Cargo.toml</code> 中定义：</p>
+ <figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">rand</span> = <span class="string">&quot;0.8.3&quot;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<hr>
+<h2 id="Rust-集合"><a href="#Rust-集合" class="headerlink" title="Rust 集合"></a>Rust 集合</h2><ul>
+<li>vector</li>
+<li>string</li>
+<li>HashMap</li>
+</ul>
+<hr>
+<h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3><p><code>Vec&lt;T&gt;</code>，变长数组，固定类型 T，但是 T 可以用 enum 来放多种值。</p>
+<p>新建：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> v1: <span class="built_in">Vec</span>&lt;<span class="built_in">i32</span>&gt; = <span class="built_in">Vec</span>::new();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> v2 = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>栈式访问（需要 mut）：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v.push(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> last = v.pop();</span><br></pre></td></tr></table></figure>
+
+<p>随机访问：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> third: &amp;<span class="built_in">i32</span> = &amp;v[<span class="number">2</span>];</span><br><span class="line"><span class="comment">// 下标不存在会 panic</span></span><br><span class="line"><span class="comment">// 这里借了个 immut 引用，之后整个 v 不可 mut</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>遍历：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &amp;v &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &amp;<span class="keyword">mut</span> v &#123;</span><br><span class="line">    *i += <span class="number">10</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><ul>
+<li><code>&amp;str</code>：字符串切片 -&gt; 语言核心中的</li>
+<li><code>String</code>：标准库提供的一种 utf-8 字符串实现</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> s1 = <span class="built_in">String</span>::new();</span><br><span class="line"><span class="keyword">let</span>     s2 = <span class="string">&quot;hello&quot;</span>.to_string();</span><br><span class="line"><span class="keyword">let</span>     s3 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>⚠️ 注意 String 不支持索引：<code>s[0]</code> ❌</p>
+<ul>
+<li>String 是 Vec<u8> 的封装</li>
+<li>Rust 保证索引运算的时间复杂度是 <code>O(1)</code></li>
+<li>utf-8 按字节切不合理，按字符切慢，所以不能索引</li>
+</ul>
+<hr>
+<p>遍历：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> <span class="string">&quot;...&quot;</span>.chars() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>. c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> b <span class="keyword">in</span> <span class="string">&quot;...&quot;</span>.bytes() &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>尾加：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s.push(<span class="string">&#x27;l&#x27;</span>);        <span class="comment">// 字符</span></span><br><span class="line"></span><br><span class="line">s.push_str(<span class="string">&quot;bar&quot;</span>);  <span class="comment">// &amp;str</span></span><br><span class="line"><span class="comment">// 注：String 可以自动转为 &amp;str，所以这里也能传 String 对象</span></span><br><span class="line"><span class="comment">//    deref coercion: &amp;s -&gt; &amp;s[..]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;foo&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="built_in">String</span>::from(<span class="string">&quot;bar&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s3 = s1 + s2;  <span class="comment">// fn add(self, s: &amp;str) -&gt; String</span></span><br><span class="line"><span class="comment">// s1 被移动不再可用，但 s2 还能用</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">format!</span>(<span class="string">&quot;&#123;&#125; &#123;&#125; &#123;&#125;&quot;</span>, s1, s2, s3);  <span class="comment">// fmt.Sprintf</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p><code>HashMap&lt;K, V&gt;</code>：哈希表</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::HashMap;  <span class="comment">// 需要导入</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> scores = HashMap::new();</span><br><span class="line">scores.insert(<span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>), <span class="number">10</span>);</span><br><span class="line">              <span class="comment">// 非 Copy 值入 HashMap 会移动 owner</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>From zip：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> keys = <span class="built_in">vec!</span>[<span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>), <span class="built_in">String</span>::from(<span class="string">&quot;Red&quot;</span>)];</span><br><span class="line"><span class="keyword">let</span> vals = <span class="built_in">vec!</span>[<span class="number">10</span>, <span class="number">50</span>];</span><br><span class="line"><span class="keyword">let</span> scores = HashMap&lt;_, _&gt; = keys.iter().zip(vals.iter()).collect();</span><br><span class="line">             <span class="comment">// HashMap 的类型标注是必须的</span></span><br><span class="line">             <span class="comment">// 因为 collect 可以产出多种类型</span></span><br><span class="line">             <span class="comment">// 但 K 和 V 的类型可以推断</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>取值：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> team = <span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s = scores.get(&amp;team);  <span class="comment">// -&gt; Option&lt;V&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>遍历：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (key, value) <span class="keyword">in</span> &amp;scores &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Insert if not exists:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scores.entry(<span class="built_in">String</span>::from(<span class="string">&quot;Yellow&quot;</span>)).or_insert(<span class="number">50</span>);</span><br></pre></td></tr></table></figure>
+
+<p>改旧值：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> text = <span class="string">&quot;hello world wonderful world&quot;</span>;</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> text.split_whitespace() &#123;</span><br><span class="line">    <span class="keyword">let</span> count = map.entry(word).or_insert(<span class="number">0</span>); <span class="comment">// -&gt; &amp;mut V</span></span><br><span class="line">    *count += <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-错误处理"><a href="#Rust-错误处理" class="headerlink" title="Rust 错误处理"></a>Rust 错误处理</h2><ul>
+<li><p>panic：不可恢复</p>
+</li>
+<li><p>Result: 可恢复</p>
+</li>
+</ul>
+<hr>
+<h3 id="panic"><a href="#panic" class="headerlink" title="panic"></a>panic</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span> </span>() &#123;</span><br><span class="line">    <span class="built_in">panic!</span>(<span class="string">&quot;crash&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>panic!</code> 宏会导致：</p>
+<ul>
+<li>展开：回溯栈，逐步清理</li>
+<li>终止：直接退，留给 OS 清理</li>
+</ul>
+<p>默认是展开，终止要在 <code>Cargo.toml</code> 中设：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[profile.release]</span></span><br><span class="line"><span class="attr">panic</span> = <span class="string">&#x27;abort&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Result</span></span>&lt;T, E&gt; &#123;</span><br><span class="line">    <span class="literal">Ok</span>(T),</span><br><span class="line">    <span class="literal">Err</span>(E),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>用 match 处理 enum：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">&quot;hi.txt&quot;</span>); <span class="comment">// -&gt; Result&lt;File, io::Err&gt;</span></span><br><span class="line">    <span class="keyword">let</span> f = <span class="keyword">match</span> f &#123;</span><br><span class="line">        <span class="literal">Ok</span>(file) =&gt; file,</span><br><span class="line">        <span class="literal">Err</span>(error) =&gt; &#123;</span><br><span class="line">            <span class="built_in">panic!</span>(<span class="string">&quot;problem opening file: &#123;:?&#125;&quot;</span>. error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Ok 取值，Err panic 这个模式很常用，所以有化简：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> f = File::open(<span class="string">&quot;hi.txt&quot;</span>).unwrap(); <span class="comment">// Err =&gt; panic</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> f = File::open(<span class="string">&quot;hi.txt&quot;</span>).expect(<span class="string">&quot;自定义panic信息&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>还可以用闭包自定义处理：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> f = File::open(<span class="string">&quot;hi.txt&quot;</span>).unwrap_or_else(|error| &#123;</span><br><span class="line">    <span class="keyword">if</span> error.kind() == Errorkind::NotFound &#123;</span><br><span class="line">        File::create(<span class="string">&quot;hi.txt&quot;</span>).unwrap_or_else(|error| &#123;</span><br><span class="line">            panic(<span class="string">&quot;...&quot;</span>);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  <span class="comment">// 不是 NotFound</span></span><br><span class="line">        panic(<span class="string">&quot;...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="错误传播"><a href="#错误传播" class="headerlink" title="错误传播"></a>错误传播</h4><p>错误传播：把 Result 继续向上返回给调用者。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">open_file</span> </span>() -&gt; <span class="built_in">Result</span>&lt;File, io::Error&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">&quot;hi.txt&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> f = <span class="keyword">match</span> f &#123;</span><br><span class="line">        <span class="literal">Ok</span>(file) =&gt; file,</span><br><span class="line">        <span class="literal">Err</span>(e) =&gt; <span class="keyword">return</span>(e),</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简写：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> f = File::open(<span class="string">&quot;hi.txt&quot;</span>)?;</span><br><span class="line"><span class="comment">// ? 运算符：只能用于返回 Result 的 fn</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>在 main 中用 <code>Result</code> 和 <code>?</code>：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() -&gt; <span class="built_in">Result</span>&lt;(), <span class="built_in">Box</span>&lt;<span class="keyword">dyn</span> Error&gt;&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">&quot;hi.txt&quot;</span>)?;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-泛型"><a href="#Rust-泛型" class="headerlink" title="Rust 泛型"></a>Rust 泛型</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest</span></span>&lt;T&gt;(list: &amp;[T]) -&gt; T &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T, U&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: U,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Option</span></span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="literal">Some</span>(T),</span><br><span class="line">    <span class="literal">None</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>泛型 x 方法：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span>&lt;T&gt; Point&lt;T&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">x</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;T &#123;</span><br><span class="line">        &amp;<span class="keyword">self</span>.x</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只对某种特定类型实现：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> Point&lt;<span class="built_in">f32</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">distance</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">f32</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-trait"><a href="#Rust-trait" class="headerlink" title="Rust trait"></a>Rust trait</h2><blockquote>
+<p>trait：定义共享的行为（类似于 interface）</p>
+</blockquote>
+<hr>
+<p>定义 trait：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Summary</span></span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>实现 trait：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Foo</span></span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Summary <span class="keyword">for</span> Foo &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span> &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：impl 后面的 trait 或 for 后面的类型，其中之一必须定义在本地作用域：</p>
+<blockquote>
+<p>不能为外部类型实现外部 trait</p>
+</blockquote>
+<hr>
+<p>默认实现：定义 trait 时写一种通用的实现</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Summary</span></span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>trait 作为参数：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">notify</span></span>(item: <span class="keyword">impl</span> Summary) &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时要求实现多个 trait 用 + 连接：</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">notify</span></span>(item: <span class="keyword">impl</span> Summary+Display) &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">notify</span></span>&lt;T: Summary+Display&gt;(item: T) &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>&lt;T, U&gt; (t: T, u: U) -&gt; <span class="built_in">i32</span></span><br><span class="line">    <span class="keyword">where</span> T: Display + <span class="built_in">Clone</span>,</span><br><span class="line">          U: <span class="built_in">Clone</span> + <span class="built_in">Debug</span></span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-生命周期"><a href="#Rust-生命周期" class="headerlink" title="Rust 生命周期"></a>Rust 生命周期</h2><blockquote>
+<p>引用的 Lifetime </p>
+</blockquote>
+<hr>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> r;                 ─┐<span class="symbol">&#x27;a</span></span><br><span class="line">&#123;                ─┐<span class="symbol">&#x27;b</span>   │</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">5</span>;    │     │</span><br><span class="line">    r = &amp;x;       │     │</span><br><span class="line">&#125;                ─┘     │</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, r);     ─┘</span><br></pre></td></tr></table></figure>
+
+<p>❌ <code>r</code> 在 <code>&#39;a</code>，但引用了更小的 <code>&#39;b</code></p>
+<hr>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">5</span>;               ─┐<span class="symbol">&#x27;b</span></span><br><span class="line"><span class="keyword">let</span> r = &amp;x;         ─┐<span class="symbol">&#x27;a</span>  │</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, r);  ─┘   ─┘</span><br></pre></td></tr></table></figure>
+
+<p>✅ <code>r</code> 在 <code>&#39;a</code>，引用更大的 <code>&#39;b</code> 中的 <code>x</code></p>
+<hr>
+<h3 id="生命周期标注"><a href="#生命周期标注" class="headerlink" title="生命周期标注"></a>生命周期标注</h3><p>生命周期标注：告诉编译器一个引用是从哪里借过来的。</p>
+<hr>
+<h3 id="函数生命周期标注"><a href="#函数生命周期标注" class="headerlink" title="函数生命周期标注"></a>函数生命周期标注</h3><p>函数生命周期标注：告诉返回的引用时从哪个参数借来的。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span> </span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hi&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> s2 = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> r = longest(s1.as_str(), s2);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>. r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>TODO：实现 <code>longest</code> 函数。</p>
+<hr>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>❌ 不能编译！</p>
+<ul>
+<li>返回的引用不知道是从 <code>x</code> 还是 <code>y</code> 借来的</li>
+<li>生命周期不能确定</li>
+</ul>
+<hr>
+<p>使用泛型标注：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>, y: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用泛型语法声明一个 lifetime 标注</li>
+<li>标注 <code>x</code>、<code>y</code> 都是生命周期 <code>&#39;a</code> (Rust 会取二者中较小的)</li>
+<li>标注返回值的 lifetime 也是 <code>&#39;a</code></li>
+</ul>
+<hr>
+<p>调用时：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">✅ &#123;</span><br><span class="line">    <span class="keyword">let</span> s1</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> s2                   ─┐<span class="symbol">&#x27;a</span></span><br><span class="line">        <span class="keyword">let</span> r = longest(s1, s2);  │</span><br><span class="line">        print r                  ─┘     </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">❌ &#123;</span><br><span class="line">    <span class="keyword">let</span> s1</span><br><span class="line">    <span class="keyword">let</span> r;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> s2                   ─┐<span class="symbol">&#x27;a</span></span><br><span class="line">        r = longest(s1, s2);      │</span><br><span class="line">    &#125;                            ─┘</span><br><span class="line">    print r  <span class="comment">// 较小的 &#x27;a 已经结束了</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>使用标注：必须让返回值与参数关联（必须在参数、返回值中同时出现）</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(x: &amp;<span class="built_in">str</span>, y:&amp;<span class="built_in">str</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span> &#123;...&#125;</span><br><span class="line"><span class="comment">// ❌ &#x27;a 只在返回值有</span></span><br></pre></td></tr></table></figure>
+
+<p>若返回值生命周期与参数无关（说明不是借来的），则应该返回具有所有权的东西，而非引用。</p>
+<hr>
+<h3 id="结构体生命周期标注"><a href="#结构体生命周期标注" class="headerlink" title="结构体生命周期标注"></a>结构体生命周期标注</h3><p>包含引用的 struct 应在泛型列表中加类型标注：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">E</span></span>&lt;<span class="symbol">&#x27;a</span>&gt; &#123;</span><br><span class="line">    part: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;<span class="symbol">&#x27;a</span>&gt; E&lt;<span class="symbol">&#x27;a</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">foo</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">i32</span> &#123; ... &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> n = <span class="built_in">String</span>::from(<span class="string">&quot;call some fn&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> first_word = n.split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">        .next()</span><br><span class="line">        .expect(<span class="string">&quot;could not find a space&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> i = E&#123; part: first_word &#125;;</span><br><span class="line">    <span class="comment">// 必须在 E 用完后，n 再离域</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="生命周期省略"><a href="#生命周期省略" class="headerlink" title="生命周期省略"></a>生命周期省略</h3><p>省略规则：</p>
+<ol>
+<li><p>每个引用参数都拥有自己的 lifetime；</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>(x: &amp;<span class="built_in">str</span>)          =&gt; <span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>)</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) =&gt; f&lt;<span class="symbol">&#x27;a</span>, <span class="symbol">&#x27;b</span>&gt;(x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>, y: &amp;<span class="symbol">&#x27;b</span> <span class="built_in">str</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>若只有一个输入 lifetime，则输出 lifetime 与之同；</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>(x: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> </span><br><span class="line">  ⬇️</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>若有一个参数是 <code>&amp;self</code> 或 <code>&amp;mut self</code>，即函数是一个方法，则输入 lifetime 与 self 同；</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">规则 <span class="number">3</span> 就是说：方法产出的 lifetime 同 <span class="keyword">self</span>。</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<hr>
+<p>使用规则，一步步走，若推断出了输出的生命周期则结束：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>(s: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span></span><br><span class="line">  ⬇️ 规则 <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(s: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span></span><br><span class="line">  ⬇️ 规则 <span class="number">2</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(s: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>) -&gt; &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span></span><br><span class="line">  ✅ 推断成功完成：可以省略生命周期标注</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">f</span></span>(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span></span><br><span class="line">  ⬇️ 规则 <span class="number">1</span></span><br><span class="line">f&lt;<span class="symbol">&#x27;a</span>, <span class="symbol">&#x27;b</span>&gt;(x: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>, y: &amp;<span class="symbol">&#x27;b</span> <span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span></span><br><span class="line">  ⬇️ 规则 <span class="number">2</span></span><br><span class="line">❌ 不符合规则 <span class="number">2</span>：不只一个输入</span><br><span class="line">   不可省略标注，必须手写。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="静态生命周期"><a href="#静态生命周期" class="headerlink" title="静态生命周期"></a>静态生命周期</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s: &amp;<span class="symbol">&#x27;static</span> <span class="built_in">str</span> = <span class="string">&quot;hello&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>让引用在整个程序中始终可用。</p>
+<p>（实际上：<code>&amp;str</code> 字面量自带 <code>&#39;static</code>）</p>
+<hr>
+<h2 id="Rust-测试"><a href="#Rust-测试" class="headerlink" title="Rust 测试"></a>Rust 测试</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[test]</span>    <span class="comment">// test 属性标注 </span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">it_works</span></span>() &#123;</span><br><span class="line">    <span class="built_in">assert_eq!</span>(<span class="number">2</span>+<span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cargo <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>测试手段：<strong>断言</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">assert!</span>(BOOL,  <span class="string">&quot;fmt&quot;</span>, args...)</span><br><span class="line">       布尔测试  自定义失败信息</span><br><span class="line"></span><br><span class="line"><span class="built_in">assert_eq!</span>(A, B, ...)</span><br><span class="line"><span class="built_in">assert_ne!</span>(A, B, ...)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>测试手段：<strong>panic</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">panic!</span>(<span class="string">&quot;...&quot;</span>)  <span class="comment">// =&gt; test FAILED</span></span><br></pre></td></tr></table></figure>
+
+<p>期望 panic （不 panic 则 failed）：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[test]</span></span><br><span class="line"><span class="meta">#[should_panic(expected=<span class="meta-string">&quot;可选参数：期望特定 panic 信息&quot;</span>)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">foo</span></span>() &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>测试手段：<strong>Result</strong></p>
+<ul>
+<li><code>Ok</code> 则测试通过</li>
+<li><code>Err</code> 则 FAILED</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[test]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">it_works</span></span>() -&gt; <span class="built_in">Result</span>&lt;(), <span class="built_in">String</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="number">2</span> + <span class="number">2</span> == <span class="number">4</span> &#123;</span><br><span class="line">        <span class="literal">Ok</span>(())</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="literal">Err</span>(<span class="built_in">String</span>::from(<span class="string">&quot;...&quot;</span>))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>控制测试运行</strong>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cargo <span class="built_in">test</span>  TARGET  --  --option</span><br><span class="line"> 给 cargo <span class="built_in">test</span> 的参数 &lt;-｜-&gt; 给测试二进制的参数</span><br><span class="line">                     分隔</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>TARGET</code>：测试目标：<ul>
+<li>函数全名</li>
+<li>部分名称：run 所有包含该词的</li>
+</ul>
+</li>
+<li><code>--option</code>：<ul>
+<li><code>--test-threads=1</code> 单线程</li>
+<li><code>--show-output</code> 显示 stdout</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>忽略测试：</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[test]</span></span><br><span class="line"><span class="meta">#[ignore]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">expensive_test</span></span>() &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用 <code>cargo test</code> 会忽略该测试</li>
+<li>用 <code>cargo test --ignored</code> 专门跑标记了 ignore 的测试</li>
+</ul>
+<hr>
+<h3 id="测试的组织"><a href="#测试的组织" class="headerlink" title="测试的组织"></a>测试的组织</h3><ul>
+<li>单元测试：测私：在隔离环境，一次一个功能</li>
+<li>集成测试：测公：以外部视角，一次测多个</li>
+</ul>
+<hr>
+<h4 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h4><p>与待测代码在同一个文件中，搞一个 tests 子模块：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">foo</span></span>(a: <span class="built_in">i32</span>) -&gt; <span class="built_in">i32</span> &#123;  <span class="comment">// 业务代码：待测</span></span><br><span class="line">     ... </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[cfg(test)]</span>  <span class="comment">// 只有在 cargo test 时才编译</span></span><br><span class="line"><span class="keyword">mod</span> tests &#123;</span><br><span class="line">    <span class="keyword">use</span> super::*;  <span class="comment">// 导入待测</span></span><br><span class="line">    </span><br><span class="line">    <span class="meta">#[test]</span></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">foo_test</span></span>() &#123;  <span class="comment">// 测试函数</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h4><p>建个单独的 tests 目录，与 <code>src</code> 同级：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Cargo.toml</span><br><span class="line">├── src</span><br><span class="line">│   └── lib.rs</span><br><span class="line">└── tests</span><br><span class="line">    └── integration_test.rs</span><br></pre></td></tr></table></figure>
+
+<p><code>integration_test.rs</code>：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> adder; <span class="comment">// 待测 lib</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#[test]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">it_adds_two</span></span>() &#123;</span><br><span class="line">    <span class="built_in">assert_eq!</span>(<span class="number">5</span>, adder::add_two(<span class="number">3</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>cargo test</code> 测试所有单元、集成测试</li>
+<li><code>cargo test --test FILE_NAME_WITHOUT_RS</code> 测试某集成 test 文件</li>
+</ul>
+<hr>
+<p>集成测试模块中的通用代码：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tests/common/mod.rs</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">setup</span></span>() &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在其他 test 文件中调用：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> adder;</span><br><span class="line"><span class="keyword">mod</span> common;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[test]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">it_adds_two</span></span>() &#123;</span><br><span class="line">    common::setup();</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>二进制 crate 的集成测试：</p>
+<ul>
+<li><code>tests</code> 目录下不能拿 <code>src/main.rs</code> 中的代码</li>
+<li>所有功能写在 <code>lib.rs</code>，成为一个可测试的库（库与 crate 同名）</li>
+<li><code>tests</code> 中测试 <code>lib.rs</code></li>
+<li><code>main.rs</code> 只简单调用 <code>lib.rs</code>，无需再测</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Cargo.toml</span><br><span class="line">├── src</span><br><span class="line">│   ├── lib.rs  # 主要功能封装成函数库</span><br><span class="line">│   └── main.rs # 调用 lib.rs 中的函数</span><br><span class="line">└── tests</span><br><span class="line">    └── integration_test.rs  # 测 lib.rs</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="实例：minigrep"><a href="#实例：minigrep" class="headerlink" title="实例：minigrep"></a>实例：minigrep</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">minigrep</span><br><span class="line">├── Cargo.toml</span><br><span class="line">└── src</span><br><span class="line">    ├── lib.rs</span><br><span class="line">    └── main.rs</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>main.rs</code>：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::env;</span><br><span class="line"><span class="keyword">use</span> std::process;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> minigrep::Config;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> args: <span class="built_in">Vec</span>&lt;<span class="built_in">String</span>&gt; = env::args().collect();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> config = Config::new(&amp;args).unwrap_or_else(|err| &#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;Problem parsing arguments: &#123;&#125;&quot;</span>, err);</span><br><span class="line">        process::exit(<span class="number">1</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> <span class="literal">Err</span>(e) = minigrep::run(config) &#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;Application error: &#123;&#125;&quot;</span>, e);</span><br><span class="line">        process::exit(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>具体功能 <code>lib.rs</code>：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::error::Error;</span><br><span class="line"><span class="keyword">use</span> std::env;</span><br><span class="line"><span class="keyword">use</span> std::fs;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Config</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> query: <span class="built_in">String</span>,</span><br><span class="line">    <span class="keyword">pub</span> filename: <span class="built_in">String</span>,</span><br><span class="line">    <span class="keyword">pub</span> case_sensitive: <span class="built_in">bool</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Config &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>(args: &amp;[<span class="built_in">String</span>]) -&gt; <span class="built_in">Result</span>&lt;Config, &amp;<span class="symbol">&#x27;static</span> <span class="built_in">str</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> args.len() &lt; <span class="number">3</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">Err</span>(<span class="string">&quot;not enough arguments&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> query = args[<span class="number">1</span>].clone();</span><br><span class="line">        <span class="keyword">let</span> filename = args[<span class="number">2</span>].clone();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> case_sensitive = env::var(<span class="string">&quot;CASE_INSENSITIVE&quot;</span>)</span><br><span class="line">            .is_err(); <span class="comment">// 未设置是 Err</span></span><br><span class="line"></span><br><span class="line">        <span class="literal">Ok</span>(Config &#123; query, filename, case_sensitive &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">run</span></span>(config: Config) -&gt; <span class="built_in">Result</span>&lt;(), <span class="built_in">Box</span>&lt;<span class="keyword">dyn</span> Error&gt;&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> contents = fs::read_to_string(config.filename)?;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> results = <span class="keyword">if</span> config.case_sensitive &#123;</span><br><span class="line">        search(&amp;config.query, &amp;contents)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        search_case_insensitive(&amp;config.query, &amp;contents)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> results &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, line);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="literal">Ok</span>(())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">search</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(query: &amp;<span class="built_in">str</span>, contents: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>) -&gt; <span class="built_in">Vec</span>&lt;&amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> results = <span class="built_in">Vec</span>::new();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> contents.lines() &#123;</span><br><span class="line">        <span class="keyword">if</span> line.contains(query) &#123;</span><br><span class="line">            results.push(line);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    results</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">search_case_insensitive</span></span>&lt;<span class="symbol">&#x27;a</span>&gt;(query: &amp;<span class="built_in">str</span>, contents: &amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>) -&gt; <span class="built_in">Vec</span>&lt;&amp;<span class="symbol">&#x27;a</span> <span class="built_in">str</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> query = query.to_lowercase();</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> results = <span class="built_in">Vec</span>::new();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> contents.lines() &#123;</span><br><span class="line">        <span class="keyword">if</span> line.to_lowercase().contains(&amp;query) &#123;</span><br><span class="line">            results.push(line);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    results</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>单元测试：<code>lib.rs</code></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[cfg(test)]</span></span><br><span class="line"><span class="keyword">mod</span> tests &#123;</span><br><span class="line">    <span class="keyword">use</span> super::*;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">#[test]</span></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">case_sensitive</span></span>() &#123;</span><br><span class="line">        <span class="keyword">let</span> query = <span class="string">&quot;duct&quot;</span>;</span><br><span class="line">        <span class="keyword">let</span> contents = <span class="string">&quot;\</span></span><br><span class="line"><span class="string">Rust:</span></span><br><span class="line"><span class="string">safe, fast, productive.</span></span><br><span class="line"><span class="string">Pick three.</span></span><br><span class="line"><span class="string">Duct tape.&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">assert_eq!</span>(</span><br><span class="line">            <span class="built_in">vec!</span>[<span class="string">&quot;safe, fast, productive.&quot;</span>],</span><br><span class="line">            search(query, contents)</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#[test]</span></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">case_insensitive</span></span>() &#123;</span><br><span class="line">       <span class="keyword">let</span> query = <span class="string">&quot;rUsT&quot;</span>;</span><br><span class="line">       <span class="keyword">let</span> contents = <span class="string">&quot;\</span></span><br><span class="line"><span class="string">Rust:</span></span><br><span class="line"><span class="string">safe, fast, productive.</span></span><br><span class="line"><span class="string">Pick three.</span></span><br><span class="line"><span class="string">Trust me.&quot;</span>;</span><br><span class="line">       <span class="built_in">assert_eq!</span>(</span><br><span class="line">           <span class="built_in">vec!</span>[<span class="string">&quot;Rust:&quot;</span>, <span class="string">&quot;Trust me.&quot;</span>],</span><br><span class="line">           search_case_insensitive(query, contents)</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Rust-101"><span class="toc-number">1.</span> <span class="toc-text">Rust 101</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-World"><span class="toc-number">1.1.</span> <span class="toc-text">Hello World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">Rust 量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">Rust 静态类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Rust-%E6%A0%87%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">Rust 标量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">算术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E5%9E%8B%EF%BC%9A%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">整型：字面量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E5%9E%8B%EF%BC%9A%E6%BA%A2%E5%87%BA"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">整型：溢出</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rust-%E5%A4%8D%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">Rust 复合类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">Rust 函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E5%8F%A5-vs-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.4.1.</span> <span class="toc-text">语句 vs 表达式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">1.5.</span> <span class="toc-text">Rust 控制流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if-%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.5.1.</span> <span class="toc-text">if 条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF"><span class="toc-number">1.5.2.</span> <span class="toc-text">循环</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%89%80%E6%9C%89%E6%9D%83"><span class="toc-number">1.6.</span> <span class="toc-text">Rust 所有权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8-vs-%E5%85%8B%E9%9A%86"><span class="toc-number">1.6.1.</span> <span class="toc-text">移动 vs 克隆</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#trait-Copy-amp-Drop"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">trait: Copy &amp; Drop</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E6%9D%83-amp-%E5%87%BD%E6%95%B0"><span class="toc-number">1.6.2.</span> <span class="toc-text">所有权 &amp; 函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E3%80%81%E5%80%9F%E7%94%A8"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">引用、借用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%BC%95%E7%94%A8"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">可变引用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%82%AC%E5%9E%82%E5%BC%95%E7%94%A8"><span class="toc-number">1.6.3.</span> <span class="toc-text">悬垂引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#slice"><span class="toc-number">1.6.4.</span> <span class="toc-text">slice</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-struct"><span class="toc-number">1.7.</span> <span class="toc-text">Rust struct</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.7.1.</span> <span class="toc-text">一般结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.7.2.</span> <span class="toc-text">元组结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">1.7.3.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E5%87%BD%E6%95%B0"><span class="toc-number">1.7.4.</span> <span class="toc-text">关联函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%9E%9A%E4%B8%BE"><span class="toc-number">1.8.</span> <span class="toc-text">Rust 枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Option"><span class="toc-number">1.8.1.</span> <span class="toc-text">Option</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#match"><span class="toc-number">1.8.2.</span> <span class="toc-text">match</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#if-let"><span class="toc-number">1.8.3.</span> <span class="toc-text">if let</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.9.</span> <span class="toc-text">Rust 项目：模块系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#crate"><span class="toc-number">1.9.1.</span> <span class="toc-text">crate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mod"><span class="toc-number">1.9.2.</span> <span class="toc-text">mod</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%8D%95%E6%96%87%E4%BB%B6"><span class="toc-number">1.9.2.1.</span> <span class="toc-text">实现：单文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%9A%E6%96%87%E4%BB%B6"><span class="toc-number">1.9.2.2.</span> <span class="toc-text">实现：多文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#use"><span class="toc-number">1.9.3.</span> <span class="toc-text">use</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E5%8C%85"><span class="toc-number">1.9.4.</span> <span class="toc-text">外部包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%9B%86%E5%90%88"><span class="toc-number">1.10.</span> <span class="toc-text">Rust 集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vector"><span class="toc-number">1.10.1.</span> <span class="toc-text">vector</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#string"><span class="toc-number">1.10.2.</span> <span class="toc-text">string</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap"><span class="toc-number">1.10.3.</span> <span class="toc-text">HashMap</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.11.</span> <span class="toc-text">Rust 错误处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#panic"><span class="toc-number">1.11.1.</span> <span class="toc-text">panic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Result"><span class="toc-number">1.11.2.</span> <span class="toc-text">Result</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%BC%A0%E6%92%AD"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">错误传播</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%B3%9B%E5%9E%8B"><span class="toc-number">1.12.</span> <span class="toc-text">Rust 泛型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-trait"><span class="toc-number">1.13.</span> <span class="toc-text">Rust trait</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.14.</span> <span class="toc-text">Rust 生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A0%87%E6%B3%A8"><span class="toc-number">1.14.1.</span> <span class="toc-text">生命周期标注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A0%87%E6%B3%A8"><span class="toc-number">1.14.2.</span> <span class="toc-text">函数生命周期标注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A0%87%E6%B3%A8"><span class="toc-number">1.14.3.</span> <span class="toc-text">结构体生命周期标注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9C%81%E7%95%A5"><span class="toc-number">1.14.4.</span> <span class="toc-text">生命周期省略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.14.5.</span> <span class="toc-text">静态生命周期</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.15.</span> <span class="toc-text">Rust 测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-number">1.15.1.</span> <span class="toc-text">测试的组织</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="toc-number">1.15.1.1.</span> <span class="toc-text">单元测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95"><span class="toc-number">1.15.1.2.</span> <span class="toc-text">集成测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%EF%BC%9Aminigrep"><span class="toc-number">1.16.</span> <span class="toc-text">实例：minigrep</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/10/03/Rust/Rust101/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&text=Rust101"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&is_video=false&description=Rust101"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Rust101&body=Check out this article: https://clownote.github.io/2022/10/03/Rust/Rust101/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&title=Rust101"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/10/03/Rust/Rust101/&name=Rust101&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- New: global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146911386-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-146911386-1');
+    </script>
+    
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+
+</body>
+</html>
