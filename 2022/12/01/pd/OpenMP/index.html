@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="学习《高性能计算：现代系统与应用实践》（Thomas Sterling，Matthew Anderson，Maciej Brodowicz）第 7 章 OpenMP 的基础  OpenMP OpenMP 是一个 API C、C++、Fortran   OpenMP 是共享内存的多线程编程模型 共享内存 默认所有线程可以直接访问全局变量 可以限制变量为各线程私有（e.g. 索引变量 i）   线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenMP">
+<meta property="og:url" content="https://clownote.github.io/2022/12/01/pd/OpenMP/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="学习《高性能计算：现代系统与应用实践》（Thomas Sterling，Matthew Anderson，Maciej Brodowicz）第 7 章 OpenMP 的基础  OpenMP OpenMP 是一个 API C、C++、Fortran   OpenMP 是共享内存的多线程编程模型 共享内存 默认所有线程可以直接访问全局变量 可以限制变量为各线程私有（e.g. 索引变量 i）   线程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://clownote.github.io/2022/12/01/pd/OpenMP/imgs/openmp-fork-join.png">
+<meta property="og:image" content="https://clownote.github.io/2022/12/01/pd/OpenMP/imgs/openmp-for.png">
+<meta property="og:image" content="https://clownote.github.io/2022/12/01/pd/OpenMP/imgs/openmp-sessions.png">
+<meta property="og:image" content="https://clownote.github.io/2022/12/01/pd/OpenMP/imgs/openmp-reduction.png">
+<meta property="article:published_time" content="2022-12-01T10:45:37.354Z">
+<meta property="article:modified_time" content="2022-12-01T02:47:45.543Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://clownote.github.io/2022/12/01/pd/OpenMP/imgs/openmp-fork-join.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>OpenMP</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2022/12/01/pd/MPI/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/12/01/pd/OpenMP/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&text=OpenMP"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&is_video=false&description=OpenMP"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=OpenMP&body=Check out this article: https://clownote.github.io/2022/12/01/pd/OpenMP/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&name=OpenMP&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenMP"><span class="toc-number">1.</span> <span class="toc-text">OpenMP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-OpenMP"><span class="toc-number">1.2.</span> <span class="toc-text">使用 OpenMP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hello-World"><span class="toc-number">1.2.1.</span> <span class="toc-text">Hello World</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">私有变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenMP-%E5%B9%B6%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">OpenMP 并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C-for"><span class="toc-number">1.3.1.</span> <span class="toc-text">并行 for</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C-sections"><span class="toc-number">1.3.2.</span> <span class="toc-text">并行 sections</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenMP-%E5%90%8C%E6%AD%A5"><span class="toc-number">1.4.</span> <span class="toc-text">OpenMP 同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#critical-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.1.</span> <span class="toc-text">critical 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#master-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.2.</span> <span class="toc-text">master 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#barrier-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.3.</span> <span class="toc-text">barrier 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#single-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.4.</span> <span class="toc-text">single 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reduction-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.5.</span> <span class="toc-text">reduction 指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%B2%E8%81%8A"><span class="toc-number">1.5.</span> <span class="toc-text">闲聊</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-pragma"><span class="toc-number">1.5.1.</span> <span class="toc-text">Why pragma</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-private"><span class="toc-number">1.5.2.</span> <span class="toc-text">Why private</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        OpenMP
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-12-01T10:45:37.354Z" itemprop="datePublished">2022-12-01</time>
+        
+        (Updated: <time datetime="2022-12-01T02:47:45.543Z" itemprop="dateModified">2022-12-01</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>学习《高性能计算：现代系统与应用实践》（Thomas Sterling，Matthew Anderson，Maciej Brodowicz）第 7 章 OpenMP 的基础</p>
+</blockquote>
+<h1 id="OpenMP"><a href="#OpenMP" class="headerlink" title="OpenMP"></a>OpenMP</h1><ul>
+<li>OpenMP 是一个 API<ul>
+<li>C、C++、Fortran</li>
+</ul>
+</li>
+<li>OpenMP 是<strong>共享内存</strong>的<em>多线程</em>编程模型<ul>
+<li>共享内存<ul>
+<li>默认所有线程可以直接访问全局变量</li>
+<li>可以限制变量为各线程私有（e.g. 索引变量 <code>i</code>）</li>
+</ul>
+</li>
+<li>线程并行<ul>
+<li>master/worker 线程：fork-join 模型</li>
+<li>分支：SPMD（单程序多数据）</li>
+<li>聚合：隐式栏栅同步：超出当前访问前，所有线程都要完成</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="imgs/openmp-fork-join.png" alt="openmp-fork-join"></p>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> OMP_NUM_THREADS=8  <span class="comment"># 开几个线程，默认自动看 CPU</span></span><br><span class="line"><span class="built_in">export</span> OMP_DYNAMIC=TRUE   <span class="comment"># 动态线程数量</span></span><br><span class="line"><span class="built_in">export</span> OMP_NESTED=TRUE    <span class="comment"># 允许嵌套并行</span></span><br><span class="line"><span class="built_in">export</span> OMP_SCHEDULE=schedule.chunk  <span class="comment"># 循环的负载分布</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-OpenMP"><a href="#使用-OpenMP" class="headerlink" title="使用 OpenMP"></a>使用 OpenMP</h2><p>不用安装：</p>
+<ul>
+<li>GCC 内置了 OpenMP 支持！</li>
+<li>编译的时候带上 <code>-fopenmp</code> 就行。</li>
+</ul>
+<p>导入：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>基本函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">omp_get_num_threads()  <span class="comment">// 有多少个并行的进程: OMP_NUM_THREADS</span></span><br><span class="line">omp_get_thread_num()   <span class="comment">// 我(当前进程)的 id</span></span><br><span class="line">                       <span class="comment">// master: 0; worker: [1, OMP_NUM_THREADS)</span></span><br></pre></td></tr></table></figure>
+
+<p>OpenMP 指令（制导语句）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp <span class="meta-string">&lt;directive&gt; &lt;clauses&gt; &lt;statement&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hello.c</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">    &#123;  <span class="comment">// fork</span></span><br><span class="line">        <span class="keyword">int</span> num_threads = omp_get_num_threads();</span><br><span class="line">        <span class="keyword">int</span> thread_id = omp_get_thread_num();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Hello world from %d (total %d)\n&quot;</span>, thread_id, num_threads);</span><br><span class="line">    &#125;  <span class="comment">// join</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>魔法是 <code>#pragma omp parallel</code>：串行 -&gt; 并行。派生出 <code>OMP_NUM_THREADS</code> 个进程来并行跑其后的一个代码块。</p>
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ gcc-11 -fopenmp hello.c</span><br><span class="line">$ ./a.out</span><br><span class="line">Hello world from 1 (total 4)</span><br><span class="line">Hello world from 0 (total 4)</span><br><span class="line">Hello world from 3 (total 4)</span><br><span class="line">Hello world from 2 (total 4)</span><br></pre></td></tr></table></figure>
+
+<p>顺序是那种乱七八糟的：并行。觉得不明显可以指定线程数量，再运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ OMP_NUM_THREADS=100 ./a.out</span><br><span class="line">Hello world from 2 (total 100)</span><br><span class="line">Hello world from 11 (total 100)</span><br><span class="line">...</span><br><span class="line">Hello world from 35 (total 100)</span><br><span class="line">...</span><br><span class="line">Hello world from 0 (total 100)</span><br><span class="line">Hello world from 98 (total 100)</span><br></pre></td></tr></table></figure>
+
+<h3 id="私有变量"><a href="#私有变量" class="headerlink" title="私有变量"></a>私有变量</h3><p>上面那个程序的另一种版本：</p>
+<ul>
+<li>预先定义两个变量，但是指定为各线程私有</li>
+<li>只让 id 为 0 的进程，即<strong>主线程</strong>获取 <code>num_threads</code></li>
+<li>（其实我试了，编译成汇编和上面那个区别不大，两个变量结束并行之后都不是有效值。<del>所以目前还不清楚这样在外面先定义好变量有啥优势</del> 这个问题大致有答案了，见后文：[[#Why private]]。我还是喜欢局部变量就局部去定义。） ^b5e08c</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hello-v2.c</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num_threads, thread_id;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel private(num_threads, thread_id)</span></span><br><span class="line">    &#123;</span><br><span class="line">        thread_id = omp_get_thread_num();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Hello world from thread %d.\n&quot;</span>, thread_id);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (thread_id == <span class="number">0</span>) &#123;</span><br><span class="line">            num_threads = omp_get_num_threads();</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Total number of thread is: %d\n&quot;</span>, num_threads);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// printf(&quot;End of parallel: %d, %d\n&quot;, thread_id, num_threads);</span></span><br><span class="line">    <span class="comment">// End of parallel: 1, 61694048</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ gcc-11 -fopenmp hello-v2.c; ./a.out </span><br><span class="line">Hello world from thread 0.</span><br><span class="line">Total number of thread is: 4</span><br><span class="line">Hello world from thread 3.</span><br><span class="line">Hello world from thread 2.</span><br><span class="line">Hello world from thread 1.</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>小结：OpenMP 并行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">    &#123;</span><br><span class="line">        并行的代码;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>默认各线程共享上下文中的变量：在 <code>omp parallel</code> 后面加 <code>private(...)</code> 指定要各线程私有的变量。</li>
+</ul>
+<h2 id="OpenMP-并行"><a href="#OpenMP-并行" class="headerlink" title="OpenMP 并行"></a>OpenMP 并行</h2><h3 id="并行-for"><a href="#并行-for" class="headerlink" title="并行 for"></a>并行 for</h3><p><img src="imgs/openmp-for.png" alt="OpenMP parallel for"></p>
+<p>线程间循环分布：通过 OpenMP，让多个线程同时（并行）处理一个 <code>for</code> 循环。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">20</span>;</span><br><span class="line">    <span class="keyword">int</span> num_threads, thread_id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">double</span> a[N], b[N], result[N];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">        a[i] = <span class="number">1.0</span> * i;</span><br><span class="line">        b[i] = <span class="number">100.0</span> * i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">        result[i] = a[i] + b[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;TEST result[19]=%g\n&quot;</span>, result[<span class="number">19</span>]);</span><br><span class="line">    <span class="comment">// TEST result[19]=1919</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要并行化处理合并两个数组的操作，只需加 5 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;  // +1</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp parallel  <span class="comment">// +2</span></span></span><br><span class="line">    &#123;  <span class="comment">// +3</span></span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp for  <span class="comment">// +4</span></span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d: i=%d\n&quot;</span>, omp_get_thread_num(), i);</span><br><span class="line">            result[i] = a[i] + b[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;  <span class="comment">// +5</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;TEST result[19]=%g\n&quot;</span>, result[<span class="number">19</span>]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此处的魔法是 <code>#pragma omp for</code>，把 for 分配给各个线程。中间额外加了一个 printf，可以看到 20 次循环，被几个线程平分：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0: i=0  ... 0: i=4</span><br><span class="line">2: i=10 ... 2: i=14</span><br><span class="line">3: i=15 ... 3: i=19</span><br><span class="line">1: i=5  ... 1: i=9</span><br><span class="line">TEST result[19]=1919</span><br></pre></td></tr></table></figure>
+
+<p>如果露掉这一行  <code>#pragma omp for</code>，OpenMP 便无从得知你要并行这个 for。那就比较“精彩”了，4 个线程，把循环各跑一遍，极致反向优化：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0: i=0 ... 0: i=19</span><br><span class="line">1: i=0 ... 1: i=19</span><br><span class="line">2: i=0 ... 2: i=19</span><br><span class="line">3: i=0 ... 3: i=19</span><br><span class="line">TEST result[19]=1919</span><br></pre></td></tr></table></figure>
+
+<p>这个操作太常用了，所以有简化的写法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d: i=%d\n&quot;</span>, omp_get_thread_num(), i);</span><br><span class="line">    result[i] = a[i] + b[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>小结：并行 for：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp for</span></span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">⬇️ 复合魔法</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for</span></span><br><span class="line"><span class="keyword">for</span> (;;) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可选：<code>omp for</code> 后面加子句 <code>schedule(static.chunk)</code>，指定切分循环的方式。</li>
+</ul>
+<h3 id="并行-sections"><a href="#并行-sections" class="headerlink" title="并行 sections"></a>并行 sections</h3><p><img src="imgs/openmp-sessions.png" alt="OpenMP parallel sessions"></p>
+<p>有多块代码要并发执行：</p>
+<ul>
+<li>一个块称为一个 section</li>
+<li>多个 section 在一个 sections 中并行</li>
+<li>一个线程处理一个 section</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp sections</span></span><br><span class="line">    &#123;</span><br><span class="line">        &#123; <span class="comment">/* section 0 */</span> &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">        &#123; <span class="comment">/* section 1 */</span> &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">        &#123; <span class="comment">/* section 2 */</span> &#125;</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类似于 <code>parallel for</code>，如果开并行只是为了执行 sections，也可以用合并的 <code>parallel sections</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel sections</span></span><br><span class="line">&#123;</span><br><span class="line">    &#123; <span class="comment">/* section 0 */</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">    &#123; <span class="comment">/* section 1 */</span> &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个例子：并行地对一列数据进行统计，求最值、均值、方差：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> N = (<span class="number">1</span>&lt;&lt;<span class="number">29</span>);  <span class="comment">// N doubles: 4 GiB</span></span><br><span class="line">    <span class="comment">// const int N = 10;</span></span><br><span class="line">    <span class="keyword">double</span> *x = <span class="built_in">calloc</span>(N, <span class="keyword">sizeof</span>(<span class="keyword">double</span>));</span><br><span class="line">    <span class="comment">// #pragma omp parallel for  // 初始化</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">        x[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 总和、均值、平方的总和</span></span><br><span class="line">    <span class="keyword">double</span> sum = <span class="number">0.0</span>, avg = <span class="number">0.0</span>, sum2 = <span class="number">0.0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp parallel sections shared(x, sum, avg, sum2)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// section 0: 计算 最大最小值</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">double</span> max = (<span class="number">1</span>&lt;&lt;<span class="number">31</span>), min = (<span class="number">1</span>&lt;&lt;<span class="number">31</span>) - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (x[i] &lt; min) min = x[i];</span><br><span class="line">                <span class="keyword">if</span> (x[i] &gt; max) max = x[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;min: %f\nmax: %f\n&quot;</span>, min, max);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp section  <span class="comment">// section 1: 计算总和、均值</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">                sum += x[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;sum: %f\n&quot;</span>, sum);</span><br><span class="line"></span><br><span class="line">            avg = sum / N;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;avg: %f\n&quot;</span>, avg);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp section  <span class="comment">// section 2: 计算平方的均值</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">                sum2 += x[i] * x[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;sum2: %f\n&quot;</span>, sum2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 方差 = 平方的均值 - 均值的平方</span></span><br><span class="line">    <span class="keyword">double</span> var = sum2 / N - avg * avg;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;var: %f\n&quot;</span>, var);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里使用了全局共享的 <code>sum</code> 等几个量，是为了在并行结束后，留下这些值，用于计算方差。</p>
+<p>编译运行，对比去掉 parallel 的版本，似乎有一定的提升：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ openmp gcc-11 -fopenmp sections.c; time ./a.out    </span><br><span class="line">min: 0.000000</span><br><span class="line">max: 536870911.000000</span><br><span class="line">sum2: 51580834826121141939077120.000000</span><br><span class="line">sum: 144115187606093856.000000</span><br><span class="line">avg: 268435455.125000</span><br><span class="line">var: 24019198213991840.000000</span><br><span class="line">./a.out  7.34s user 4.00s system 101% cpu 11.200 total</span><br><span class="line"></span><br><span class="line">$ openmp gcc-11 -fopenmp no-sections.c; time ./a.out    </span><br><span class="line">min: 0.000000</span><br><span class="line">max: 536870911.000000</span><br><span class="line">sum: 144115187606093856.000000</span><br><span class="line">avg: 268435455.125000</span><br><span class="line">sum2: 51580834826121141939077120.000000</span><br><span class="line">var: 24019198213991840.000000</span><br><span class="line">./a.out  8.41s user 9.52s system 72% cpu 24.587 total</span><br></pre></td></tr></table></figure>
+
+<h2 id="OpenMP-同步"><a href="#OpenMP-同步" class="headerlink" title="OpenMP 同步"></a>OpenMP 同步</h2><p>共享内存：</p>
+<ul>
+<li>OpenMP 的多个并发线程之间共享全局数据</li>
+<li>无需 send/recv 的消息传递在并发进程之间交换数值</li>
+</ul>
+<p>同步机制：</p>
+<ul>
+<li><strong>协调</strong>并行程序中多个并行线程的执行</li>
+<li>控制顺序：避免竞争 -&gt; 冲突</li>
+<li>隐式：join 栅栏</li>
+<li>显示：critical、master、barrier、single</li>
+</ul>
+<h3 id="critical-指令"><a href="#critical-指令" class="headerlink" title="critical 指令"></a>critical 指令</h3><p>临界同步指令 <code>critical</code>：多个并行线程互斥访问共享变量。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#paragma omp critical</span></span><br><span class="line">&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>e.g. 尝试做个并行计数器：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for shared(n)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; <span class="number">40000</span>; i++) &#123;</span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp critical</span></span><br><span class="line">        n = n + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;n: %d\n&quot;</span>, n);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行（运行了很多次都是对的）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ openmp gcc-11 -fopenmp critical.c; time  OMP_NUM_THREADS=1000 ./a.out    </span><br><span class="line">n: 40000</span><br><span class="line">OMP_NUM_THREADS=1000 ./a.out  0.01s user 0.05s system 16% cpu 0.390 total</span><br></pre></td></tr></table></figure>
+
+<p>如果删掉 <code>#pragma omp critical</code>，就会出现喜闻乐见的错误结果（多运行一些次就能看到各种不同的错误结果）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ openmp gcc-11 -fopenmp no-critical.c; time  OMP_NUM_THREADS=1000 ./a.out    </span><br><span class="line">n: 39960</span><br><span class="line">OMP_NUM_THREADS=1000 ./a.out  0.01s user 0.06s system 63% cpu 0.104 total</span><br></pre></td></tr></table></figure>
+
+<h3 id="master-指令"><a href="#master-指令" class="headerlink" title="master 指令"></a>master 指令</h3><p><code>master</code> 指令：只有主线程执行这一块代码，其他线程遇到则跳过。</p>
+<ul>
+<li>主线程：执行这一块代码</li>
+<li>其他线程：直接往下走，不等</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp master</span></span><br><span class="line">&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="barrier-指令"><a href="#barrier-指令" class="headerlink" title="barrier 指令"></a>barrier 指令</h3><p><code>barrier</code> 指令：同步所有并发线程：</p>
+<ul>
+<li>遇到 barrier 的线程就停下来，等；</li>
+<li>等所有进程都到了 barrier 才能继续。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp barrier</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="single-指令"><a href="#single-指令" class="headerlink" title="single 指令"></a>single 指令</h3><p><code>single</code> 指令：宽松版 <code>master</code> + 隐式  <code>barrier</code>：</p>
+<ul>
+<li>在代码块（<code>&#123; ... &#125;</code>）<strong>后面</strong>放一个隐式 barrier；</li>
+<li>允许任意线程 Foo 执行代码块；</li>
+<li>其他线程跳过代码块执行，但是阻塞在 barrier，等 Foo 酱执行完代码块再放行。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp single</span></span><br><span class="line">&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="reduction-指令"><a href="#reduction-指令" class="headerlink" title="reduction 指令"></a>reduction 指令</h3><p><strong>规约</strong>：将大量值组合在一起，生成单个结果值。</p>
+<blockquote>
+<p>Reduction：the action or fact of making a specified thing smaller or less in amount, degree, or size<br>—— New Oxford American Dictionary</p>
+<p>这里所谓规约就是让值的个数变少的操作。（回想一下 Lisp 就很形象了。）</p>
+</blockquote>
+<p>OpenMP 可以用 <code>reduction</code> 指令做规约：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> result;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp reduction(op : result)</span></span><br><span class="line">&#123;</span><br><span class="line">    result = ...;  <span class="comment">// 局部 result</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 全局 result: result = reduce(op, results)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>op</code> 为某种运算：<code>+</code>，<code>-</code>，<code>*</code>，<code>/</code>，<code>&amp;</code>，<code>|</code>，<code>^</code> 中的一个；<ul>
+<li>更复杂的规约也容易使用其他<a href="#OpenMP%20%E5%90%8C%E6%AD%A5">同步</a>的方式实现。</li>
+</ul>
+</li>
+<li><code>result</code> 为结果变量，注意这个值在块内是各线程私有，出来之后变成全局的、规约得到的结果。</li>
+</ul>
+<p><img src="imgs/openmp-reduction.png" alt="OpenMP reduction"></p>
+<p>e.g.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">16</span>;</span><br><span class="line">    <span class="keyword">float</span> a[N], b[N], result;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">        a[i] = i * <span class="number">1.0</span>;</span><br><span class="line">        b[i] = i * <span class="number">2.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for reduction(+ : result)</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">        result += a[i] * b[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Result = %f\n&quot;</span>, result);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gcc-11 -fopenmp reduction.c; ./a.out    </span><br><span class="line">Result = 2480.000000</span><br></pre></td></tr></table></figure>
+
+<h2 id="闲聊"><a href="#闲聊" class="headerlink" title="闲聊"></a>闲聊</h2><h3 id="Why-pragma"><a href="#Why-pragma" class="headerlink" title="Why pragma"></a>Why pragma</h3><p><code>#pragma</code> 是什么鬼啊？<code>pragma</code> 来源于 pragmatic（务实的），，所以关联的点是什么。。</p>
+<p>Pragma，也叫做 directive。Directive 就是“指示”的意思，不知到是如何惨遭毒手，被翻译为“制导语句”的。。不翻译成“42 号混凝土”我是不敢苟同的。</p>
+<p>总之这东西就是用来指导编译器如何编译的。（教编译器做事）</p>
+<p>（对了，我最讨厌这种要左手连打几个字母的词了，顺便吐槽一下“Database”，这个词简直了，尤其是要大写时。其实换一种角度来考虑，还是键盘键位设计的锅。）</p>
+<h3 id="Why-private"><a href="#Why-private" class="headerlink" title="Why private"></a>Why private</h3><p><code>private</code> 子句有何用？[[#^b5e08c|前文]]提到，在各线程内定义局部变量可以完全避免 <code>private</code>，但这是站在一开始就编写 OpenMP 并行代码的角度来设计得到的结果。</p>
+<p>OpenMP 设计的一项初衷是在<strong>尽可能少改动</strong>原有串行代码的基础上，加入并行支持。理想的情况只需加入尽可能少的制导语句（<code>#pragma omp parallel</code>、<code>#pragma omp parallel for</code> 等）就可以让原本串行的代码变并行。</p>
+<p>所以就有这种场景：原本的代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i, j;</span><br><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">      <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">          <span class="comment">//do something</span></span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要使其支持并发，有 <code>private</code> 的支持，只需加一行制导语句，完全不需要改动原有任何一行代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i, j;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for private(j)</span></span><br><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但如果没有 <code>private</code>，就需要改动原有代码结构，把 <code>j</code> 的定义移动到第一层循环内：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for</span></span><br><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果需要为 <code>C89</code> （所有变量定义要写到 scope 顶部）写的代码加入并行性，这个 <code>private</code> 对于还是比较有意义的。</p>
+<p>所以更多是一种兼容性吧。</p>
+<hr>
+<p>最近学这些计算（有没有一种可能计算机本来就是用来做计算的😭），还真有好多代码是八几年、九几年写的，有些甚至写的是 K&amp;R C，一直沿用至今，正确、高效、优雅、美观，真的 nb（褒义，由衷赞叹，写的确实漂亮，以带着最深沉偏见的、最批判的锋利目光去看，也无可挑剔）。</p>
+<p>再看看现在好多所谓学“*”的 * 写的代码，我没有针对 * 语言，我是说 * 写的任何程序，真的 nb（贬义。那些“代码”，笑死，看别人接手是喜剧，要自己接手是悲剧；眼睁睁看着别人写出这种代码是人间炼狱）。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/6358375/openmp-are-local-variables-automatically-private">StackOverflow: OpenMP: are local variables automatically private?</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/23890539/is-there-any-difference-between-variables-in-a-private-clause-and-variables-defi/23892073#23892073">StackOverflow: Is there any difference between variables in a private clause and variables defined within a parallel region in OpenMP?</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/288441/variable-declaration-placement-in-c">StackOverflow: Variable declaration placement in C</a></li>
+</ul>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenMP"><span class="toc-number">1.</span> <span class="toc-text">OpenMP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-OpenMP"><span class="toc-number">1.2.</span> <span class="toc-text">使用 OpenMP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hello-World"><span class="toc-number">1.2.1.</span> <span class="toc-text">Hello World</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">私有变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenMP-%E5%B9%B6%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">OpenMP 并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C-for"><span class="toc-number">1.3.1.</span> <span class="toc-text">并行 for</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C-sections"><span class="toc-number">1.3.2.</span> <span class="toc-text">并行 sections</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenMP-%E5%90%8C%E6%AD%A5"><span class="toc-number">1.4.</span> <span class="toc-text">OpenMP 同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#critical-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.1.</span> <span class="toc-text">critical 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#master-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.2.</span> <span class="toc-text">master 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#barrier-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.3.</span> <span class="toc-text">barrier 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#single-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.4.</span> <span class="toc-text">single 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reduction-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.5.</span> <span class="toc-text">reduction 指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%B2%E8%81%8A"><span class="toc-number">1.5.</span> <span class="toc-text">闲聊</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-pragma"><span class="toc-number">1.5.1.</span> <span class="toc-text">Why pragma</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-private"><span class="toc-number">1.5.2.</span> <span class="toc-text">Why private</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/12/01/pd/OpenMP/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&text=OpenMP"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&is_video=false&description=OpenMP"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=OpenMP&body=Check out this article: https://clownote.github.io/2022/12/01/pd/OpenMP/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&title=OpenMP"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/12/01/pd/OpenMP/&name=OpenMP&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- New: global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146911386-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-146911386-1');
+    </script>
+    
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+
+</body>
+</html>

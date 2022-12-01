@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="浅学 MPI。 MPI分布式内存多处理器：  处理器 + 辅助组件 &#x3D;&gt; 节点 一堆节点 &#x3D;&gt; 高性能计算系统 节点 &#x3D;&gt; 进程   节点之间：消息传递  MPI：消息传递接口 安装还是用 Docker 方便。 宿主机： 12345sudo docker run -idt --name openmpi -v &#x2F;home&#x2F;openmpi&#x2F;:&#x2F;home&#x2F;openmpi -p 2200">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MPI">
+<meta property="og:url" content="https://clownote.github.io/2022/12/01/pd/MPI/index.html">
+<meta property="og:site_name" content="clownote">
+<meta property="og:description" content="浅学 MPI。 MPI分布式内存多处理器：  处理器 + 辅助组件 &#x3D;&gt; 节点 一堆节点 &#x3D;&gt; 高性能计算系统 节点 &#x3D;&gt; 进程   节点之间：消息传递  MPI：消息传递接口 安装还是用 Docker 方便。 宿主机： 12345sudo docker run -idt --name openmpi -v &#x2F;home&#x2F;openmpi&#x2F;:&#x2F;home&#x2F;openmpi -p 2200">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://clownote.github.io/2022/12/01/pd/MPI/imgs/mpi-bcast.png">
+<meta property="og:image" content="https://clownote.github.io/2022/12/01/pd/MPI/imgs/mpi-scatter.png">
+<meta property="og:image" content="https://clownote.github.io/2022/12/01/pd/MPI/imgs/mpi-gather.png">
+<meta property="og:image" content="https://clownote.github.io/2022/12/01/pd/MPI/imgs/mpi-allgather.png">
+<meta property="og:image" content="https://clownote.github.io/2022/12/01/pd/MPI/imgs/mpi-alltoall.png">
+<meta property="article:published_time" content="2022-12-01T10:45:21.841Z">
+<meta property="article:modified_time" content="2022-12-01T02:47:45.535Z">
+<meta property="article:author" content="CDFMLR">
+<meta property="article:tag" content="CDFMLR, blogs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://clownote.github.io/2022/12/01/pd/MPI/imgs/mpi-bcast.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/rabbit.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/rabbit_192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/rabbit_180.png">
+          
+        
+    
+    <!-- title -->
+    <title>MPI</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+    <!--Google search varification (PRIVATE)-->
+    <meta name="google-site-verification" content="MrqlpFAD8nDanw3Ypv7ZsIWHLnTdhRuLa4QhSVwxIvc" />
+    <!--Google AdSense 关联 (PRIVATE)-->
+    <script data-ad-client="ca-pub-1510963483941114" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/12/01/pd/OpenMP/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/10/03/blog/macOS%20Monterey%202K%20%E5%B1%8F%E5%BC%80%20HiDPI/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/12/01/pd/MPI/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/12/01/pd/MPI/&text=MPI"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/12/01/pd/MPI/&is_video=false&description=MPI"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MPI&body=Check out this article: https://clownote.github.io/2022/12/01/pd/MPI/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/12/01/pd/MPI/&name=MPI&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MPI"><span class="toc-number">1.</span> <span class="toc-text">MPI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MPI-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.</span> <span class="toc-text">MPI 基本命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-World"><span class="toc-number">1.3.</span> <span class="toc-text">Hello World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">通信器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#size-amp-rank"><span class="toc-number">1.4.1.</span> <span class="toc-text">size &amp; rank</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E6%B6%88%E6%81%AF"><span class="toc-number">1.5.</span> <span class="toc-text">点对点消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%80%81"><span class="toc-number">1.5.1.</span> <span class="toc-text">发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6"><span class="toc-number">1.5.2.</span> <span class="toc-text">接收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.3.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E9%80%9A%E4%BF%A1"><span class="toc-number">1.6.</span> <span class="toc-text">聚合通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%EF%BC%9ABarrier"><span class="toc-number">1.6.1.</span> <span class="toc-text">同步：Barrier</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%BF%E6%92%AD%EF%BC%9ABcast"><span class="toc-number">1.6.2.</span> <span class="toc-text">广播：Bcast</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%95%A3%EF%BC%9AScatter"><span class="toc-number">1.6.3.</span> <span class="toc-text">分散：Scatter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B6%E9%9B%86%EF%BC%9AGather"><span class="toc-number">1.6.4.</span> <span class="toc-text">收集：Gather</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%94%B6%E9%9B%86%EF%BC%9AAllgather"><span class="toc-number">1.6.5.</span> <span class="toc-text">全局收集：Allgather</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E7%BA%A6%EF%BC%9AReduce"><span class="toc-number">1.6.6.</span> <span class="toc-text">规约：Reduce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E8%A7%84%E7%BA%A6%EF%BC%9AAllreduce"><span class="toc-number">1.6.7.</span> <span class="toc-text">全局规约：Allreduce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%88%B0%E5%85%A8%E5%B1%80%EF%BC%9AAlltoall"><span class="toc-number">1.6.8.</span> <span class="toc-text">全局到全局：Alltoall</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E9%80%9A%E4%BF%A1"><span class="toc-number">1.7.</span> <span class="toc-text">非阻塞通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.8.</span> <span class="toc-text">自定义数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">1.9.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MPI
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">clownote</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-12-01T10:45:21.841Z" itemprop="datePublished">2022-12-01</time>
+        
+        (Updated: <time datetime="2022-12-01T02:47:45.535Z" itemprop="dateModified">2022-12-01</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>浅学 MPI。</p>
+<h1 id="MPI"><a href="#MPI" class="headerlink" title="MPI"></a>MPI</h1><p>分布式内存多处理器：</p>
+<ul>
+<li>处理器 + 辅助组件 =&gt; 节点</li>
+<li>一堆节点 =&gt; 高性能计算系统<ul>
+<li>节点 =&gt; 进程</li>
+</ul>
+</li>
+<li>节点之间：消息传递</li>
+</ul>
+<p>MPI：消息传递接口</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>还是用 Docker 方便。</p>
+<p>宿主机：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -idt --name openmpi -v /home/openmpi/:/home/openmpi -p 22001:22 alpine</span><br><span class="line"></span><br><span class="line">sudo ufw allow 22001 comment <span class="string">&#x27;openmpi:ssh&#x27;</span></span><br><span class="line"></span><br><span class="line">sudo docker <span class="built_in">exec</span> -it openmpi sh</span><br></pre></td></tr></table></figure>
+
+<p>容器内：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">apk add build-base  <span class="comment"># 国内网络有时候要多运行几次</span></span><br><span class="line">apk add perl  <span class="comment"># Open MPI requires perl</span></span><br><span class="line">apk add linux-headers  <span class="comment"># #include &lt;linux/unistd.h&gt;</span></span><br><span class="line">apk add bash vim</span><br><span class="line">apk add gcompat libstdc++ curl</span><br><span class="line"></span><br><span class="line">apk add openssh</span><br><span class="line">vi /etc/ssh/sshd_config <span class="comment"># PermitRootLogin yes</span></span><br><span class="line">passwd <span class="comment"># 重新设个 root 密码</span></span><br><span class="line">/usr/sbin/sshd  <span class="comment"># 开 ssh 服务后台</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载、安装 OpenMPI</span></span><br><span class="line">wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.4.tar.gz</span><br><span class="line">tar xzf openmpi-4.1.4.tar.gz</span><br><span class="line"><span class="built_in">cd</span> openmpi-4.1.4</span><br><span class="line">./configure --prefix=/usr/<span class="built_in">local</span></span><br><span class="line">make all install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试安装</span></span><br><span class="line"><span class="built_in">cd</span> /openmpi-4.1.4/examples/</span><br><span class="line">mpicc -o hello_c hello_c.c</span><br><span class="line">mpirun -n 4 --allow-run-as-root --oversubscribe hello_c</span><br><span class="line">    <span class="comment"># --allow-run-as-root: root 硬跑</span></span><br><span class="line">    <span class="comment"># --oversubscribe: 没有多处理器，单核单线程硬跑</span></span><br></pre></td></tr></table></figure>
+
+<p>退出来，宿主机，把刚才装好的做成镜像备用，可以方便以后重开：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps <span class="comment"># 找一下刚才那个的 id</span></span><br><span class="line">sudo docker commit 37c628532bae openmpi:v0.0.0</span><br></pre></td></tr></table></figure>
+
+<p>以后再次搭这个环境就方便了：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -idt --name openmpi -v /home/openmpi/:/home/openmpi -p 22001:22 openmpi:v0.0.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个没有 entrypoint，</span></span><br><span class="line"><span class="comment"># 如果要用 ssh，需要手动进去手动开一下 sshd</span></span><br><span class="line">sudo docker <span class="built_in">exec</span> -it openmpi-with-sshd sh</span><br><span class="line">容器内 <span class="comment"># /usr/sbin/sshd</span></span><br></pre></td></tr></table></figure>
+
+<p>看着多是由于好多步骤是在弄 SSH，弄好了 SSH，搭集群也就方便了。但我暂时没有兴趣。</p>
+<h2 id="MPI-基本命令"><a href="#MPI-基本命令" class="headerlink" title="MPI 基本命令"></a>MPI 基本命令</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;  // 导入包</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);  <span class="comment">// 任意其他 MPI 调用前</span></span><br><span class="line">    ...</span><br><span class="line">    MPI_Finalize(); <span class="comment">// 任意其他 MPI 调用后</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello, world!\n&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc hello.c -o hello</span><br><span class="line">$ mpirun -n 4 --allow-run-as-root --oversubscribe hello</span><br><span class="line">Hello, world!</span><br><span class="line">Hello, world!</span><br><span class="line">Hello, world!</span><br><span class="line">Hello, world!</span><br></pre></td></tr></table></figure>
+
+<p>（<code>--allow-run-as-root</code> 和 <code>--oversubscribe</code> 是由于我要强制在单核单线程的虚拟机里用 Docker 里的 root 用户运行 MPI 程序，正常环境上不用。）</p>
+<h2 id="通信器"><a href="#通信器" class="headerlink" title="通信器"></a>通信器</h2><p>上面的 <a href="#Hello%20World">Hello World</a>：无共享。每个进程做自己的，没有交互，无法协调工作。</p>
+<p>MPI 的并发进程交互：<strong>通信器</strong>（communicator）：</p>
+<ul>
+<li>地址空间：包含一组 MPI 进程</li>
+<li>其他各种属性</li>
+</ul>
+<p>MPI 自带提供一个开箱即用的通信器：<code>MPI_COMM_WORLD</code>，包含该 MPI 程序的所有并发进程。</p>
+<h3 id="size-amp-rank"><a href="#size-amp-rank" class="headerlink" title="size &amp; rank"></a>size &amp; rank</h3><p><code>size</code> 和 <code>rank</code> 是两个常用的通信器属性。</p>
+<ul>
+<li><code>size</code>：通信器的<strong>大小</strong>，即构成通信器的进程数量；</li>
+<li><code>rank</code>：通信器中每个进程的标识（唯一进程 ID，$\ge 0$ 的整数），称为 rank；</li>
+</ul>
+<p>两个属性的 getter（不是 setter）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> size, rank;</span><br><span class="line"></span><br><span class="line">MPI_Comm_size(MPI_COMM_WORLD, <span class="comment">/* out */</span> &amp;size); </span><br><span class="line">MPI_Comm_rank(MPI_COMM_WORLD, <span class="comment">/* out */</span> &amp;rank);</span><br></pre></td></tr></table></figure>
+
+<p>（其实这两个函数有 <code>int</code> 类型的返回值，目测成功都是 0。）</p>
+<p>e.g. 带 rank 和 size 的 Hello World：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size, rank;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello from rank %d out of %d processes in MPI_COMM_WORLD\n&quot;</span>, rank, size);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># mpicc comm.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span></span><br><span class="line">Hello from rank <span class="number">0</span> out of <span class="number">4</span> processes in MPI_COMM_WORLD</span><br><span class="line">Hello from rank <span class="number">2</span> out of <span class="number">4</span> processes in MPI_COMM_WORLD</span><br><span class="line">Hello from rank <span class="number">1</span> out of <span class="number">4</span> processes in MPI_COMM_WORLD</span><br><span class="line">Hello from rank <span class="number">3</span> out of <span class="number">4</span> processes in MPI_COMM_WORLD</span><br></pre></td></tr></table></figure>
+
+<h2 id="点对点消息"><a href="#点对点消息" class="headerlink" title="点对点消息"></a>点对点消息</h2><ul>
+<li>MPI 负责管理通信器内的进程之间的数据交换</li>
+<li>MPI 数据交换的媒介：消息<ul>
+<li>源进程 rank</li>
+<li>目标进程 rank</li>
+<li>包含源、目的进程的通信器</li>
+<li>标记：区分两个进程间的一组可能的消息，用户自定</li>
+</ul>
+</li>
+</ul>
+<h3 id="发送"><a href="#发送" class="headerlink" title="发送"></a>发送</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MPI_Send(</span><br><span class="line">    <span class="comment">/* in */</span> <span class="keyword">void</span>* message,</span><br><span class="line">    <span class="keyword">int</span> count, MPI_Datatype datatype,</span><br><span class="line">    <span class="keyword">int</span> dest, <span class="keyword">int</span> tag, MPI_Comm comm)</span><br></pre></td></tr></table></figure>
+
+<p>发送的消息内容是：从 <code>message</code> 参数处开始的一个 <code>MPI_Datatype[count]</code> <strong>数组</strong>。</p>
+<p>其中，<code>count</code> 是数据元素的数量（数组长度）；<code>MPI_Datatype</code> 为其类型，基本就是和 C 的简单数据类型一一对应：</p>
+<table>
+<thead>
+<tr>
+<th><code>MPI_Datatype</code></th>
+<th>对应的 C 数据类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>MPI_SHORT</code></td>
+<td><code>short int</code></td>
+</tr>
+<tr>
+<td><code>MPI_INT</code></td>
+<td><code>int</code></td>
+</tr>
+<tr>
+<td><code>MPI_LONG</code></td>
+<td><code>long int</code></td>
+</tr>
+<tr>
+<td><code>MPI_LONG_LONG</code></td>
+<td><code>long long int</code></td>
+</tr>
+<tr>
+<td><code>MPI_UNSIGNED_CHAR</code></td>
+<td><code>unsigned char</code></td>
+</tr>
+<tr>
+<td><code>MPI_UNSIGNED_SHORT</code></td>
+<td><code>unsigned short int</code></td>
+</tr>
+<tr>
+<td><code>MPI_UNSIGNED</code></td>
+<td><code>unsigned int</code></td>
+</tr>
+<tr>
+<td><code>MPI_UNSIGNED_LONG</code></td>
+<td><code>unsigned long int</code></td>
+</tr>
+<tr>
+<td><code>MPI_UNSIGNED_LONG_LONG</code></td>
+<td><code>unsigned long long int</code></td>
+</tr>
+<tr>
+<td><code>MPI_FLOAT</code></td>
+<td><code>float</code></td>
+</tr>
+<tr>
+<td><code>MPI_DOUBLE</code></td>
+<td><code>double</code></td>
+</tr>
+<tr>
+<td><code>MPI_LONG_DOUBLE</code></td>
+<td><code>long double</code></td>
+</tr>
+<tr>
+<td><code>MPI_BYTE</code></td>
+<td><code>unsigned char</code></td>
+</tr>
+</tbody></table>
+<p>再次强调，MPI 发送的是数组。单发一个数 <code>int a</code> 也要将其看作 <code>int msg[1] = &amp;a</code>，所以写作 <code>MPI_Send(&amp;a, 1, MPI_INT, ...)</code>；而如果要发送一个数组 <code>int A[3]</code>，则不必再取地址：<code>MPI_Send(A, 3, MPI_INT, ...)</code>。</p>
+<p>再次强调，MPI 发送的是数组，理解这点后再去看 MPI 接口，就没那么魔幻了，很多都是「数组首地址 + 长度 + 类型」这三个配套出现，可能有多组这个三元组，例如 <a href="#%E5%88%86%E6%95%A3%EF%BC%9AScatter"><code>MPI_Scatter</code></a>，后面再加上一个「源/目标进程号 + 通信器」。</p>
+<h3 id="接收"><a href="#接收" class="headerlink" title="接收"></a>接收</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MPI_Recv(</span><br><span class="line">    <span class="comment">/* out */</span> <span class="keyword">void</span>* message,</span><br><span class="line">    <span class="keyword">int</span> count, MPI_Datatype datatype,</span><br><span class="line">    <span class="keyword">int</span> source, <span class="keyword">int</span> tag, MPI_Comm comm,</span><br><span class="line">    MPI_Status* status)</span><br></pre></td></tr></table></figure>
+
+<p><code>status</code> 就是 <code>source</code> + <code>tag</code> + 可能的 error。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>把之前的带 rank 的 hello 改成顺序版本：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rank, size;</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (size == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;This example requires more than one process to execute.\n&quot;</span>);</span><br><span class="line">        MPI_Finalize();</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 消息收发的参数</span></span><br><span class="line">    <span class="keyword">int</span> message[<span class="number">2</span>];  <span class="comment">// buffer</span></span><br><span class="line">    <span class="keyword">int</span> dst, src;</span><br><span class="line">    <span class="keyword">int</span> tag = <span class="number">0</span>;</span><br><span class="line">    MPI_Status status;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rank != <span class="number">0</span>) &#123;  <span class="comment">// 给进程 0 发消息</span></span><br><span class="line">        message[<span class="number">0</span>] = rank;</span><br><span class="line">        message[<span class="number">1</span>] = size;</span><br><span class="line"></span><br><span class="line">        dst = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        MPI_Send(message, <span class="number">2</span>, MPI_INT, dst, tag, MPI_COMM_WORLD);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  <span class="comment">// 进程 0：顺序收消息</span></span><br><span class="line">        <span class="keyword">for</span> (src = <span class="number">1</span>; src &lt; size; src++) &#123;</span><br><span class="line">            MPI_Recv(message, <span class="number">2</span>, MPI_INT, src, MPI_ANY_TAG, MPI_COMM_WORLD, &amp;status);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Hello from process %d out of %d.\n&quot;</span>,</span><br><span class="line">                   message[<span class="number">0</span>], message[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc send-recv.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">Hello from process 1 out of 4.</span><br><span class="line">Hello from process 2 out of 4.</span><br><span class="line">Hello from process 3 out of 4.</span><br></pre></td></tr></table></figure>
+
+<p>这个程序用上 master-worker 模式了：</p>
+<ul>
+<li>rank 为 0 的进程是 master，负责顺序收消息、打印；</li>
+<li>rank 为其他值的进程是 worker，负责发一条消息给 master；</li>
+<li><code>if-else</code> 分化 master 和 worker 的工作。</li>
+</ul>
+<h2 id="聚合通信"><a href="#聚合通信" class="headerlink" title="聚合通信"></a>聚合通信</h2><p>聚合通信：包含通信器内的所有进程的通信模式（群消息）</p>
+<h3 id="同步：Barrier"><a href="#同步：Barrier" class="headerlink" title="同步：Barrier"></a>同步：Barrier</h3><p>Barrier：栅栏：</p>
+<ul>
+<li>所有人都堵在这里等；</li>
+<li>所有人都到齐了再放行。</li>
+</ul>
+<blockquote>
+<p>栅（zhà）栏，居然不是读 shān，我说咋老是打不出来。。。另外原来 zhà 栏是这个字啊，从未设想过😭</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MPI_Barrier(MPI_Comm comm)</span><br></pre></td></tr></table></figure>
+
+<p>e.g. 又一个 Hello World：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    MPI_Barrier(MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size, rank;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line">    <span class="keyword">char</span> name[MPI_MAX_PROCESSOR_NAME];</span><br><span class="line">    MPI_Get_processor_name(name, &amp;len);</span><br><span class="line"></span><br><span class="line">    MPI_Barrier(MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello, world! Process %d of %d on %s\n&quot;</span>, rank, size, name);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc barrier.c &amp;&amp; mpirun -n <span class="number">4</span> --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">Hello, world! Process <span class="number">0</span> of <span class="number">4</span> on c8e9719000d7</span><br><span class="line">Hello, world! Process <span class="number">2</span> of <span class="number">4</span> on c8e9719000d7</span><br><span class="line">Hello, world! Process <span class="number">3</span> of <span class="number">4</span> on c8e9719000d7</span><br><span class="line">Hello, world! Process <span class="number">1</span> of <span class="number">4</span> on c8e9719000d7</span><br></pre></td></tr></table></figure>
+
+<p>联想：OpenMP 的 <a href="OpenMP.md#barrier%20%E6%8C%87%E4%BB%A4">barrier 指令</a>。</p>
+<h3 id="广播：Bcast"><a href="#广播：Bcast" class="headerlink" title="广播：Bcast"></a>广播：Bcast</h3><p><img src="imgs/mpi-bcast.png"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MPI_Bcast(</span><br><span class="line">    <span class="keyword">void</span> *shared_data,</span><br><span class="line">    <span class="keyword">int</span> count, MPI_Datatype datatype,</span><br><span class="line">    <span class="keyword">int</span> root, MPI_Comm comm)</span><br></pre></td></tr></table></figure>
+
+<p>把 <code>root</code> 的 <code>shared_data</code> 广播（同步）给各进程的 <code>shared_data</code> 里。</p>
+<p>e.g.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size, rank;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> A[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        A[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> root = <span class="number">0</span>;  <span class="comment">// root process</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rank == root) &#123;</span><br><span class="line">        A[<span class="number">0</span>] = <span class="number">3</span>;</span><br><span class="line">        A[<span class="number">1</span>] = <span class="number">5</span>;</span><br><span class="line">        A[<span class="number">2</span>] = <span class="number">4</span>;</span><br><span class="line">        A[<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MPI_Bcast(A, <span class="number">4</span>, MPI_INT, root, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Rank %d: A = [%d, %d, %d, %d]\n&quot;</span>, rank, A[<span class="number">0</span>], A[<span class="number">1</span>], A[<span class="number">2</span>], A[<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc bcast.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">Rank 0: A = [3, 5, 4, 1]</span><br><span class="line">Rank 1: A = [3, 5, 4, 1]</span><br><span class="line">Rank 2: A = [3, 5, 4, 1]</span><br><span class="line">Rank 3: A = [3, 5, 4, 1]</span><br></pre></td></tr></table></figure>
+
+<h3 id="分散：Scatter"><a href="#分散：Scatter" class="headerlink" title="分散：Scatter"></a>分散：Scatter</h3><p><img src="imgs/mpi-scatter.png"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MPI_Scatter(</span><br><span class="line">    <span class="keyword">void</span> *send_data, <span class="keyword">int</span> send_count, MPI_Datatype send_type,</span><br><span class="line">    <span class="keyword">void</span> *recv_data, <span class="keyword">int</span> recv_count, MPI_Datatype recv_type,</span><br><span class="line">    <span class="keyword">int</span> root, MPI_Comm comm);</span><br></pre></td></tr></table></figure>
+
+<p>把 <code>root</code> 的 <code>send_data</code> 分散到各个进程的 <code>recv_data</code> 里，包括自己的，每个人发 <code>send_count</code> 个。</p>
+<p>e.g.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size, rank;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (size != <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;This example requires 4 processes to execute.\n&quot;</span>);</span><br><span class="line">        MPI_Finalize();</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> A[<span class="number">4</span>], B[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        A[i] = <span class="number">0</span>;</span><br><span class="line">        B[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> root = <span class="number">0</span>;  <span class="comment">// root process</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rank == root) &#123;</span><br><span class="line">        A[<span class="number">0</span>] = <span class="number">3</span>;</span><br><span class="line">        A[<span class="number">1</span>] = <span class="number">5</span>;</span><br><span class="line">        A[<span class="number">2</span>] = <span class="number">4</span>;</span><br><span class="line">        A[<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MPI_Scatter(A, <span class="number">1</span>, MPI_INT,</span><br><span class="line">                B, <span class="number">1</span>, MPI_INT,</span><br><span class="line">                root, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Rank %d: A = [%d, %d, %d, %d], B = [%d, %d, %d, %d]\n&quot;</span>, rank, </span><br><span class="line">           A[<span class="number">0</span>], A[<span class="number">1</span>], A[<span class="number">2</span>], A[<span class="number">3</span>], </span><br><span class="line">           B[<span class="number">0</span>], B[<span class="number">1</span>], B[<span class="number">2</span>], B[<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc scatter.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">Rank 0: A = [3, 5, 4, 1], B = [3, 0, 0, 0]</span><br><span class="line">Rank 1: A = [0, 0, 0, 0], B = [5, 0, 0, 0]</span><br><span class="line">Rank 2: A = [0, 0, 0, 0], B = [4, 0, 0, 0]</span><br><span class="line">Rank 3: A = [0, 0, 0, 0], B = [1, 0, 0, 0]</span><br></pre></td></tr></table></figure>
+
+<h3 id="收集：Gather"><a href="#收集：Gather" class="headerlink" title="收集：Gather"></a>收集：Gather</h3><p><img src="imgs/mpi-gather.png"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MPI_Gather(</span><br><span class="line">    <span class="keyword">void</span> *send_data, <span class="keyword">int</span> send_count, MPI_Datatype send_type,</span><br><span class="line">    <span class="keyword">void</span> *recv_data, <span class="keyword">int</span> recv_count, MPI_Datatype recv_type,</span><br><span class="line">    <span class="keyword">int</span> dest, MPI_Comm comm);</span><br></pre></td></tr></table></figure>
+
+<p><code>MPI_Gather</code> 就是做反向的 <a href="#%E5%88%86%E6%95%A3%EF%BC%9AScatter">MPI_Scatter</a>：把各个进程的 <code>send_data</code> 收集到 <code>dest</code> 的 <code>recv_data</code> 里。</p>
+<p>e.g.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size, rank;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* assert size == 4 */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> A[<span class="number">4</span>], B[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        A[i] = <span class="number">0</span>;</span><br><span class="line">        B[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A[<span class="number">0</span>] = rank;  <span class="comment">// 各自进程的结果</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> dest = <span class="number">0</span>; <span class="comment">// 收集到 dest</span></span><br><span class="line"></span><br><span class="line">    MPI_Gather(A, <span class="number">1</span>, MPI_INT,</span><br><span class="line">               B, <span class="number">1</span>, MPI_INT,</span><br><span class="line">               dest, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Rank %d: A = [%d, %d, %d, %d], B = [%d, %d, %d, %d]\n&quot;</span>, rank, </span><br><span class="line">           A[<span class="number">0</span>], A[<span class="number">1</span>], A[<span class="number">2</span>], A[<span class="number">3</span>], </span><br><span class="line">           B[<span class="number">0</span>], B[<span class="number">1</span>], B[<span class="number">2</span>], B[<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc gather.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">Rank 0: A = [0, 0, 0, 0], B = [0, 1, 2, 3]</span><br><span class="line">Rank 1: A = [1, 0, 0, 0], B = [0, 0, 0, 0]</span><br><span class="line">Rank 2: A = [2, 0, 0, 0], B = [0, 0, 0, 0]</span><br><span class="line">Rank 3: A = [3, 0, 0, 0], B = [0, 0, 0, 0]</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局收集：Allgather"><a href="#全局收集：Allgather" class="headerlink" title="全局收集：Allgather"></a>全局收集：Allgather</h3><p><img src="imgs/mpi-allgather.png"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MPI_Gather(</span><br><span class="line">    <span class="keyword">void</span> *send_data, <span class="keyword">int</span> send_count, MPI_Datatype send_type,</span><br><span class="line">    <span class="keyword">void</span> *recv_data, <span class="keyword">int</span> recv_count, MPI_Datatype recv_type,</span><br><span class="line">    MPI_Comm comm);</span><br></pre></td></tr></table></figure>
+
+<p>类似于 <a href="#%E6%94%B6%E9%9B%86%EF%BC%9AGather">MPI_Gather</a>，但是收集的结果是广播到所有进程上的，而不是上缴到 dest（所以也就没这个参数了）。</p>
+<p>e.g.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size, rank;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* assert size == 4 */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> A[<span class="number">4</span>], B[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        A[i] = <span class="number">0</span>;</span><br><span class="line">        B[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A[<span class="number">0</span>] = rank;  <span class="comment">// 各自进程的结果</span></span><br><span class="line"></span><br><span class="line">    MPI_Allgather(A, <span class="number">1</span>, MPI_INT,</span><br><span class="line">                  B, <span class="number">1</span>, MPI_INT,</span><br><span class="line">                  MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Rank %d: A = [%d, %d, %d, %d], B = [%d, %d, %d, %d]\n&quot;</span>, rank, </span><br><span class="line">           A[<span class="number">0</span>], A[<span class="number">1</span>], A[<span class="number">2</span>], A[<span class="number">3</span>], </span><br><span class="line">           B[<span class="number">0</span>], B[<span class="number">1</span>], B[<span class="number">2</span>], B[<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc allgather.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">Rank 0: A = [0, 0, 0, 0], B = [0, 1, 2, 3]</span><br><span class="line">Rank 1: A = [1, 0, 0, 0], B = [0, 1, 2, 3]</span><br><span class="line">Rank 2: A = [2, 0, 0, 0], B = [0, 1, 2, 3]</span><br><span class="line">Rank 3: A = [3, 0, 0, 0], B = [0, 1, 2, 3]</span><br></pre></td></tr></table></figure>
+
+<h3 id="规约：Reduce"><a href="#规约：Reduce" class="headerlink" title="规约：Reduce"></a>规约：Reduce</h3><p>关于「规约」、「reduce」的词意以及这个过程的示意图，见 OpenMP 的 <a href="OpenMP.md#reduction%20%E6%8C%87%E4%BB%A4">reduction 指令</a>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MPI_Reduce(<span class="keyword">const</span> <span class="keyword">void</span> *send_data, <span class="keyword">void</span> *recv_data,</span><br><span class="line">           <span class="keyword">int</span> count, MPI_Datatype datatype, </span><br><span class="line">           MPI_Op op,</span><br><span class="line">           <span class="keyword">int</span> dest, MPI_Comm comm);</span><br></pre></td></tr></table></figure>
+
+<p>每个进程发 <code>count</code> 个 <code>datatype</code> 类型的本地结果 <code>send_data</code> 到 <code>dest</code>，<code>dest</code> 将这些结果做 <code>op</code> 运算，结果放到 <code>recv_data</code>。</p>
+<p><code>op</code> 可以是：</p>
+<ul>
+<li><code>MPI_MAX</code>、<code>MPI_MIN</code></li>
+<li><code>MPI_SUM</code>、<code>MPI_PROD</code></li>
+<li><code>MPI_LAND</code>（逻辑与）、<code>MPI_BAND</code>（按位与），类似的还有 OR、XOR。要求 datatype 是整型</li>
+<li><code>MPI_MAXLOC</code>（最大值<strong>和</strong>其位置）、<code>MPI_MINLOC</code>。要求 datatype 是对：<code>MPI_DOUBLE_INT</code> 或 <code>MPI_2INI</code></li>
+</ul>
+<p>e.g. 计算两个向量的点积：$a \cdot b = \sum_i a_i b_i$：</p>
+<p>具体来说就是做这件事：</p>
+<p>$$<br>\begin{array}{rll}<br>a \cdot b =&amp;\  [\underbrace{1,\cdots,1}_\textrm{100个1},2,\cdots,2,\cdots] \times [2,\cdots,2]^T\<br>~ =&amp;\ \underbrace{1 \times 2 + \cdots +1 \times 2}_\textrm{100次} +\<br>~ &amp;\  2 \times 2 + \cdots + 2 \times 2 +\<br>~ &amp;\  \cdots<br>\end{array}<br>$$</p>
+<p>其中，最后一个等号右边每一行由一个进程来算，行之间加起来用 reduce 来做。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size, rank;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> local_vector_size = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">int</span> global_vector_size = size * local_vector_size;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">double</span> *a, *b;</span><br><span class="line">    a = (<span class="keyword">double</span> *) <span class="built_in">malloc</span>(local_vector_size * <span class="keyword">sizeof</span>(<span class="keyword">double</span>));</span><br><span class="line">    b = (<span class="keyword">double</span> *) <span class="built_in">malloc</span>(local_vector_size * <span class="keyword">sizeof</span>(<span class="keyword">double</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; local_vector_size; i++) &#123;</span><br><span class="line">        a[i] = <span class="number">1.0</span> * rank;</span><br><span class="line">        b[i] = <span class="number">2.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 上面都是造数据</span></span><br><span class="line">    <span class="comment">// 下面正式开始算 dot product，两阶段：本地累积、全局规约</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">double</span> partial_sum = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; local_vector_size; i++) &#123;</span><br><span class="line">        partial_sum += a[i] * b[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> root = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">double</span> sum = <span class="number">0.0</span>;</span><br><span class="line">    MPI_Reduce(&amp;partial_sum, &amp;sum, </span><br><span class="line">               <span class="number">1</span>, MPI_DOUBLE, MPI_SUM, </span><br><span class="line">               root, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rank == root) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;The dot product is %g\n&quot;</span>, sum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">free</span>(a);</span><br><span class="line">    <span class="built_in">free</span>(b);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc reduce.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">The dot product is 1200</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局规约：Allreduce"><a href="#全局规约：Allreduce" class="headerlink" title="全局规约：Allreduce"></a>全局规约：Allreduce</h3><p>类似于从 <a href="#%E6%94%B6%E9%9B%86%EF%BC%9AGather"><code>MPI_Gather</code></a> 到 <a href="#%E5%85%A8%E5%B1%80%E6%94%B6%E9%9B%86%EF%BC%9AAllgather"><code>MPI_Allgather</code></a>，<code>MPI_Allreduce</code> 做  <a href="#%E8%A7%84%E7%BA%A6%EF%BC%9AReduce"><code>MPI_Reduce</code></a>  的运算，但是把结果广播到每一个进程（所以也就无需 dest 参数）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MPI_Allreduce(<span class="keyword">const</span> <span class="keyword">void</span> *send_data, <span class="keyword">void</span> *recv_data,</span><br><span class="line">              <span class="keyword">int</span> count, MPI_Datatype datatype, </span><br><span class="line">              MPI_Op op,</span><br><span class="line">              MPI_Comm comm);</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size, rank;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> input = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">switch</span> (rank) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>: input = <span class="number">2</span>; <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>: input = <span class="number">7</span>; <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>: input = <span class="number">1</span>; <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> output;</span><br><span class="line">    MPI_Allreduce(&amp;input, &amp;output, <span class="number">1</span>, MPI_INT, MPI_SUM, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Rank %d: result = %d.\n&quot;</span>, rank, output);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc allreduce.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">Rank 3: result = 10.</span><br><span class="line">Rank 1: result = 10.</span><br><span class="line">Rank 2: result = 10.</span><br><span class="line">Rank 0: result = 10.</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局到全局：Alltoall"><a href="#全局到全局：Alltoall" class="headerlink" title="全局到全局：Alltoall"></a>全局到全局：Alltoall</h3><p>alltoall 通信模式：</p>
+<ul>
+<li>每个发送器也是接收器；</li>
+<li>不同的数据被发送到每个接收器：第 i 个数据分区被发送到第 j 个进程；</li>
+</ul>
+<p>用每行表示一个进程，每列表示一个数据分区，则 alltoall 的效果类似于矩阵转置：</p>
+<p><img src="imgs/mpi-alltoall.png"></p>
+<p>我的理解是 <code>Alltoall = Allscatter</code>，不知道对不对哈：</p>
+<ul>
+<li>作 sender：每个进程把自己的数组 A 做 <a href="#%E5%88%86%E6%95%A3%EF%BC%9AScatter"><code>Scatter</code></a> 发到各个进程；</li>
+<li>作 recver：进程 <code>i</code> 把各个进程发来的数（<code>A[i] from j</code>）按 sender 的 rank <code>j</code> 拼成新数组 B：<code>B[j] = A[i] form j</code>。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MPI_Alltoall(</span><br><span class="line">    <span class="keyword">void</span> *send_data, <span class="keyword">int</span> send_count, MPI_Datatype send_type,</span><br><span class="line">    <span class="keyword">void</span> *recv_data, <span class="keyword">int</span> recv_count, MPI_Datatype recv_type,</span><br><span class="line">    MPI_Comm comm);</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> size, rank;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line"></span><br><span class="line">    assert((size == <span class="number">4</span>) &amp;&amp; <span class="string">&quot;this example is designed for 4 processes.&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> A[<span class="number">4</span>], B[<span class="number">4</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        A[i] = i + <span class="number">1</span> + <span class="number">4</span> * rank;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MPI_Alltoall(A, <span class="number">1</span>, MPI_INT, B, <span class="number">1</span>, MPI_INT, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    sleep(rank);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Rank %d: A = [%2d, %2d, %2d, %2d], B = [%2d, %2d, %2d, %2d]\n&quot;</span>, rank, </span><br><span class="line">           A[<span class="number">0</span>], A[<span class="number">1</span>], A[<span class="number">2</span>], A[<span class="number">3</span>], </span><br><span class="line">           B[<span class="number">0</span>], B[<span class="number">1</span>], B[<span class="number">2</span>], B[<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc alltoall.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">Rank 0: A = [ 1,  2,  3,  4], B = [ 1,  5,  9, 13]</span><br><span class="line">Rank 1: A = [ 5,  6,  7,  8], B = [ 2,  6, 10, 14]</span><br><span class="line">Rank 2: A = [ 9, 10, 11, 12], B = [ 3,  7, 11, 15]</span><br><span class="line">Rank 3: A = [13, 14, 15, 16], B = [ 4,  8, 12, 16]</span><br></pre></td></tr></table></figure>
+
+<h2 id="非阻塞通信"><a href="#非阻塞通信" class="headerlink" title="非阻塞通信"></a>非阻塞通信</h2><p>上文的 <a href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E6%B6%88%E6%81%AF">点对点消息</a> 和 <a href="#%E8%81%9A%E5%90%88%E9%80%9A%E4%BF%A1">聚合通信</a> 都是阻塞的：发/收 完成之前，函数不会返回。</p>
+<p>MPI 还提供了非阻塞的接口：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MPI_Isend(</span><br><span class="line">    <span class="keyword">void</span>* message,</span><br><span class="line">    <span class="keyword">int</span> count, MPI_Datatype datatype,</span><br><span class="line">    <span class="keyword">int</span> dest, <span class="keyword">int</span> tag, MPI_Comm comm,</span><br><span class="line">    MPI_Request *send_request)</span><br><span class="line"></span><br><span class="line">MPI_Irecv(</span><br><span class="line">    <span class="keyword">void</span>* message,</span><br><span class="line">    <span class="keyword">int</span> count, MPI_Datatype datatype,</span><br><span class="line">    <span class="keyword">int</span> source, <span class="keyword">int</span> tag, MPI_Comm comm,</span><br><span class="line">    MPI_Request *recv_request)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 还有类似的 MPI_Ibarrier, MPI_Ibcast, </span></span><br><span class="line"><span class="comment">// MPI_Iscatter, MPI_Igather</span></span><br><span class="line"><span class="comment">// MPI_Ialltoall, MPI_Iallgather</span></span><br><span class="line"><span class="comment">// MPI_Ireduce, ...</span></span><br></pre></td></tr></table></figure>
+
+<p>就是函数名 <code>MPI_Xxx</code> -&gt; <code>MPI_Ixxx</code>，参数最后加一个 <code>MPI_Request</code>，用于跟踪该异步通信。这些函数在调用后立即返回。</p>
+<p>欲知异步通信是否完成，使用 <code>MPI_Test</code>，把 <code>MPI_Ixxx</code> 的 request 传进来，检查，已完成则置 flag 的值为真：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MPI_Test(MPI_Request *request, <span class="keyword">int</span> *flag, MPI_Status *status);</span><br></pre></td></tr></table></figure>
+
+<p>在必须完成异步通信时，使用 <code>MPI_Wait</code>，阻塞，等通信完成：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MPI_Wait(MPI_Request *request, MPI_Status *status);</span><br></pre></td></tr></table></figure>
+
+<p>用非阻塞通信有一个好处是，可以防呆，避免一些程序顺序瑕疵可能带来的死锁问题。考虑如下程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rank, size;</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line"></span><br><span class="line">    assert(size == <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> tag = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> a = rank, b = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// work</span></span><br><span class="line">    MPI_Send(&amp;a, <span class="number">1</span>, MPI_INT, <span class="number">1</span> - rank, tag, MPI_COMM_WORLD);</span><br><span class="line">    MPI_Recv(&amp;b, <span class="number">1</span>, MPI_INT, <span class="number">1</span> - rank, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Rank %d: recv value %d.\n&quot;</span>, rank, b);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>send 在前，recv 在后，可以工作。但如果交换二者顺序，就直接死锁（都先 recv，但没人发啊）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DEADLOCK!!!</span></span><br><span class="line">MPI_Recv(&amp;b, <span class="number">1</span>, MPI_INT, <span class="number">1</span> - rank, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);</span><br><span class="line">MPI_Send(&amp;a, <span class="number">1</span>, MPI_INT, <span class="number">1</span> - rank, tag, MPI_COMM_WORLD);</span><br></pre></td></tr></table></figure>
+
+<p>改成非阻塞通信：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rank, size;</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line"></span><br><span class="line">    assert(size == <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> tag = <span class="number">0</span>;</span><br><span class="line">    MPI_Status status;</span><br><span class="line">    MPI_Request send_req, recv_req;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> a = rank, b = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 可以交换</span></span><br><span class="line">    MPI_Isend(&amp;a, <span class="number">1</span>, MPI_INT, <span class="number">1</span> - rank, tag, MPI_COMM_WORLD, &amp;send_req);</span><br><span class="line">    MPI_Irecv(&amp;b, <span class="number">1</span>, MPI_INT, <span class="number">1</span> - rank, tag, MPI_COMM_WORLD, &amp;recv_req);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 可以交换</span></span><br><span class="line">    MPI_Wait(&amp;send_req, &amp;status);</span><br><span class="line">    MPI_Wait(&amp;recv_req, &amp;status);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Rank %d: recv value %d.\n&quot;</span>, rank, b);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Rank <span class="number">0</span>: recv value <span class="number">1.</span></span><br><span class="line">Rank <span class="number">1</span>: recv value <span class="number">0.</span></span><br></pre></td></tr></table></figure>
+
+<p>交换 <code>Isend</code> 和 <code>Irecv</code>，程序也正常工作。交换两句 <code>Wait</code>，也正常工作。所以这个就很舒服了。</p>
+<h2 id="自定义数据类型"><a href="#自定义数据类型" class="headerlink" title="自定义数据类型"></a>自定义数据类型</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MPI_Type_create_struct(<span class="keyword">int</span> count, </span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> array_of_block_lengths[],</span><br><span class="line">    <span class="keyword">const</span> MPI_Aint array_of_displacements[],</span><br><span class="line">    <span class="keyword">const</span> MPI_Datatype array_of_types[],</span><br><span class="line">    MPI_Datatype *newtype);</span><br><span class="line"></span><br><span class="line">MPI_Type_commit(MPI_Datatype *newtype);</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">double</span> y;</span><br><span class="line">&#125; Pair;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rank, size;</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 要动态创建的新 mpi 类型</span></span><br><span class="line">    MPI_Datatype mpi_pair;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> nitems = <span class="number">2</span>;              <span class="comment">// # fields of Pair</span></span><br><span class="line">    MPI_Datatype types[nitems];  <span class="comment">// element types</span></span><br><span class="line">    MPI_Aint offsets[nitems];    <span class="comment">// element offsets</span></span><br><span class="line">    <span class="keyword">int</span> blocklengths[nitems];    <span class="comment">// element count</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Pair.x</span></span><br><span class="line">    types[<span class="number">0</span>] = MPI_INT;</span><br><span class="line">    offsets[<span class="number">0</span>] = offsetof(Pair, x);</span><br><span class="line">    blocklengths[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Pair.y</span></span><br><span class="line">    types[<span class="number">1</span>] = MPI_DOUBLE;</span><br><span class="line">    offsets[<span class="number">1</span>] = offsetof(Pair, y);</span><br><span class="line">    blocklengths[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册类型</span></span><br><span class="line">    MPI_Type_create_struct(nitems, blocklengths, offsets, types, &amp;mpi_pair);</span><br><span class="line">    MPI_Type_commit(&amp;mpi_pair);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 然后就可以把 Pair 结构体用 MPI 通信了</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> root = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    Pair <span class="built_in">pair</span>;</span><br><span class="line">    <span class="keyword">if</span> (rank == root) &#123;</span><br><span class="line">        <span class="built_in">pair</span>.x = <span class="number">10</span>;</span><br><span class="line">        <span class="built_in">pair</span>.y = <span class="number">3.14</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MPI_Bcast(&amp;<span class="built_in">pair</span>, <span class="number">1</span>, mpi_pair, root, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Rank %d: recv Pair&#123;x=%d, y=%g&#125;\n&quot;</span>, rank, <span class="built_in">pair</span>.x, <span class="built_in">pair</span>.y);</span><br><span class="line"></span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mpicc newtype.c &amp;&amp; mpirun -n 4 --allow-run-as-root --oversubscribe ./a.out</span><br><span class="line">Rank 0: recv Pair&#123;x=10, y=3.14&#125;</span><br><span class="line">Rank 1: recv Pair&#123;x=10, y=3.14&#125;</span><br><span class="line">Rank 3: recv Pair&#123;x=10, y=3.14&#125;</span><br><span class="line">Rank 2: recv Pair&#123;x=10, y=3.14&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>Thomas Sterling，Matthew Anderson，Maciej Brodowicz. 高性能计算：现代系统与应用实践. 第 8 章 MPI 的基础</li>
+<li>OpenMPI 官网: <a target="_blank" rel="noopener" href="https://www.open-mpi.org/">https://www.open-mpi.org/</a></li>
+<li>下载地址: <a target="_blank" rel="noopener" href="https://www.open-mpi.org/software/ompi/v4.1/">https://www.open-mpi.org/software/ompi/v4.1/</a></li>
+<li>安装文档: <a target="_blank" rel="noopener" href="https://www.open-mpi.org/faq/?category=building#easy-build">https://www.open-mpi.org/faq/?category=building#easy-build</a></li>
+</ul>
+<hr>
+<p>EOF</p>
+
+  </div>
+</article>
+<!--Disqus-->
+
+
+<!--Livere-->
+
+    <div class="blog-post-comments">
+        <div id="lv-container" data-id="city" data-uid="MTAyMC80NjEzMi8yMjY0Mw==">
+            <noscript>不启用 JavaScript 支持的人是看不到可爱的评论区的。😥</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MPI"><span class="toc-number">1.</span> <span class="toc-text">MPI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MPI-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.</span> <span class="toc-text">MPI 基本命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-World"><span class="toc-number">1.3.</span> <span class="toc-text">Hello World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">通信器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#size-amp-rank"><span class="toc-number">1.4.1.</span> <span class="toc-text">size &amp; rank</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E6%B6%88%E6%81%AF"><span class="toc-number">1.5.</span> <span class="toc-text">点对点消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%80%81"><span class="toc-number">1.5.1.</span> <span class="toc-text">发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6"><span class="toc-number">1.5.2.</span> <span class="toc-text">接收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.3.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E9%80%9A%E4%BF%A1"><span class="toc-number">1.6.</span> <span class="toc-text">聚合通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%EF%BC%9ABarrier"><span class="toc-number">1.6.1.</span> <span class="toc-text">同步：Barrier</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%BF%E6%92%AD%EF%BC%9ABcast"><span class="toc-number">1.6.2.</span> <span class="toc-text">广播：Bcast</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%95%A3%EF%BC%9AScatter"><span class="toc-number">1.6.3.</span> <span class="toc-text">分散：Scatter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B6%E9%9B%86%EF%BC%9AGather"><span class="toc-number">1.6.4.</span> <span class="toc-text">收集：Gather</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%94%B6%E9%9B%86%EF%BC%9AAllgather"><span class="toc-number">1.6.5.</span> <span class="toc-text">全局收集：Allgather</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E7%BA%A6%EF%BC%9AReduce"><span class="toc-number">1.6.6.</span> <span class="toc-text">规约：Reduce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E8%A7%84%E7%BA%A6%EF%BC%9AAllreduce"><span class="toc-number">1.6.7.</span> <span class="toc-text">全局规约：Allreduce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%88%B0%E5%85%A8%E5%B1%80%EF%BC%9AAlltoall"><span class="toc-number">1.6.8.</span> <span class="toc-text">全局到全局：Alltoall</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E9%80%9A%E4%BF%A1"><span class="toc-number">1.7.</span> <span class="toc-text">非阻塞通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.8.</span> <span class="toc-text">自定义数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">1.9.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://clownote.github.io/2022/12/01/pd/MPI/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://clownote.github.io/2022/12/01/pd/MPI/&text=MPI"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://clownote.github.io/2022/12/01/pd/MPI/&is_video=false&description=MPI"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MPI&body=Check out this article: https://clownote.github.io/2022/12/01/pd/MPI/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://clownote.github.io/2022/12/01/pd/MPI/&title=MPI"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://clownote.github.io/2022/12/01/pd/MPI/&name=MPI&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 CDFMLR
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cdfmlr">项目</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146911386-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    <!-- New: global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146911386-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-146911386-1');
+    </script>
+    
+
+<!-- Baidu Analytics -->
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9a0d2e6fde93dad496ac79f04f3aba97";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+<!-- Disqus Comments -->
+
+
+<!--Livere Comments-->
+
+    <script type="text/javascript">
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+
+        if (typeof LivereTower === 'function') { return; }
+
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+
+
+</body>
+</html>
